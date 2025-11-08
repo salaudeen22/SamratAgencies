@@ -15,11 +15,11 @@ const ProductCard = ({ product }) => {
 
   return (
     <Link to={`/products/${product._id}`} className="group">
-      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-        <div className="relative h-64 overflow-hidden bg-gray-200">
-          {product.image ? (
+      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-orange-200">
+        <div className="relative h-64 overflow-hidden bg-amber-50">
+          {product.images && product.images.length > 0 && product.images[0].url ? (
             <img
-              src={product.image}
+              src={product.images[0].url}
               alt={product.name}
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
             />
@@ -36,7 +36,7 @@ const ProductCard = ({ product }) => {
         </div>
 
         <div className="p-4">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">
+          <h3 className="text-lg font-semibold text-indigo-900 mb-2 line-clamp-2">
             {product.name}
           </h3>
 
@@ -46,7 +46,7 @@ const ProductCard = ({ product }) => {
 
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-2xl font-bold text-blue-600">
+              <span className="text-2xl font-bold text-orange-600">
                 ₹{product.price?.toLocaleString()}
               </span>
               {product.category && (
@@ -57,10 +57,10 @@ const ProductCard = ({ product }) => {
             <button
               onClick={handleAddToCart}
               disabled={product.inStock === false}
-              className={`px-4 py-2 rounded-md transition-colors ${
+              className={`px-4 py-2 rounded-md transition-all ${
                 product.inStock === false
                   ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  : 'bg-blue-500 text-white hover:bg-blue-600'
+                  : 'bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:from-orange-600 hover:to-amber-600'
               }`}
             >
               {product.inStock === false ? 'Out of Stock' : 'Add to Cart'}

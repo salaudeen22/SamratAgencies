@@ -41,8 +41,8 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500"></div>
       </div>
     );
   }
@@ -59,11 +59,11 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <button
           onClick={() => navigate(-1)}
-          className="text-blue-600 hover:text-blue-700 mb-6 flex items-center"
+          className="text-orange-600 hover:text-orange-700 mb-6 flex items-center font-medium"
         >
           <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -71,13 +71,13 @@ const ProductDetail = () => {
           Back
         </button>
 
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden border border-orange-100">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
             {/* Product Image */}
-            <div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
-              {product.image ? (
+            <div className="bg-amber-50 rounded-lg h-96 flex items-center justify-center overflow-hidden">
+              {product.images && product.images.length > 0 && product.images[0].url ? (
                 <img
-                  src={product.image}
+                  src={product.images[0].url}
                   alt={product.name}
                   className="w-full h-full object-cover rounded-lg"
                 />
@@ -88,16 +88,16 @@ const ProductDetail = () => {
 
             {/* Product Info */}
             <div>
-              <h1 className="text-3xl font-bold text-gray-800 mb-4">{product.name}</h1>
+              <h1 className="text-3xl font-bold text-indigo-900 mb-4">{product.name}</h1>
 
               {product.category && (
-                <span className="inline-block bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm mb-4">
+                <span className="inline-block bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm mb-4 font-medium">
                   {product.category}
                 </span>
               )}
 
               <div className="mb-6">
-                <span className="text-4xl font-bold text-blue-600">
+                <span className="text-4xl font-bold text-orange-600">
                   ₹{product.price?.toLocaleString()}
                 </span>
               </div>

@@ -11,11 +11,11 @@ const Button = ({
   const baseClasses = 'font-semibold rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
 
   const variantClasses = {
-    primary: 'bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500',
-    secondary: 'bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-500',
+    primary: 'bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:from-orange-600 hover:to-amber-600 focus:ring-orange-500',
+    secondary: 'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500',
     success: 'bg-green-500 text-white hover:bg-green-600 focus:ring-green-500',
     danger: 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500',
-    outline: 'border-2 border-blue-500 text-blue-500 hover:bg-blue-50 focus:ring-blue-500',
+    outline: 'border-2 border-orange-500 text-orange-600 hover:bg-orange-50 focus:ring-orange-500',
   };
 
   const sizeClasses = {
