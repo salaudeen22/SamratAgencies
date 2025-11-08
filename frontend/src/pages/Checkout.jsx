@@ -59,7 +59,7 @@ const Checkout = () => {
         totalAmount: getCartTotal(),
       };
 
-      const response = await orderAPI.create(orderData);
+      await orderAPI.create(orderData);
       await clearCart();
       alert('Order placed successfully!');
       navigate(`/profile`);

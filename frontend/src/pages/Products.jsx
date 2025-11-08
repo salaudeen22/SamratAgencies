@@ -13,26 +13,26 @@ const Products = () => {
   });
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const params = {};
+        if (filters.category) params.category = filters.category;
+        if (filters.minPrice) params.minPrice = filters.minPrice;
+        if (filters.maxPrice) params.maxPrice = filters.maxPrice;
+        if (filters.search) params.search = filters.search;
+
+        const response = await productAPI.getAll(params);
+        setProducts(response.data);
+      } catch (err) {
+        console.error('Failed to fetch products:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchProducts();
   }, [filters]);
-
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-      const params = {};
-      if (filters.category) params.category = filters.category;
-      if (filters.minPrice) params.minPrice = filters.minPrice;
-      if (filters.maxPrice) params.maxPrice = filters.maxPrice;
-      if (filters.search) params.search = filters.search;
-
-      const response = await productAPI.getAll(params);
-      setProducts(response.data);
-    } catch (err) {
-      console.error('Failed to fetch products:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
