@@ -1,10 +1,13 @@
+const dotenv = require('dotenv');
+
+// Load env vars FIRST
+dotenv.config();
+
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
+const session = require('express-session');
+const passport = require('./src/config/passport');
 const connectDB = require('./src/config/db');
-
-// Load env vars
-dotenv.config();
 
 // Connect to database
 connectDB();
@@ -12,9 +15,28 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Session configuration
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production'
+  }
+}));
+
+// Initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 app.use('/api/auth', require('./src/routes/authRoutes'));

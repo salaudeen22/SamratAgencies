@@ -71,6 +71,17 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const handleGoogleLogin = async (token) => {
+    try {
+      localStorage.setItem('token', token);
+      const response = await authAPI.getProfile();
+      setUser(response.data);
+    } catch (err) {
+      localStorage.removeItem('token');
+      console.error('Google login failed:', err);
+    }
+  };
+
   const value = {
     user,
     loading,
@@ -78,6 +89,7 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
+    handleGoogleLogin,
     isAuthenticated: !!user,
   };
 

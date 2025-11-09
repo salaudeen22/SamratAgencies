@@ -73,3 +73,15 @@ exports.getProfile = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Google OAuth callback
+exports.googleCallback = async (req, res) => {
+  try {
+    const token = generateToken(req.user._id);
+
+    // Redirect to frontend with token
+    res.redirect(`${process.env.FRONTEND_URL}/auth/google/success?token=${token}`);
+  } catch (error) {
+    res.redirect(`${process.env.FRONTEND_URL}/login?error=authentication_failed`);
+  }
+};
