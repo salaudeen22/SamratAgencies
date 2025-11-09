@@ -65,4 +65,55 @@ export const userAPI = {
   deleteAddress: (id) => api.delete(`/users/addresses/${id}`),
 };
 
+// Category APIs
+export const categoryAPI = {
+  getAll: () => api.get('/categories'),
+  getBySlug: (slug) => api.get(`/categories/${slug}`),
+};
+
+// Admin APIs
+export const adminAPI = {
+  // Dashboard
+  getStats: () => api.get('/admin/stats'),
+
+  // Products
+  getProducts: (params) => api.get('/admin/products', { params }),
+  createProduct: (productData) => api.post('/admin/products', productData),
+  updateProduct: (id, productData) => api.put(`/admin/products/${id}`, productData),
+  deleteProduct: (id) => api.delete(`/admin/products/${id}`),
+
+  // Orders
+  getOrders: (params) => api.get('/admin/orders', { params }),
+  getOrderById: (id) => api.get(`/admin/orders/${id}`),
+  updateOrderStatus: (id, statusData) => api.put(`/admin/orders/${id}/status`, statusData),
+
+  // Users
+  getUsers: (params) => api.get('/admin/users', { params }),
+  updateUserAdmin: (id, isAdmin) => api.put(`/admin/users/${id}/admin`, { isAdmin }),
+
+  // Categories
+  getCategories: () => api.get('/categories/admin/all'),
+  createCategory: (categoryData) => api.post('/categories/admin', categoryData),
+  updateCategory: (id, categoryData) => api.put(`/categories/admin/${id}`, categoryData),
+  deleteCategory: (id) => api.delete(`/categories/admin/${id}`),
+
+  // Subcategories
+  addSubcategory: (categoryId, subcategoryData) => api.post(`/categories/admin/${categoryId}/subcategories`, subcategoryData),
+  updateSubcategory: (categoryId, subId, subcategoryData) => api.put(`/categories/admin/${categoryId}/subcategories/${subId}`, subcategoryData),
+  deleteSubcategory: (categoryId, subId) => api.delete(`/categories/admin/${categoryId}/subcategories/${subId}`),
+
+  // Attributes
+  getAttributes: () => api.get('/admin/attributes'),
+  createAttribute: (attributeData) => api.post('/admin/attributes', attributeData),
+  updateAttribute: (id, attributeData) => api.put(`/admin/attributes/${id}`, attributeData),
+  deleteAttribute: (id) => api.delete(`/admin/attributes/${id}`),
+
+  // Attribute Sets
+  getAttributeSets: () => api.get('/admin/attribute-sets'),
+  getAttributeSet: (id) => api.get(`/admin/attribute-sets/${id}`),
+  createAttributeSet: (setData) => api.post('/admin/attribute-sets', setData),
+  updateAttributeSet: (id, setData) => api.put(`/admin/attribute-sets/${id}`, setData),
+  deleteAttributeSet: (id) => api.delete(`/admin/attribute-sets/${id}`),
+};
+
 export default api;

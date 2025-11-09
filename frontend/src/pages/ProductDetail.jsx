@@ -95,7 +95,7 @@ const ProductDetail = () => {
 
               {product.category && (
                 <span className="inline-block px-3 py-1 rounded-full text-sm mb-4 font-medium" style={{ backgroundColor: '#E0EAF0', color: '#895F42' }}>
-                  {product.category}
+                  {typeof product.category === 'object' ? product.category.name : product.category}
                 </span>
               )}
 
@@ -104,10 +104,6 @@ const ProductDetail = () => {
                   ₹{product.price?.toLocaleString()}
                 </span>
               </div>
-
-              <p className="mb-6 leading-relaxed" style={{ color: '#94A1AB' }}>
-                {product.description || 'No description available.'}
-              </p>
 
               {/* Stock Status */}
               <div className="mb-6">
@@ -174,12 +170,46 @@ const ProductDetail = () => {
                 <h3 className="font-semibold mb-4" style={{ color: '#1F2D38' }}>Product Details</h3>
                 <ul className="space-y-2" style={{ color: '#94A1AB' }}>
                   <li>• SKU: {product._id}</li>
-                  <li>• Category: {product.category || 'N/A'}</li>
+                  <li>• Category: {typeof product.category === 'object' ? product.category.name : product.category || 'N/A'}</li>
                   <li>• Availability: {product.inStock ? 'In Stock' : 'Out of Stock'}</li>
+                  {product.stock !== undefined && <li>• Stock Quantity: {product.stock}</li>}
                 </ul>
               </div>
             </div>
           </div>
+
+          {/* Specifications Section */}
+          {product.specifications && Object.keys(product.specifications).length > 0 && (
+            <div className="p-8 pt-0">
+              <div className="pt-6" style={{ borderTop: '2px solid #BDD7EB' }}>
+                <h3 className="text-2xl font-bold mb-6" style={{ color: '#1F2D38' }}>Specifications</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {Object.entries(product.specifications).map(([key, value]) => (
+                    <div key={key} className="p-4 rounded-lg" style={{ backgroundColor: '#E0EAF0' }}>
+                      <div className="text-sm font-medium mb-1" style={{ color: '#895F42' }}>
+                        {key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                      </div>
+                      <div className="text-base font-semibold" style={{ color: '#1F2D38' }}>
+                        {value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Description Section */}
+          {product.description && (
+            <div className="p-8 pt-0">
+              <div className="pt-6" style={{ borderTop: '2px solid #BDD7EB' }}>
+                <h3 className="text-2xl font-bold mb-4" style={{ color: '#1F2D38' }}>Description</h3>
+                <p className="leading-relaxed text-base" style={{ color: '#94A1AB' }}>
+                  {product.description}
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { productAPI } from '../services/api';
+import { productAPI, categoryAPI } from '../services/api';
 import ProductCard from '../components/ProductCard';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     category: '',
@@ -11,6 +12,19 @@ const Products = () => {
     maxPrice: '',
     search: '',
   });
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await categoryAPI.getAll();
+        setCategories(response.data);
+      } catch (err) {
+        console.error('Failed to fetch categories:', err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -88,12 +102,11 @@ const Products = () => {
                   style={{ border: '1px solid #BDD7EB', color: '#1F2D38' }}
                 >
                   <option value="">All Categories</option>
-                  <option value="sofa">Sofa</option>
-                  <option value="bed">Bed</option>
-                  <option value="chair">Chair</option>
-                  <option value="table">Table</option>
-                  <option value="cabinet">Cabinet</option>
-                  <option value="other">Other</option>
+                  {categories.map((category) => (
+                    <option key={category._id} value={category._id}>
+                      {category.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 

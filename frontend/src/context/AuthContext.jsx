@@ -91,6 +91,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     handleGoogleLogin,
     isAuthenticated: !!user,
+    isAdmin: user?.isAdmin || false,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

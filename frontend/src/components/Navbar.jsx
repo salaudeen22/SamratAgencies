@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import { categoryAPI } from '../services/api';
 import logo from '../assets/samrat-logo.png';
 
 const Navbar = () => {
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated, isAdmin } = useAuth();
   const { getCartCount } = useCart();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isShopMenuOpen, setIsShopMenuOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const isActive = (path) => location.pathname === path;
 
@@ -19,63 +21,18 @@ const Navbar = () => {
     { path: '/collections', label: 'Collections' },
   ];
 
-  const megaMenuCategories = [
-    {
-      title: 'Furniture',
-      items: [
-        { label: 'Modern chair', path: '/products?category=modern-chair' },
-        { label: 'Luxurious sofa', path: '/products?category=luxurious-sofa' },
-        { label: 'Sitting tables', path: '/products?category=sitting-tables' },
-        { label: 'Century cabinet', path: '/products?category=century-cabinet' },
-        { label: 'Wooden stool', path: '/products?category=wooden-stool' },
-        { label: 'Dining table', path: '/products?category=dining-table' },
-      ]
-    },
-    {
-      title: 'Lighting',
-      items: [
-        { label: 'Table lamps', path: '/products?category=table-lamps' },
-        { label: 'Wall lights', path: '/products?category=wall-lights' },
-        { label: 'Ceiling lights', path: '/products?category=ceiling-lights' },
-        { label: 'Chandeliers', path: '/products?category=chandeliers' },
-        { label: 'Smart lights', path: '/products?category=smart-lights' },
-        { label: 'Outdoor lights', path: '/products?category=outdoor-lights' },
-      ]
-    },
-    {
-      title: 'Decor',
-      items: [
-        { label: 'Home decor', path: '/products?category=home-decor' },
-        { label: 'Kitchen decor', path: '/products?category=kitchen-decor' },
-        { label: 'Office decor', path: '/products?category=office-decor' },
-        { label: 'Wooden mirrors', path: '/products?category=wooden-mirrors' },
-        { label: 'Designer clocks', path: '/products?category=designer-clocks' },
-        { label: 'Spiritual', path: '/products?category=spiritual' },
-      ]
-    },
-    {
-      title: 'Cabinetry',
-      items: [
-        { label: 'Wardrobes', path: '/products?category=wardrobes' },
-        { label: 'Shoe racks', path: '/products?category=shoe-racks' },
-        { label: 'Movable', path: '/products?category=movable' },
-        { label: 'Folding storage', path: '/products?category=folding-storage' },
-        { label: 'Wooden units', path: '/products?category=wooden-units' },
-        { label: 'Kids storage', path: '/products?category=kids-storage' },
-      ]
-    },
-    {
-      title: 'Commercial',
-      items: [
-        { label: 'Hotel furniture', path: '/products?category=hotel-furniture' },
-        { label: 'Bar furniture', path: '/products?category=bar-furniture' },
-        { label: 'School furniture', path: '/products?category=school-furniture' },
-        { label: 'Public furniture', path: '/products?category=public-furniture' },
-        { label: 'Office furniture', path: '/products?category=office-furniture' },
-        { label: 'Lab furniture', path: '/products?category=lab-furniture' },
-      ]
-    },
-  ];
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await categoryAPI.getAll();
+        setCategories(response.data);
+      } catch (err) {
+        console.error('Failed to fetch categories:', err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   return (
     <nav className="bg-white border-b sticky top-0 z-50" style={{ borderColor: '#E0EAF0' }}>
@@ -129,30 +86,38 @@ const Navbar = () => {
               </Link>
 
               {/* Mega Menu Dropdown */}
-              {isShopMenuOpen && (
+              {isShopMenuOpen && categories.length > 0 && (
                 <div className="absolute left-1/2 transform -translate-x-1/2 top-full pt-4 w-screen max-w-6xl z-50">
                   <div className="bg-white rounded-lg shadow-2xl border p-8" style={{ borderColor: '#E0EAF0' }}>
-                    <div className="grid grid-cols-5 gap-8">
-                      {megaMenuCategories.map((category) => (
-                        <div key={category.title}>
-                          <h3 className="text-sm font-bold mb-4 uppercase tracking-wide" style={{ color: '#895F42' }}>
-                            {category.title}
-                          </h3>
-                          <ul className="space-y-2">
-                            {category.items.map((item) => (
-                              <li key={item.path}>
-                                <Link
-                                  to={item.path}
-                                  className="text-sm transition-colors block"
-                                  style={{ color: '#94A1AB' }}
-                                  onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
-                                  onMouseLeave={(e) => e.currentTarget.style.color = '#94A1AB'}
-                                >
-                                  {item.label}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
+                    <div className="grid gap-8" style={{ gridTemplateColumns: `repeat(${Math.min(categories.length, 5)}, minmax(0, 1fr))` }}>
+                      {categories.map((category) => (
+                        <div key={category._id}>
+                          <Link
+                            to={`/products?category=${category._id}`}
+                            className="text-sm font-bold mb-4 uppercase tracking-wide block transition-colors"
+                            style={{ color: '#895F42' }}
+                            onMouseEnter={(e) => e.currentTarget.style.color = '#9F8065'}
+                            onMouseLeave={(e) => e.currentTarget.style.color = '#895F42'}
+                          >
+                            {category.name}
+                          </Link>
+                          {category.subcategories && category.subcategories.length > 0 && (
+                            <ul className="space-y-2">
+                              {category.subcategories.map((subcategory) => (
+                                <li key={subcategory._id}>
+                                  <Link
+                                    to={`/products?category=${subcategory._id}`}
+                                    className="text-sm transition-colors block"
+                                    style={{ color: '#94A1AB' }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = '#94A1AB'}
+                                  >
+                                    {subcategory.name}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -204,6 +169,18 @@ const Navbar = () => {
                     >
                       My Profile
                     </Link>
+                    {isAdmin && (
+                      <Link
+                        to="/admin"
+                        className="block px-4 py-2 text-sm transition-colors"
+                        style={{ color: '#895F42' }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                        onClick={() => setIsProfileDropdownOpen(false)}
+                      >
+                        Admin Panel
+                      </Link>
+                    )}
                     <button
                       onClick={() => {
                         logout();
@@ -276,6 +253,16 @@ const Navbar = () => {
                   >
                     My Profile
                   </Link>
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block py-2.5 text-sm"
+                      style={{ color: '#895F42' }}
+                    >
+                      Admin Panel
+                    </Link>
+                  )}
                   <button
                     onClick={() => {
                       logout();

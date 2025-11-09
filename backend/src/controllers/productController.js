@@ -30,17 +30,34 @@ exports.getAllProducts = async (req, res) => {
     if (sort === 'newest') sortOption.createdAt = -1;
     if (sort === 'rating') sortOption.rating = -1;
 
-    const products = await Product.find(query).sort(sortOption);
+    const products = await Product.find(query)
+      .populate('category', 'name slug')
+      .populate('attributeSet', 'name')
+      .sort(sortOption);
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// Get single product
+// Get single product (by ID or slug)
 exports.getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const { id } = req.params;
+
+    // Check if it's a MongoDB ObjectId or a slug
+    const isObjectId = /^[0-9a-fA-F]{24}$/.test(id);
+
+    const query = isObjectId ? { _id: id } : { slug: id };
+
+    const product = await Product.findOne(query)
+      .populate('category', 'name slug description')
+      .populate({
+        path: 'attributeSet',
+        populate: {
+          path: 'attributes.attribute'
+        }
+      });
 
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
@@ -99,7 +116,10 @@ exports.deleteProduct = async (req, res) => {
 // Get featured products
 exports.getFeaturedProducts = async (req, res) => {
   try {
-    const products = await Product.find({ featured: true }).limit(8);
+    const products = await Product.find({ featured: true })
+      .populate('category', 'name slug')
+      .populate('attributeSet', 'name')
+      .limit(8);
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });

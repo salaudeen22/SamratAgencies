@@ -41,9 +41,12 @@ app.use(passport.session());
 // Routes
 app.use('/api/auth', require('./src/routes/authRoutes'));
 app.use('/api/products', require('./src/routes/productRoutes'));
+app.use('/api/categories', require('./src/routes/categoryRoutes'));
 app.use('/api/cart', require('./src/routes/cartRoutes'));
 app.use('/api/orders', require('./src/routes/orderRoutes'));
 app.use('/api/users', require('./src/routes/userRoutes'));
+app.use('/api/admin', require('./src/routes/adminRoutes'));
+app.use('/api/admin', require('./src/routes/attributeRoutes'));
 
 // API info route
 app.get('/api', (req, res) => {
@@ -53,9 +56,11 @@ app.get('/api', (req, res) => {
     endpoints: {
       auth: '/api/auth',
       products: '/api/products',
+      categories: '/api/categories',
       cart: '/api/cart',
       orders: '/api/orders',
-      users: '/api/users'
+      users: '/api/users',
+      admin: '/api/admin'
     }
   });
 });

@@ -14,7 +14,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <Link to={`/products/${product._id}`} className="group">
+    <Link to={`/products/${product.slug || product._id}`} className="group">
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border-2" style={{ borderColor: 'transparent' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#BDD7EB'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}>
         <div className="relative h-64 overflow-hidden" style={{ backgroundColor: '#E0EAF0' }}>
           {product.images && product.images.length > 0 && product.images[0].url ? (
@@ -50,7 +50,9 @@ const ProductCard = ({ product }) => {
                 ₹{product.price?.toLocaleString()}
               </span>
               {product.category && (
-                <p className="text-xs mt-1" style={{ color: '#94A1AB' }}>{product.category}</p>
+                <p className="text-xs mt-1" style={{ color: '#94A1AB' }}>
+                  {typeof product.category === 'object' ? product.category.name : product.category}
+                </p>
               )}
             </div>
 
