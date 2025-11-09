@@ -17,6 +17,7 @@ import wakefit from '../assets/brand/wakefir.png';
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCategoryGroup, setSelectedCategoryGroup] = useState('Furniture');
 
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
@@ -40,17 +41,60 @@ const Home = () => {
     { name: 'Tables', icon: MdTableRestaurant, link: '/products?category=table' },
   ];
 
+  const categoryGroups = {
+    'Furniture': [
+      { label: 'Modern chair', path: '/products?category=modern-chair' },
+      { label: 'Luxurious sofa', path: '/products?category=luxurious-sofa' },
+      { label: 'Sitting tables', path: '/products?category=sitting-tables' },
+      { label: 'Century cabinet', path: '/products?category=century-cabinet' },
+      { label: 'Wooden stool', path: '/products?category=wooden-stool' },
+      { label: 'Dining table', path: '/products?category=dining-table' },
+    ],
+    'Lighting': [
+      { label: 'Table lamps', path: '/products?category=table-lamps' },
+      { label: 'Wall lights', path: '/products?category=wall-lights' },
+      { label: 'Ceiling lights', path: '/products?category=ceiling-lights' },
+      { label: 'Chandeliers', path: '/products?category=chandeliers' },
+      { label: 'Smart lights', path: '/products?category=smart-lights' },
+      { label: 'Outdoor lights', path: '/products?category=outdoor-lights' },
+    ],
+    'Decor': [
+      { label: 'Home decor', path: '/products?category=home-decor' },
+      { label: 'Kitchen decor', path: '/products?category=kitchen-decor' },
+      { label: 'Office decor', path: '/products?category=office-decor' },
+      { label: 'Wooden mirrors', path: '/products?category=wooden-mirrors' },
+      { label: 'Designer clocks', path: '/products?category=designer-clocks' },
+      { label: 'Spiritual', path: '/products?category=spiritual' },
+    ],
+    'Cabinetry': [
+      { label: 'Wardrobes', path: '/products?category=wardrobes' },
+      { label: 'Shoe racks', path: '/products?category=shoe-racks' },
+      { label: 'Movable', path: '/products?category=movable' },
+      { label: 'Folding storage', path: '/products?category=folding-storage' },
+      { label: 'Wooden units', path: '/products?category=wooden-units' },
+      { label: 'Kids storage', path: '/products?category=kids-storage' },
+    ],
+    'Commercial': [
+      { label: 'Hotel furniture', path: '/products?category=hotel-furniture' },
+      { label: 'Bar furniture', path: '/products?category=bar-furniture' },
+      { label: 'School furniture', path: '/products?category=school-furniture' },
+      { label: 'Public furniture', path: '/products?category=public-furniture' },
+      { label: 'Office furniture', path: '/products?category=office-furniture' },
+      { label: 'Lab furniture', path: '/products?category=lab-furniture' },
+    ],
+  };
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#fafaf9' }}>
       {/* Original Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0" style={{ background: `linear-gradient(to right, #E5EFF3 0%, #E5EFF3 60%, #BDD7EB 60%, #BDD7EB 100%)` }}></div>
+        <div className="absolute inset-0" style={{ backgroundColor: '#E5EFF3' }}></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <span className="inline-block px-5 py-2 text-sm font-bold rounded-full mb-4 shadow-md" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>On Demand</span>
               <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight" style={{ color: '#1F2D38' }}>
-                Wooden Classic <span className="text-transparent bg-clip-text font-black" style={{ backgroundImage: 'linear-gradient(to right, #895F42, #9F8065)' }}>Furniture</span>
+                Wooden Classic <span className="font-black" style={{ color: '#895F42' }}>Furniture</span>
               </h1>
               <p className="text-xl mb-8 leading-relaxed font-medium" style={{ color: '#1F2D38', opacity: 0.8 }}>
                 Transform your living space with premium furniture. Quality craftsmanship meets timeless elegance.
@@ -169,7 +213,7 @@ const Home = () => {
       </section>
 
       {/* Categories Section */}
-      <section className="py-16" style={{ background: 'linear-gradient(to bottom, #E0EAF0, #ffffff)' }}>
+      <section className="py-16" style={{ backgroundColor: '#fafaf9' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1F2D38' }}>Shop by Category</h2>
@@ -194,7 +238,7 @@ const Home = () => {
       </section>
 
       {/* Featured Products - Best Sellers */}
-      <section className="py-20" style={{ background: 'linear-gradient(to bottom, #ffffff, #E0EAF0)' }}>
+      <section className="py-20" style={{ backgroundColor: '#ffffff' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-12">
             <div>
@@ -242,7 +286,7 @@ const Home = () => {
                 />
                 <div className="h-8 w-px" style={{ backgroundColor: '#BDD7EB' }}></div>
                 <div>
-                  <p className="text-lg md:text-xl font-black" style={{ color: '#895F42' }}>0% Interest | ₹0 Down Payment</p>
+                  <p className="text-lg md:text-xl font-black" style={{ color: '#895F42' }}>₹0 Down Payment</p>
                   <p className="text-xs" style={{ color: '#94A1AB' }}>*T&C apply</p>
                 </div>
               </div>
@@ -260,7 +304,7 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20" style={{ background: 'linear-gradient(to bottom, #ffffff, #E0EAF0)' }}>
+      <section className="py-20" style={{ backgroundColor: '#ffffff' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1F2D38' }}>What Our Customers Say</h2>
@@ -275,7 +319,7 @@ const Home = () => {
               </div>
               <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"Excellent quality furniture! The sofa we bought is exactly as described. Very comfortable and looks amazing in our living room."</p>
               <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ background: 'linear-gradient(to bottom right, #895F42, #9F8065)', color: '#E5EFF3' }}>R</div>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>R</div>
                 <div>
                   <div className="font-semibold" style={{ color: '#1F2D38' }}>Rajesh Kumar</div>
                   <div className="text-sm" style={{ color: '#94A1AB' }}>Mumbai</div>
@@ -291,7 +335,7 @@ const Home = () => {
               </div>
               <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"Great service and fast delivery! The team was very helpful in choosing the right furniture for our home. Highly recommended!"</p>
               <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ background: 'linear-gradient(to bottom right, #1F2D38, #94A1AB)', color: '#E5EFF3' }}>P</div>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ backgroundColor: '#1F2D38', color: '#E5EFF3' }}>P</div>
                 <div>
                   <div className="font-semibold" style={{ color: '#1F2D38' }}>Priya Sharma</div>
                   <div className="text-sm" style={{ color: '#94A1AB' }}>Delhi</div>
@@ -307,7 +351,7 @@ const Home = () => {
               </div>
               <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"Amazing collection and affordable prices! We furnished our entire house from Samrat Agencies. Couldn't be happier!"</p>
               <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ background: 'linear-gradient(to bottom right, #895F42, #9F8065)', color: '#E5EFF3' }}>A</div>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>A</div>
                 <div>
                   <div className="font-semibold" style={{ color: '#1F2D38' }}>Amit Patel</div>
                   <div className="text-sm" style={{ color: '#94A1AB' }}>Bangalore</div>

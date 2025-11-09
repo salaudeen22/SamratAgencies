@@ -11,11 +11,19 @@ const Button = ({
   const baseClasses = 'font-semibold rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
 
   const variantClasses = {
-    primary: 'bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:from-orange-600 hover:to-amber-600 focus:ring-orange-500',
-    secondary: 'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500',
+    primary: 'text-white hover:opacity-90 transition-opacity',
+    secondary: 'text-white hover:opacity-90 transition-opacity',
     success: 'bg-green-500 text-white hover:bg-green-600 focus:ring-green-500',
     danger: 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500',
-    outline: 'border-2 border-orange-500 text-orange-600 hover:bg-orange-50 focus:ring-orange-500',
+    outline: 'border-2 text-white hover:opacity-80 transition-opacity',
+  };
+
+  const variantStyles = {
+    primary: { backgroundColor: '#895F42' },
+    secondary: { backgroundColor: '#1F2D38' },
+    success: {},
+    danger: {},
+    outline: { borderColor: '#895F42', backgroundColor: 'transparent', color: '#895F42' },
   };
 
   const sizeClasses = {
@@ -32,6 +40,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${disabledClasses} ${className}`}
+      style={variantStyles[variant]}
       {...props}
     >
       {children}

@@ -41,7 +41,7 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(to bottom, #E0EAF0, #ffffff)' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#fafaf9' }}>
         <div className="animate-spin rounded-full h-12 w-12 border-b-4" style={{ borderColor: '#895F42' }}></div>
       </div>
     );
@@ -59,7 +59,7 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="min-h-screen py-8" style={{ background: 'linear-gradient(to bottom, #E0EAF0, #ffffff)' }}>
+    <div className="min-h-screen py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <button
           onClick={() => navigate(-1)}

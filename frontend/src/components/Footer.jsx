@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4" style={{ color: '#B29B87' }}>Samrat Agencies</h3>
+            <h3 className="text-xl font-bold mb-4" style={{ color: '#895F42' }}>Samrat Agencies</h3>
             <p className="mb-4" style={{ color: '#E0EAF0' }}>
               Furniture Expert | Samsung Dealer
             </p>
@@ -21,10 +21,10 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4" style={{ color: '#E5EFF3' }}>Quick Links</h4>
             <ul className="space-y-2">
-              <li><Link to="/" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#B29B87'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Home</Link></li>
-              <li><Link to="/products" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#B29B87'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Products</Link></li>
-              <li><Link to="/about" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#B29B87'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>About Us</Link></li>
-              <li><Link to="/contact" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#B29B87'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Contact</Link></li>
+              <li><Link to="/" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Home</Link></li>
+              <li><Link to="/products" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Products</Link></li>
+              <li><Link to="/about" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>About Us</Link></li>
+              <li><Link to="/contact" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Contact</Link></li>
             </ul>
           </div>
 
@@ -38,7 +38,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="transition"
                   style={{ color: '#BDD7EB' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#B29B87'}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
                   onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}
                 >
                   Google My Business
@@ -51,7 +51,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="transition"
                   style={{ color: '#BDD7EB' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#B29B87'}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
                   onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}
                 >
                   JustDial
@@ -64,7 +64,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="transition"
                   style={{ color: '#BDD7EB' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#B29B87'}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
                   onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}
                 >
                   MagicPIN
@@ -77,7 +77,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="transition"
                   style={{ color: '#BDD7EB' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#B29B87'}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
                   onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}
                 >
                   Facebook
@@ -90,7 +90,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="transition"
                   style={{ color: '#BDD7EB' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#B29B87'}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
                   onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}
                 >
                   IndiaMART

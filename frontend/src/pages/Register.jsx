@@ -51,12 +51,12 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-md w-full">
-        <div className="bg-white rounded-lg shadow-md p-8 border border-orange-100">
+        <div className="bg-white rounded-lg shadow-md p-8 border-2" style={{ borderColor: '#BDD7EB' }}>
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-indigo-900">Create Account</h2>
-            <p className="text-gray-600 mt-2">Sign up for Samrat Agencies</p>
+            <h2 className="text-3xl font-bold" style={{ color: '#1F2D38' }}>Create Account</h2>
+            <p className="mt-2" style={{ color: '#94A1AB' }}>Sign up for Samrat Agencies</p>
           </div>
 
           {error && (
@@ -67,7 +67,7 @@ const Register = () => {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
                 Full Name
               </label>
               <input
@@ -76,13 +76,14 @@ const Register = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                style={{ borderColor: '#BDD7EB' }}
                 placeholder="John Doe"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
                 Email Address
               </label>
               <input
@@ -91,13 +92,14 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                style={{ borderColor: '#BDD7EB' }}
                 placeholder="your@email.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
                 Password
               </label>
               <input
@@ -106,13 +108,14 @@ const Register = () => {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                style={{ borderColor: '#BDD7EB' }}
                 placeholder="••••••••"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
                 Confirm Password
               </label>
               <input
@@ -121,7 +124,8 @@ const Register = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                style={{ borderColor: '#BDD7EB' }}
                 placeholder="••••••••"
               />
             </div>
@@ -132,9 +136,9 @@ const Register = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p style={{ color: '#94A1AB' }}>
               Already have an account?{' '}
-              <Link to="/login" className="text-orange-600 hover:text-orange-700 font-semibold">
+              <Link to="/login" className="font-semibold transition" style={{ color: '#895F42' }} onMouseEnter={(e) => e.currentTarget.style.color = '#9F8065'} onMouseLeave={(e) => e.currentTarget.style.color = '#895F42'}>
                 Login here
               </Link>
             </p>

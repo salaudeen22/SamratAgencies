@@ -49,7 +49,7 @@ const Products = () => {
   };
 
   return (
-    <div className="min-h-screen py-8" style={{ background: 'linear-gradient(to bottom, #E0EAF0, #ffffff)' }}>
+    <div className="min-h-screen py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold mb-8" style={{ color: '#1F2D38' }}>Our Products</h1>
 

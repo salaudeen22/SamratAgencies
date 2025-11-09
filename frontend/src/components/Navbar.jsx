@@ -10,49 +10,167 @@ const Navbar = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isShopMenuOpen, setIsShopMenuOpen] = useState(false);
 
   const isActive = (path) => location.pathname === path;
 
   const navLinks = [
     { path: '/', label: 'Home' },
-    { path: '/products', label: 'Products' },
+    { path: '/collections', label: 'Collections' },
+  ];
+
+  const megaMenuCategories = [
+    {
+      title: 'Furniture',
+      items: [
+        { label: 'Modern chair', path: '/products?category=modern-chair' },
+        { label: 'Luxurious sofa', path: '/products?category=luxurious-sofa' },
+        { label: 'Sitting tables', path: '/products?category=sitting-tables' },
+        { label: 'Century cabinet', path: '/products?category=century-cabinet' },
+        { label: 'Wooden stool', path: '/products?category=wooden-stool' },
+        { label: 'Dining table', path: '/products?category=dining-table' },
+      ]
+    },
+    {
+      title: 'Lighting',
+      items: [
+        { label: 'Table lamps', path: '/products?category=table-lamps' },
+        { label: 'Wall lights', path: '/products?category=wall-lights' },
+        { label: 'Ceiling lights', path: '/products?category=ceiling-lights' },
+        { label: 'Chandeliers', path: '/products?category=chandeliers' },
+        { label: 'Smart lights', path: '/products?category=smart-lights' },
+        { label: 'Outdoor lights', path: '/products?category=outdoor-lights' },
+      ]
+    },
+    {
+      title: 'Decor',
+      items: [
+        { label: 'Home decor', path: '/products?category=home-decor' },
+        { label: 'Kitchen decor', path: '/products?category=kitchen-decor' },
+        { label: 'Office decor', path: '/products?category=office-decor' },
+        { label: 'Wooden mirrors', path: '/products?category=wooden-mirrors' },
+        { label: 'Designer clocks', path: '/products?category=designer-clocks' },
+        { label: 'Spiritual', path: '/products?category=spiritual' },
+      ]
+    },
+    {
+      title: 'Cabinetry',
+      items: [
+        { label: 'Wardrobes', path: '/products?category=wardrobes' },
+        { label: 'Shoe racks', path: '/products?category=shoe-racks' },
+        { label: 'Movable', path: '/products?category=movable' },
+        { label: 'Folding storage', path: '/products?category=folding-storage' },
+        { label: 'Wooden units', path: '/products?category=wooden-units' },
+        { label: 'Kids storage', path: '/products?category=kids-storage' },
+      ]
+    },
+    {
+      title: 'Commercial',
+      items: [
+        { label: 'Hotel furniture', path: '/products?category=hotel-furniture' },
+        { label: 'Bar furniture', path: '/products?category=bar-furniture' },
+        { label: 'School furniture', path: '/products?category=school-furniture' },
+        { label: 'Public furniture', path: '/products?category=public-furniture' },
+        { label: 'Office furniture', path: '/products?category=office-furniture' },
+        { label: 'Lab furniture', path: '/products?category=lab-furniture' },
+      ]
+    },
   ];
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="bg-white border-b sticky top-0 z-50" style={{ borderColor: '#E0EAF0' }}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <img src={logo} alt="Samrat Agencies" className="h-10 w-auto" />
-            <span className="text-xl font-bold" style={{ color: '#1F2D38' }}>Samrat Agencies</span>
+          <Link to="/" className="flex items-center space-x-2">
+            <img src={logo} alt="Samrat Agencies" className="h-8 w-auto" />
+            <span className="text-lg font-semibold tracking-tight" style={{ color: '#1F2D38' }}>Samrat Agencies</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden md:flex items-center space-x-10 absolute left-1/2 transform -translate-x-1/2">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="font-medium transition"
-                style={{ color: isActive(link.path) ? '#895F42' : '#94A1AB' }}
-                onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
-                onMouseLeave={(e) => e.currentTarget.style.color = isActive(link.path) ? '#895F42' : '#94A1AB'}
+                className="text-sm font-medium tracking-wide uppercase transition-colors relative group"
+                style={{ color: isActive(link.path) ? '#895F42' : '#1F2D38' }}
               >
                 {link.label}
+                <span
+                  className="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300"
+                  style={{ backgroundColor: '#895F42' }}
+                ></span>
+                {isActive(link.path) && (
+                  <span className="absolute bottom-0 left-0 w-full h-0.5" style={{ backgroundColor: '#895F42' }}></span>
+                )}
               </Link>
             ))}
+
+            {/* Shop with Mega Menu */}
+            <div
+              className="relative"
+              onMouseEnter={() => setIsShopMenuOpen(true)}
+              onMouseLeave={() => setIsShopMenuOpen(false)}
+            >
+              <Link
+                to="/products"
+                className="text-sm font-medium tracking-wide uppercase transition-colors relative group"
+                style={{ color: isActive('/products') ? '#895F42' : '#1F2D38' }}
+              >
+                Shop
+                <span
+                  className="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300"
+                  style={{ backgroundColor: '#895F42' }}
+                ></span>
+                {isActive('/products') && (
+                  <span className="absolute bottom-0 left-0 w-full h-0.5" style={{ backgroundColor: '#895F42' }}></span>
+                )}
+              </Link>
+
+              {/* Mega Menu Dropdown */}
+              {isShopMenuOpen && (
+                <div className="absolute left-1/2 transform -translate-x-1/2 top-full pt-4 w-screen max-w-6xl z-50">
+                  <div className="bg-white rounded-lg shadow-2xl border p-8" style={{ borderColor: '#E0EAF0' }}>
+                    <div className="grid grid-cols-5 gap-8">
+                      {megaMenuCategories.map((category) => (
+                        <div key={category.title}>
+                          <h3 className="text-sm font-bold mb-4 uppercase tracking-wide" style={{ color: '#895F42' }}>
+                            {category.title}
+                          </h3>
+                          <ul className="space-y-2">
+                            {category.items.map((item) => (
+                              <li key={item.path}>
+                                <Link
+                                  to={item.path}
+                                  className="text-sm transition-colors block"
+                                  style={{ color: '#94A1AB' }}
+                                  onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
+                                  onMouseLeave={(e) => e.currentTarget.style.color = '#94A1AB'}
+                                >
+                                  {item.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Right Side */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
             {/* Cart */}
-            <Link to="/cart" className="relative">
-              <svg className="w-6 h-6 transition" style={{ color: '#94A1AB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#94A1AB'} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            <Link to="/cart" className="relative group">
+              <svg className="w-5 h-5 transition-colors" style={{ color: '#1F2D38' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
               {getCartCount() > 0 && (
-                <span className="absolute -top-2 -right-2 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>
+                <span className="absolute -top-1.5 -right-1.5 text-xs rounded-full h-4 w-4 flex items-center justify-center font-semibold" style={{ backgroundColor: '#895F42', color: 'white', fontSize: '10px' }}>
                   {getCartCount()}
                 </span>
               )}
@@ -60,31 +178,28 @@ const Navbar = () => {
 
             {/* User Menu */}
             {isAuthenticated ? (
-              <div className="hidden md:flex items-center space-x-3 relative">
+              <div className="hidden md:flex items-center relative">
                 <button
                   onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-                  className="flex items-center space-x-2 transition"
-                  style={{ color: '#94A1AB' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#94A1AB'}
+                  className="flex items-center space-x-1.5"
+                  style={{ color: '#1F2D38' }}
                 >
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-sm font-semibold" style={{ backgroundColor: '#E0EAF0', color: '#895F42' }}>
                     {user?.name?.charAt(0).toUpperCase() || 'U'}
                   </div>
-                  <span>{user?.name || 'Profile'}</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
 
                 {isProfileDropdownOpen && (
-                  <div className="absolute right-0 top-12 w-48 bg-white rounded-lg shadow-xl py-2" style={{ border: '1px solid #BDD7EB' }}>
+                  <div className="absolute right-0 top-10 w-44 bg-white rounded-md shadow-lg py-1 border" style={{ borderColor: '#E0EAF0' }}>
                     <Link
                       to="/profile"
-                      className="block px-4 py-2 transition"
+                      className="block px-4 py-2 text-sm transition-colors"
                       style={{ color: '#1F2D38' }}
-                      onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#E0EAF0'; e.currentTarget.style.color = '#895F42'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#1F2D38'; }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       onClick={() => setIsProfileDropdownOpen(false)}
                     >
                       My Profile
@@ -94,7 +209,7 @@ const Navbar = () => {
                         logout();
                         setIsProfileDropdownOpen(false);
                       }}
-                      className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50"
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
                     >
                       Logout
                     </button>
@@ -102,11 +217,11 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <div className="hidden md:flex items-center space-x-3">
-                <Link to="/login" className="font-medium transition" style={{ color: '#94A1AB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#94A1AB'}>
+              <div className="hidden md:flex items-center space-x-6">
+                <Link to="/login" className="text-sm font-medium" style={{ color: '#1F2D38' }}>
                   Login
                 </Link>
-                <Link to="/register" className="px-4 py-2 rounded-md transition" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#9F8065'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}>
+                <Link to="/register" className="text-sm font-medium px-4 py-1.5 rounded-sm transition-colors" style={{ backgroundColor: '#1F2D38', color: 'white' }}>
                   Register
                 </Link>
               </div>
@@ -115,15 +230,15 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2"
-              style={{ color: '#94A1AB' }}
+              className="md:hidden"
+              style={{ color: '#1F2D38' }}
             >
               {isMobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               )}
@@ -134,16 +249,15 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white" style={{ borderTop: '1px solid #BDD7EB' }}>
-          <div className="px-4 py-3 space-y-2">
+        <div className="md:hidden bg-white border-t" style={{ borderColor: '#E0EAF0' }}>
+          <div className="px-6 py-4 space-y-1">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-2 px-3 rounded font-semibold"
+                className="block py-2.5 text-sm font-medium tracking-wide uppercase"
                 style={{
-                  backgroundColor: isActive(link.path) ? '#E0EAF0' : 'transparent',
                   color: isActive(link.path) ? '#895F42' : '#1F2D38'
                 }}
               >
@@ -151,23 +265,23 @@ const Navbar = () => {
               </Link>
             ))}
 
-            <div className="pt-2" style={{ borderTop: '1px solid #BDD7EB' }}>
+            <div className="pt-3 mt-3 space-y-1" style={{ borderTop: '1px solid #E0EAF0' }}>
               {isAuthenticated ? (
                 <>
                   <Link
                     to="/profile"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block py-2 px-3 rounded"
+                    className="block py-2.5 text-sm"
                     style={{ color: '#1F2D38' }}
                   >
-                    Profile
+                    My Profile
                   </Link>
                   <button
                     onClick={() => {
                       logout();
                       setIsMobileMenuOpen(false);
                     }}
-                    className="w-full text-left py-2 px-3 rounded text-red-600 hover:bg-red-50"
+                    className="w-full text-left py-2.5 text-sm text-red-600"
                   >
                     Logout
                   </button>
@@ -177,7 +291,7 @@ const Navbar = () => {
                   <Link
                     to="/login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block py-2 px-3 rounded"
+                    className="block py-2.5 text-sm"
                     style={{ color: '#1F2D38' }}
                   >
                     Login
@@ -185,8 +299,8 @@ const Navbar = () => {
                   <Link
                     to="/register"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block py-2 px-3 rounded text-center"
-                    style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}
+                    className="block py-2.5 text-sm text-center mt-2"
+                    style={{ backgroundColor: '#1F2D38', color: 'white' }}
                   >
                     Register
                   </Link>
