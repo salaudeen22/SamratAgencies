@@ -76,6 +76,7 @@ const Register = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
+                autoComplete="name"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
                 style={{ borderColor: '#BDD7EB' }}
                 placeholder="John Doe"
@@ -92,6 +93,7 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                autoComplete="email"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
                 style={{ borderColor: '#BDD7EB' }}
                 placeholder="your@email.com"
@@ -108,6 +110,7 @@ const Register = () => {
                 value={formData.password}
                 onChange={handleChange}
                 required
+                autoComplete="new-password"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
                 style={{ borderColor: '#BDD7EB' }}
                 placeholder="••••••••"
@@ -124,6 +127,7 @@ const Register = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
+                autoComplete="new-password"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
                 style={{ borderColor: '#BDD7EB' }}
                 placeholder="••••••••"

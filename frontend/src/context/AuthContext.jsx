@@ -40,9 +40,9 @@ export const AuthProvider = ({ children }) => {
     try {
       setError(null);
       const response = await authAPI.login({ email, password });
-      const { token, user } = response.data;
+      const { token, ...userData } = response.data;
       localStorage.setItem('token', token);
-      setUser(user);
+      setUser(userData);
       return { success: true };
     } catch (err) {
       const message = err.response?.data?.message || 'Login failed';
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     try {
       setError(null);
       const response = await authAPI.register(userData);
-      const { token, user } = response.data;
+      const { token, ...user } = response.data;
       localStorage.setItem('token', token);
       setUser(user);
       return { success: true };

@@ -1,26 +1,61 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { orderAPI } from '../services/api';
+import { orderAPI, userAPI } from '../services/api';
+import Button from '../components/Button';
+import Modal from '../components/Modal';
 
 const Profile = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
+  const [addresses, setAddresses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('profile');
+  const [editMode, setEditMode] = useState(false);
+  const [showAddressForm, setShowAddressForm] = useState(false);
+  const [editingAddress, setEditingAddress] = useState(null);
+
+  const [profileData, setProfileData] = useState({
+    name: '',
+    email: '',
+    phone: ''
+  });
+
+  const [addressData, setAddressData] = useState({
+    name: '',
+    phone: '',
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    state: '',
+    pincode: '',
+    country: 'India',
+    isDefault: false
+  });
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
       return;
     }
+
+    if (user) {
+      setProfileData({
+        name: user.name || '',
+        email: user.email || '',
+        phone: user.phone || ''
+      });
+    }
+
     if (activeTab === 'orders') {
       fetchOrders();
+    } else if (activeTab === 'addresses') {
+      fetchAddresses();
     } else {
       setLoading(false);
     }
-  }, [isAuthenticated, navigate, activeTab]);
+  }, [isAuthenticated, navigate, activeTab, user]);
 
   const fetchOrders = async () => {
     try {
@@ -32,6 +67,91 @@ const Profile = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchAddresses = async () => {
+    try {
+      setLoading(true);
+      const response = await userAPI.getAddresses();
+      setAddresses(response.data);
+    } catch (err) {
+      console.error('Failed to fetch addresses:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleProfileUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      await userAPI.updateProfile(profileData);
+      alert('Profile updated successfully!');
+      setEditMode(false);
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to update profile');
+    }
+  };
+
+  const handleAddressSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (editingAddress) {
+        const response = await userAPI.updateAddress(editingAddress._id, addressData);
+        setAddresses(response.data);
+        alert('Address updated successfully!');
+      } else {
+        const response = await userAPI.addAddress(addressData);
+        setAddresses(response.data);
+        alert('Address added successfully!');
+      }
+      resetAddressForm();
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to save address');
+    }
+  };
+
+  const handleEditAddress = (address) => {
+    setEditingAddress(address);
+    setAddressData({
+      name: address.name,
+      phone: address.phone,
+      addressLine1: address.addressLine1,
+      addressLine2: address.addressLine2 || '',
+      city: address.city,
+      state: address.state,
+      pincode: address.pincode,
+      country: address.country,
+      isDefault: address.isDefault
+    });
+    setShowAddressForm(true);
+  };
+
+  const handleDeleteAddress = async (addressId) => {
+    if (!confirm('Are you sure you want to delete this address?')) return;
+
+    try {
+      const response = await userAPI.deleteAddress(addressId);
+      setAddresses(response.data);
+      alert('Address deleted successfully!');
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to delete address');
+    }
+  };
+
+  const resetAddressForm = () => {
+    setShowAddressForm(false);
+    setEditingAddress(null);
+    setAddressData({
+      name: '',
+      phone: '',
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      state: '',
+      pincode: '',
+      country: 'India',
+      isDefault: false
+    });
   };
 
   const getStatusColor = (status) => {
@@ -50,42 +170,55 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">My Account</h1>
+        <h1 className="text-3xl font-bold mb-8" style={{ color: '#1F2D38' }}>My Account</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white rounded-lg shadow-md p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
               <div className="text-center mb-6">
-                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-blue-600">
+                <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#BDD7EB' }}>
+                  <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
                     {user?.name?.charAt(0).toUpperCase()}
                   </span>
                 </div>
-                <h2 className="text-xl font-semibold text-gray-800">{user?.name}</h2>
-                <p className="text-gray-600 text-sm">{user?.email}</p>
+                <h2 className="text-xl font-semibold" style={{ color: '#1F2D38' }}>{user?.name}</h2>
+                <p className="text-sm" style={{ color: '#94A1AB' }}>{user?.email}</p>
               </div>
 
               <div className="space-y-2">
                 <button
-                  onClick={() => setActiveTab('profile')}
+                  onClick={() => { setActiveTab('profile'); setEditMode(false); }}
                   className={`w-full text-left px-4 py-2 rounded-md transition ${
                     activeTab === 'profile'
-                      ? 'bg-blue-500 text-white'
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'text-white'
+                      : 'hover:bg-gray-100'
                   }`}
+                  style={activeTab === 'profile' ? { backgroundColor: '#895F42' } : { color: '#1F2D38' }}
                 >
                   Profile
+                </button>
+                <button
+                  onClick={() => setActiveTab('addresses')}
+                  className={`w-full text-left px-4 py-2 rounded-md transition ${
+                    activeTab === 'addresses'
+                      ? 'text-white'
+                      : 'hover:bg-gray-100'
+                  }`}
+                  style={activeTab === 'addresses' ? { backgroundColor: '#895F42' } : { color: '#1F2D38' }}
+                >
+                  Addresses
                 </button>
                 <button
                   onClick={() => setActiveTab('orders')}
                   className={`w-full text-left px-4 py-2 rounded-md transition ${
                     activeTab === 'orders'
-                      ? 'bg-blue-500 text-white'
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'text-white'
+                      : 'hover:bg-gray-100'
                   }`}
+                  style={activeTab === 'orders' ? { backgroundColor: '#895F42' } : { color: '#1F2D38' }}
                 >
                   My Orders
                 </button>
@@ -101,53 +234,329 @@ const Profile = () => {
 
           {/* Main Content */}
           <div className="lg:col-span-3">
+            {/* Profile Tab */}
             {activeTab === 'profile' && (
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-2xl font-semibold mb-6">Profile Information</h2>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Full Name
-                    </label>
-                    <p className="text-gray-800 text-lg">{user?.name}</p>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Email
-                    </label>
-                    <p className="text-gray-800 text-lg">{user?.email}</p>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Member Since
-                    </label>
-                    <p className="text-gray-800 text-lg">
-                      {new Date(user?.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
+              <div className="bg-white rounded-lg shadow-md p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-semibold" style={{ color: '#1F2D38' }}>Profile Information</h2>
+                  {!editMode && (
+                    <button
+                      onClick={() => setEditMode(true)}
+                      className="px-4 py-2 rounded-md text-white transition"
+                      style={{ backgroundColor: '#895F42' }}
+                    >
+                      Edit Profile
+                    </button>
+                  )}
                 </div>
+
+                {editMode ? (
+                  <form onSubmit={handleProfileUpdate} className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                        Full Name
+                      </label>
+                      <input
+                        type="text"
+                        value={profileData.name}
+                        onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
+                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                        style={{ borderColor: '#BDD7EB' }}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        value={profileData.email}
+                        onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
+                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                        style={{ borderColor: '#BDD7EB' }}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        value={profileData.phone}
+                        onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
+                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                        style={{ borderColor: '#BDD7EB' }}
+                      />
+                    </div>
+                    <div className="flex gap-4">
+                      <Button type="submit">Save Changes</Button>
+                      <button
+                        type="button"
+                        onClick={() => setEditMode(false)}
+                        className="px-4 py-2 border rounded-md"
+                        style={{ borderColor: '#BDD7EB', color: '#1F2D38' }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
+                        Full Name
+                      </label>
+                      <p className="text-lg" style={{ color: '#1F2D38' }}>{user?.name}</p>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
+                        Email
+                      </label>
+                      <p className="text-lg" style={{ color: '#1F2D38' }}>{user?.email}</p>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
+                        Phone Number
+                      </label>
+                      <p className="text-lg" style={{ color: '#1F2D38' }}>{user?.phone || 'Not provided'}</p>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
+                        Member Since
+                      </label>
+                      <p className="text-lg" style={{ color: '#1F2D38' }}>
+                        {new Date(user?.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
-            {activeTab === 'orders' && (
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-2xl font-semibold mb-6">Order History</h2>
+            {/* Addresses Tab */}
+            {activeTab === 'addresses' && (
+              <div className="bg-white rounded-lg shadow-md p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-semibold" style={{ color: '#1F2D38' }}>My Addresses</h2>
+                  <button
+                    onClick={() => setShowAddressForm(true)}
+                    className="px-4 py-2 rounded-md text-white transition"
+                    style={{ backgroundColor: '#895F42' }}
+                  >
+                    Add New Address
+                  </button>
+                </div>
+
+                {/* Address Modal */}
+                <Modal
+                  isOpen={showAddressForm}
+                  onClose={resetAddressForm}
+                  title={editingAddress ? 'Edit Address' : 'Add New Address'}
+                >
+                  <form onSubmit={handleAddressSubmit} className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                            Full Name*
+                          </label>
+                          <input
+                            type="text"
+                            value={addressData.name}
+                            onChange={(e) => setAddressData({ ...addressData, name: e.target.value })}
+                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                            style={{ borderColor: '#BDD7EB' }}
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                            Phone Number*
+                          </label>
+                          <input
+                            type="tel"
+                            value={addressData.phone}
+                            onChange={(e) => setAddressData({ ...addressData, phone: e.target.value })}
+                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                            style={{ borderColor: '#BDD7EB' }}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                          Address Line 1*
+                        </label>
+                        <input
+                          type="text"
+                          value={addressData.addressLine1}
+                          onChange={(e) => setAddressData({ ...addressData, addressLine1: e.target.value })}
+                          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                          style={{ borderColor: '#BDD7EB' }}
+                          placeholder="House/Flat No., Building Name"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                          Address Line 2
+                        </label>
+                        <input
+                          type="text"
+                          value={addressData.addressLine2}
+                          onChange={(e) => setAddressData({ ...addressData, addressLine2: e.target.value })}
+                          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                          style={{ borderColor: '#BDD7EB' }}
+                          placeholder="Street, Area, Landmark"
+                        />
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                            City*
+                          </label>
+                          <input
+                            type="text"
+                            value={addressData.city}
+                            onChange={(e) => setAddressData({ ...addressData, city: e.target.value })}
+                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                            style={{ borderColor: '#BDD7EB' }}
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                            State*
+                          </label>
+                          <input
+                            type="text"
+                            value={addressData.state}
+                            onChange={(e) => setAddressData({ ...addressData, state: e.target.value })}
+                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                            style={{ borderColor: '#BDD7EB' }}
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                            Pincode*
+                          </label>
+                          <input
+                            type="text"
+                            value={addressData.pincode}
+                            onChange={(e) => setAddressData({ ...addressData, pincode: e.target.value })}
+                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                            style={{ borderColor: '#BDD7EB' }}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id="isDefault"
+                          checked={addressData.isDefault}
+                          onChange={(e) => setAddressData({ ...addressData, isDefault: e.target.checked })}
+                          className="rounded"
+                        />
+                        <label htmlFor="isDefault" className="text-sm" style={{ color: '#1F2D38' }}>
+                          Set as default address
+                        </label>
+                      </div>
+                    <div className="flex gap-4 mt-6">
+                      <Button type="submit">{editingAddress ? 'Update Address' : 'Save Address'}</Button>
+                      <button
+                        type="button"
+                        onClick={resetAddressForm}
+                        className="px-4 py-2 border rounded-md"
+                        style={{ borderColor: '#BDD7EB', color: '#1F2D38' }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                </Modal>
 
                 {loading ? (
                   <div className="text-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading orders...</p>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto" style={{ borderColor: '#895F42' }}></div>
+                    <p className="mt-4" style={{ color: '#94A1AB' }}>Loading addresses...</p>
+                  </div>
+                ) : addresses.length > 0 ? (
+                  <div className="space-y-4">
+                    {addresses.map((address) => (
+                      <div key={address._id} className="border rounded-lg p-4 relative" style={{ borderColor: '#BDD7EB' }}>
+                        {address.isDefault && (
+                          <span className="absolute top-4 right-4 px-2 py-1 rounded text-xs font-semibold text-white" style={{ backgroundColor: '#895F42' }}>
+                            Default
+                          </span>
+                        )}
+                        <div className="mb-2">
+                          <p className="font-semibold" style={{ color: '#1F2D38' }}>{address.name}</p>
+                          <p className="text-sm" style={{ color: '#94A1AB' }}>{address.phone}</p>
+                        </div>
+                        <p className="text-sm" style={{ color: '#1F2D38' }}>
+                          {address.addressLine1}
+                          {address.addressLine2 && `, ${address.addressLine2}`}
+                        </p>
+                        <p className="text-sm" style={{ color: '#1F2D38' }}>
+                          {address.city}, {address.state} - {address.pincode}
+                        </p>
+                        <p className="text-sm" style={{ color: '#94A1AB' }}>{address.country}</p>
+                        <div className="mt-4 flex gap-2">
+                          <button
+                            onClick={() => handleEditAddress(address)}
+                            className="text-sm px-3 py-1 border rounded-md transition hover:bg-gray-50"
+                            style={{ borderColor: '#BDD7EB', color: '#895F42' }}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteAddress(address._id)}
+                            className="text-sm px-3 py-1 border border-red-300 text-red-600 rounded-md hover:bg-red-50 transition"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12">
+                    <p className="text-lg mb-4" style={{ color: '#94A1AB' }}>No addresses saved yet</p>
+                    <button
+                      onClick={() => setShowAddressForm(true)}
+                      className="px-4 py-2 rounded-md text-white"
+                      style={{ backgroundColor: '#895F42' }}
+                    >
+                      Add Your First Address
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Orders Tab */}
+            {activeTab === 'orders' && (
+              <div className="bg-white rounded-lg shadow-md p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
+                <h2 className="text-2xl font-semibold mb-6" style={{ color: '#1F2D38' }}>Order History</h2>
+
+                {loading ? (
+                  <div className="text-center py-12">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto" style={{ borderColor: '#895F42' }}></div>
+                    <p className="mt-4" style={{ color: '#94A1AB' }}>Loading orders...</p>
                   </div>
                 ) : orders.length > 0 ? (
                   <div className="space-y-4">
                     {orders.map((order) => (
-                      <div key={order._id} className="border rounded-lg p-4">
+                      <div key={order._id} className="border rounded-lg p-4" style={{ borderColor: '#BDD7EB' }}>
                         <div className="flex justify-between items-start mb-4">
                           <div>
-                            <p className="text-sm text-gray-600">
+                            <p className="text-sm" style={{ color: '#94A1AB' }}>
                               Order ID: {order._id}
                             </p>
-                            <p className="text-sm text-gray-600">
+                            <p className="text-sm" style={{ color: '#94A1AB' }}>
                               Date: {new Date(order.createdAt).toLocaleDateString()}
                             </p>
                           </div>
@@ -163,26 +572,26 @@ const Profile = () => {
                         <div className="space-y-2 mb-4">
                           {order.items?.map((item, index) => (
                             <div key={index} className="flex justify-between text-sm">
-                              <span className="text-gray-700">
+                              <span style={{ color: '#1F2D38' }}>
                                 {item.product?.name || 'Product'} x {item.quantity}
                               </span>
-                              <span className="font-semibold">
+                              <span className="font-semibold" style={{ color: '#1F2D38' }}>
                                 ₹{(item.price * item.quantity).toLocaleString()}
                               </span>
                             </div>
                           ))}
                         </div>
 
-                        <div className="border-t pt-3 flex justify-between items-center">
-                          <span className="font-semibold">Total</span>
-                          <span className="text-lg font-bold text-blue-600">
+                        <div className="border-t pt-3 flex justify-between items-center" style={{ borderColor: '#BDD7EB' }}>
+                          <span className="font-semibold" style={{ color: '#1F2D38' }}>Total</span>
+                          <span className="text-lg font-bold" style={{ color: '#895F42' }}>
                             ₹{order.totalAmount?.toLocaleString()}
                           </span>
                         </div>
 
                         {order.shippingAddress && (
-                          <div className="mt-4 pt-4 border-t text-sm text-gray-600">
-                            <p className="font-semibold mb-1">Shipping Address:</p>
+                          <div className="mt-4 pt-4 border-t text-sm" style={{ borderColor: '#BDD7EB', color: '#94A1AB' }}>
+                            <p className="font-semibold mb-1" style={{ color: '#1F2D38' }}>Shipping Address:</p>
                             <p>{order.shippingAddress.name}</p>
                             <p>{order.shippingAddress.address}</p>
                             <p>
@@ -197,10 +606,11 @@ const Profile = () => {
                   </div>
                 ) : (
                   <div className="text-center py-12">
-                    <p className="text-gray-600 text-lg mb-4">No orders yet</p>
+                    <p className="text-lg mb-4" style={{ color: '#94A1AB' }}>No orders yet</p>
                     <button
                       onClick={() => navigate('/products')}
-                      className="text-blue-600 hover:text-blue-700 font-semibold"
+                      className="font-semibold transition"
+                      style={{ color: '#895F42' }}
                     >
                       Start Shopping
                     </button>
