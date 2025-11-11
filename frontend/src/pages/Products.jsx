@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { productAPI, categoryAPI } from '../services/api';
 import ProductCard from '../components/ProductCard';
+import SEO from '../components/SEO';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -124,7 +125,14 @@ const Products = () => {
   };
 
   return (
-    <div className="min-h-screen py-8" style={{ backgroundColor: '#fafaf9' }}>
+    <>
+      <SEO
+        title="Premium Furniture Products | Samrat Agencies Bangalore"
+        description="Browse our extensive collection of premium furniture including sofas, beds, dining tables, chairs, and more. Quality furniture at competitive prices in Bangalore."
+        keywords="furniture products, buy furniture online, sofas, beds, dining tables, chairs, wardrobes, bangalore furniture"
+        url="/products"
+      />
+      <div className="min-h-screen py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold mb-8" style={{ color: '#1F2D38' }}>Our Products</h1>
 
@@ -422,6 +430,7 @@ const Products = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

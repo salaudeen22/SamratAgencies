@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { productAPI } from '../services/api';
 import { useCart } from '../context/CartContext';
 import Button from '../components/Button';
+import SEO from '../components/SEO';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -60,8 +61,18 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="min-h-screen py-4 lg:py-8" style={{ backgroundColor: '#fafaf9' }}>
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-12">
+    <>
+      <SEO
+        title={`${product.name} | Samrat Agencies`}
+        description={product.description?.substring(0, 160) || `Buy ${product.name} at Samrat Agencies. Premium furniture in Bangalore.`}
+        keywords={`${product.name}, ${product.category?.name || 'furniture'}, ${product.brand || ''}, furniture bangalore, samrat agencies`}
+        image={product.images?.[0]?.url || '/samrat-logo.png'}
+        url={`/products/${id}`}
+        type="product"
+        product={product}
+      />
+      <div className="min-h-screen py-4 lg:py-8" style={{ backgroundColor: '#fafaf9' }}>
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-12">
         {/* Breadcrumb Navigation */}
         <div className="mb-4 flex items-center text-sm" style={{ color: '#94A1AB' }}>
           <button
@@ -376,7 +387,8 @@ const ProductDetail = () => {
           )}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

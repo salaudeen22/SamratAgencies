@@ -1,0 +1,18 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Disallow admin pages
+Disallow: /admin/
+Disallow: /admin/*
+
+# Disallow cart and checkout (duplicate content)
+Disallow: /cart
+Disallow: /checkout
+
+# Disallow auth pages
+Disallow: /login
+Disallow: /register
+Disallow: /profile
+
+Sitemap: https://samratagencies.com/sitemap.xml

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { productAPI } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import Button from '../components/Button';
+import SEO from '../components/SEO';
 import { MdChair, MdOutlineBedroomParent, MdTableRestaurant } from 'react-icons/md';
 import { GiSofa } from 'react-icons/gi';
 import { FaStar } from 'react-icons/fa';
@@ -85,7 +86,15 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#fafaf9' }}>
+    <>
+      <SEO
+        title="Samrat Agencies - Furniture Expert | Samsung Dealer | Bangalore"
+        description="Samrat Agencies - Premium Furniture & Samsung Dealer in Bangalore. Established 1991. Rated 5.0★ with 108+ reviews. Shop sofas, beds, dining tables & more."
+        keywords="furniture bangalore, samsung dealer, premium furniture, home furniture, office furniture, samrat agencies, sofas, beds, dining tables"
+        url="/"
+        type="website"
+      />
+      <div className="min-h-screen" style={{ backgroundColor: '#fafaf9' }}>
       {/* Original Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0" style={{ backgroundColor: '#E5EFF3' }}></div>
@@ -442,6 +451,7 @@ const Home = () => {
       </section>
 
     </div>
+    </>
   );
 };
 

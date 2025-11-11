@@ -48,6 +48,7 @@ app.use('/api/users', require('./src/routes/userRoutes'));
 app.use('/api/admin', require('./src/routes/adminRoutes'));
 app.use('/api/admin', require('./src/routes/attributeRoutes'));
 app.use('/api/upload', require('./src/routes/uploadRoutes'));
+app.use('/', require('./src/routes/sitemapRoutes'));
 
 // API info route
 app.get('/api', (req, res) => {
