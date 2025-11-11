@@ -16,7 +16,8 @@ const Products = () => {
     name: '',
     description: '',
     category: '',
-    subcategory: '',
+    level2Category: '',
+    level3Category: '',
     attributeSet: '',
     specifications: {},
     price: '',
@@ -56,12 +57,20 @@ const Products = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Determine the final category (use the most specific level selected)
+      const finalCategory = formData.level3Category || formData.level2Category || formData.category;
+
       // Convert specifications object to proper format for backend
       const submitData = {
         ...formData,
+        category: finalCategory,
         price: parseFloat(formData.price),
         stock: parseInt(formData.stock),
       };
+
+      // Remove level2Category and level3Category as they're not in the backend schema
+      delete submitData.level2Category;
+      delete submitData.level3Category;
 
       if (editingProduct) {
         await adminAPI.updateProduct(editingProduct._id, submitData);
@@ -92,11 +101,37 @@ const Products = () => {
       }
     }
 
+    // Determine category hierarchy for the product's category
+    const productCategoryId = product.category?._id || product.category || '';
+    let level1 = '', level2 = '', level3 = '';
+
+    // Find the category in the hierarchy
+    const findCategoryPath = (cats, targetId, path = []) => {
+      for (const cat of cats) {
+        if (cat._id === targetId) {
+          return [...path, cat._id];
+        }
+        if (cat.children && cat.children.length > 0) {
+          const result = findCategoryPath(cat.children, targetId, [...path, cat._id]);
+          if (result) return result;
+        }
+      }
+      return null;
+    };
+
+    const categoryPath = findCategoryPath(categories, productCategoryId);
+    if (categoryPath) {
+      level1 = categoryPath[0] || '';
+      level2 = categoryPath[1] || '';
+      level3 = categoryPath[2] || '';
+    }
+
     setFormData({
       name: product.name,
       description: product.description,
-      category: product.category?._id || product.category || '',
-      subcategory: product.subcategory || '',
+      category: level1,
+      level2Category: level2,
+      level3Category: level3,
       attributeSet: product.attributeSet?._id || product.attributeSet || '',
       specifications: specs,
       price: product.price || '',
@@ -146,7 +181,8 @@ const Products = () => {
       name: '',
       description: '',
       category: '',
-      subcategory: '',
+      level2Category: '',
+      level3Category: '',
       attributeSet: '',
       specifications: {},
       price: '',
@@ -358,8 +394,23 @@ const Products = () => {
     }
   };
 
-  const getSelectedCategory = () => {
-    return categories.find(cat => cat._id === formData.category);
+  // Helper functions for category cascading
+  const getLevel1Categories = () => {
+    return categories.filter(cat => !cat.parent);
+  };
+
+  const getLevel2Categories = () => {
+    if (!formData.category) return [];
+    const level1Category = categories.find(cat => cat._id === formData.category);
+    return level1Category?.children || [];
+  };
+
+  const getLevel3Categories = () => {
+    if (!formData.level2Category) return [];
+    const level1Category = categories.find(cat => cat._id === formData.category);
+    if (!level1Category) return [];
+    const level2Category = level1Category.children?.find(cat => cat._id === formData.level2Category);
+    return level2Category?.children || [];
   };
 
   return (
@@ -416,34 +467,68 @@ const Products = () => {
                       placeholder="Product SKU"
                     />
                   </div>
+                  {/* Level 1 Category */}
                   <div>
-                    <label className="block text-sm font-medium mb-1">Category *</label>
+                    <label className="block text-sm font-medium mb-1">Category Level 1 *</label>
                     <select
                       value={formData.category}
-                      onChange={(e) => setFormData({ ...formData, category: e.target.value, subcategory: '' })}
+                      onChange={(e) => setFormData({
+                        ...formData,
+                        category: e.target.value,
+                        level2Category: '',
+                        level3Category: ''
+                      })}
                       className="w-full px-3 py-2 border rounded-lg"
                       required
                     >
-                      <option value="">Select Category</option>
-                      {categories.map((cat) => (
+                      <option value="">Select Level 1 Category</option>
+                      {getLevel1Categories().map((cat) => (
                         <option key={cat._id} value={cat._id}>
                           {cat.name}
                         </option>
                       ))}
                     </select>
                   </div>
-                  {getSelectedCategory()?.subcategories?.length > 0 && (
+
+                  {/* Level 2 Category */}
+                  {getLevel2Categories().length > 0 && (
                     <div>
-                      <label className="block text-sm font-medium mb-1">Subcategory</label>
+                      <label className="block text-sm font-medium mb-1">Category Level 2</label>
                       <select
-                        value={formData.subcategory}
-                        onChange={(e) => setFormData({ ...formData, subcategory: e.target.value })}
+                        value={formData.level2Category}
+                        onChange={(e) => setFormData({
+                          ...formData,
+                          level2Category: e.target.value,
+                          level3Category: ''
+                        })}
                         className="w-full px-3 py-2 border rounded-lg"
                       >
-                        <option value="">Select Subcategory</option>
-                        {getSelectedCategory().subcategories.map((sub) => (
-                          <option key={sub._id} value={sub.slug}>
-                            {sub.name}
+                        <option value="">Select Level 2 Category</option>
+                        {getLevel2Categories().map((cat) => (
+                          <option key={cat._id} value={cat._id}>
+                            {cat.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
+                  {/* Level 3 Category */}
+                  {getLevel3Categories().length > 0 && (
+                    <div>
+                      <label className="block text-sm font-medium mb-1">Category Level 3</label>
+                      <select
+                        value={formData.level3Category}
+                        onChange={(e) => setFormData({
+                          ...formData,
+                          level3Category: e.target.value
+                        })}
+                        className="w-full px-3 py-2 border rounded-lg"
+                      >
+                        <option value="">Select Level 3 Category</option>
+                        {getLevel3Categories().map((cat) => (
+                          <option key={cat._id} value={cat._id}>
+                            {cat.name}
                           </option>
                         ))}
                       </select>
