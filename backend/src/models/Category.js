@@ -1,41 +1,14 @@
 const mongoose = require('mongoose');
 
-const subcategorySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  slug: {
-    type: String,
-    required: true,
-    lowercase: true,
-    trim: true
-  },
-  description: String,
-  image: {
-    url: String,
-    public_id: String
-  },
-  isActive: {
-    type: Boolean,
-    default: true
-  }
-}, {
-  timestamps: true
-});
-
 const categorySchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true,
-    unique: true
+    trim: true
   },
   slug: {
     type: String,
     required: true,
-    unique: true,
     lowercase: true,
     trim: true
   },
@@ -44,7 +17,11 @@ const categorySchema = new mongoose.Schema({
     url: String,
     public_id: String
   },
-  subcategories: [subcategorySchema],
+  parent: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+    default: null
+  },
   isActive: {
     type: Boolean,
     default: true
@@ -56,5 +33,9 @@ const categorySchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
+
+// Index for faster queries
+categorySchema.index({ parent: 1 });
+categorySchema.index({ slug: 1 });
 
 module.exports = mongoose.model('Category', categorySchema);

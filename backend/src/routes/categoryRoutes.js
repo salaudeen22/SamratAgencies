@@ -3,14 +3,38 @@ const router = express.Router();
 const { auth, adminAuth } = require('../middleware/auth');
 const Category = require('../models/Category');
 
-// Get all categories (public)
+// Get all categories with hierarchy (public)
 router.get('/', async (req, res) => {
   try {
-    // Get only parent categories (those without a parent field)
-    const categories = await Category.find({ isActive: true, parent: { $exists: false } })
-      .populate('subcategories')
+    const categories = await Category.find({ isActive: true })
+      .populate('parent')
       .sort({ order: 1, name: 1 });
-    res.json(categories);
+
+    // Build hierarchy
+    const categoryMap = {};
+    const rootCategories = [];
+
+    // First pass: create map
+    categories.forEach(cat => {
+      categoryMap[cat._id.toString()] = {
+        ...cat.toObject(),
+        children: []
+      };
+    });
+
+    // Second pass: build hierarchy
+    categories.forEach(cat => {
+      if (cat.parent) {
+        const parentId = cat.parent._id ? cat.parent._id.toString() : cat.parent.toString();
+        if (categoryMap[parentId]) {
+          categoryMap[parentId].children.push(categoryMap[cat._id.toString()]);
+        }
+      } else {
+        rootCategories.push(categoryMap[cat._id.toString()]);
+      }
+    });
+
+    res.json(rootCategories);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -19,7 +43,8 @@ router.get('/', async (req, res) => {
 // Get single category by slug (public)
 router.get('/:slug', async (req, res) => {
   try {
-    const category = await Category.findOne({ slug: req.params.slug, isActive: true });
+    const category = await Category.findOne({ slug: req.params.slug, isActive: true })
+      .populate('parent');
     if (!category) {
       return res.status(404).json({ message: 'Category not found' });
     }
@@ -33,11 +58,38 @@ router.get('/:slug', async (req, res) => {
 router.use(auth);
 router.use(adminAuth);
 
-// Get all categories (admin)
+// Get all categories (admin) - returns hierarchical structure
 router.get('/admin/all', async (req, res) => {
   try {
-    const categories = await Category.find().sort({ order: 1, createdAt: -1 });
-    res.json(categories);
+    const categories = await Category.find()
+      .populate('parent')
+      .sort({ order: 1, name: 1 });
+
+    // Build hierarchy
+    const categoryMap = {};
+    const rootCategories = [];
+
+    // First pass: create map
+    categories.forEach(cat => {
+      categoryMap[cat._id.toString()] = {
+        ...cat.toObject(),
+        children: []
+      };
+    });
+
+    // Second pass: build hierarchy
+    categories.forEach(cat => {
+      if (cat.parent) {
+        const parentId = cat.parent._id ? cat.parent._id.toString() : cat.parent.toString();
+        if (categoryMap[parentId]) {
+          categoryMap[parentId].children.push(categoryMap[cat._id.toString()]);
+        }
+      } else {
+        rootCategories.push(categoryMap[cat._id.toString()]);
+      }
+    });
+
+    res.json(rootCategories);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -46,7 +98,7 @@ router.get('/admin/all', async (req, res) => {
 // Create category
 router.post('/admin', async (req, res) => {
   try {
-    const { name, description, image, isActive, order } = req.body;
+    const { name, description, image, isActive, order, parent } = req.body;
 
     // Generate slug from name
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -56,13 +108,14 @@ router.post('/admin', async (req, res) => {
       slug,
       description,
       image,
-      isActive,
+      isActive: isActive !== undefined ? isActive : true,
       order: order || 0,
-      subcategories: []
+      parent: parent || null
     });
 
     await category.save();
-    res.status(201).json({ message: 'Category created successfully', category });
+    const populatedCategory = await Category.findById(category._id).populate('parent');
+    res.status(201).json({ message: 'Category created successfully', category: populatedCategory });
   } catch (error) {
     res.status(400).json({ message: 'Failed to create category', error: error.message });
   }
@@ -71,7 +124,7 @@ router.post('/admin', async (req, res) => {
 // Update category
 router.put('/admin/:id', async (req, res) => {
   try {
-    const { name, description, image, isActive, order } = req.body;
+    const { name, description, image, isActive, order, parent } = req.body;
     const updateData = { description, image, isActive, order };
 
     // Update slug if name changed
@@ -80,11 +133,16 @@ router.put('/admin/:id', async (req, res) => {
       updateData.slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     }
 
+    // Update parent if provided
+    if (parent !== undefined) {
+      updateData.parent = parent || null;
+    }
+
     const category = await Category.findByIdAndUpdate(
       req.params.id,
       updateData,
       { new: true, runValidators: true }
-    );
+    ).populate('parent');
 
     if (!category) {
       return res.status(404).json({ message: 'Category not found' });
@@ -99,6 +157,14 @@ router.put('/admin/:id', async (req, res) => {
 // Delete category
 router.delete('/admin/:id', async (req, res) => {
   try {
+    // Check if category has children
+    const childrenCount = await Category.countDocuments({ parent: req.params.id });
+    if (childrenCount > 0) {
+      return res.status(400).json({
+        message: 'Cannot delete category with children. Delete child categories first.'
+      });
+    }
+
     const category = await Category.findByIdAndDelete(req.params.id);
     if (!category) {
       return res.status(404).json({ message: 'Category not found' });
@@ -106,79 +172,6 @@ router.delete('/admin/:id', async (req, res) => {
     res.json({ message: 'Category deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Failed to delete category', error: error.message });
-  }
-});
-
-// Add subcategory
-router.post('/admin/:id/subcategories', async (req, res) => {
-  try {
-    const { name, description, image, isActive } = req.body;
-    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-
-    const category = await Category.findById(req.params.id);
-    if (!category) {
-      return res.status(404).json({ message: 'Category not found' });
-    }
-
-    category.subcategories.push({
-      name,
-      slug,
-      description,
-      image,
-      isActive: isActive !== undefined ? isActive : true
-    });
-
-    await category.save();
-    res.json({ message: 'Subcategory added successfully', category });
-  } catch (error) {
-    res.status(400).json({ message: 'Failed to add subcategory', error: error.message });
-  }
-});
-
-// Update subcategory
-router.put('/admin/:id/subcategories/:subId', async (req, res) => {
-  try {
-    const { name, description, image, isActive } = req.body;
-
-    const category = await Category.findById(req.params.id);
-    if (!category) {
-      return res.status(404).json({ message: 'Category not found' });
-    }
-
-    const subcategory = category.subcategories.id(req.params.subId);
-    if (!subcategory) {
-      return res.status(404).json({ message: 'Subcategory not found' });
-    }
-
-    if (name) {
-      subcategory.name = name;
-      subcategory.slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    }
-    if (description !== undefined) subcategory.description = description;
-    if (image !== undefined) subcategory.image = image;
-    if (isActive !== undefined) subcategory.isActive = isActive;
-
-    await category.save();
-    res.json({ message: 'Subcategory updated successfully', category });
-  } catch (error) {
-    res.status(400).json({ message: 'Failed to update subcategory', error: error.message });
-  }
-});
-
-// Delete subcategory
-router.delete('/admin/:id/subcategories/:subId', async (req, res) => {
-  try {
-    const category = await Category.findById(req.params.id);
-    if (!category) {
-      return res.status(404).json({ message: 'Category not found' });
-    }
-
-    category.subcategories.pull(req.params.subId);
-    await category.save();
-
-    res.json({ message: 'Subcategory deleted successfully', category });
-  } catch (error) {
-    res.status(500).json({ message: 'Failed to delete subcategory', error: error.message });
   }
 });
 

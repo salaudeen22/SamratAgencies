@@ -25,6 +25,7 @@ const Navbar = () => {
     const fetchCategories = async () => {
       try {
         const response = await categoryAPI.getAll();
+        // Backend now returns hierarchical structure with top-level categories
         setCategories(response.data);
       } catch (err) {
         console.error('Failed to fetch categories:', err);
@@ -101,18 +102,18 @@ const Navbar = () => {
                           >
                             {category.name}
                           </Link>
-                          {category.subcategories && category.subcategories.length > 0 && (
+                          {category.children && category.children.length > 0 && (
                             <ul className="space-y-2">
-                              {category.subcategories.map((subcategory) => (
-                                <li key={subcategory._id}>
+                              {category.children.map((child) => (
+                                <li key={child._id}>
                                   <Link
-                                    to={`/products?category=${subcategory._id}`}
+                                    to={`/products?category=${child._id}`}
                                     className="text-sm transition-colors block"
                                     style={{ color: '#94A1AB' }}
                                     onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
                                     onMouseLeave={(e) => e.currentTarget.style.color = '#94A1AB'}
                                   >
-                                    {subcategory.name}
+                                    {child.name}
                                   </Link>
                                 </li>
                               ))}
