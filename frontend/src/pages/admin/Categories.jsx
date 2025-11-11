@@ -237,8 +237,6 @@ const Categories = () => {
       if (cat.children && cat.children.length > 0) {
         const filteredChildren = filterCategories(cat.children, term);
         if (filteredChildren.length > 0) {
-          // Auto-expand if children match
-          setExpandedCategories(prev => new Set([...prev, cat._id]));
           return true;
         }
       }
@@ -256,6 +254,29 @@ const Categories = () => {
   };
 
   const filteredCategories = filterCategories(categories, searchTerm);
+
+  // Auto-expand categories when searching
+  useEffect(() => {
+    if (searchTerm) {
+      const expandedIds = new Set();
+      const findMatchingParents = (cats) => {
+        cats.forEach((cat) => {
+          if (cat.children && cat.children.length > 0) {
+            const hasMatchingChild = cat.children.some((child) =>
+              child.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              child.description?.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            if (hasMatchingChild) {
+              expandedIds.add(cat._id);
+            }
+            findMatchingParents(cat.children);
+          }
+        });
+      };
+      findMatchingParents(categories);
+      setExpandedCategories(expandedIds);
+    }
+  }, [searchTerm, categories]);
 
   // Pagination logic - only paginate top-level categories
   const totalPages = Math.ceil(filteredCategories.length / itemsPerPage);
