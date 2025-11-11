@@ -1,4 +1,6 @@
 const Product = require('../models/Product');
+const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { s3Client, bucketConfig } = require('../config/s3');
 
 // Get all products
 exports.getAllProducts = async (req, res) => {
@@ -121,6 +123,88 @@ exports.getFeaturedProducts = async (req, res) => {
       .populate('attributeSet', 'name')
       .limit(8);
     res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Add images to product (Admin only)
+exports.addProductImages = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { images } = req.body; // Array of {url, key}
+
+    if (!images || images.length === 0) {
+      return res.status(400).json({ message: 'No images provided' });
+    }
+
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Add new images to the product
+    const newImages = images.map(img => ({
+      url: img.url,
+      public_id: img.key // Using key as public_id for consistency
+    }));
+
+    product.images.push(...newImages);
+    await product.save();
+
+    res.json({
+      message: 'Images added successfully',
+      product
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Remove image from product (Admin only)
+exports.removeProductImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { imageKey } = req.body;
+
+    if (!imageKey) {
+      return res.status(400).json({ message: 'Image key is required' });
+    }
+
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Find and remove the image from product
+    const imageIndex = product.images.findIndex(img => img.public_id === imageKey);
+
+    if (imageIndex === -1) {
+      return res.status(404).json({ message: 'Image not found in product' });
+    }
+
+    product.images.splice(imageIndex, 1);
+    await product.save();
+
+    // Delete from S3
+    try {
+      const deleteParams = {
+        Bucket: bucketConfig.bucketName,
+        Key: imageKey,
+      };
+      const command = new DeleteObjectCommand(deleteParams);
+      await s3Client.send(command);
+    } catch (s3Error) {
+      console.error('Error deleting from S3:', s3Error);
+      // Continue even if S3 deletion fails
+    }
+
+    res.json({
+      message: 'Image removed successfully',
+      product
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

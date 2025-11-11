@@ -116,4 +116,36 @@ export const adminAPI = {
   deleteAttributeSet: (id) => api.delete(`/admin/attribute-sets/${id}`),
 };
 
+// Upload APIs
+export const uploadAPI = {
+  // Upload single image
+  uploadImage: (file) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    return api.post('/upload/image', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+  },
+
+  // Upload multiple images
+  uploadImages: (files) => {
+    const formData = new FormData();
+    files.forEach(file => {
+      formData.append('images', file);
+    });
+    return api.post('/upload/images', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+  },
+
+  // Delete image from S3
+  deleteImage: (key) => api.delete('/upload/image', { data: { key } }),
+
+  // Add images to product
+  addProductImages: (productId, images) => api.post(`/products/${productId}/images`, { images }),
+
+  // Remove image from product
+  removeProductImage: (productId, imageKey) => api.delete(`/products/${productId}/images`, { data: { imageKey } }),
+};
+
 export default api;
