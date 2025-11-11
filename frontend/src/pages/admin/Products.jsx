@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import Modal from '../../components/admin/Modal';
-import { adminAPI } from '../../services/api';
+import { adminAPI, uploadAPI } from '../../services/api';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -23,10 +23,13 @@ const Products = () => {
     stock: '',
     sku: '',
     brand: '',
-    featured: false
+    featured: false,
+    images: []
   });
 
   const [selectedAttributeSet, setSelectedAttributeSet] = useState(null);
+  const [uploadingImages, setUploadingImages] = useState(false);
+  const [primaryImageIndex, setPrimaryImageIndex] = useState(0);
 
   useEffect(() => {
     fetchData();
@@ -100,8 +103,10 @@ const Products = () => {
       stock: product.stock || '',
       sku: product.sku || '',
       brand: product.brand || '',
-      featured: product.featured || false
+      featured: product.featured || false,
+      images: product.images || []
     });
+    setPrimaryImageIndex(0);
     setShowModal(true);
   };
 
@@ -148,11 +153,79 @@ const Products = () => {
       stock: '',
       sku: '',
       brand: '',
-      featured: false
+      featured: false,
+      images: []
     });
     setSelectedAttributeSet(null);
     setEditingProduct(null);
+    setPrimaryImageIndex(0);
+    setUploadingImages(false);
     setShowModal(false);
+  };
+
+  const handleImageUpload = async (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    // Check if adding these files would exceed 5 images
+    if (formData.images.length + files.length > 5) {
+      alert('Maximum 5 images allowed per product');
+      return;
+    }
+
+    setUploadingImages(true);
+    try {
+      const uploadedImages = [];
+
+      for (const file of files) {
+        const response = await uploadAPI.uploadImage(file);
+        uploadedImages.push({
+          url: response.data.file.url,
+          public_id: response.data.file.key
+        });
+      }
+
+      setFormData({
+        ...formData,
+        images: [...formData.images, ...uploadedImages]
+      });
+    } catch (error) {
+      alert(error.response?.data?.message || 'Failed to upload images');
+    } finally {
+      setUploadingImages(false);
+    }
+  };
+
+  const handleRemoveImage = async (index) => {
+    const image = formData.images[index];
+
+    if (window.confirm('Remove this image?')) {
+      try {
+        // Delete from S3
+        await uploadAPI.deleteImage(image.public_id);
+
+        // Remove from form data
+        const newImages = formData.images.filter((_, i) => i !== index);
+        setFormData({ ...formData, images: newImages });
+
+        // Adjust primary image index if needed
+        if (primaryImageIndex >= newImages.length) {
+          setPrimaryImageIndex(Math.max(0, newImages.length - 1));
+        }
+      } catch (error) {
+        alert('Failed to remove image');
+      }
+    }
+  };
+
+  const handleSetPrimaryImage = (index) => {
+    // Move the selected image to the first position
+    const newImages = [...formData.images];
+    const [primaryImage] = newImages.splice(index, 1);
+    newImages.unshift(primaryImage);
+
+    setFormData({ ...formData, images: newImages });
+    setPrimaryImageIndex(0);
   };
 
   const renderSpecificationField = (attr) => {
@@ -405,6 +478,81 @@ const Products = () => {
                       required
                     />
                   </div>
+                </div>
+              </div>
+
+              {/* Product Images */}
+              <div>
+                <h4 className="font-semibold text-md mb-3 text-gray-700 border-b pb-2">Product Images (Max 5)</h4>
+                <div className="space-y-4">
+                  {/* Upload Button */}
+                  <div>
+                    <label className="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition">
+                      <input
+                        type="file"
+                        accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+                        multiple
+                        onChange={handleImageUpload}
+                        disabled={uploadingImages || formData.images.length >= 5}
+                        className="hidden"
+                      />
+                      {uploadingImages ? 'Uploading...' : formData.images.length >= 5 ? 'Maximum images reached' : '+ Add Images'}
+                    </label>
+                    <p className="text-xs text-gray-500 mt-2">
+                      Supported formats: JPG, PNG, GIF, WEBP (Max 5MB per image)
+                    </p>
+                  </div>
+
+                  {/* Image Preview Grid */}
+                  {formData.images.length > 0 && (
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                      {formData.images.map((image, index) => (
+                        <div key={index} className="relative group">
+                          <img
+                            src={image.url}
+                            alt={`Product ${index + 1}`}
+                            className="w-full h-32 object-cover rounded-lg border-2 border-gray-200"
+                          />
+
+                          {/* Primary Badge */}
+                          {index === 0 && (
+                            <div className="absolute top-1 left-1 bg-green-500 text-white text-xs px-2 py-1 rounded">
+                              Primary
+                            </div>
+                          )}
+
+                          {/* Action Buttons */}
+                          <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center gap-2">
+                            {index !== 0 && (
+                              <button
+                                type="button"
+                                onClick={() => handleSetPrimaryImage(index)}
+                                className="px-2 py-1 bg-green-500 hover:bg-green-600 text-white text-xs rounded"
+                                title="Set as primary"
+                              >
+                                Set Primary
+                              </button>
+                            )}
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveImage(index)}
+                              className="px-2 py-1 bg-red-500 hover:bg-red-600 text-white text-xs rounded"
+                              title="Remove image"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {formData.images.length === 0 && (
+                    <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg">
+                      <p className="text-gray-500">No images uploaded yet</p>
+                      <p className="text-sm text-gray-400 mt-1">First image will be used as primary thumbnail</p>
+                    </div>
+                  )}
                 </div>
               </div>
 
