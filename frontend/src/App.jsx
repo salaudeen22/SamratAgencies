@@ -92,7 +92,12 @@ function App() {
               }
             />
 
-            {/* Public Routes */}
+            {/* Auth Routes (without Navbar/Footer) */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/auth/google/success" element={<GoogleAuthSuccess />} />
+
+            {/* Public Routes (with Navbar/Footer) */}
             <Route
               path="/*"
               element={
@@ -105,8 +110,6 @@ function App() {
                       <Route path="/products/:id" element={<ProductDetail />} />
                       <Route path="/cart" element={<Cart />} />
                       <Route path="/checkout" element={<Checkout />} />
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/register" element={<Register />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/about" element={<About />} />
                       <Route path="/contact" element={<Contact />} />
@@ -114,7 +117,6 @@ function App() {
                       <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                       <Route path="/shipping-and-delivery" element={<ShippingAndDelivery />} />
                       <Route path="/cancellation-and-refund" element={<CancellationAndRefund />} />
-                      <Route path="/auth/google/success" element={<GoogleAuthSuccess />} />
                     </Routes>
                   </main>
                   <Footer />
