@@ -42,11 +42,13 @@ const Checkout = () => {
     try {
       setLoading(true);
       const orderData = {
-        items: cart.items.map(item => ({
-          product: item.product._id,
-          quantity: item.quantity,
-          price: item.product.price,
-        })),
+        items: cart.items
+          .filter(item => item.product)
+          .map(item => ({
+            product: item.product._id,
+            quantity: item.quantity,
+            price: item.product.price,
+          })),
         shippingAddress: {
           name: formData.name,
           phone: formData.phone,
@@ -242,7 +244,10 @@ const Checkout = () => {
               <h2 className="text-xl font-semibold mb-4" style={{ color: '#1F2D38' }}>Order Summary</h2>
 
               <div className="space-y-3 mb-6">
-                {cart.items.map((item) => (
+                {cart.items.map((item) => {
+                  if (!item.product) return null;
+
+                  return (
                   <div key={item.product._id} className="flex justify-between text-sm">
                     <span style={{ color: '#94A1AB' }}>
                       {item.product.name} x {item.quantity}
@@ -251,7 +256,8 @@ const Checkout = () => {
                       ₹{(item.product.price * item.quantity).toLocaleString()}
                     </span>
                   </div>
-                ))}
+                  );
+                })}
               </div>
 
               <div className="pt-4 space-y-2" style={{ borderTop: '2px solid #BDD7EB' }}>
