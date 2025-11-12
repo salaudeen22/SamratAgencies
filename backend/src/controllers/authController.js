@@ -79,9 +79,11 @@ exports.googleCallback = async (req, res) => {
   try {
     const token = generateToken(req.user._id);
 
-    // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL}/auth/google/success?token=${token}`);
+    // Redirect to frontend with token (remove trailing slash if exists)
+    const frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
+    res.redirect(`${frontendUrl}/auth/google/success?token=${token}`);
   } catch (error) {
-    res.redirect(`${process.env.FRONTEND_URL}/login?error=authentication_failed`);
+    const frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
+    res.redirect(`${frontendUrl}/login?error=authentication_failed`);
   }
 };
