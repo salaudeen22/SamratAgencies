@@ -128,6 +128,134 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Categories Section */}
+      <section className="py-8 sm:py-12 md:py-16" style={{ backgroundColor: '#E5EFF2' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Everything Your Home Needs</h2>
+            <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>From cozy corners to statement pieces, we've got you covered</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            {categories.map((category) => {
+              const IconComponent = category.icon;
+              return (
+                <Link key={category.name} to={category.link}>
+                  <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 cursor-pointer border-2" style={{ borderColor: 'transparent' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}>
+                    <div className="flex justify-center items-center mb-2 sm:mb-4" style={{ color: '#895F42' }}>
+                      <IconComponent className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
+                    </div>
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold" style={{ color: '#1F2D38' }}>{category.name}</h3>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Products - Best Sellers */}
+      <section className="py-8 sm:py-12 md:py-20" style={{ backgroundColor: '#ffffff' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-12">
+            <div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style={{ color: '#1F2D38' }}>Loved by Thousands</h2>
+              <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>Pieces that make a house feel like home</p>
+            </div>
+          </div>
+
+          {loading ? (
+            <div className="text-center py-16">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-4 mx-auto" style={{ borderColor: '#895F42' }}></div>
+              <p className="mt-6 text-lg" style={{ color: '#94A1AB' }}>Finding your next favorite piece...</p>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {featuredProducts.slice(0, 8).map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+
+      {/* Stats Banner */}
+      <section className="py-6 sm:py-8 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #BDD7EB 0%, #E5EFF2 100%)' }}>
+        {/* Decorative circles */}
+        <div className="absolute top-3 left-3 w-16 h-16 rounded-full opacity-20" style={{ backgroundColor: '#895F42' }}></div>
+        <div className="absolute bottom-3 right-3 w-20 h-20 rounded-full opacity-10" style={{ backgroundColor: '#C97B63' }}></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-3 sm:mb-4">
+            <h2 className="text-base sm:text-lg md:text-xl font-bold mb-0.5" style={{ color: '#1F2D38' }}>The Numbers Speak</h2>
+            <p className="text-xs" style={{ color: '#1F2D38', opacity: 0.7 }}>Your trust is our greatest achievement</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+            {/* Stat 1 */}
+            <div className="text-center bg-white rounded-lg p-3 sm:p-4 shadow-md transform hover:scale-105 transition-all duration-300">
+              <div className="text-xl sm:text-2xl md:text-3xl font-black mb-0.5" style={{ color: '#895F42' }}>30+</div>
+              <div className="text-sm sm:text-base font-bold mb-0.5" style={{ color: '#1F2D38' }}>Years of Trust</div>
+              <p className="text-xs" style={{ color: '#94A1AB' }}>Since 1991</p>
+            </div>
+
+            {/* Stat 2 */}
+            <div className="text-center bg-white rounded-lg p-3 sm:p-4 shadow-md transform hover:scale-105 transition-all duration-300">
+              <div className="text-xl sm:text-2xl md:text-3xl font-black mb-0.5" style={{ color: '#895F42' }}>5000+</div>
+              <div className="text-sm sm:text-base font-bold mb-0.5" style={{ color: '#1F2D38' }}>Happy Customers</div>
+              <p className="text-xs" style={{ color: '#94A1AB' }}>Homes beautiful</p>
+            </div>
+
+            {/* Stat 3 */}
+            <div className="text-center bg-white rounded-lg p-3 sm:p-4 shadow-md transform hover:scale-105 transition-all duration-300">
+              <div className="text-xl sm:text-2xl md:text-3xl font-black mb-0.5" style={{ color: '#895F42' }}>500+</div>
+              <div className="text-sm sm:text-base font-bold mb-0.5" style={{ color: '#1F2D38' }}>Quality Products</div>
+              <p className="text-xs" style={{ color: '#94A1AB' }}>Curated collection</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* New Arrivals Section */}
+      <section className="py-8 sm:py-12 md:py-20" style={{ backgroundColor: '#E5EFF2' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-12">
+            <div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style={{ color: '#1F2D38' }}>Just Arrived</h2>
+              <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>Fresh styles to refresh your space</p>
+            </div>
+            <Link to="/products?sort=newest">
+              <button className="mt-4 sm:mt-0 px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 shadow-md" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>
+                View All New
+              </button>
+            </Link>
+          </div>
+
+          {loading ? (
+            <div className="text-center py-16">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-4 mx-auto" style={{ borderColor: '#895F42' }}></div>
+              <p className="mt-6 text-lg" style={{ color: '#94A1AB' }}>Loading new arrivals...</p>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {featuredProducts.slice(0, 4).map((product) => (
+                  <div key={product._id} className="relative">
+                    <div className="absolute top-2 left-2 z-10">
+                      <span className="inline-block px-3 py-1 text-xs font-bold rounded-full shadow-md" style={{ backgroundColor: '#C97B63', color: '#FFFFFF' }}>
+                        NEW
+                      </span>
+                    </div>
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+
       {/* Partner Brands Section */}
       <section className="py-8 sm:py-12 md:py-16 overflow-hidden" style={{ backgroundColor: '#E0EAF0' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -206,58 +334,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-8 sm:py-12 md:py-16" style={{ backgroundColor: '#E5EFF2' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Everything Your Home Needs</h2>
-            <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>From cozy corners to statement pieces, we've got you covered</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {categories.map((category) => {
-              const IconComponent = category.icon;
-              return (
-                <Link key={category.name} to={category.link}>
-                  <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 cursor-pointer border-2" style={{ borderColor: 'transparent' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}>
-                    <div className="flex justify-center items-center mb-2 sm:mb-4" style={{ color: '#895F42' }}>
-                      <IconComponent className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
-                    </div>
-                    <h3 className="text-base sm:text-lg md:text-xl font-bold" style={{ color: '#1F2D38' }}>{category.name}</h3>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Products - Best Sellers */}
-      <section className="py-8 sm:py-12 md:py-20" style={{ backgroundColor: '#ffffff' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-12">
-            <div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style={{ color: '#1F2D38' }}>Loved by Thousands</h2>
-              <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>Pieces that make a house feel like home</p>
-            </div>
-          </div>
-
-          {loading ? (
-            <div className="text-center py-16">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-4 mx-auto" style={{ borderColor: '#895F42' }}></div>
-              <p className="mt-6 text-lg" style={{ color: '#94A1AB' }}>Finding your next favorite piece...</p>
-            </div>
-          ) : (
-            <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                {featuredProducts.slice(0, 8).map((product) => (
-                  <ProductCard key={product._id} product={product} />
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      </section>
-
       {/* Bajaj Finserv Banner */}
       <section className="py-4" style={{ backgroundColor: '#E0EAF0' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -285,65 +361,6 @@ const Home = () => {
                 </button>
               </Link>
 
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-8 sm:py-12 md:py-20" style={{ backgroundColor: '#ffffff' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Real Homes, Real Stories</h2>
-            <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>Hear from families who found their perfect fit</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" style={{ border: '2px solid #BDD7EB' }}>
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar key={i} className="w-5 h-5" style={{ color: '#9F8065' }} />
-                ))}
-              </div>
-              <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"We didn't think we could afford a sofa this beautiful! It's become the heart of our living room where the family gathers every evening. Worth every rupee."</p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>R</div>
-                <div>
-                  <div className="font-semibold" style={{ color: '#1F2D38' }}>Rajesh Kumar</div>
-                  <div className="text-sm" style={{ color: '#94A1AB' }}>Mumbai • Young Family</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" style={{ border: '2px solid #BDD7EB' }}>
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar key={i} className="w-5 h-5" style={{ color: '#9F8065' }} />
-                ))}
-              </div>
-              <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"Setting up our first home felt overwhelming until we found Samrat. The team understood exactly what we needed and made it so easy. Our bedroom looks straight out of a magazine!"</p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ backgroundColor: '#1F2D38', color: '#E5EFF3' }}>P</div>
-                <div>
-                  <div className="font-semibold" style={{ color: '#1F2D38' }}>Priya Sharma</div>
-                  <div className="text-sm" style={{ color: '#94A1AB' }}>Delhi • First Home</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" style={{ border: '2px solid #BDD7EB' }}>
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar key={i} className="w-5 h-5" style={{ color: '#9F8065' }} />
-                ))}
-              </div>
-              <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"Three years later, our dining table still looks brand new. Quality that lasts is rare these days. We've recommended Samrat to all our friends—they're family now!"</p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>A</div>
-                <div>
-                  <div className="font-semibold" style={{ color: '#1F2D38' }}>Amit Patel</div>
-                  <div className="text-sm" style={{ color: '#94A1AB' }}>Bangalore • Loyal Customer</div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -423,6 +440,65 @@ const Home = () => {
                 </div>
               </div>
 
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-8 sm:py-12 md:py-20" style={{ backgroundColor: '#ffffff' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Real Homes, Real Stories</h2>
+            <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>Hear from families who found their perfect fit</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" style={{ border: '2px solid #BDD7EB' }}>
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <FaStar key={i} className="w-5 h-5" style={{ color: '#9F8065' }} />
+                ))}
+              </div>
+              <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"We didn't think we could afford a sofa this beautiful! It's become the heart of our living room where the family gathers every evening. Worth every rupee."</p>
+              <div className="flex items-center">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>R</div>
+                <div>
+                  <div className="font-semibold" style={{ color: '#1F2D38' }}>Rajesh Kumar</div>
+                  <div className="text-sm" style={{ color: '#94A1AB' }}>Mumbai • Young Family</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" style={{ border: '2px solid #BDD7EB' }}>
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <FaStar key={i} className="w-5 h-5" style={{ color: '#9F8065' }} />
+                ))}
+              </div>
+              <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"Setting up our first home felt overwhelming until we found Samrat. The team understood exactly what we needed and made it so easy. Our bedroom looks straight out of a magazine!"</p>
+              <div className="flex items-center">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ backgroundColor: '#1F2D38', color: '#E5EFF3' }}>P</div>
+                <div>
+                  <div className="font-semibold" style={{ color: '#1F2D38' }}>Priya Sharma</div>
+                  <div className="text-sm" style={{ color: '#94A1AB' }}>Delhi • First Home</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" style={{ border: '2px solid #BDD7EB' }}>
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <FaStar key={i} className="w-5 h-5" style={{ color: '#9F8065' }} />
+                ))}
+              </div>
+              <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"Three years later, our dining table still looks brand new. Quality that lasts is rare these days. We've recommended Samrat to all our friends—they're family now!"</p>
+              <div className="flex items-center">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>A</div>
+                <div>
+                  <div className="font-semibold" style={{ color: '#1F2D38' }}>Amit Patel</div>
+                  <div className="text-sm" style={{ color: '#94A1AB' }}>Bangalore • Loyal Customer</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

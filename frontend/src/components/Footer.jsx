@@ -7,14 +7,14 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 sm:gap-8">
           <div className="sm:col-span-2 md:col-span-1">
             <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4" style={{ color: '#895F42' }}>Samrat Agencies</h3>
-            <p className="mb-3 sm:mb-4 text-sm sm:text-base" style={{ color: '#E0EAF0' }}>
-              Furniture Expert | Samsung Dealer
-            </p>
-            <p className="text-xs sm:text-sm mb-2" style={{ color: '#E0EAF0' }}>
+            <p className="text-xs sm:text-sm mb-3" style={{ color: '#E0EAF0' }}>
               Established in 1991
             </p>
-            <p className="text-xs sm:text-sm" style={{ color: '#E0EAF0' }}>
-              Rated 5.0 ★ (108+ Reviews)
+            <p className="text-xs sm:text-sm leading-relaxed" style={{ color: '#BDD7EB' }}>
+              Babu Reddy Complex, 5<br />
+              Begur Main Road, Hongasandra<br />
+              Bommanahalli, Bengaluru<br />
+              Karnataka 560114
             </p>
           </div>
 
@@ -110,16 +110,11 @@ const Footer = () => {
           </div>
 
           <div className="sm:col-span-2 md:col-span-1">
-            <h4 className="text-sm sm:text-base font-semibold mb-3 sm:mb-4" style={{ color: '#E5EFF3' }}>Contact Info</h4>
+            <h4 className="text-sm sm:text-base font-semibold mb-3 sm:mb-4" style={{ color: '#E5EFF3' }}>Contact</h4>
             <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm" style={{ color: '#E0EAF0' }}>
               <li className="font-semibold">Phone:</li>
               <li>+91 98809 14457</li>
-              <li>+91 94492 70486</li>
-              <li className="font-semibold mt-3">Address:</li>
-              <li>Babu Reddy Complex, 5<br />Begur Main Road, Hongasandra<br />Bommanahalli, Bengaluru<br />Karnataka 560114</li>
-              <li className="mt-3">
-                <span className="font-semibold">Hours:</span> Mon-Sun 8:00 AM - 10:30 PM
-              </li>
+              <li>+91 94480 75801</li>
             </ul>
           </div>
         </div>
