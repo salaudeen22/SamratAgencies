@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { orderAPI } from '../services/api';
+import { orderAPI, userAPI } from '../services/api';
 import Button from '../components/Button';
 
 const Checkout = () => {
@@ -10,6 +10,9 @@ const Checkout = () => {
   const { cart, getCartTotal, clearCart } = useCart();
   const { isAuthenticated } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [savedAddresses, setSavedAddresses] = useState([]);
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [useNewAddress, setUseNewAddress] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,6 +23,63 @@ const Checkout = () => {
     pincode: '',
     paymentMethod: 'cod',
   });
+
+  // Fetch saved addresses
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      if (isAuthenticated) {
+        try {
+          const response = await userAPI.getAddresses();
+          setSavedAddresses(response.data);
+
+          // Auto-select default address if available
+          const defaultAddress = response.data.find(addr => addr.isDefault);
+          if (defaultAddress && !useNewAddress) {
+            setSelectedAddressId(defaultAddress._id);
+            fillFormWithAddress(defaultAddress);
+          }
+        } catch (error) {
+          console.error('Failed to fetch addresses:', error);
+        }
+      }
+    };
+    fetchAddresses();
+  }, [isAuthenticated, useNewAddress]);
+
+  // Fill form with selected address
+  const fillFormWithAddress = (address) => {
+    setFormData({
+      ...formData,
+      name: address.name,
+      phone: address.phone,
+      address: `${address.addressLine1}${address.addressLine2 ? ', ' + address.addressLine2 : ''}`,
+      city: address.city,
+      state: address.state,
+      pincode: address.pincode,
+    });
+  };
+
+  // Handle address selection
+  const handleAddressSelect = (address) => {
+    setSelectedAddressId(address._id);
+    setUseNewAddress(false);
+    fillFormWithAddress(address);
+  };
+
+  // Handle new address
+  const handleUseNewAddress = () => {
+    setUseNewAddress(true);
+    setSelectedAddressId(null);
+    setFormData({
+      ...formData,
+      name: '',
+      phone: '',
+      address: '',
+      city: '',
+      state: '',
+      pincode: '',
+    });
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -93,7 +153,75 @@ const Checkout = () => {
           {/* Checkout Form */}
           <div className="lg:col-span-2">
             <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
-              <h2 className="text-xl font-semibold mb-6" style={{ color: '#1F2D38' }}>Shipping Information</h2>
+              {/* Saved Addresses */}
+              {savedAddresses.length > 0 && (
+                <div className="mb-8">
+                  <h2 className="text-xl font-semibold mb-4" style={{ color: '#1F2D38' }}>Select Delivery Address</h2>
+                  <div className="space-y-3">
+                    {savedAddresses.map((address) => (
+                      <div
+                        key={address._id}
+                        onClick={() => handleAddressSelect(address)}
+                        className={`p-4 border-2 rounded-lg cursor-pointer transition ${
+                          selectedAddressId === address._id ? 'border-[#895F42] bg-[#FDF8F5]' : 'border-[#BDD7EB] hover:border-[#895F42]'
+                        }`}
+                      >
+                        <div className="flex items-start">
+                          <input
+                            type="radio"
+                            name="selectedAddress"
+                            checked={selectedAddressId === address._id}
+                            onChange={() => handleAddressSelect(address)}
+                            className="mt-1 mr-3"
+                          />
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <p className="font-semibold" style={{ color: '#1F2D38' }}>{address.name}</p>
+                              {address.isDefault && (
+                                <span className="px-2 py-1 text-xs rounded" style={{ backgroundColor: '#895F42', color: 'white' }}>
+                                  Default
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>{address.phone}</p>
+                            <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>
+                              {address.addressLine1}{address.addressLine2 && `, ${address.addressLine2}`}
+                            </p>
+                            <p className="text-sm" style={{ color: '#94A1AB' }}>
+                              {address.city}, {address.state} - {address.pincode}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={handleUseNewAddress}
+                      className="w-full p-4 border-2 rounded-lg transition text-left"
+                      style={{
+                        borderColor: useNewAddress ? '#895F42' : '#BDD7EB',
+                        backgroundColor: useNewAddress ? '#FDF8F5' : 'white',
+                        color: '#1F2D38'
+                      }}
+                    >
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          name="selectedAddress"
+                          checked={useNewAddress}
+                          onChange={handleUseNewAddress}
+                          className="mr-3"
+                        />
+                        <span className="font-semibold">+ Use a new address</span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <h2 className="text-xl font-semibold mb-6" style={{ color: '#1F2D38' }}>
+                {savedAddresses.length > 0 ? 'Shipping Details' : 'Shipping Information'}
+              </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
