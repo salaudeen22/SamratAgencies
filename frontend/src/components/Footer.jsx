@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="mt-auto" style={{ backgroundColor: '#1F2D38' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4" style={{ color: '#895F42' }}>Samrat Agencies</h3>
             <p className="mb-4" style={{ color: '#E0EAF0' }}>
@@ -25,6 +25,16 @@ const Footer = () => {
               <li><Link to="/products" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Products</Link></li>
               <li><Link to="/about" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>About Us</Link></li>
               <li><Link to="/contact" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Contact</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-4" style={{ color: '#E5EFF3' }}>Policies</h4>
+            <ul className="space-y-2">
+              <li><Link to="/privacy-policy" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Privacy Policy</Link></li>
+              <li><Link to="/terms-and-conditions" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Terms & Conditions</Link></li>
+              <li><Link to="/shipping-and-delivery" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Shipping & Delivery</Link></li>
+              <li><Link to="/cancellation-and-refund" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Cancellation & Refund</Link></li>
             </ul>
           </div>
 

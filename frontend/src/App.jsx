@@ -15,6 +15,10 @@ import Profile from './pages/Profile';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import GoogleAuthSuccess from './pages/GoogleAuthSuccess';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
+import ShippingAndDelivery from './pages/ShippingAndDelivery';
+import CancellationAndRefund from './pages/CancellationAndRefund';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminCategories from './pages/admin/Categories';
 import AdminAttributes from './pages/admin/Attributes';
@@ -106,6 +110,10 @@ function App() {
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/about" element={<About />} />
                       <Route path="/contact" element={<Contact />} />
+                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                      <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+                      <Route path="/shipping-and-delivery" element={<ShippingAndDelivery />} />
+                      <Route path="/cancellation-and-refund" element={<CancellationAndRefund />} />
                       <Route path="/auth/google/success" element={<GoogleAuthSuccess />} />
                     </Routes>
                   </main>
