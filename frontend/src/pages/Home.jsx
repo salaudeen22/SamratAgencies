@@ -36,10 +36,10 @@ const Home = () => {
   }, []);
 
   const categories = [
-    { name: 'Sofas', icon: GiSofa, link: '/products?category=sofa' },
-    { name: 'Beds', icon: MdOutlineBedroomParent, link: '/products?category=bed' },
-    { name: 'Chairs', icon: MdChair, link: '/products?category=chair' },
-    { name: 'Tables', icon: MdTableRestaurant, link: '/products?category=table' },
+    { name: 'Sofas', icon: GiSofa, link: '/products?category=69134da33c6b5d0f9ef0f2fa' }, // Sofas & Sofa Sets
+    { name: 'Beds', icon: MdOutlineBedroomParent, link: '/products?category=69134fa33c6b5d0f9ef0f36f' }, // Beds
+    { name: 'Dining', icon: MdTableRestaurant, link: '/products?category=691352b863378e6200012b11' }, // Dining Room Furniture
+    { name: 'Office', icon: MdChair, link: '/products?category=6913533b63378e6200012b48' }, // Office & Study Furniture
   ];
 
   const categoryGroups = {
@@ -88,28 +88,31 @@ const Home = () => {
   return (
     <>
       <SEO
-        title="Samrat Agencies - Furniture Expert | Samsung Dealer | Bangalore"
-        description="Samrat Agencies - Premium Furniture & Samsung Dealer in Bangalore. Established 1991. Rated 5.0★ with 108+ reviews. Shop sofas, beds, dining tables & more."
-        keywords="furniture bangalore, samsung dealer, premium furniture, home furniture, office furniture, samrat agencies, sofas, beds, dining tables"
+        title="Samrat Agencies - Furniture Made for Real Life | Bangalore"
+        description="Beautiful furniture designed for the way you live. Thoughtfully crafted, honestly priced. From first apartment to forever home—trusted since 1991. Shop sofas, beds, dining tables & more."
+        keywords="affordable furniture bangalore, quality furniture, home furniture, modern furniture, samrat agencies, sofas, beds, dining tables, furniture store"
         url="/"
         type="website"
       />
-      <div className="min-h-screen" style={{ backgroundColor: '#fafaf9' }}>
+      <div className="min-h-screen" style={{ backgroundColor: '#E5EFF2' }}>
       {/* Original Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0" style={{ backgroundColor: '#E5EFF3' }}></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24 lg:py-32">
+      <section className="relative overflow-hidden bg-[#E5EFF2] md:bg-transparent h-[80vh] flex items-center">
+        {/* Desktop only: Reversed Golden Ratio split (62:38) */}
+        <div className="absolute inset-0 hidden md:block" style={{
+          background: 'linear-gradient(to right, #1F2D38 0%, #1F2D38 62%, #E5EFF2 62%, #E5EFF2 100%)'
+        }}></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="text-center md:text-left">
-              <span className="inline-block px-4 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm font-bold rounded-full mb-3 sm:mb-4 shadow-md" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>On Demand</span>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight" style={{ color: '#1F2D38' }}>
-                Wooden Classic <span className="font-black" style={{ color: '#895F42' }}>Furniture</span>
+              <span className="inline-block px-4 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm font-bold rounded-full mb-3 sm:mb-4 shadow-md" style={{ backgroundColor: '#895F42', color: '#FFFFFF' }}>Your Home Deserves This</span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight" style={{ color: '#FFFFFF' }}>
+                Furniture Made for <span className="font-black" style={{ color: '#C97B63' }}>Real Life</span>
               </h1>
-              <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 leading-relaxed font-medium" style={{ color: '#1F2D38', opacity: 0.8 }}>
-                Transform your living space with premium furniture. Quality craftsmanship meets timeless elegance.
+              <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 leading-relaxed font-medium" style={{ color: '#FFFFFF', opacity: 0.9 }}>
+                Beautiful pieces designed for the way you live. Thoughtfully crafted, honestly priced, and built to be part of your everyday moments.
               </p>
               <Link to="/products">
-                <Button size="lg">Explore Category →</Button>
+                <Button size="lg">Find Your Perfect Piece</Button>
               </Link>
             </div>
             <div className="relative">
@@ -120,24 +123,6 @@ const Home = () => {
                   className="w-full h-64 sm:h-80 md:h-96 object-cover"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-4 sm:mt-6">
-                <div className="bg-white rounded-xl p-3 sm:p-4 shadow-lg text-center border-2" style={{ borderColor: '#BDD7EB' }}>
-                  <p className="text-2xl sm:text-3xl font-bold mb-1" style={{ color: '#895F42' }}>500+</p>
-                  <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>Products</p>
-                </div>
-                <div className="bg-white rounded-xl p-3 sm:p-4 shadow-lg text-center border-2" style={{ borderColor: '#BDD7EB' }}>
-                  <p className="text-2xl sm:text-3xl font-bold mb-1" style={{ color: '#895F42' }}>5000+</p>
-                  <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>Happy Customers</p>
-                </div>
-                <div className="bg-white rounded-xl p-3 sm:p-4 shadow-lg text-center border-2" style={{ borderColor: '#BDD7EB' }}>
-                  <p className="text-2xl sm:text-3xl font-bold mb-1" style={{ color: '#895F42' }}>15+</p>
-                  <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>Years Experience</p>
-                </div>
-                <div className="bg-white rounded-xl p-3 sm:p-4 shadow-lg text-center border-2" style={{ borderColor: '#BDD7EB' }}>
-                  <p className="text-2xl sm:text-3xl font-bold mb-1" style={{ color: '#895F42' }}>100%</p>
-                  <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>Satisfaction</p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -147,8 +132,8 @@ const Home = () => {
       <section className="py-8 sm:py-12 md:py-16 overflow-hidden" style={{ backgroundColor: '#E0EAF0' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style={{ color: '#1F2D38' }}>Our Trusted Partners</h2>
-            <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>Premium brands we work with</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style={{ color: '#1F2D38' }}>Brands You Know & Love</h2>
+            <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>Quality names you can trust, all in one place</p>
           </div>
 
           {/* Auto-scrolling carousel */}
@@ -222,11 +207,11 @@ const Home = () => {
       </section>
 
       {/* Categories Section */}
-      <section className="py-8 sm:py-12 md:py-16" style={{ backgroundColor: '#fafaf9' }}>
+      <section className="py-8 sm:py-12 md:py-16" style={{ backgroundColor: '#E5EFF2' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Shop by Category</h2>
-            <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>Find exactly what you need for your home</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Everything Your Home Needs</h2>
+            <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>From cozy corners to statement pieces, we've got you covered</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             {categories.map((category) => {
@@ -251,22 +236,15 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-12">
             <div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style={{ color: '#1F2D38' }}>Best Sellers</h2>
-              <div className="flex gap-4 sm:gap-6 mt-3 sm:mt-4">
-                <button className="text-sm sm:text-base md:text-lg font-semibold pb-1 border-b-2" style={{ color: '#1F2D38', borderColor: '#895F42' }}>
-                  Best sellers
-                </button>
-                <button className="text-sm sm:text-base md:text-lg pb-1" style={{ color: '#94A1AB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#1F2D38'} onMouseLeave={(e) => e.currentTarget.style.color = '#94A1AB'}>
-                  New arrivals
-                </button>
-              </div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style={{ color: '#1F2D38' }}>Loved by Thousands</h2>
+              <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>Pieces that make a house feel like home</p>
             </div>
           </div>
 
           {loading ? (
             <div className="text-center py-16">
               <div className="animate-spin rounded-full h-16 w-16 border-b-4 mx-auto" style={{ borderColor: '#895F42' }}></div>
-              <p className="mt-6 text-lg" style={{ color: '#94A1AB' }}>Loading amazing products...</p>
+              <p className="mt-6 text-lg" style={{ color: '#94A1AB' }}>Finding your next favorite piece...</p>
             </div>
           ) : (
             <>
@@ -303,7 +281,7 @@ const Home = () => {
               {/* CTA */}
               <Link to="/products">
                 <button className="px-6 py-2 text-sm font-bold rounded-full shadow-md transition-all duration-300 hover:scale-105 whitespace-nowrap" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>
-                  Shop with Easy EMI →
+                  Take It Home Today
                 </button>
               </Link>
 
@@ -316,8 +294,8 @@ const Home = () => {
       <section className="py-8 sm:py-12 md:py-20" style={{ backgroundColor: '#ffffff' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>What Our Customers Say</h2>
-            <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>Don't just take our word for it</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Real Homes, Real Stories</h2>
+            <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>Hear from families who found their perfect fit</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" style={{ border: '2px solid #BDD7EB' }}>
@@ -326,12 +304,12 @@ const Home = () => {
                   <FaStar key={i} className="w-5 h-5" style={{ color: '#9F8065' }} />
                 ))}
               </div>
-              <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"Excellent quality furniture! The sofa we bought is exactly as described. Very comfortable and looks amazing in our living room."</p>
+              <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"We didn't think we could afford a sofa this beautiful! It's become the heart of our living room where the family gathers every evening. Worth every rupee."</p>
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>R</div>
                 <div>
                   <div className="font-semibold" style={{ color: '#1F2D38' }}>Rajesh Kumar</div>
-                  <div className="text-sm" style={{ color: '#94A1AB' }}>Mumbai</div>
+                  <div className="text-sm" style={{ color: '#94A1AB' }}>Mumbai • Young Family</div>
                 </div>
               </div>
             </div>
@@ -342,12 +320,12 @@ const Home = () => {
                   <FaStar key={i} className="w-5 h-5" style={{ color: '#9F8065' }} />
                 ))}
               </div>
-              <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"Great service and fast delivery! The team was very helpful in choosing the right furniture for our home. Highly recommended!"</p>
+              <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"Setting up our first home felt overwhelming until we found Samrat. The team understood exactly what we needed and made it so easy. Our bedroom looks straight out of a magazine!"</p>
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ backgroundColor: '#1F2D38', color: '#E5EFF3' }}>P</div>
                 <div>
                   <div className="font-semibold" style={{ color: '#1F2D38' }}>Priya Sharma</div>
-                  <div className="text-sm" style={{ color: '#94A1AB' }}>Delhi</div>
+                  <div className="text-sm" style={{ color: '#94A1AB' }}>Delhi • First Home</div>
                 </div>
               </div>
             </div>
@@ -358,12 +336,12 @@ const Home = () => {
                   <FaStar key={i} className="w-5 h-5" style={{ color: '#9F8065' }} />
                 ))}
               </div>
-              <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"Amazing collection and affordable prices! We furnished our entire house from Samrat Agencies. Couldn't be happier!"</p>
+              <p className="mb-6 leading-relaxed italic" style={{ color: '#1F2D38' }}>"Three years later, our dining table still looks brand new. Quality that lasts is rare these days. We've recommended Samrat to all our friends—they're family now!"</p>
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold mr-4" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>A</div>
                 <div>
                   <div className="font-semibold" style={{ color: '#1F2D38' }}>Amit Patel</div>
-                  <div className="text-sm" style={{ color: '#94A1AB' }}>Bangalore</div>
+                  <div className="text-sm" style={{ color: '#94A1AB' }}>Bangalore • Loyal Customer</div>
                 </div>
               </div>
             </div>
@@ -372,7 +350,7 @@ const Home = () => {
       </section>
 
       {/* Premium Card Layout Section */}
-      <section className="py-8 sm:py-12 md:py-20">
+      <section className="py-8 sm:py-12 md:py-20" style={{ backgroundColor: '#E5EFF2' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
 
@@ -386,11 +364,11 @@ const Home = () => {
               <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent"></div>
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8 lg:p-12">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-white mb-4 sm:mb-6 leading-tight">
-                  Wooden classic table
+                  Tables That Bring Everyone Together
                 </h2>
                 <Link to="/products?category=table">
                   <button className="px-6 sm:px-8 py-2 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-xl" style={{ backgroundColor: '#1F2D38', color: '#E5EFF3' }}>
-                    Explore category
+                    Shop Tables
                   </button>
                 </Link>
               </div>
@@ -404,11 +382,11 @@ const Home = () => {
                 <div className="grid grid-cols-2 h-full items-center">
                   <div className="p-4 sm:p-6 md:p-8 lg:p-10">
                     <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold mb-3 sm:mb-4 md:mb-6 leading-tight" style={{ color: '#1F2D38' }}>
-                      Pottery products
+                      Add Your Personal Touch
                     </h3>
                     <Link to="/products">
                       <button className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-md" style={{ backgroundColor: '#1F2D38', color: '#E5EFF3' }}>
-                        Explore category
+                        Shop Decor
                       </button>
                     </Link>
                   </div>
@@ -434,11 +412,11 @@ const Home = () => {
                   </div>
                   <div className="p-4 sm:p-6 md:p-8 lg:p-10">
                     <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold mb-3 sm:mb-4 md:mb-6 leading-tight" style={{ color: '#1F2D38' }}>
-                      Florence compact
+                      Sleep Better, Live Better
                     </h3>
                     <Link to="/products?category=bed">
                       <button className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-md" style={{ backgroundColor: '#1F2D38', color: '#E5EFF3' }}>
-                        Explore category
+                        Shop Beds
                       </button>
                     </Link>
                   </div>

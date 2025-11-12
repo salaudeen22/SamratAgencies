@@ -1,6 +1,20 @@
 const Product = require('../models/Product');
+const Category = require('../models/Category');
 const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const { s3Client, bucketConfig } = require('../config/s3');
+
+// Helper function to get all child category IDs recursively
+async function getAllChildCategoryIds(categoryId) {
+  const childCategories = await Category.find({ parent: categoryId });
+  let allIds = [categoryId];
+
+  for (const child of childCategories) {
+    const childIds = await getAllChildCategoryIds(child._id);
+    allIds = allIds.concat(childIds);
+  }
+
+  return allIds;
+}
 
 // Get all products
 exports.getAllProducts = async (req, res) => {
@@ -10,7 +24,41 @@ exports.getAllProducts = async (req, res) => {
     let query = {};
 
     if (category) {
-      query.category = category;
+      console.log('Category parameter received:', category);
+
+      let categoryId;
+
+      // Check if category is a valid ObjectId
+      const isObjectId = /^[0-9a-fA-F]{24}$/.test(category);
+
+      if (isObjectId) {
+        categoryId = category;
+        console.log('Using category ID:', category);
+      } else {
+        // Find category by slug or name
+        const categoryDoc = await Category.findOne({
+          $or: [
+            { slug: category },
+            { name: { $regex: new RegExp(`^${category}$`, 'i') } }
+          ]
+        });
+
+        console.log('Category lookup result:', categoryDoc);
+
+        if (categoryDoc) {
+          categoryId = categoryDoc._id;
+          console.log('Using category ID from lookup:', categoryDoc._id);
+        } else {
+          console.log('No category found for:', category);
+        }
+      }
+
+      // Get all child categories recursively
+      if (categoryId) {
+        const allCategoryIds = await getAllChildCategoryIds(categoryId);
+        console.log('Including category IDs (parent + children):', allCategoryIds);
+        query.category = { $in: allCategoryIds };
+      }
     }
 
     if (search) {

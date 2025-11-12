@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { productAPI, categoryAPI } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import SEO from '../components/SEO';
 
 const Products = () => {
+  const location = useLocation();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,19 @@ const Products = () => {
     sortBy: '',
     inStock: false,
   });
+
+  // Read URL parameters on mount
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const categoryFromUrl = searchParams.get('category');
+
+    console.log('URL Search Params:', location.search);
+    console.log('Category from URL:', categoryFromUrl);
+
+    if (categoryFromUrl) {
+      setFilters(prev => ({ ...prev, category: categoryFromUrl }));
+    }
+  }, [location.search]);
 
   useEffect(() => {
     const fetchCategories = async () => {
