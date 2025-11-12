@@ -43,7 +43,10 @@ const Cart = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
-            {cart.items.map((item) => (
+            {cart.items.map((item) => {
+              if (!item.product) return null;
+
+              return (
               <div key={item.product._id} className="bg-white rounded-lg shadow-md p-6" style={{ border: '2px solid #BDD7EB' }}>
                 <div className="flex items-center space-x-6">
                   {/* Product Image */}
@@ -117,7 +120,8 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Order Summary */}
