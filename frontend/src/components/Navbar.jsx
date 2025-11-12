@@ -242,6 +242,53 @@ const Navbar = () => {
               </Link>
             ))}
 
+            {/* Shop Link with Categories */}
+            <div className="pt-3 mt-3" style={{ borderTop: '1px solid #E0EAF0' }}>
+              <Link
+                to="/products"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block py-2.5 text-sm font-medium tracking-wide uppercase"
+                style={{
+                  color: isActive('/products') ? '#895F42' : '#1F2D38'
+                }}
+              >
+                Shop
+              </Link>
+
+              {/* Mobile Categories */}
+              {categories.length > 0 && (
+                <div className="pl-4 mt-2 space-y-2">
+                  {categories.map((category) => (
+                    <div key={category._id}>
+                      <Link
+                        to={`/products?category=${category._id}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block py-1.5 text-xs font-semibold uppercase"
+                        style={{ color: '#895F42' }}
+                      >
+                        {category.name}
+                      </Link>
+                      {category.children && category.children.length > 0 && (
+                        <div className="pl-3 space-y-1">
+                          {category.children.map((child) => (
+                            <Link
+                              key={child._id}
+                              to={`/products?category=${child._id}`}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className="block py-1 text-xs"
+                              style={{ color: '#94A1AB' }}
+                            >
+                              {child.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className="pt-3 mt-3 space-y-1" style={{ borderTop: '1px solid #E0EAF0' }}>
               {isAuthenticated ? (
                 <>
@@ -286,7 +333,7 @@ const Navbar = () => {
                   <Link
                     to="/register"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block py-2.5 text-sm text-center mt-2"
+                    className="block py-2.5 text-sm text-center mt-2 rounded-md"
                     style={{ backgroundColor: '#1F2D38', color: 'white' }}
                   >
                     Register

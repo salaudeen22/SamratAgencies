@@ -3,24 +3,24 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
   return (
     <footer className="mt-auto" style={{ backgroundColor: '#1F2D38' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-          <div>
-            <h3 className="text-xl font-bold mb-4" style={{ color: '#895F42' }}>Samrat Agencies</h3>
-            <p className="mb-4" style={{ color: '#E0EAF0' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 sm:gap-8">
+          <div className="sm:col-span-2 md:col-span-1">
+            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4" style={{ color: '#895F42' }}>Samrat Agencies</h3>
+            <p className="mb-3 sm:mb-4 text-sm sm:text-base" style={{ color: '#E0EAF0' }}>
               Furniture Expert | Samsung Dealer
             </p>
-            <p className="text-sm mb-2" style={{ color: '#E0EAF0' }}>
+            <p className="text-xs sm:text-sm mb-2" style={{ color: '#E0EAF0' }}>
               Established in 1991
             </p>
-            <p className="text-sm" style={{ color: '#E0EAF0' }}>
+            <p className="text-xs sm:text-sm" style={{ color: '#E0EAF0' }}>
               Rated 5.0 ★ (108+ Reviews)
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4" style={{ color: '#E5EFF3' }}>Quick Links</h4>
-            <ul className="space-y-2">
+            <h4 className="text-sm sm:text-base font-semibold mb-3 sm:mb-4" style={{ color: '#E5EFF3' }}>Quick Links</h4>
+            <ul className="space-y-1.5 sm:space-y-2 text-sm sm:text-base">
               <li><Link to="/" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Home</Link></li>
               <li><Link to="/products" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Products</Link></li>
               <li><Link to="/about" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>About Us</Link></li>
@@ -29,8 +29,8 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4" style={{ color: '#E5EFF3' }}>Policies</h4>
-            <ul className="space-y-2">
+            <h4 className="text-sm sm:text-base font-semibold mb-3 sm:mb-4" style={{ color: '#E5EFF3' }}>Policies</h4>
+            <ul className="space-y-1.5 sm:space-y-2 text-sm sm:text-base">
               <li><Link to="/privacy-policy" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Privacy Policy</Link></li>
               <li><Link to="/terms-and-conditions" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Terms & Conditions</Link></li>
               <li><Link to="/shipping-and-delivery" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Shipping & Delivery</Link></li>
@@ -39,8 +39,8 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4" style={{ color: '#E5EFF3' }}>Find Us Online</h4>
-            <ul className="space-y-2">
+            <h4 className="text-sm sm:text-base font-semibold mb-3 sm:mb-4" style={{ color: '#E5EFF3' }}>Find Us Online</h4>
+            <ul className="space-y-1.5 sm:space-y-2 text-sm sm:text-base">
               <li>
                 <a
                   href="https://www.google.com/maps/place/Samrat+Agencies"
@@ -109,9 +109,9 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div>
-            <h4 className="font-semibold mb-4" style={{ color: '#E5EFF3' }}>Contact Info</h4>
-            <ul className="space-y-2 text-sm" style={{ color: '#E0EAF0' }}>
+          <div className="sm:col-span-2 md:col-span-1">
+            <h4 className="text-sm sm:text-base font-semibold mb-3 sm:mb-4" style={{ color: '#E5EFF3' }}>Contact Info</h4>
+            <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm" style={{ color: '#E0EAF0' }}>
               <li className="font-semibold">Phone:</li>
               <li>+91 98809 14457</li>
               <li>+91 94492 70486</li>
@@ -124,7 +124,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 text-center" style={{ borderTop: '1px solid #94A1AB', color: '#BDD7EB' }}>
+        <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-xs sm:text-sm" style={{ borderTop: '1px solid #94A1AB', color: '#BDD7EB' }}>
           <p>&copy; {new Date().getFullYear()} Samrat Agencies. All rights reserved.</p>
         </div>
       </div>

@@ -145,18 +145,18 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen py-8" style={{ backgroundColor: '#fafaf9' }}>
+    <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold mb-8" style={{ color: '#1F2D38' }}>Checkout</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 md:mb-8" style={{ color: '#1F2D38' }}>Checkout</h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {/* Checkout Form */}
           <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
+            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-4 sm:p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
               {/* Saved Addresses */}
               {savedAddresses.length > 0 && (
-                <div className="mb-8">
-                  <h2 className="text-xl font-semibold mb-4" style={{ color: '#1F2D38' }}>Select Delivery Address</h2>
+                <div className="mb-6 sm:mb-8">
+                  <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Select Delivery Address</h2>
                   <div className="space-y-3">
                     {savedAddresses.map((address) => (
                       <div
@@ -219,13 +219,13 @@ const Checkout = () => {
                 </div>
               )}
 
-              <h2 className="text-xl font-semibold mb-6" style={{ color: '#1F2D38' }}>
+              <h2 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6" style={{ color: '#1F2D38' }}>
                 {savedAddresses.length > 0 ? 'Shipping Details' : 'Shipping Information'}
               </h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
                     Full Name *
                   </label>
                   <input
@@ -234,13 +234,13 @@ const Checkout = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                    className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
                     style={{ borderColor: '#BDD7EB' }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
                     Email *
                   </label>
                   <input
@@ -249,13 +249,13 @@ const Checkout = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                    className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
                     style={{ borderColor: '#BDD7EB' }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
                     Phone *
                   </label>
                   <input
@@ -264,13 +264,13 @@ const Checkout = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                    className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
                     style={{ borderColor: '#BDD7EB' }}
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
                     Address *
                   </label>
                   <textarea
@@ -279,13 +279,13 @@ const Checkout = () => {
                     onChange={handleChange}
                     required
                     rows="3"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                    className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
                     style={{ borderColor: '#BDD7EB' }}
                   ></textarea>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
                     City *
                   </label>
                   <input
@@ -294,13 +294,13 @@ const Checkout = () => {
                     value={formData.city}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                    className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
                     style={{ borderColor: '#BDD7EB' }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
                     State *
                   </label>
                   <input
@@ -309,13 +309,13 @@ const Checkout = () => {
                     value={formData.state}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                    className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
                     style={{ borderColor: '#BDD7EB' }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
                     Pincode *
                   </label>
                   <input
@@ -324,15 +324,15 @@ const Checkout = () => {
                     value={formData.pincode}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                    className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
                     style={{ borderColor: '#BDD7EB' }}
                   />
                 </div>
               </div>
 
-              <div className="mt-6">
-                <h3 className="text-lg font-semibold mb-4" style={{ color: '#1F2D38' }}>Payment Method</h3>
-                <div className="space-y-2">
+              <div className="mt-4 sm:mt-6">
+                <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Payment Method</h3>
+                <div className="space-y-2 text-sm sm:text-base">
                   <label className="flex items-center">
                     <input
                       type="radio"
@@ -358,7 +358,7 @@ const Checkout = () => {
                 </div>
               </div>
 
-              <div className="mt-8">
+              <div className="mt-6 sm:mt-8">
                 <Button type="submit" disabled={loading} className="w-full" size="lg">
                   {loading ? 'Processing...' : 'Place Order'}
                 </Button>
@@ -368,8 +368,8 @@ const Checkout = () => {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-6 sticky top-20 border-2" style={{ borderColor: '#BDD7EB' }}>
-              <h2 className="text-xl font-semibold mb-4" style={{ color: '#1F2D38' }}>Order Summary</h2>
+            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-20 border-2" style={{ borderColor: '#BDD7EB' }}>
+              <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Order Summary</h2>
 
               <div className="space-y-3 mb-6">
                 {cart.items.map((item) => {

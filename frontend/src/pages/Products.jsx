@@ -132,16 +132,16 @@ const Products = () => {
         keywords="furniture products, buy furniture online, sofas, beds, dining tables, chairs, wardrobes, bangalore furniture"
         url="/products"
       />
-      <div className="min-h-screen py-8" style={{ backgroundColor: '#fafaf9' }}>
+      <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold mb-8" style={{ color: '#1F2D38' }}>Our Products</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 md:mb-8" style={{ color: '#1F2D38' }}>Our Products</h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {/* Filters Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-6 sticky top-20" style={{ border: '2px solid #BDD7EB' }}>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold" style={{ color: '#1F2D38' }}>Filters</h2>
+            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-20" style={{ border: '2px solid #BDD7EB' }}>
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <h2 className="text-lg sm:text-xl font-semibold" style={{ color: '#1F2D38' }}>Filters</h2>
                 {(filters.category || filters.search || filters.minPrice || filters.maxPrice || filters.sortBy || filters.inStock) && (
                   <button
                     onClick={clearFilters}
@@ -156,8 +156,8 @@ const Products = () => {
               </div>
 
               {/* Search */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+              <div className="mb-4 sm:mb-6">
+                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
                   <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
@@ -176,9 +176,9 @@ const Products = () => {
 
               {/* Category Dropdowns */}
               <div className="mb-6">
-                <div className="flex items-center justify-between mb-2">
-                  <label className="block text-sm font-medium" style={{ color: '#1F2D38' }}>
-                    <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+                  <label className="block text-xs sm:text-sm font-medium" style={{ color: '#1F2D38' }}>
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                     </svg>
                     Categories
@@ -204,7 +204,7 @@ const Products = () => {
                   <select
                     value={selectedLevel1}
                     onChange={(e) => handleLevel1Change(e.target.value)}
-                    className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 text-sm"
+                    className="w-full px-3 py-1.5 sm:py-2 rounded-md focus:outline-none focus:ring-2 text-xs sm:text-sm"
                     style={{ border: '1px solid #BDD7EB', color: '#1F2D38' }}
                   >
                     <option value="">All Categories</option>
@@ -220,7 +220,7 @@ const Products = () => {
                     <select
                       value={selectedLevel2}
                       onChange={(e) => handleLevel2Change(e.target.value)}
-                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 text-sm"
+                      className="w-full px-3 py-1.5 sm:py-2 rounded-md focus:outline-none focus:ring-2 text-xs sm:text-sm"
                       style={{ border: '1px solid #BDD7EB', color: '#1F2D38' }}
                     >
                       <option value="">All in {categories.find(c => c._id === selectedLevel1)?.name}</option>
@@ -237,7 +237,7 @@ const Products = () => {
                     <select
                       value={selectedLevel3}
                       onChange={(e) => handleLevel3Change(e.target.value)}
-                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 text-sm"
+                      className="w-full px-3 py-1.5 sm:py-2 rounded-md focus:outline-none focus:ring-2 text-xs sm:text-sm"
                       style={{ border: '1px solid #BDD7EB', color: '#1F2D38' }}
                     >
                       <option value="">All in {getLevel2Categories().find(c => c._id === selectedLevel2)?.name}</option>
@@ -252,9 +252,9 @@ const Products = () => {
               </div>
 
               {/* Sort By */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
-                  <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="mb-4 sm:mb-6">
+                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
                   </svg>
                   Sort By
@@ -263,7 +263,7 @@ const Products = () => {
                   name="sortBy"
                   value={filters.sortBy}
                   onChange={handleFilterChange}
-                  className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2"
+                  className="w-full px-3 py-1.5 sm:py-2 rounded-md focus:outline-none focus:ring-2 text-xs sm:text-sm"
                   style={{ border: '1px solid #BDD7EB', color: '#1F2D38' }}
                 >
                   <option value="">Default</option>
@@ -276,9 +276,9 @@ const Products = () => {
               </div>
 
               {/* Price Range */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
-                  <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="mb-4 sm:mb-6">
+                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   Price Range
@@ -290,7 +290,7 @@ const Products = () => {
                     value={filters.minPrice}
                     onChange={handleFilterChange}
                     placeholder="Min"
-                    className="px-3 py-2 rounded-md focus:outline-none focus:ring-2"
+                    className="px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm rounded-md focus:outline-none focus:ring-2"
                     style={{ border: '1px solid #BDD7EB' }}
                   />
                   <input
@@ -299,14 +299,14 @@ const Products = () => {
                     value={filters.maxPrice}
                     onChange={handleFilterChange}
                     placeholder="Max"
-                    className="px-3 py-2 rounded-md focus:outline-none focus:ring-2"
+                    className="px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm rounded-md focus:outline-none focus:ring-2"
                     style={{ border: '1px solid #BDD7EB' }}
                   />
                 </div>
               </div>
 
               {/* Availability */}
-              <div className="mb-6">
+              <div className="mb-4 sm:mb-6">
                 <label className="flex items-center cursor-pointer">
                   <input
                     type="checkbox"
@@ -316,8 +316,8 @@ const Products = () => {
                     className="w-4 h-4 rounded"
                     style={{ accentColor: '#895F42' }}
                   />
-                  <span className="ml-2 text-sm font-medium" style={{ color: '#1F2D38' }}>
-                    <svg className="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <span className="ml-2 text-xs sm:text-sm font-medium" style={{ color: '#1F2D38' }}>
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     In Stock Only
@@ -327,7 +327,7 @@ const Products = () => {
 
               <button
                 onClick={clearFilters}
-                className="w-full px-4 py-2 rounded-md transition font-medium shadow-sm"
+                className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base rounded-md transition font-medium shadow-sm"
                 style={{ backgroundColor: '#895F42', color: 'white' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#9F8065'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
@@ -340,9 +340,9 @@ const Products = () => {
           {/* Products Grid */}
           <div className="lg:col-span-3">
             {/* Results Header */}
-            <div className="mb-6 flex items-center justify-between">
+            <div className="mb-4 sm:mb-6 flex items-center justify-between">
               <div>
-                <p className="text-sm" style={{ color: '#94A1AB' }}>
+                <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>
                   {loading ? 'Loading...' : `${products.length} ${products.length === 1 ? 'product' : 'products'} found`}
                 </p>
                 {(filters.category || filters.search || filters.minPrice || filters.maxPrice || filters.sortBy || filters.inStock) && (
