@@ -77,6 +77,8 @@ exports.getAllProducts = async (req, res) => {
     let sortOption = {};
     if (sort === 'price-asc') sortOption.price = 1;
     if (sort === 'price-desc') sortOption.price = -1;
+    if (sort === 'name-asc') sortOption.name = 1;
+    if (sort === 'name-desc') sortOption.name = -1;
     if (sort === 'newest') sortOption.createdAt = -1;
     if (sort === 'rating') sortOption.rating = -1;
 

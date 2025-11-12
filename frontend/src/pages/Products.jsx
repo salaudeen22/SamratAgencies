@@ -56,9 +56,26 @@ const Products = () => {
         if (filters.minPrice) params.minPrice = filters.minPrice;
         if (filters.maxPrice) params.maxPrice = filters.maxPrice;
         if (filters.search) params.search = filters.search;
+        if (filters.sortBy) {
+          // Convert frontend sortBy format to backend format
+          const sortMap = {
+            'price_asc': 'price-asc',
+            'price_desc': 'price-desc',
+            'name_asc': 'name-asc',
+            'name_desc': 'name-desc',
+            'newest': 'newest'
+          };
+          params.sort = sortMap[filters.sortBy] || filters.sortBy;
+        }
 
-        const response = await productAPI.getAll(params);
-        setProducts(response.data);
+        let productsData = await productAPI.getAll(params);
+
+        // Filter in stock on frontend if needed
+        if (filters.inStock) {
+          productsData.data = productsData.data.filter(product => product.stock > 0);
+        }
+
+        setProducts(productsData.data);
       } catch (err) {
         console.error('Failed to fetch products:', err);
       } finally {
