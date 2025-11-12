@@ -44,6 +44,7 @@ app.use('/api/products', require('./src/routes/productRoutes'));
 app.use('/api/categories', require('./src/routes/categoryRoutes'));
 app.use('/api/cart', require('./src/routes/cartRoutes'));
 app.use('/api/orders', require('./src/routes/orderRoutes'));
+app.use('/api/payment', require('./src/routes/paymentRoutes'));
 app.use('/api/users', require('./src/routes/userRoutes'));
 app.use('/api/admin', require('./src/routes/adminRoutes'));
 app.use('/api/admin', require('./src/routes/attributeRoutes'));
@@ -61,6 +62,7 @@ app.get('/api', (req, res) => {
       categories: '/api/categories',
       cart: '/api/cart',
       orders: '/api/orders',
+      payment: '/api/payment',
       users: '/api/users',
       admin: '/api/admin',
       upload: '/api/upload'

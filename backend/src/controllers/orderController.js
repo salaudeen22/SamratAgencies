@@ -9,10 +9,7 @@ exports.createOrder = async (req, res) => {
       items,
       shippingAddress,
       paymentMethod,
-      itemsPrice,
-      taxPrice,
-      shippingPrice,
-      totalPrice
+      totalAmount
     } = req.body;
 
     if (!items || items.length === 0) {
@@ -24,10 +21,10 @@ exports.createOrder = async (req, res) => {
       items,
       shippingAddress,
       paymentMethod,
-      itemsPrice,
-      taxPrice,
-      shippingPrice,
-      totalPrice
+      itemsPrice: totalAmount,
+      taxPrice: 0,
+      shippingPrice: 0,
+      totalPrice: totalAmount
     });
 
     // Clear user cart after order is created

@@ -55,6 +55,13 @@ export const orderAPI = {
   updateStatus: (id, status) => api.put(`/orders/${id}/status`, { status }),
 };
 
+// Payment APIs
+export const paymentAPI = {
+  getRazorpayKey: () => api.get('/payment/razorpay/key'),
+  createRazorpayOrder: (amount, currency, receipt) => api.post('/payment/razorpay/order', { amount, currency, receipt }),
+  verifyRazorpayPayment: (paymentData) => api.post('/payment/razorpay/verify', paymentData),
+};
+
 // User APIs
 export const userAPI = {
   getProfile: () => api.get('/users/profile'),

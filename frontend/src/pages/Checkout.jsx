@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { orderAPI, userAPI } from '../services/api';
+import { orderAPI, userAPI, paymentAPI } from '../services/api';
 import Button from '../components/Button';
 
 const Checkout = () => {
@@ -23,6 +23,17 @@ const Checkout = () => {
     pincode: '',
     paymentMethod: 'cod',
   });
+
+  // Load Razorpay script
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   // Fetch saved addresses
   useEffect(() => {
@@ -121,15 +132,87 @@ const Checkout = () => {
         totalAmount: getCartTotal(),
       };
 
-      await orderAPI.create(orderData);
-      await clearCart();
-      alert('Order placed successfully!');
-      navigate(`/profile`);
+      if (formData.paymentMethod === 'online') {
+        // Handle Razorpay payment
+        await handleRazorpayPayment(orderData);
+      } else {
+        // Handle COD
+        await orderAPI.create(orderData);
+        await clearCart();
+        alert('Order placed successfully!');
+        navigate(`/profile`);
+      }
     } catch (err) {
       console.error('Order failed:', err);
       alert(err.response?.data?.message || 'Failed to place order');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleRazorpayPayment = async (orderData) => {
+    try {
+      // Create order first
+      const order = await orderAPI.create(orderData);
+      const orderId = order.data._id;
+      const totalAmount = orderData.totalAmount;
+
+      // Get Razorpay key
+      const keyResponse = await paymentAPI.getRazorpayKey();
+      const razorpayKey = keyResponse.data.key;
+
+      // Create Razorpay order
+      const razorpayOrderResponse = await paymentAPI.createRazorpayOrder(
+        totalAmount,
+        'INR',
+        `order_${orderId}`
+      );
+      const razorpayOrder = razorpayOrderResponse.data;
+
+      // Initialize Razorpay checkout
+      const options = {
+        key: razorpayKey,
+        amount: razorpayOrder.amount,
+        currency: razorpayOrder.currency,
+        name: 'Samrat Agencies',
+        description: 'Furniture Purchase',
+        order_id: razorpayOrder.id,
+        handler: async function (response) {
+          try {
+            // Verify payment
+            const verifyResponse = await paymentAPI.verifyRazorpayPayment({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              orderId: orderId,
+            });
+
+            if (verifyResponse.data.success) {
+              await clearCart();
+              alert('Payment successful! Order placed.');
+              navigate('/profile');
+            } else {
+              alert('Payment verification failed');
+            }
+          } catch (error) {
+            console.error('Payment verification failed:', error);
+            alert('Payment verification failed');
+          }
+        },
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.phone,
+        },
+        theme: {
+          color: '#895F42',
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      throw error;
     }
   };
 

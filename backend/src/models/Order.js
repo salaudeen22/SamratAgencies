@@ -25,7 +25,15 @@ const orderSchema = new mongoose.Schema({
     image: String
   }],
   shippingAddress: {
-    street: {
+    name: {
+      type: String,
+      required: true
+    },
+    phone: {
+      type: String,
+      required: true
+    },
+    address: {
       type: String,
       required: true
     },
@@ -37,19 +45,19 @@ const orderSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    zipCode: {
+    pincode: {
       type: String,
       required: true
     },
     country: {
       type: String,
-      required: true
+      default: 'India'
     }
   },
   paymentMethod: {
     type: String,
     required: true,
-    enum: ['Card', 'PayPal', 'Cash on Delivery']
+    enum: ['cod', 'online']
   },
   paymentResult: {
     id: String,
