@@ -22,6 +22,11 @@ const variantSchema = new mongoose.Schema({
     enum: ['immediate', 'made-to-order'],
     default: 'immediate'
   },
+  deliveryDays: {
+    type: Number,
+    min: 1,
+    default: 7
+  },
   images: [{
     url: String,
     public_id: String
@@ -87,6 +92,11 @@ const productSchema = new mongoose.Schema({
     type: String,
     enum: ['immediate', 'made-to-order'],
     default: 'immediate'
+  },
+  deliveryDays: {
+    type: Number,
+    min: 1,
+    default: 7
   },
   sku: {
     type: String,

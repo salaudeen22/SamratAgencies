@@ -22,6 +22,7 @@ const Products = () => {
     specifications: {},
     price: '',
     availabilityType: 'immediate',
+    deliveryDays: 7,
     sku: '',
     brand: '',
     featured: false,
@@ -66,6 +67,7 @@ const Products = () => {
         category: finalCategory,
         price: parseFloat(formData.price),
         availabilityType: formData.availabilityType,
+        deliveryDays: parseInt(formData.deliveryDays),
       };
 
       // Remove level2Category and level3Category as they're not in the backend schema
@@ -136,6 +138,7 @@ const Products = () => {
       specifications: specs,
       price: product.price || '',
       availabilityType: product.availabilityType || 'immediate',
+      deliveryDays: product.deliveryDays || 7,
       sku: product.sku || '',
       brand: product.brand || '',
       featured: product.featured || false,
@@ -187,6 +190,7 @@ const Products = () => {
       specifications: {},
       price: '',
       availabilityType: 'immediate',
+      deliveryDays: 7,
       sku: '',
       brand: '',
       featured: false,
@@ -692,6 +696,22 @@ const Products = () => {
                       <option value="immediate">Immediate Delivery</option>
                       <option value="made-to-order">Made to Order</option>
                     </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Delivery Days *</label>
+                    <input
+                      type="number"
+                      value={formData.deliveryDays}
+                      onChange={(e) => setFormData({ ...formData, deliveryDays: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-lg"
+                      min="1"
+                      required
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      {formData.availabilityType === 'immediate'
+                        ? 'Days to ship (e.g., 2-3 days)'
+                        : 'Days to manufacture and deliver (e.g., 15-30 days)'}
+                    </p>
                   </div>
                   <div className="flex items-center">
                     <label className="flex items-center gap-2">
