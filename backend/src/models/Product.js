@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Variant schema - only created when specific attributes affect price/stock
+// Variant schema - only created when specific attributes affect price/availability
 const variantSchema = new mongoose.Schema({
   // Attribute values that define this variant (e.g., {color: 'Red', size: 'Large'})
   attributeValues: {
@@ -17,10 +17,10 @@ const variantSchema = new mongoose.Schema({
     required: true,
     min: 0
   },
-  stock: {
-    type: Number,
-    default: 0,
-    min: 0
+  availabilityType: {
+    type: String,
+    enum: ['immediate', 'made-to-order'],
+    default: 'immediate'
   },
   images: [{
     url: String,
@@ -83,10 +83,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     min: 0
   },
-  stock: {
-    type: Number,
-    default: 0,
-    min: 0
+  availabilityType: {
+    type: String,
+    enum: ['immediate', 'made-to-order'],
+    default: 'immediate'
   },
   sku: {
     type: String,
@@ -136,20 +136,20 @@ productSchema.virtual('hasVariants').get(function() {
   return this.variants && this.variants.length > 0;
 });
 
-// Virtual field to get total stock
-productSchema.virtual('totalStock').get(function() {
+// Virtual field to check if product is available (has any immediate or made-to-order option)
+productSchema.virtual('isAvailable').get(function() {
   if (this.hasVariants) {
-    return this.variants.reduce((total, variant) => total + (variant.stock || 0), 0);
+    return this.variants.some(variant => variant.isActive);
   }
-  return this.stock || 0;
+  return this.isActive;
 });
 
-// Virtual field to check stock availability
-productSchema.virtual('inStock').get(function() {
+// Virtual field to check if product has immediate availability
+productSchema.virtual('hasImmediateAvailability').get(function() {
   if (this.hasVariants) {
-    return this.variants.some(variant => variant.stock > 0 && variant.isActive);
+    return this.variants.some(variant => variant.availabilityType === 'immediate' && variant.isActive);
   }
-  return this.stock > 0;
+  return this.availabilityType === 'immediate' && this.isActive;
 });
 
 // Virtual field to get price range (for products with variants)

@@ -27,8 +27,8 @@ exports.addToCart = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    if (product.stock < quantity) {
-      return res.status(400).json({ message: 'Insufficient stock' });
+    if (!product.isActive) {
+      return res.status(400).json({ message: 'Product is not available' });
     }
 
     let cart = await Cart.findOne({ user: req.user.id });

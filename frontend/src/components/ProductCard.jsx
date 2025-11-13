@@ -75,9 +75,9 @@ const ProductCard = ({ product }) => {
             </svg>
           </button>
 
-          {product.inStock === false && (
-            <div className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-md text-sm font-semibold">
-              Out of Stock
+          {product.availabilityType === 'made-to-order' && (
+            <div className="absolute top-2 right-2 text-white px-3 py-1 rounded-md text-sm font-semibold shadow-lg" style={{ backgroundColor: '#895F42' }}>
+              Made to Order
             </div>
           )}
         </div>
@@ -105,20 +105,15 @@ const ProductCard = ({ product }) => {
 
             <button
               onClick={handleAddToCart}
-              disabled={product.inStock === false}
-              className={`px-4 py-2 rounded-md transition-all ${
-                product.inStock === false
-                  ? 'cursor-not-allowed'
-                  : ''
-              }`}
+              className="px-4 py-2 rounded-md transition-all"
               style={{
-                backgroundColor: product.inStock === false ? '#E0EAF0' : '#895F42',
-                color: product.inStock === false ? '#94A1AB' : '#E5EFF3'
+                backgroundColor: '#895F42',
+                color: '#E5EFF3'
               }}
-              onMouseEnter={(e) => { if (product.inStock !== false) e.currentTarget.style.backgroundColor = '#9F8065'; }}
-              onMouseLeave={(e) => { if (product.inStock !== false) e.currentTarget.style.backgroundColor = '#895F42'; }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#9F8065'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
             >
-              {product.inStock === false ? 'Out of Stock' : 'Add to Cart'}
+              {product.availabilityType === 'made-to-order' ? 'Order Now' : 'Add to Cart'}
             </button>
           </div>
         </div>

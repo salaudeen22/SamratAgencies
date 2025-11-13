@@ -219,87 +219,77 @@ const ProductDetail = () => {
                   </span>
                 </div>
 
-                {/* Stock Status with Icon */}
+                {/* Availability Type */}
                 <div className="flex items-center gap-2">
-                  {product.inStock ? (
+                  {product.availabilityType === 'immediate' ? (
                     <>
                       <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm font-semibold text-green-600">In Stock ({product.stock} available)</span>
+                      <span className="text-sm font-semibold text-green-600">Immediate Delivery</span>
                     </>
                   ) : (
                     <>
-                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                      <span className="text-sm font-semibold text-red-600">Out of Stock</span>
+                      <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#895F42' }}></div>
+                      <span className="text-sm font-semibold" style={{ color: '#895F42' }}>Made to Order</span>
                     </>
                   )}
                 </div>
               </div>
 
               {/* Quantity Selector */}
-              {product.inStock && (
-                <div className="mb-6">
-                  <label className="block text-sm font-semibold mb-3" style={{ color: '#1F2D38' }}>
-                    Select Quantity
-                  </label>
-                  <div className="inline-flex items-center rounded-lg overflow-hidden" style={{ border: '2px solid #BDD7EB' }}>
-                    <button
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="px-5 py-3 font-bold text-lg transition hover:bg-gray-50"
-                      style={{ color: '#895F42', borderRight: '2px solid #BDD7EB' }}
-                      disabled={quantity <= 1}
-                    >
-                      −
-                    </button>
-                    <span className="px-8 py-3 text-xl font-bold bg-white" style={{ color: '#1F2D38' }}>
-                      {quantity}
-                    </span>
-                    <button
-                      onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                      className="px-5 py-3 font-bold text-lg transition hover:bg-gray-50"
-                      style={{ color: '#895F42', borderLeft: '2px solid #BDD7EB' }}
-                      disabled={quantity >= product.stock}
-                    >
-                      +
-                    </button>
-                  </div>
+              <div className="mb-6">
+                <label className="block text-sm font-semibold mb-3" style={{ color: '#1F2D38' }}>
+                  Select Quantity
+                </label>
+                <div className="inline-flex items-center rounded-lg overflow-hidden" style={{ border: '2px solid #BDD7EB' }}>
+                  <button
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="px-5 py-3 font-bold text-lg transition hover:bg-gray-50"
+                    style={{ color: '#895F42', borderRight: '2px solid #BDD7EB' }}
+                    disabled={quantity <= 1}
+                  >
+                    −
+                  </button>
+                  <span className="px-8 py-3 text-xl font-bold bg-white" style={{ color: '#1F2D38' }}>
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={() => setQuantity(Math.min(100, quantity + 1))}
+                    className="px-5 py-3 font-bold text-lg transition hover:bg-gray-50"
+                    style={{ color: '#895F42', borderLeft: '2px solid #BDD7EB' }}
+                    disabled={quantity >= 100}
+                  >
+                    +
+                  </button>
                 </div>
-              )}
+              </div>
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 mb-6">
                 <button
                   onClick={handleAddToCart}
-                  disabled={!product.inStock}
-                  className={`flex-1 px-6 py-4 rounded-lg font-semibold text-base transition-all duration-200 flex items-center justify-center gap-2 ${
-                    !product.inStock ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg transform hover:-translate-y-0.5'
-                  }`}
+                  className="flex-1 px-6 py-4 rounded-lg font-semibold text-base transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-lg transform hover:-translate-y-0.5"
                   style={{
-                    backgroundColor: product.inStock ? '#895F42' : '#E0EAF0',
-                    color: product.inStock ? 'white' : '#94A1AB',
-                    border: product.inStock ? 'none' : '2px solid #BDD7EB'
+                    backgroundColor: '#895F42',
+                    color: 'white'
                   }}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
-                  Add to Cart
+                  {product.availabilityType === 'made-to-order' ? 'Order Now' : 'Add to Cart'}
                 </button>
                 <button
                   onClick={handleBuyNow}
-                  disabled={!product.inStock}
-                  className={`flex-1 px-6 py-4 rounded-lg font-semibold text-base transition-all duration-200 flex items-center justify-center gap-2 ${
-                    !product.inStock ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg transform hover:-translate-y-0.5'
-                  }`}
+                  className="flex-1 px-6 py-4 rounded-lg font-semibold text-base transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-lg transform hover:-translate-y-0.5"
                   style={{
-                    backgroundColor: product.inStock ? '#10B981' : '#E0EAF0',
-                    color: product.inStock ? 'white' : '#94A1AB',
-                    border: product.inStock ? 'none' : '2px solid #BDD7EB'
+                    backgroundColor: '#10B981',
+                    color: 'white'
                   }}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
-                  Buy Now
+                  {product.availabilityType === 'made-to-order' ? 'Order & Buy Now' : 'Buy Now'}
                 </button>
               </div>
 

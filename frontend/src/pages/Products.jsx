@@ -18,7 +18,7 @@ const Products = () => {
     maxPrice: '',
     search: '',
     sortBy: '',
-    inStock: false,
+    availabilityType: '',
   });
 
   // Read URL parameters on mount
@@ -56,6 +56,7 @@ const Products = () => {
         if (filters.minPrice) params.minPrice = filters.minPrice;
         if (filters.maxPrice) params.maxPrice = filters.maxPrice;
         if (filters.search) params.search = filters.search;
+        if (filters.availabilityType) params.availabilityType = filters.availabilityType;
         if (filters.sortBy) {
           // Convert frontend sortBy format to backend format
           const sortMap = {
@@ -69,12 +70,6 @@ const Products = () => {
         }
 
         let productsData = await productAPI.getAll(params);
-
-        // Filter in stock on frontend if needed
-        if (filters.inStock) {
-          productsData.data = productsData.data.filter(product => product.stock > 0);
-        }
-
         setProducts(productsData.data);
       } catch (err) {
         console.error('Failed to fetch products:', err);
@@ -101,7 +96,7 @@ const Products = () => {
       maxPrice: '',
       search: '',
       sortBy: '',
-      inStock: false,
+      availabilityType: '',
     });
     setSelectedLevel1('');
     setSelectedLevel2('');
@@ -174,7 +169,7 @@ const Products = () => {
             <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-20" style={{ border: '2px solid #BDD7EB' }}>
               <div className="flex items-center justify-between mb-3 sm:mb-4">
                 <h2 className="text-lg sm:text-xl font-semibold" style={{ color: '#1F2D38' }}>Filters</h2>
-                {(filters.category || filters.search || filters.minPrice || filters.maxPrice || filters.sortBy || filters.inStock) && (
+                {(filters.category || filters.search || filters.minPrice || filters.maxPrice || filters.sortBy || filters.availabilityType) && (
                   <button
                     onClick={clearFilters}
                     className="text-xs font-medium transition"
@@ -337,24 +332,25 @@ const Products = () => {
                 </div>
               </div>
 
-              {/* Availability */}
+              {/* Availability Type */}
               <div className="mb-4 sm:mb-6">
-                <label className="flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    name="inStock"
-                    checked={filters.inStock}
-                    onChange={handleFilterChange}
-                    className="w-4 h-4 rounded"
-                    style={{ accentColor: '#895F42' }}
-                  />
-                  <span className="ml-2 text-xs sm:text-sm font-medium" style={{ color: '#1F2D38' }}>
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    In Stock Only
-                  </span>
+                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Availability
                 </label>
+                <select
+                  name="availabilityType"
+                  value={filters.availabilityType}
+                  onChange={handleFilterChange}
+                  className="w-full px-3 py-1.5 sm:py-2 rounded-md focus:outline-none focus:ring-2 text-xs sm:text-sm"
+                  style={{ border: '1px solid #BDD7EB', color: '#1F2D38' }}
+                >
+                  <option value="">All Products</option>
+                  <option value="immediate">Immediate Delivery</option>
+                  <option value="made-to-order">Made to Order</option>
+                </select>
               </div>
 
               <button
@@ -377,7 +373,7 @@ const Products = () => {
                 <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>
                   {loading ? 'Loading...' : `${products.length} ${products.length === 1 ? 'product' : 'products'} found`}
                 </p>
-                {(filters.category || filters.search || filters.minPrice || filters.maxPrice || filters.sortBy || filters.inStock) && (
+                {(filters.category || filters.search || filters.minPrice || filters.maxPrice || filters.sortBy || filters.availabilityType) && (
                   <div className="flex flex-wrap gap-2 mt-2">
                     {filters.category && (
                       <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
@@ -417,11 +413,11 @@ const Products = () => {
                         </button>
                       </span>
                     )}
-                    {filters.inStock && (
+                    {filters.availabilityType && (
                       <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        In Stock Only
+                        {filters.availabilityType === 'immediate' ? 'Immediate Delivery' : 'Made to Order'}
                         <button
-                          onClick={() => setFilters(prev => ({ ...prev, inStock: false }))}
+                          onClick={() => setFilters(prev => ({ ...prev, availabilityType: '' }))}
                           className="ml-1.5 hover:text-yellow-900"
                         >
                           ×

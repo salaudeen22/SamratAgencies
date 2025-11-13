@@ -21,7 +21,7 @@ const Products = () => {
     attributeSet: '',
     specifications: {},
     price: '',
-    stock: '',
+    availabilityType: 'immediate',
     sku: '',
     brand: '',
     featured: false,
@@ -65,7 +65,7 @@ const Products = () => {
         ...formData,
         category: finalCategory,
         price: parseFloat(formData.price),
-        stock: parseInt(formData.stock),
+        availabilityType: formData.availabilityType,
       };
 
       // Remove level2Category and level3Category as they're not in the backend schema
@@ -135,7 +135,7 @@ const Products = () => {
       attributeSet: product.attributeSet?._id || product.attributeSet || '',
       specifications: specs,
       price: product.price || '',
-      stock: product.stock || '',
+      availabilityType: product.availabilityType || 'immediate',
       sku: product.sku || '',
       brand: product.brand || '',
       featured: product.featured || false,
@@ -186,7 +186,7 @@ const Products = () => {
       attributeSet: '',
       specifications: {},
       price: '',
-      stock: '',
+      availabilityType: 'immediate',
       sku: '',
       brand: '',
       featured: false,
@@ -682,15 +682,16 @@ const Products = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Stock Quantity *</label>
-                    <input
-                      type="number"
-                      value={formData.stock}
-                      onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+                    <label className="block text-sm font-medium mb-1">Availability Type *</label>
+                    <select
+                      value={formData.availabilityType}
+                      onChange={(e) => setFormData({ ...formData, availabilityType: e.target.value })}
                       className="w-full px-3 py-2 border rounded-lg"
-                      min="0"
                       required
-                    />
+                    >
+                      <option value="immediate">Immediate Delivery</option>
+                      <option value="made-to-order">Made to Order</option>
+                    </select>
                   </div>
                   <div className="flex items-center">
                     <label className="flex items-center gap-2">
@@ -751,7 +752,7 @@ const Products = () => {
                         Price
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                        Stock
+                        Availability
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                         Actions
@@ -775,8 +776,8 @@ const Products = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">₹{product.price}</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 py-1 text-xs rounded ${product.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                            {product.stock} units
+                          <span className={`px-2 py-1 text-xs rounded ${product.availabilityType === 'immediate' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'}`}>
+                            {product.availabilityType === 'immediate' ? 'Immediate' : 'Made to Order'}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -832,8 +833,12 @@ const Products = () => {
                       <p className="font-medium">₹{product.price}</p>
                     </div>
                     <div>
-                      <span className="text-gray-600">Stock:</span>
-                      <p className="font-medium">{product.stock} units</p>
+                      <span className="text-gray-600">Availability:</span>
+                      <p className="font-medium text-xs">
+                        <span className={`px-2 py-1 rounded ${product.availabilityType === 'immediate' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'}`}>
+                          {product.availabilityType === 'immediate' ? 'Immediate' : 'Made to Order'}
+                        </span>
+                      </p>
                     </div>
                   </div>
                   <div className="flex gap-2">

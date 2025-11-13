@@ -20,7 +20,7 @@ router.get('/products', async (req, res) => {
 
     const filter = {};
     if (req.query.category) filter.category = req.query.category;
-    if (req.query.inStock !== undefined) filter.inStock = req.query.inStock === 'true';
+    if (req.query.availabilityType) filter.availabilityType = req.query.availabilityType;
 
     const products = await Product.find(filter)
       .sort({ createdAt: -1 })
@@ -225,7 +225,8 @@ router.get('/stats', async (req, res) => {
 
     const pendingOrders = await Order.countDocuments({ status: 'Pending' });
     const deliveredOrders = await Order.countDocuments({ status: 'Delivered' });
-    const outOfStockProducts = await Product.countDocuments({ inStock: false });
+    const immediateProducts = await Product.countDocuments({ availabilityType: 'immediate' });
+    const madeToOrderProducts = await Product.countDocuments({ availabilityType: 'made-to-order' });
 
     const recentOrders = await Order.find()
       .populate('user', 'name email')
@@ -260,7 +261,8 @@ router.get('/stats', async (req, res) => {
       totalRevenue: totalRevenue[0]?.total || 0,
       pendingOrders,
       deliveredOrders,
-      outOfStockProducts,
+      immediateProducts,
+      madeToOrderProducts,
       recentOrders,
       topProducts
     });

@@ -34,9 +34,9 @@ const SEO = ({
         url: fullUrl,
         priceCurrency: 'INR',
         price: product.price,
-        availability: product.inStock
+        availability: product.availabilityType === 'immediate'
           ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
+          : 'https://schema.org/PreOrder',
         seller: {
           '@type': 'Organization',
           name: 'Samrat Agencies'

@@ -122,9 +122,9 @@ const Wishlist = () => {
                       </svg>
                     </button>
 
-                    {product.inStock === false && (
-                      <div className="absolute top-2 left-2 bg-red-500 text-white px-3 py-1 rounded-md text-sm font-semibold">
-                        Out of Stock
+                    {product.availabilityType === 'made-to-order' && (
+                      <div className="absolute top-2 left-2 text-white px-3 py-1 rounded-md text-sm font-semibold" style={{ backgroundColor: '#895F42' }}>
+                        Made to Order
                       </div>
                     )}
                   </div>
@@ -165,22 +165,19 @@ const Wishlist = () => {
                   {/* Add to Cart Button */}
                   <button
                     onClick={() => handleAddToCart(product._id)}
-                    disabled={product.inStock === false}
-                    className={`w-full mt-4 px-4 py-2 rounded-md transition-all text-sm sm:text-base ${
-                      product.inStock === false ? 'cursor-not-allowed' : ''
-                    }`}
+                    className="w-full mt-4 px-4 py-2 rounded-md transition-all text-sm sm:text-base"
                     style={{
-                      backgroundColor: product.inStock === false ? '#E0EAF0' : '#895F42',
-                      color: product.inStock === false ? '#94A1AB' : '#E5EFF3',
+                      backgroundColor: '#895F42',
+                      color: '#E5EFF3',
                     }}
                     onMouseEnter={(e) => {
-                      if (product.inStock !== false) e.currentTarget.style.backgroundColor = '#9F8065';
+                      e.currentTarget.style.backgroundColor = '#9F8065';
                     }}
                     onMouseLeave={(e) => {
-                      if (product.inStock !== false) e.currentTarget.style.backgroundColor = '#895F42';
+                      e.currentTarget.style.backgroundColor = '#895F42';
                     }}
                   >
-                    {product.inStock === false ? 'Out of Stock' : 'Add to Cart'}
+                    {product.availabilityType === 'made-to-order' ? 'Order Now' : 'Add to Cart'}
                   </button>
                 </div>
               </div>
