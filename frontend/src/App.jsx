@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { WishlistProvider } from './context/WishlistContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AdminRoute from './components/AdminRoute';
@@ -12,6 +13,7 @@ const Home = lazy(() => import('./pages/Home'));
 const Products = lazy(() => import('./pages/Products'));
 const ProductDetail = lazy(() => import('./pages/ProductDetail'));
 const Cart = lazy(() => import('./pages/Cart'));
+const Wishlist = lazy(() => import('./pages/Wishlist'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
@@ -50,8 +52,9 @@ function App() {
     <Router>
       <AuthProvider>
         <CartProvider>
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes>
+          <WishlistProvider>
+            <Suspense fallback={<LoadingFallback />}>
+              <Routes>
               {/* Admin Routes */}
               <Route
                 path="/admin"
@@ -129,6 +132,7 @@ function App() {
                         <Route path="/products" element={<Products />} />
                         <Route path="/products/:id" element={<ProductDetail />} />
                         <Route path="/cart" element={<Cart />} />
+                        <Route path="/wishlist" element={<Wishlist />} />
                         <Route path="/checkout" element={<Checkout />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/about" element={<About />} />
@@ -143,8 +147,9 @@ function App() {
                   </div>
                 }
               />
-            </Routes>
-          </Suspense>
+              </Routes>
+            </Suspense>
+          </WishlistProvider>
         </CartProvider>
       </AuthProvider>
     </Router>

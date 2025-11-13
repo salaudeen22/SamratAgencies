@@ -49,6 +49,15 @@ export const cartAPI = {
   clearCart: () => api.delete('/cart'),
 };
 
+// Wishlist APIs
+export const wishlistAPI = {
+  getWishlist: () => api.get('/wishlist'),
+  addItem: (productId) => api.post('/wishlist', { productId }),
+  removeItem: (productId) => api.delete(`/wishlist/${productId}`),
+  clearWishlist: () => api.delete('/wishlist'),
+  checkStatus: (productId) => api.get(`/wishlist/check/${productId}`),
+};
+
 // Order APIs
 export const orderAPI = {
   create: (orderData) => api.post('/orders', orderData),

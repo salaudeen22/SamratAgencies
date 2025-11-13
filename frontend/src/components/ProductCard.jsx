@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const [isWishlisted, setIsWishlisted] = useState(isInWishlist(product._id));
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
@@ -10,6 +14,23 @@ const ProductCard = ({ product }) => {
     const result = await addToCart(product._id, 1);
     if (result.success) {
       alert('Added to cart!');
+    }
+  };
+
+  const handleWishlistToggle = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isWishlisted) {
+      const result = await removeFromWishlist(product._id);
+      if (result.success) {
+        setIsWishlisted(false);
+      }
+    } else {
+      const result = await addToWishlist(product._id);
+      if (result.success) {
+        setIsWishlisted(true);
+      }
     }
   };
 
@@ -28,6 +49,32 @@ const ProductCard = ({ product }) => {
               No Image
             </div>
           )}
+
+          {/* Wishlist Heart Icon */}
+          <button
+            onClick={handleWishlistToggle}
+            className="absolute top-2 left-2 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+            style={{
+              color: isWishlisted ? '#ef4444' : '#94A1AB',
+            }}
+            title={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill={isWishlisted ? 'currentColor' : 'none'}
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
+            </svg>
+          </button>
+
           {product.inStock === false && (
             <div className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-md text-sm font-semibold">
               Out of Stock

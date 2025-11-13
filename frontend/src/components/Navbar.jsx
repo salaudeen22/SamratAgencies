@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
 import { categoryAPI } from '../services/api';
 import logo from '../assets/samrat-logo.png';
 
 const Navbar = () => {
   const { user, logout, isAuthenticated, isAdmin } = useAuth();
   const { getCartCount } = useCart();
+  const { getWishlistCount } = useWishlist();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -129,6 +131,18 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div className="flex items-center space-x-6">
+            {/* Wishlist */}
+            <Link to="/wishlist" className="relative group">
+              <svg className="w-5 h-5 transition-colors" style={{ color: '#1F2D38' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+              {getWishlistCount() > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 text-xs rounded-full h-4 w-4 flex items-center justify-center font-semibold" style={{ backgroundColor: '#ef4444', color: 'white', fontSize: '10px' }}>
+                  {getWishlistCount()}
+                </span>
+              )}
+            </Link>
+
             {/* Cart */}
             <Link to="/cart" className="relative group">
               <svg className="w-5 h-5 transition-colors" style={{ color: '#1F2D38' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">

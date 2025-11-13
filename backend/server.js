@@ -43,6 +43,7 @@ app.use('/api/auth', require('./src/routes/authRoutes'));
 app.use('/api/products', require('./src/routes/productRoutes'));
 app.use('/api/categories', require('./src/routes/categoryRoutes'));
 app.use('/api/cart', require('./src/routes/cartRoutes'));
+app.use('/api/wishlist', require('./src/routes/wishlistRoutes'));
 app.use('/api/orders', require('./src/routes/orderRoutes'));
 app.use('/api/payment', require('./src/routes/paymentRoutes'));
 app.use('/api/users', require('./src/routes/userRoutes'));
@@ -62,6 +63,7 @@ app.get('/api', (req, res) => {
       products: '/api/products',
       categories: '/api/categories',
       cart: '/api/cart',
+      wishlist: '/api/wishlist',
       orders: '/api/orders',
       payment: '/api/payment',
       users: '/api/users',
