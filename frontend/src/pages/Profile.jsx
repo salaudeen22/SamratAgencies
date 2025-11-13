@@ -170,28 +170,28 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen py-8" style={{ backgroundColor: '#fafaf9' }}>
+    <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold mb-8" style={{ color: '#1F2D38' }}>My Account</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 md:mb-8" style={{ color: '#1F2D38' }}>My Account</h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
-              <div className="text-center mb-6">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#BDD7EB' }}>
-                  <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
+            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
+              <div className="text-center mb-4 sm:mb-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4" style={{ backgroundColor: '#BDD7EB' }}>
+                  <span className="text-xl sm:text-2xl font-bold" style={{ color: '#895F42' }}>
                     {user?.name?.charAt(0).toUpperCase()}
                   </span>
                 </div>
-                <h2 className="text-xl font-semibold" style={{ color: '#1F2D38' }}>{user?.name}</h2>
-                <p className="text-sm" style={{ color: '#94A1AB' }}>{user?.email}</p>
+                <h2 className="text-lg sm:text-xl font-semibold" style={{ color: '#1F2D38' }}>{user?.name}</h2>
+                <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>{user?.email}</p>
               </div>
 
               <div className="space-y-2">
                 <button
                   onClick={() => { setActiveTab('profile'); setEditMode(false); }}
-                  className={`w-full text-left px-4 py-2 rounded-md transition ${
+                  className={`w-full text-left px-3 sm:px-4 py-2 rounded-md transition text-sm sm:text-base ${
                     activeTab === 'profile'
                       ? 'text-white'
                       : 'hover:bg-gray-100'
@@ -202,7 +202,7 @@ const Profile = () => {
                 </button>
                 <button
                   onClick={() => setActiveTab('addresses')}
-                  className={`w-full text-left px-4 py-2 rounded-md transition ${
+                  className={`w-full text-left px-3 sm:px-4 py-2 rounded-md transition text-sm sm:text-base ${
                     activeTab === 'addresses'
                       ? 'text-white'
                       : 'hover:bg-gray-100'
@@ -213,7 +213,7 @@ const Profile = () => {
                 </button>
                 <button
                   onClick={() => setActiveTab('orders')}
-                  className={`w-full text-left px-4 py-2 rounded-md transition ${
+                  className={`w-full text-left px-3 sm:px-4 py-2 rounded-md transition text-sm sm:text-base ${
                     activeTab === 'orders'
                       ? 'text-white'
                       : 'hover:bg-gray-100'
@@ -224,7 +224,7 @@ const Profile = () => {
                 </button>
                 <button
                   onClick={logout}
-                  className="w-full text-left px-4 py-2 rounded-md text-red-600 hover:bg-red-50 transition"
+                  className="w-full text-left px-3 sm:px-4 py-2 rounded-md text-red-600 hover:bg-red-50 transition text-sm sm:text-base"
                 >
                   Logout
                 </button>
@@ -236,13 +236,13 @@ const Profile = () => {
           <div className="lg:col-span-3">
             {/* Profile Tab */}
             {activeTab === 'profile' && (
-              <div className="bg-white rounded-lg shadow-md p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-semibold" style={{ color: '#1F2D38' }}>Profile Information</h2>
+              <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 gap-3 sm:gap-0">
+                  <h2 className="text-xl sm:text-2xl font-semibold" style={{ color: '#1F2D38' }}>Profile Information</h2>
                   {!editMode && (
                     <button
                       onClick={() => setEditMode(true)}
-                      className="px-4 py-2 rounded-md text-white transition"
+                      className="px-4 py-2 rounded-md text-white transition text-sm sm:text-base"
                       style={{ backgroundColor: '#895F42' }}
                     >
                       Edit Profile
@@ -305,28 +305,28 @@ const Profile = () => {
                 ) : (
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
+                      <label className="block text-xs sm:text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
                         Full Name
                       </label>
-                      <p className="text-lg" style={{ color: '#1F2D38' }}>{user?.name}</p>
+                      <p className="text-base sm:text-lg" style={{ color: '#1F2D38' }}>{user?.name}</p>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
+                      <label className="block text-xs sm:text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
                         Email
                       </label>
-                      <p className="text-lg" style={{ color: '#1F2D38' }}>{user?.email}</p>
+                      <p className="text-base sm:text-lg break-all" style={{ color: '#1F2D38' }}>{user?.email}</p>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
+                      <label className="block text-xs sm:text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
                         Phone Number
                       </label>
-                      <p className="text-lg" style={{ color: '#1F2D38' }}>{user?.phone || 'Not provided'}</p>
+                      <p className="text-base sm:text-lg" style={{ color: '#1F2D38' }}>{user?.phone || 'Not provided'}</p>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
+                      <label className="block text-xs sm:text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
                         Member Since
                       </label>
-                      <p className="text-lg" style={{ color: '#1F2D38' }}>
+                      <p className="text-base sm:text-lg" style={{ color: '#1F2D38' }}>
                         {new Date(user?.createdAt).toLocaleDateString()}
                       </p>
                     </div>
@@ -337,12 +337,12 @@ const Profile = () => {
 
             {/* Addresses Tab */}
             {activeTab === 'addresses' && (
-              <div className="bg-white rounded-lg shadow-md p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-semibold" style={{ color: '#1F2D38' }}>My Addresses</h2>
+              <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 gap-3 sm:gap-0">
+                  <h2 className="text-xl sm:text-2xl font-semibold" style={{ color: '#1F2D38' }}>My Addresses</h2>
                   <button
                     onClick={() => setShowAddressForm(true)}
-                    className="px-4 py-2 rounded-md text-white transition"
+                    className="px-4 py-2 rounded-md text-white transition text-sm sm:text-base"
                     style={{ backgroundColor: '#895F42' }}
                   >
                     Add New Address
@@ -480,41 +480,41 @@ const Profile = () => {
 
                 {loading ? (
                   <div className="text-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto" style={{ borderColor: '#895F42' }}></div>
-                    <p className="mt-4" style={{ color: '#94A1AB' }}>Loading addresses...</p>
+                    <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 mx-auto" style={{ borderColor: '#895F42' }}></div>
+                    <p className="mt-4 text-sm sm:text-base" style={{ color: '#94A1AB' }}>Loading addresses...</p>
                   </div>
                 ) : addresses.length > 0 ? (
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {addresses.map((address) => (
-                      <div key={address._id} className="border rounded-lg p-4 relative" style={{ borderColor: '#BDD7EB' }}>
+                      <div key={address._id} className="border rounded-lg p-3 sm:p-4 relative" style={{ borderColor: '#BDD7EB' }}>
                         {address.isDefault && (
-                          <span className="absolute top-4 right-4 px-2 py-1 rounded text-xs font-semibold text-white" style={{ backgroundColor: '#895F42' }}>
+                          <span className="absolute top-3 sm:top-4 right-3 sm:right-4 px-2 py-1 rounded text-xs font-semibold text-white" style={{ backgroundColor: '#895F42' }}>
                             Default
                           </span>
                         )}
-                        <div className="mb-2">
-                          <p className="font-semibold" style={{ color: '#1F2D38' }}>{address.name}</p>
-                          <p className="text-sm" style={{ color: '#94A1AB' }}>{address.phone}</p>
+                        <div className="mb-2 pr-16 sm:pr-20">
+                          <p className="font-semibold text-sm sm:text-base" style={{ color: '#1F2D38' }}>{address.name}</p>
+                          <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>{address.phone}</p>
                         </div>
-                        <p className="text-sm" style={{ color: '#1F2D38' }}>
+                        <p className="text-xs sm:text-sm" style={{ color: '#1F2D38' }}>
                           {address.addressLine1}
                           {address.addressLine2 && `, ${address.addressLine2}`}
                         </p>
-                        <p className="text-sm" style={{ color: '#1F2D38' }}>
+                        <p className="text-xs sm:text-sm" style={{ color: '#1F2D38' }}>
                           {address.city}, {address.state} - {address.pincode}
                         </p>
-                        <p className="text-sm" style={{ color: '#94A1AB' }}>{address.country}</p>
-                        <div className="mt-4 flex gap-2">
+                        <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>{address.country}</p>
+                        <div className="mt-3 sm:mt-4 flex flex-wrap gap-2">
                           <button
                             onClick={() => handleEditAddress(address)}
-                            className="text-sm px-3 py-1 border rounded-md transition hover:bg-gray-50"
+                            className="text-xs sm:text-sm px-3 py-1.5 sm:py-1 border rounded-md transition hover:bg-gray-50"
                             style={{ borderColor: '#BDD7EB', color: '#895F42' }}
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => handleDeleteAddress(address._id)}
-                            className="text-sm px-3 py-1 border border-red-300 text-red-600 rounded-md hover:bg-red-50 transition"
+                            className="text-xs sm:text-sm px-3 py-1.5 sm:py-1 border border-red-300 text-red-600 rounded-md hover:bg-red-50 transition"
                           >
                             Delete
                           </button>
@@ -524,10 +524,10 @@ const Profile = () => {
                   </div>
                 ) : (
                   <div className="text-center py-12">
-                    <p className="text-lg mb-4" style={{ color: '#94A1AB' }}>No addresses saved yet</p>
+                    <p className="text-base sm:text-lg mb-4" style={{ color: '#94A1AB' }}>No addresses saved yet</p>
                     <button
                       onClick={() => setShowAddressForm(true)}
-                      className="px-4 py-2 rounded-md text-white"
+                      className="px-4 py-2 rounded-md text-white text-sm sm:text-base"
                       style={{ backgroundColor: '#895F42' }}
                     >
                       Add Your First Address
@@ -539,29 +539,29 @@ const Profile = () => {
 
             {/* Orders Tab */}
             {activeTab === 'orders' && (
-              <div className="bg-white rounded-lg shadow-md p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
-                <h2 className="text-2xl font-semibold mb-6" style={{ color: '#1F2D38' }}>Order History</h2>
+              <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
+                <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6" style={{ color: '#1F2D38' }}>Order History</h2>
 
                 {loading ? (
                   <div className="text-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto" style={{ borderColor: '#895F42' }}></div>
-                    <p className="mt-4" style={{ color: '#94A1AB' }}>Loading orders...</p>
+                    <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 mx-auto" style={{ borderColor: '#895F42' }}></div>
+                    <p className="mt-4 text-sm sm:text-base" style={{ color: '#94A1AB' }}>Loading orders...</p>
                   </div>
                 ) : orders.length > 0 ? (
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {orders.map((order) => (
-                      <div key={order._id} className="border rounded-lg p-4" style={{ borderColor: '#BDD7EB' }}>
-                        <div className="flex justify-between items-start mb-4">
-                          <div>
-                            <p className="text-sm" style={{ color: '#94A1AB' }}>
+                      <div key={order._id} className="border rounded-lg p-3 sm:p-4" style={{ borderColor: '#BDD7EB' }}>
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3 sm:mb-4 gap-2 sm:gap-0">
+                          <div className="flex-1">
+                            <p className="text-xs sm:text-sm break-all" style={{ color: '#94A1AB' }}>
                               Order ID: {order._id}
                             </p>
-                            <p className="text-sm" style={{ color: '#94A1AB' }}>
+                            <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>
                               Date: {new Date(order.createdAt).toLocaleDateString()}
                             </p>
                           </div>
                           <span
-                            className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(
+                            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold self-start ${getStatusColor(
                               order.status
                             )}`}
                           >
@@ -569,29 +569,29 @@ const Profile = () => {
                           </span>
                         </div>
 
-                        <div className="space-y-2 mb-4">
+                        <div className="space-y-2 mb-3 sm:mb-4">
                           {order.items?.map((item, index) => (
-                            <div key={index} className="flex justify-between text-sm">
-                              <span style={{ color: '#1F2D38' }}>
+                            <div key={index} className="flex justify-between text-xs sm:text-sm gap-2">
+                              <span className="flex-1" style={{ color: '#1F2D38' }}>
                                 {item.product?.name || 'Product'} x {item.quantity}
                               </span>
-                              <span className="font-semibold" style={{ color: '#1F2D38' }}>
+                              <span className="font-semibold whitespace-nowrap" style={{ color: '#1F2D38' }}>
                                 ₹{(item.price * item.quantity).toLocaleString()}
                               </span>
                             </div>
                           ))}
                         </div>
 
-                        <div className="border-t pt-3 flex justify-between items-center" style={{ borderColor: '#BDD7EB' }}>
-                          <span className="font-semibold" style={{ color: '#1F2D38' }}>Total</span>
-                          <span className="text-lg font-bold" style={{ color: '#895F42' }}>
+                        <div className="border-t pt-2 sm:pt-3 flex justify-between items-center" style={{ borderColor: '#BDD7EB' }}>
+                          <span className="font-semibold text-sm sm:text-base" style={{ color: '#1F2D38' }}>Total</span>
+                          <span className="text-base sm:text-lg font-bold" style={{ color: '#895F42' }}>
                             ₹{order.totalAmount?.toLocaleString()}
                           </span>
                         </div>
 
                         {order.shippingAddress && (
-                          <div className="mt-4 pt-4 border-t text-sm" style={{ borderColor: '#BDD7EB', color: '#94A1AB' }}>
-                            <p className="font-semibold mb-1" style={{ color: '#1F2D38' }}>Shipping Address:</p>
+                          <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t text-xs sm:text-sm" style={{ borderColor: '#BDD7EB', color: '#94A1AB' }}>
+                            <p className="font-semibold mb-1 text-sm sm:text-base" style={{ color: '#1F2D38' }}>Shipping Address:</p>
                             <p>{order.shippingAddress.name}</p>
                             <p>{order.shippingAddress.address}</p>
                             <p>
@@ -606,10 +606,10 @@ const Profile = () => {
                   </div>
                 ) : (
                   <div className="text-center py-12">
-                    <p className="text-lg mb-4" style={{ color: '#94A1AB' }}>No orders yet</p>
+                    <p className="text-base sm:text-lg mb-4" style={{ color: '#94A1AB' }}>No orders yet</p>
                     <button
                       onClick={() => navigate('/products')}
-                      className="font-semibold transition"
+                      className="font-semibold transition text-sm sm:text-base"
                       style={{ color: '#895F42' }}
                     >
                       Start Shopping
