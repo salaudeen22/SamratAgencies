@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { contactAPI } from '../services/api';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,9 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -16,17 +20,35 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    });
+    setLoading(true);
+    setError('');
+    setSuccess(false);
+
+    try {
+      const response = await contactAPI.submitForm(formData);
+
+      if (response.data.success) {
+        setSuccess(true);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+
+        // Auto-hide success message after 5 seconds
+        setTimeout(() => {
+          setSuccess(false);
+        }, 5000);
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to send message. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -174,14 +196,31 @@ const Contact = () => {
                   ></textarea>
                 </div>
 
+                {/* Success Message */}
+                {success && (
+                  <div className="p-4 rounded-lg" style={{ backgroundColor: '#d4edda', color: '#155724', border: '1px solid #c3e6cb' }}>
+                    <p className="font-semibold">✓ Message sent successfully!</p>
+                    <p className="text-sm mt-1">Thank you for contacting us. We'll get back to you soon.</p>
+                  </div>
+                )}
+
+                {/* Error Message */}
+                {error && (
+                  <div className="p-4 rounded-lg" style={{ backgroundColor: '#f8d7da', color: '#721c24', border: '1px solid #f5c6cb' }}>
+                    <p className="font-semibold">✗ Error</p>
+                    <p className="text-sm mt-1">{error}</p>
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  className="w-full text-white px-6 py-4 rounded-lg font-semibold transition-all shadow-lg"
+                  disabled={loading}
+                  className="w-full text-white px-6 py-4 rounded-lg font-semibold transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ backgroundColor: '#895F42' }}
-                  onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
-                  onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                  onMouseEnter={(e) => !loading && (e.currentTarget.style.opacity = '0.9')}
+                  onMouseLeave={(e) => !loading && (e.currentTarget.style.opacity = '1')}
                 >
-                  Send Message
+                  {loading ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </div>

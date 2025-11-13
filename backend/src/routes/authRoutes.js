@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const { register, login, getProfile, googleCallback } = require('../controllers/authController');
+const { register, login, getProfile, googleCallback, forgotPassword, resetPassword } = require('../controllers/authController');
 const { auth } = require('../middleware/auth');
 
 router.post('/register', register);
 router.post('/login', login);
 router.get('/profile', auth, getProfile);
+router.post('/forgot-password', forgotPassword);
+router.post('/reset-password', resetPassword);
 
 // Google OAuth routes
 router.get('/google',

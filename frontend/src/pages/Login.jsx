@@ -115,9 +115,18 @@ const Login = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
-                  Password
-                </label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-semibold" style={{ color: '#1F2D38' }}>
+                    Password
+                  </label>
+                  <Link
+                    to="/forgot-password"
+                    className="text-sm font-medium transition-colors duration-200 hover:underline"
+                    style={{ color: '#895F42' }}
+                  >
+                    Forgot Password?
+                  </Link>
+                </div>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <MdLock className="h-5 w-5" style={{ color: '#94A1AB' }} />

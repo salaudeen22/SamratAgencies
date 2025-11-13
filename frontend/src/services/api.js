@@ -26,6 +26,8 @@ export const authAPI = {
   register: (userData) => api.post('/auth/register', userData),
   login: (credentials) => api.post('/auth/login', credentials),
   getProfile: () => api.get('/auth/profile'),
+  forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
+  resetPassword: (token, password) => api.post('/auth/reset-password', { token, password }),
 };
 
 // Product APIs
@@ -153,6 +155,11 @@ export const uploadAPI = {
 
   // Remove image from product
   removeProductImage: (productId, imageKey) => api.delete(`/products/${productId}/images`, { data: { imageKey } }),
+};
+
+// Contact API
+export const contactAPI = {
+  submitForm: (formData) => api.post('/contact', formData),
 };
 
 export default api;

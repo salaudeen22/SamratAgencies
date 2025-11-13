@@ -1,6 +1,9 @@
 const Order = require('../models/Order');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
+const User = require('../models/User');
+const { sendEmail } = require('../config/email');
+const { orderConfirmationEmail } = require('../utils/emailTemplates');
 
 // Create new order
 exports.createOrder = async (req, res) => {
@@ -32,6 +35,20 @@ exports.createOrder = async (req, res) => {
       { user: req.user.id },
       { items: [], totalPrice: 0 }
     );
+
+    // Get user email for sending confirmation
+    const user = await User.findById(req.user.id);
+
+    // Send order confirmation email
+    if (user && user.email) {
+      const emailContent = orderConfirmationEmail(order);
+      await sendEmail({
+        to: user.email,
+        subject: emailContent.subject,
+        html: emailContent.html,
+        text: emailContent.text
+      });
+    }
 
     res.status(201).json(order);
   } catch (error) {

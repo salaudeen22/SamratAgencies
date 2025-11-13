@@ -49,6 +49,7 @@ app.use('/api/users', require('./src/routes/userRoutes'));
 app.use('/api/admin', require('./src/routes/adminRoutes'));
 app.use('/api/admin', require('./src/routes/attributeRoutes'));
 app.use('/api/upload', require('./src/routes/uploadRoutes'));
+app.use('/api/contact', require('./src/routes/contactRoutes'));
 app.use('/', require('./src/routes/sitemapRoutes'));
 
 // API info route
@@ -65,7 +66,8 @@ app.get('/api', (req, res) => {
       payment: '/api/payment',
       users: '/api/users',
       admin: '/api/admin',
-      upload: '/api/upload'
+      upload: '/api/upload',
+      contact: '/api/contact'
     }
   });
 });
