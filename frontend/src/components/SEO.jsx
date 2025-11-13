@@ -58,7 +58,7 @@ const SEO = ({
     image: fullImage,
     '@id': siteUrl,
     url: siteUrl,
-    telephone: '+91-XXXXXXXXXX',
+    telephone: '+91-9880914457',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Bangalore',
