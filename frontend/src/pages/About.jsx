@@ -624,7 +624,7 @@ const About = () => {
                       <p className="font-bold text-lg mb-2" style={{ color: '#1F2D38' }}>Phone</p>
                       <p className="leading-relaxed" style={{ color: '#94A1AB' }}>
                         <a href="tel:+919880914457" className="hover:underline">+91 98809 14457</a><br />
-                        <a href="tel:+919449270486" className="hover:underline">+91 94492 70486</a>
+                        <a href="tel:+919448075801" className="hover:underline">+91 94480 75801</a>
                       </p>
                     </div>
                   </div>

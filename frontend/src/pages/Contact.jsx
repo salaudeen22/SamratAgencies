@@ -92,7 +92,7 @@ const Contact = () => {
               </div>
               <h3 className="text-xl font-bold mb-4" style={{ color: '#1F2D38' }}>Call Us</h3>
               <a href="tel:+919880914457" className="block mb-2 text-lg font-medium hover:underline" style={{ color: '#895F42' }}>+91 98809 14457</a>
-              <a href="tel:+919449270486" className="block mb-4 text-lg font-medium hover:underline" style={{ color: '#895F42' }}>+91 94492 70486</a>
+              <a href="tel:+919448075801" className="block mb-4 text-lg font-medium hover:underline" style={{ color: '#895F42' }}>+91 94480 75801</a>
               <div className="pt-4 border-t" style={{ borderColor: '#E0EAF0' }}>
                 <p className="text-sm font-semibold" style={{ color: '#1F2D38' }}>Business Hours</p>
                 <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>Mon-Sun: 8:00 AM - 10:30 PM</p>
