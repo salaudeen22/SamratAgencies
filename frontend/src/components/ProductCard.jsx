@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import QuickLook from './QuickLook';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const [isWishlisted, setIsWishlisted] = useState(isInWishlist(product._id));
+  const [showQuickLook, setShowQuickLook] = useState(false);
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
@@ -75,8 +77,32 @@ const ProductCard = ({ product }) => {
             </svg>
           </button>
 
+          {/* Quick Look Button */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowQuickLook(true);
+            }}
+            className="absolute top-2 right-2 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all opacity-0 group-hover:opacity-100"
+            style={{ color: '#895F42' }}
+            title="Quick Look"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </button>
+
           {product.availabilityType === 'made-to-order' && (
-            <div className="absolute top-2 right-2 text-white px-3 py-1 rounded-md text-sm font-semibold shadow-lg" style={{ backgroundColor: '#895F42' }}>
+            <div className="absolute bottom-2 right-2 text-white px-3 py-1 rounded-md text-sm font-semibold shadow-lg" style={{ backgroundColor: '#895F42' }}>
               Made to Order
             </div>
           )}
@@ -128,6 +154,13 @@ const ProductCard = ({ product }) => {
           </div>
         </div>
       </div>
+
+      {/* Quick Look Modal */}
+      <QuickLook
+        product={product}
+        isOpen={showQuickLook}
+        onClose={() => setShowQuickLook(false)}
+      />
     </Link>
   );
 };

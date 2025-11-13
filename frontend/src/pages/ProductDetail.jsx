@@ -4,6 +4,7 @@ import { productAPI } from '../services/api';
 import { useCart } from '../context/CartContext';
 import Button from '../components/Button';
 import SEO from '../components/SEO';
+import ProductCard from '../components/ProductCard';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -13,12 +14,29 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await productAPI.getById(id);
         setProduct(response.data);
+
+        // Fetch related products from the same category
+        if (response.data.category) {
+          const categoryId = typeof response.data.category === 'object'
+            ? response.data.category._id
+            : response.data.category;
+
+          const relatedResponse = await productAPI.getAll({
+            category: categoryId,
+            limit: 4
+          });
+
+          // Filter out the current product
+          const filtered = relatedResponse.data.filter(p => p._id !== response.data._id);
+          setRelatedProducts(filtered.slice(0, 3));
+        }
       } catch (err) {
         console.error('Failed to fetch product:', err);
       } finally {
@@ -386,6 +404,27 @@ const ProductDetail = () => {
             </div>
           )}
         </div>
+
+        {/* Related Products Section */}
+        {relatedProducts.length > 0 && (
+          <div className="mt-8">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-lg" style={{ backgroundColor: '#E0EAF0' }}>
+                <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl lg:text-2xl font-bold" style={{ color: '#1F2D38' }}>
+                Related Products from {typeof product.category === 'object' ? product.category.name : product.category}
+              </h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {relatedProducts.map((relatedProduct) => (
+                <ProductCard key={relatedProduct._id} product={relatedProduct} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       </div>
     </>
