@@ -33,7 +33,10 @@ const Checkout = () => {
     state: '',
     pincode: '',
     paymentMethod: 'cod',
+    specialInstructions: '',
   });
+
+  const [saveAddress, setSaveAddress] = useState(false);
 
   // Calculate delivery charge when pincode is entered
   const calculateDeliveryCharge = async (pincode) => {
@@ -68,6 +71,24 @@ const Checkout = () => {
 
   const getFinalTotal = () => {
     return Math.max(0, getCartTotal() - couponDiscount + deliveryCharge);
+  };
+
+  // Calculate expected delivery date range
+  const getDeliveryDateRange = () => {
+    if (!deliveryInfo?.estimatedDays) return null;
+
+    const today = new Date();
+    const minDate = new Date(today);
+    const maxDate = new Date(today);
+
+    minDate.setDate(today.getDate() + deliveryInfo.estimatedDays.min);
+    maxDate.setDate(today.getDate() + deliveryInfo.estimatedDays.max);
+
+    const options = { month: 'short', day: 'numeric' };
+    return {
+      min: minDate.toLocaleDateString('en-IN', options),
+      max: maxDate.toLocaleDateString('en-IN', options)
+    };
   };
 
   // Load Razorpay script
@@ -171,6 +192,25 @@ const Checkout = () => {
 
     try {
       setLoading(true);
+
+      // Save address if checkbox is checked
+      if (saveAddress && useNewAddress) {
+        try {
+          await userAPI.addAddress({
+            name: formData.name,
+            phone: formData.phone,
+            addressLine1: formData.address,
+            city: formData.city,
+            state: formData.state,
+            pincode: formData.pincode,
+            isDefault: savedAddresses.length === 0, // Set as default if it's the first address
+          });
+        } catch (error) {
+          console.error('Failed to save address:', error);
+          // Continue with order even if address save fails
+        }
+      }
+
       const orderData = {
         items: cart.items
           .filter(item => item.product)
@@ -195,6 +235,7 @@ const Checkout = () => {
         coupon: appliedCoupon?._id || null,
         discount: couponDiscount || 0,
         deliveryCharge: deliveryCharge || 0,
+        specialInstructions: formData.specialInstructions || '',
       };
 
       if (formData.paymentMethod === 'online') {
@@ -294,7 +335,44 @@ const Checkout = () => {
   return (
     <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 md:mb-8" style={{ color: '#1F2D38' }}>Checkout</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: '#1F2D38' }}>Checkout</h1>
+
+        {/* Progress Steps */}
+        <div className="mb-6 sm:mb-8">
+          <div className="flex items-center justify-center">
+            <div className="flex items-center w-full max-w-2xl">
+              {/* Step 1: Cart */}
+              <div className="flex flex-col items-center flex-1">
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold bg-green-500">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="text-xs mt-1 hidden sm:block" style={{ color: '#94A1AB' }}>Cart</span>
+              </div>
+
+              <div className="flex-1 h-1 bg-green-500 mx-2"></div>
+
+              {/* Step 2: Checkout */}
+              <div className="flex flex-col items-center flex-1">
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold" style={{ backgroundColor: '#895F42' }}>
+                  2
+                </div>
+                <span className="text-xs mt-1 font-medium hidden sm:block" style={{ color: '#895F42' }}>Checkout</span>
+              </div>
+
+              <div className="flex-1 h-1 mx-2" style={{ backgroundColor: '#BDD7EB' }}></div>
+
+              {/* Step 3: Confirmation */}
+              <div className="flex flex-col items-center flex-1">
+                <div className="w-8 h-8 rounded-full flex items-center justify-center font-semibold" style={{ backgroundColor: '#E0EAF0', color: '#94A1AB' }}>
+                  3
+                </div>
+                <span className="text-xs mt-1 hidden sm:block" style={{ color: '#94A1AB' }}>Confirmation</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {/* Checkout Form */}
@@ -489,31 +567,109 @@ const Checkout = () => {
                 </div>
               </div>
 
+              {/* Special Instructions */}
+              <div className="mt-4 sm:mt-6">
+                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                  Special Instructions (Optional)
+                </label>
+                <textarea
+                  name="specialInstructions"
+                  value={formData.specialInstructions}
+                  onChange={handleChange}
+                  rows="2"
+                  placeholder="Any special delivery instructions..."
+                  className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
+                  style={{ borderColor: '#BDD7EB' }}
+                ></textarea>
+              </div>
+
+              {/* Save Address Checkbox */}
+              {useNewAddress && (
+                <div className="mt-3">
+                  <label className="flex items-center text-sm">
+                    <input
+                      type="checkbox"
+                      checked={saveAddress}
+                      onChange={(e) => setSaveAddress(e.target.checked)}
+                      className="mr-2"
+                    />
+                    <span style={{ color: '#1F2D38' }}>Save this address for future orders</span>
+                  </label>
+                </div>
+              )}
+
               <div className="mt-4 sm:mt-6">
                 <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Payment Method</h3>
-                <div className="space-y-2 text-sm sm:text-base">
-                  <label className="flex items-center">
+                <div className="space-y-3">
+                  {/* COD Option */}
+                  <label
+                    className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition ${
+                      formData.paymentMethod === 'cod' ? 'border-[#895F42] bg-[#FDF8F5]' : 'border-[#BDD7EB] hover:border-[#895F42]'
+                    }`}
+                  >
                     <input
                       type="radio"
                       name="paymentMethod"
                       value="cod"
                       checked={formData.paymentMethod === 'cod'}
                       onChange={handleChange}
-                      className="mr-2"
+                      className="mr-3"
                     />
-                    Cash on Delivery
+                    <div className="flex items-center gap-3 flex-1">
+                      <div className="p-2 rounded-lg" style={{ backgroundColor: '#E0EAF0' }}>
+                        <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm sm:text-base" style={{ color: '#1F2D38' }}>Cash on Delivery</p>
+                        <p className="text-xs" style={{ color: '#94A1AB' }}>Pay when you receive</p>
+                      </div>
+                    </div>
                   </label>
-                  <label className="flex items-center">
+
+                  {/* Online Payment Option */}
+                  <label
+                    className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition ${
+                      formData.paymentMethod === 'online' ? 'border-[#895F42] bg-[#FDF8F5]' : 'border-[#BDD7EB] hover:border-[#895F42]'
+                    }`}
+                  >
                     <input
                       type="radio"
                       name="paymentMethod"
                       value="online"
                       checked={formData.paymentMethod === 'online'}
                       onChange={handleChange}
-                      className="mr-2"
+                      className="mr-3"
                     />
-                    Online Payment
+                    <div className="flex items-center gap-3 flex-1">
+                      <div className="p-2 rounded-lg" style={{ backgroundColor: '#E0EAF0' }}>
+                        <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm sm:text-base" style={{ color: '#1F2D38' }}>Online Payment</p>
+                        <p className="text-xs" style={{ color: '#94A1AB' }}>UPI, Cards, Net Banking</p>
+                      </div>
+                    </div>
                   </label>
+                </div>
+
+                {/* Trust Badges */}
+                <div className="mt-4 p-3 rounded-lg flex items-center justify-center gap-4 text-center" style={{ backgroundColor: '#F0F9FF' }}>
+                  <div className="flex items-center gap-1">
+                    <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-xs font-medium text-green-700">100% Secure</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <svg className="w-4 h-4" style={{ color: '#895F42' }} fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-xs font-medium" style={{ color: '#895F42' }}>SSL Encrypted</span>
+                  </div>
                 </div>
               </div>
 
@@ -531,17 +687,41 @@ const Checkout = () => {
               <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Order Summary</h2>
 
               <div className="space-y-3 mb-6">
-                {cart.items.map((item) => {
+                {cart.items.map((item, index) => {
                   if (!item.product) return null;
+                  const itemPrice = item.price || item.product.price;
 
                   return (
-                  <div key={item.product._id} className="flex justify-between text-sm">
-                    <span style={{ color: '#94A1AB' }}>
-                      {item.product.name} x {item.quantity}
-                    </span>
-                    <span className="font-semibold" style={{ color: '#1F2D38' }}>
-                      ₹{(item.product.price * item.quantity).toLocaleString()}
-                    </span>
+                  <div key={`${item.product._id}-${index}`} className="flex gap-3 pb-3" style={{ borderBottom: '1px solid #E5E7EB' }}>
+                    {/* Product Thumbnail */}
+                    <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0" style={{ backgroundColor: '#E0EAF0' }}>
+                      {item.product.images && item.product.images.length > 0 && item.product.images[0].url ? (
+                        <img
+                          src={item.product.images[0].url}
+                          alt={item.product.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-xs" style={{ color: '#94A1AB' }}>
+                          No Image
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Product Info */}
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <p className="text-sm font-medium line-clamp-1" style={{ color: '#1F2D38' }}>
+                          {item.product.name}
+                        </p>
+                        <p className="text-xs" style={{ color: '#94A1AB' }}>
+                          Qty: {item.quantity}
+                        </p>
+                      </div>
+                      <p className="text-sm font-semibold" style={{ color: '#895F42' }}>
+                        ₹{(itemPrice * item.quantity).toLocaleString()}
+                      </p>
+                    </div>
                   </div>
                   );
                 })}
@@ -583,6 +763,23 @@ const Checkout = () => {
                   <span style={{ color: '#1F2D38' }}>Total</span>
                   <span style={{ color: '#895F42' }}>₹{getFinalTotal().toLocaleString()}</span>
                 </div>
+
+                {/* Expected Delivery Date */}
+                {deliveryInfo && getDeliveryDateRange() && (
+                  <div className="mt-4 p-3 rounded-lg" style={{ backgroundColor: '#ECFDF5' }}>
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <div className="text-xs">
+                        <p className="font-semibold text-green-700">Expected Delivery</p>
+                        <p className="text-green-600">
+                          {getDeliveryDateRange().min} - {getDeliveryDateRange().max}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
