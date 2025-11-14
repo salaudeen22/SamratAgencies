@@ -46,28 +46,28 @@ const OrderConfirmation = () => {
   }
 
   return (
-    <div className="min-h-screen py-8" style={{ backgroundColor: '#fafaf9' }}>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-4 sm:py-8" style={{ backgroundColor: '#fafaf9' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Success Banner */}
-        <div className="bg-green-50 rounded-lg p-6 mb-8 border-2 border-green-200">
+        <div className="bg-green-50 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8 border-2 border-green-200">
           <div className="flex items-center justify-center mb-4">
-            <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center">
-              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-green-500 flex items-center justify-center">
+              <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-center mb-2 text-green-800">Order Placed Successfully!</h1>
-          <p className="text-center text-green-700">
+          <h1 className="text-2xl sm:text-3xl font-bold text-center mb-2 text-green-800">Order Placed Successfully!</h1>
+          <p className="text-center text-sm sm:text-base text-green-700">
             Thank you for your order. We've sent a confirmation email with your order details.
           </p>
         </div>
 
         {/* Order Details */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6" style={{ border: '2px solid #BDD7EB' }}>
-          <h2 className="text-xl font-semibold mb-4" style={{ color: '#1F2D38' }}>Order Details</h2>
+        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6" style={{ border: '2px solid #BDD7EB' }}>
+          <h2 className="text-lg sm:text-xl font-semibold mb-4" style={{ color: '#1F2D38' }}>Order Details</h2>
 
-          <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <div>
               <p className="text-sm" style={{ color: '#94A1AB' }}>Order ID</p>
               <p className="font-semibold" style={{ color: '#1F2D38' }}>#{order._id.slice(-8).toUpperCase()}</p>
@@ -101,11 +101,11 @@ const OrderConfirmation = () => {
 
           {/* Items Ordered */}
           <div className="border-t-2 pt-4" style={{ borderColor: '#BDD7EB' }}>
-            <h3 className="font-semibold mb-4" style={{ color: '#1F2D38' }}>Items Ordered</h3>
-            <div className="space-y-4">
+            <h3 className="text-base sm:text-lg font-semibold mb-4" style={{ color: '#1F2D38' }}>Items Ordered</h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {order.items.map((item, index) => (
-                <div key={index} className="flex items-start space-x-4 p-4 rounded-lg" style={{ backgroundColor: '#F9FAFB' }}>
-                  <div className="w-20 h-20 rounded-lg flex-shrink-0" style={{ backgroundColor: '#E0EAF0' }}>
+                <div key={index} className="flex items-start space-x-3 sm:space-x-4 p-3 sm:p-4 rounded-lg" style={{ backgroundColor: '#F9FAFB' }}>
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg flex-shrink-0" style={{ backgroundColor: '#E0EAF0' }}>
                     {item.image ? (
                       <img
                         src={item.image}
@@ -118,12 +118,12 @@ const OrderConfirmation = () => {
                       </div>
                     )}
                   </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold" style={{ color: '#1F2D38' }}>{item.name}</h4>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-sm sm:text-base" style={{ color: '#1F2D38' }}>{item.name}</h4>
 
                     {/* Display Variants if available */}
                     {item.selectedVariants && Object.keys(item.selectedVariants).length > 0 && (
-                      <div className="mt-2 flex flex-wrap gap-2">
+                      <div className="mt-2 flex flex-wrap gap-1.5 sm:gap-2">
                         {Object.entries(item.selectedVariants).map(([key, value]) => (
                           <span
                             key={key}
@@ -136,11 +136,11 @@ const OrderConfirmation = () => {
                       </div>
                     )}
 
-                    <div className="mt-2 flex items-center justify-between">
-                      <p className="text-sm" style={{ color: '#94A1AB' }}>
-                        Quantity: {item.quantity}
+                    <div className="mt-2 flex items-center justify-between gap-2">
+                      <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>
+                        Qty: {item.quantity}
                       </p>
-                      <p className="font-semibold" style={{ color: '#895F42' }}>
+                      <p className="font-semibold text-sm sm:text-base" style={{ color: '#895F42' }}>
                         ₹{(item.price * item.quantity).toLocaleString()}
                       </p>
                     </div>
@@ -152,10 +152,10 @@ const OrderConfirmation = () => {
         </div>
 
         {/* Shipping & Payment Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6">
           {/* Shipping Address */}
-          <div className="bg-white rounded-lg shadow-md p-6" style={{ border: '2px solid #BDD7EB' }}>
-            <h3 className="font-semibold mb-4" style={{ color: '#1F2D38' }}>Shipping Address</h3>
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6" style={{ border: '2px solid #BDD7EB' }}>
+            <h3 className="text-base sm:text-lg font-semibold mb-4" style={{ color: '#1F2D38' }}>Shipping Address</h3>
             <div className="space-y-2 text-sm">
               <p className="font-semibold" style={{ color: '#1F2D38' }}>{order.shippingAddress.name}</p>
               <p style={{ color: '#94A1AB' }}>{order.shippingAddress.phone}</p>
@@ -168,8 +168,8 @@ const OrderConfirmation = () => {
           </div>
 
           {/* Order Summary */}
-          <div className="bg-white rounded-lg shadow-md p-6" style={{ border: '2px solid #BDD7EB' }}>
-            <h3 className="font-semibold mb-4" style={{ color: '#1F2D38' }}>Order Summary</h3>
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6" style={{ border: '2px solid #BDD7EB' }}>
+            <h3 className="text-base sm:text-lg font-semibold mb-4" style={{ color: '#1F2D38' }}>Order Summary</h3>
             <div className="space-y-3">
               <div className="flex justify-between text-sm" style={{ color: '#94A1AB' }}>
                 <span>Subtotal</span>
@@ -195,14 +195,14 @@ const OrderConfirmation = () => {
 
         {/* Delivery Estimate */}
         {order.paymentMethod === 'cod' && (
-          <div className="bg-blue-50 rounded-lg p-6 mb-6 border-2 border-blue-200">
-            <div className="flex items-start">
-              <svg className="w-6 h-6 mr-3 flex-shrink-0" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-blue-50 rounded-lg p-4 sm:p-6 mb-6 border-2 border-blue-200">
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <div>
-                <h4 className="font-semibold mb-1" style={{ color: '#1F2D38' }}>Cash on Delivery</h4>
-                <p className="text-sm" style={{ color: '#94A1AB' }}>
+                <h4 className="font-semibold mb-1 text-sm sm:text-base" style={{ color: '#1F2D38' }}>Cash on Delivery</h4>
+                <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>
                   Please keep ₹{order.totalPrice.toLocaleString()} ready in cash. Our delivery partner will collect the payment at the time of delivery.
                 </p>
               </div>
@@ -211,17 +211,17 @@ const OrderConfirmation = () => {
         )}
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <Button
             onClick={() => navigate('/profile')}
-            className="flex-1"
+            className="flex-1 w-full sm:w-auto"
             size="lg"
           >
             View Order Details
           </Button>
           <button
             onClick={() => navigate('/products')}
-            className="flex-1 px-6 py-3 rounded-lg font-medium transition"
+            className="flex-1 w-full sm:w-auto px-4 sm:px-6 py-3 rounded-lg font-medium transition text-sm sm:text-base"
             style={{
               backgroundColor: 'white',
               color: '#895F42',
