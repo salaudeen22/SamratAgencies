@@ -21,6 +21,11 @@ const cartSchema = new mongoose.Schema({
     price: {
       type: Number,
       required: true
+    },
+    selectedVariants: {
+      type: Map,
+      of: String,
+      default: {}
     }
   }],
   totalPrice: {

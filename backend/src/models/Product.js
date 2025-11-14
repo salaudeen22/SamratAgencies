@@ -83,6 +83,25 @@ const productSchema = new mongoose.Schema({
   }],
   // Product variants (only if some attributes affect price/stock)
   variants: [variantSchema],
+
+  // Variant Configuration - Price modifiers per attribute option (new flexible system)
+  variantPricing: [{
+    attributeCode: String,
+    attributeName: String,
+    options: [{
+      value: String,
+      label: String,
+      priceModifier: {
+        type: Number,
+        default: 0
+      },
+      image: {
+        url: String,
+        public_id: String
+      }
+    }]
+  }],
+
   // If no variants, use these
   price: {
     type: Number,

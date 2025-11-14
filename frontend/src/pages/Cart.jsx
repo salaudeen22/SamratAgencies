@@ -6,13 +6,13 @@ const Cart = () => {
   const { cart, updateQuantity, removeFromCart, getCartTotal } = useCart();
   const navigate = useNavigate();
 
-  const handleQuantityChange = async (productId, newQuantity) => {
-    await updateQuantity(productId, newQuantity);
+  const handleQuantityChange = async (productId, newQuantity, selectedVariants) => {
+    await updateQuantity(productId, newQuantity, selectedVariants);
   };
 
-  const handleRemove = async (productId) => {
+  const handleRemove = async (productId, selectedVariants) => {
     if (window.confirm('Remove this item from cart?')) {
-      await removeFromCart(productId);
+      await removeFromCart(productId, selectedVariants);
     }
   };
 
@@ -43,11 +43,17 @@ const Cart = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
-            {cart.items.map((item) => {
+            {cart.items.map((item, index) => {
               if (!item.product) return null;
 
+              // Create unique key including variants
+              const itemKey = `${item.product._id}-${JSON.stringify(item.selectedVariants || {})}-${index}`;
+
+              // Get the actual price (with variant modifiers)
+              const itemPrice = item.price || item.product.price || 0;
+
               return (
-              <div key={item.product._id} className="bg-white rounded-lg shadow-md p-4 sm:p-6" style={{ border: '2px solid #BDD7EB' }}>
+              <div key={itemKey} className="bg-white rounded-lg shadow-md p-4 sm:p-6" style={{ border: '2px solid #BDD7EB' }}>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 md:space-x-6">
                   {/* Product Image */}
                   <div className="rounded-lg w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0" style={{ backgroundColor: '#E0EAF0' }}>
@@ -79,8 +85,24 @@ const Cart = () => {
                       <p className="text-xs sm:text-sm mt-1" style={{ color: '#94A1AB' }}>
                         {item.product.category}
                       </p>
+
+                      {/* Display Selected Variants */}
+                      {item.selectedVariants && Object.keys(item.selectedVariants).length > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {Object.entries(item.selectedVariants).map(([key, value]) => (
+                            <span
+                              key={key}
+                              className="text-xs px-2 py-1 rounded"
+                              style={{ backgroundColor: '#E0EAF0', color: '#1F2D38' }}
+                            >
+                              <span className="capitalize font-medium">{key}:</span> {value}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
                       <p className="font-bold mt-2 text-base sm:text-lg" style={{ color: '#895F42' }}>
-                        ₹{item.product.price?.toLocaleString()}
+                        ₹{itemPrice.toLocaleString()}
                       </p>
                     </div>
 
@@ -88,7 +110,7 @@ const Cart = () => {
                     <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto space-x-4">
                       <div className="flex items-center space-x-2 sm:space-x-3">
                         <button
-                          onClick={() => handleQuantityChange(item.product._id, item.quantity - 1)}
+                          onClick={() => handleQuantityChange(item.product._id, item.quantity - 1, item.selectedVariants)}
                           className="px-2 sm:px-3 py-1 rounded-md transition text-sm sm:text-base"
                           style={{ backgroundColor: '#E0EAF0', color: '#1F2D38' }}
                           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#BDD7EB'}
@@ -98,7 +120,7 @@ const Cart = () => {
                         </button>
                         <span className="text-base sm:text-lg font-semibold min-w-[30px] text-center" style={{ color: '#1F2D38' }}>{item.quantity}</span>
                         <button
-                          onClick={() => handleQuantityChange(item.product._id, item.quantity + 1)}
+                          onClick={() => handleQuantityChange(item.product._id, item.quantity + 1, item.selectedVariants)}
                           className="px-2 sm:px-3 py-1 rounded-md transition text-sm sm:text-base"
                           style={{ backgroundColor: '#E0EAF0', color: '#1F2D38' }}
                           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#BDD7EB'}
@@ -111,10 +133,10 @@ const Cart = () => {
                       {/* Subtotal & Remove */}
                       <div className="text-right">
                         <p className="text-base sm:text-lg font-bold mb-1 sm:mb-2" style={{ color: '#1F2D38' }}>
-                          ₹{(item.product.price * item.quantity).toLocaleString()}
+                          ₹{(itemPrice * item.quantity).toLocaleString()}
                         </p>
                         <button
-                          onClick={() => handleRemove(item.product._id)}
+                          onClick={() => handleRemove(item.product._id, item.selectedVariants)}
                           className="text-red-500 hover:text-red-700 text-xs sm:text-sm"
                         >
                           Remove

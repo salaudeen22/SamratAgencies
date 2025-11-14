@@ -13,6 +13,13 @@ const ProductCard = ({ product }) => {
   const handleAddToCart = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    // If product has variants, redirect to detail page instead
+    if (product.variantPricing && product.variantPricing.length > 0) {
+      window.location.href = `/products/${product.slug || product._id}`;
+      return;
+    }
+
     const result = await addToCart(product._id, 1);
     if (result.success) {
       alert('Added to cart!');
@@ -119,9 +126,41 @@ const ProductCard = ({ product }) => {
 
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
-                ₹{product.price?.toLocaleString()}
-              </span>
+              {/* Show price range if product has variant pricing */}
+              {product.variantPricing && product.variantPricing.length > 0 ? (
+                (() => {
+                  // Calculate min and max price
+                  let minPrice = product.price || 0;
+                  let maxPrice = product.price || 0;
+
+                  product.variantPricing.forEach(variant => {
+                    variant.options.forEach(option => {
+                      const modifier = option.priceModifier || 0;
+                      const priceWithModifier = (product.price || 0) + modifier;
+                      if (priceWithModifier < minPrice) minPrice = priceWithModifier;
+                      if (priceWithModifier > maxPrice) maxPrice = priceWithModifier;
+                    });
+                  });
+
+                  return (
+                    <div>
+                      {minPrice === maxPrice ? (
+                        <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
+                          ₹{minPrice.toLocaleString()}
+                        </span>
+                      ) : (
+                        <span className="text-xl font-bold" style={{ color: '#895F42' }}>
+                          ₹{minPrice.toLocaleString()} - ₹{maxPrice.toLocaleString()}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })()
+              ) : (
+                <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
+                  ₹{product.price?.toLocaleString()}
+                </span>
+              )}
               {product.category && (
                 <p className="text-xs mt-1" style={{ color: '#94A1AB' }}>
                   {typeof product.category === 'object' ? product.category.name : product.category}
@@ -149,7 +188,11 @@ const ProductCard = ({ product }) => {
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#9F8065'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
             >
-              {product.availabilityType === 'made-to-order' ? 'Order Now' : 'Add to Cart'}
+              {product.variantPricing && product.variantPricing.length > 0
+                ? 'Select Options'
+                : product.availabilityType === 'made-to-order'
+                ? 'Order Now'
+                : 'Add to Cart'}
             </button>
           </div>
         </div>

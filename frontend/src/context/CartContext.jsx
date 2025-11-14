@@ -42,19 +42,30 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const addToCart = async (productId, quantity = 1) => {
+  const addToCart = async (productId, quantity = 1, selectedVariants = {}, calculatedPrice = null) => {
     try {
       if (isAuthenticated) {
-        const response = await cartAPI.addItem(productId, quantity);
+        const response = await cartAPI.addItem(productId, quantity, selectedVariants, calculatedPrice);
         setCart(response.data);
       } else {
         // Handle guest cart in localStorage
         const updatedCart = { ...cart };
-        const existingItem = updatedCart.items.find(item => item.product._id === productId);
+
+        // Check if item with same product and variants exists
+        const existingItem = updatedCart.items.find(item =>
+          item.product._id === productId &&
+          JSON.stringify(item.selectedVariants || {}) === JSON.stringify(selectedVariants)
+        );
+
         if (existingItem) {
           existingItem.quantity += quantity;
         } else {
-          updatedCart.items.push({ product: { _id: productId }, quantity });
+          updatedCart.items.push({
+            product: { _id: productId },
+            quantity,
+            selectedVariants,
+            price: calculatedPrice
+          });
         }
         setCart(updatedCart);
         localStorage.setItem('guestCart', JSON.stringify(updatedCart));
@@ -66,18 +77,21 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const updateQuantity = async (productId, quantity) => {
+  const updateQuantity = async (productId, quantity, selectedVariants = {}) => {
     try {
       if (quantity <= 0) {
-        return removeFromCart(productId);
+        return removeFromCart(productId, selectedVariants);
       }
 
       if (isAuthenticated) {
-        const response = await cartAPI.updateItem(productId, quantity);
+        const response = await cartAPI.updateItem(productId, quantity, selectedVariants);
         setCart(response.data);
       } else {
         const updatedCart = { ...cart };
-        const item = updatedCart.items.find(item => item.product._id === productId);
+        const item = updatedCart.items.find(item =>
+          item.product._id === productId &&
+          JSON.stringify(item.selectedVariants || {}) === JSON.stringify(selectedVariants)
+        );
         if (item) {
           item.quantity = quantity;
           setCart(updatedCart);
@@ -91,14 +105,17 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const removeFromCart = async (productId) => {
+  const removeFromCart = async (productId, selectedVariants = {}) => {
     try {
       if (isAuthenticated) {
-        const response = await cartAPI.removeItem(productId);
+        const response = await cartAPI.removeItem(productId, selectedVariants);
         setCart(response.data);
       } else {
         const updatedCart = { ...cart };
-        updatedCart.items = updatedCart.items.filter(item => item.product._id !== productId);
+        updatedCart.items = updatedCart.items.filter(item =>
+          !(item.product._id === productId &&
+            JSON.stringify(item.selectedVariants || {}) === JSON.stringify(selectedVariants))
+        );
         setCart(updatedCart);
         localStorage.setItem('guestCart', JSON.stringify(updatedCart));
       }
@@ -130,7 +147,8 @@ export const CartProvider = ({ children }) => {
 
   const getCartTotal = () => {
     return cart.items.reduce((total, item) => {
-      const price = item.product?.price || 0;
+      // Use item.price (calculated with variants) if available, fallback to product.price
+      const price = item.price || item.product?.price || 0;
       return total + (price * item.quantity);
     }, 0);
   };

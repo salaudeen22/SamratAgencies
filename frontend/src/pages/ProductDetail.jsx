@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext';
 import Button from '../components/Button';
 import SEO from '../components/SEO';
 import ProductCard from '../components/ProductCard';
+import VariantSelector from '../components/VariantSelector';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -15,6 +16,8 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [selectedVariantOptions, setSelectedVariantOptions] = useState({});
+  const [displayPrice, setDisplayPrice] = useState(0);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -48,10 +51,17 @@ const ProductDetail = () => {
   }, [id]);
 
   const handleAddToCart = async () => {
-    const result = await addToCart(product._id, quantity);
+    // Use displayPrice if variants are selected, otherwise use product.price
+    const finalPrice = displayPrice || product.price;
+    const result = await addToCart(product._id, quantity, selectedVariantOptions, finalPrice);
     if (result.success) {
       alert('Added to cart!');
     }
+  };
+
+  const handleVariantChange = (options, price) => {
+    setSelectedVariantOptions(options);
+    setDisplayPrice(price);
   };
 
   const handleBuyNow = async () => {
@@ -229,29 +239,38 @@ const ProductDetail = () => {
                 </div>
               </div>
 
-              {/* Price Section */}
-              <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#FFF8F3', border: '2px solid #895F42' }}>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-3xl lg:text-4xl font-bold" style={{ color: '#895F42' }}>
-                    ₹{product.price?.toLocaleString()}
-                  </span>
+              {/* Price Section - Show variant selector if variants exist */}
+              {product.variantPricing && product.variantPricing.length > 0 ? (
+                <div className="mb-6">
+                  <VariantSelector
+                    product={product}
+                    onVariantChange={handleVariantChange}
+                  />
                 </div>
+              ) : (
+                <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#FFF8F3', border: '2px solid #895F42' }}>
+                  <div className="flex items-baseline gap-2 mb-2">
+                    <span className="text-3xl lg:text-4xl font-bold" style={{ color: '#895F42' }}>
+                      ₹{product.price?.toLocaleString()}
+                    </span>
+                  </div>
 
-                {/* Availability Type */}
-                <div className="flex items-center gap-2">
-                  {product.availabilityType === 'immediate' ? (
-                    <>
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm font-semibold text-green-600">Immediate Delivery</span>
-                    </>
-                  ) : (
-                    <>
-                      <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#895F42' }}></div>
-                      <span className="text-sm font-semibold" style={{ color: '#895F42' }}>Made to Order</span>
-                    </>
-                  )}
+                  {/* Availability Type */}
+                  <div className="flex items-center gap-2">
+                    {product.availabilityType === 'immediate' ? (
+                      <>
+                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span className="text-sm font-semibold text-green-600">Immediate Delivery</span>
+                      </>
+                    ) : (
+                      <>
+                        <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#895F42' }}></div>
+                        <span className="text-sm font-semibold" style={{ color: '#895F42' }}>Made to Order</span>
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Quantity Selector */}
               <div className="mb-6">

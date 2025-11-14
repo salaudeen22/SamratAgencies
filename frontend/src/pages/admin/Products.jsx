@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import Modal from '../../components/admin/Modal';
+import VariantPricingManager from '../../components/admin/VariantPricingManager';
 import { adminAPI, uploadAPI } from '../../services/api';
 
 const Products = () => {
@@ -26,7 +27,8 @@ const Products = () => {
     sku: '',
     brand: '',
     featured: false,
-    images: []
+    images: [],
+    variantPricing: []
   });
 
   const [selectedAttributeSet, setSelectedAttributeSet] = useState(null);
@@ -142,7 +144,8 @@ const Products = () => {
       sku: product.sku || '',
       brand: product.brand || '',
       featured: product.featured || false,
-      images: product.images || []
+      images: product.images || [],
+      variantPricing: product.variantPricing || []
     });
     setPrimaryImageIndex(0);
     setShowModal(true);
@@ -165,7 +168,8 @@ const Products = () => {
     setFormData({
       ...formData,
       attributeSet: setId,
-      specifications: {} // Reset specifications when changing attribute set
+      specifications: {}, // Reset specifications when changing attribute set
+      variantPricing: [] // Reset variant pricing when changing attribute set
     });
   };
 
@@ -194,7 +198,8 @@ const Products = () => {
       sku: '',
       brand: '',
       featured: false,
-      images: []
+      images: [],
+      variantPricing: []
     });
     setSelectedAttributeSet(null);
     setEditingProduct(null);
@@ -266,6 +271,24 @@ const Products = () => {
 
     setFormData({ ...formData, images: newImages });
     setPrimaryImageIndex(0);
+  };
+
+  // Handle variant pricing changes
+  const handleVariantPricingChange = (variantPricing) => {
+    setFormData({ ...formData, variantPricing });
+  };
+
+  // Upload variant option image
+  const handleUploadVariantImage = async (file) => {
+    try {
+      const response = await uploadAPI.uploadImage(file);
+      return {
+        url: response.data.file.url,
+        public_id: response.data.file.key
+      };
+    } catch (error) {
+      throw new Error('Failed to upload variant image');
+    }
   };
 
   const renderSpecificationField = (attr) => {
@@ -645,27 +668,44 @@ const Products = () => {
                 </div>
               </div>
 
-              {/* Dynamic Specifications */}
-              {selectedAttributeSet && selectedAttributeSet.attributes && selectedAttributeSet.attributes.length > 0 && (
+              {/* Dynamic Specifications - Only show non-variant attributes */}
+              {selectedAttributeSet && selectedAttributeSet.attributes && selectedAttributeSet.attributes.filter(attr => !attr.attribute?.isVariant).length > 0 && (
                 <div>
                   <h4 className="font-semibold text-md mb-3 text-gray-700 border-b pb-2">
                     Specifications ({selectedAttributeSet.name})
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {selectedAttributeSet.attributes.map((attr, idx) => (
-                      <div key={idx}>
-                        <label className="block text-sm font-medium mb-1">
-                          {attr.attribute?.name}
-                          {attr.isRequired && <span className="text-red-500 ml-1">*</span>}
-                          {attr.attribute?.unit && <span className="text-gray-500 text-xs ml-1">({attr.attribute.unit})</span>}
-                        </label>
-                        {renderSpecificationField(attr)}
-                        {attr.attribute?.helpText && (
-                          <p className="text-xs text-gray-500 mt-1">{attr.attribute.helpText}</p>
-                        )}
-                      </div>
-                    ))}
+                    {selectedAttributeSet.attributes
+                      .filter(attr => !attr.attribute?.isVariant)
+                      .map((attr, idx) => (
+                        <div key={idx}>
+                          <label className="block text-sm font-medium mb-1">
+                            {attr.attribute?.name}
+                            {attr.isRequired && <span className="text-red-500 ml-1">*</span>}
+                            {attr.attribute?.unit && <span className="text-gray-500 text-xs ml-1">({attr.attribute.unit})</span>}
+                          </label>
+                          {renderSpecificationField(attr)}
+                          {attr.attribute?.helpText && (
+                            <p className="text-xs text-gray-500 mt-1">{attr.attribute.helpText}</p>
+                          )}
+                        </div>
+                      ))}
                   </div>
+                </div>
+              )}
+
+              {/* Variant Pricing Configuration */}
+              {selectedAttributeSet && (
+                <div>
+                  <h4 className="font-semibold text-md mb-3 text-gray-700 border-b pb-2">
+                    Variant Pricing Configuration
+                  </h4>
+                  <VariantPricingManager
+                    selectedAttributeSet={selectedAttributeSet}
+                    variantPricing={formData.variantPricing}
+                    onVariantPricingChange={handleVariantPricingChange}
+                    onUploadImage={handleUploadVariantImage}
+                  />
                 </div>
               )}
 
@@ -674,7 +714,9 @@ const Products = () => {
                 <h4 className="font-semibold text-md mb-3 text-gray-700 border-b pb-2">Pricing & Inventory</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1">Price (₹) *</label>
+                    <label className="block text-sm font-medium mb-1">
+                      {formData.variantPricing && formData.variantPricing.length > 0 ? 'Base Price (₹) *' : 'Price (₹) *'}
+                    </label>
                     <input
                       type="number"
                       value={formData.price}
@@ -684,6 +726,11 @@ const Products = () => {
                       step="0.01"
                       required
                     />
+                    {formData.variantPricing && formData.variantPricing.length > 0 && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        This is the base price. Final price will be calculated as: Base + Variant Modifiers
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1">Availability Type *</label>

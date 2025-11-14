@@ -22,7 +22,12 @@ const orderSchema = new mongoose.Schema({
       type: Number,
       required: true
     },
-    image: String
+    image: String,
+    selectedVariants: {
+      type: Map,
+      of: String,
+      default: {}
+    }
   }],
   shippingAddress: {
     name: {

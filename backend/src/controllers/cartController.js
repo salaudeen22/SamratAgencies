@@ -1,6 +1,24 @@
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 
+// Helper function to compare variant selections
+const variantsMatch = (variants1, variants2) => {
+  if (!variants1 && !variants2) return true;
+  if (!variants1 || !variants2) return false;
+
+  const obj1 = variants1 instanceof Map ? Object.fromEntries(variants1) : variants1;
+  const obj2 = variants2 instanceof Map ? Object.fromEntries(variants2) : variants2;
+
+  const keys1 = Object.keys(obj1).sort();
+  const keys2 = Object.keys(obj2).sort();
+
+  if (keys1.length !== keys2.length) return false;
+
+  return keys1.every((key, index) => {
+    return key === keys2[index] && obj1[key] === obj2[key];
+  });
+};
+
 // Get user cart
 exports.getCart = async (req, res) => {
   try {
@@ -19,7 +37,7 @@ exports.getCart = async (req, res) => {
 // Add item to cart
 exports.addToCart = async (req, res) => {
   try {
-    const { productId, quantity } = req.body;
+    const { productId, quantity, selectedVariants, calculatedPrice } = req.body;
 
     const product = await Product.findById(productId);
 
@@ -40,17 +58,25 @@ exports.addToCart = async (req, res) => {
       });
     }
 
+    // Find item with same product AND same variant selections
     const itemIndex = cart.items.findIndex(item =>
-      item.product.toString() === productId
+      item.product.toString() === productId &&
+      variantsMatch(item.selectedVariants, selectedVariants)
     );
 
+    // Use calculatedPrice if provided (for variants), otherwise use product.price
+    const finalPrice = calculatedPrice || product.price;
+
     if (itemIndex > -1) {
+      // Item with same product and variants exists - increase quantity
       cart.items[itemIndex].quantity += quantity;
     } else {
+      // New item - add to cart
       cart.items.push({
         product: productId,
         quantity,
-        price: product.price
+        price: finalPrice,
+        selectedVariants: selectedVariants || {}
       });
     }
 
@@ -66,7 +92,7 @@ exports.addToCart = async (req, res) => {
 // Update cart item quantity
 exports.updateCartItem = async (req, res) => {
   try {
-    const { productId, quantity } = req.body;
+    const { productId, quantity, selectedVariants } = req.body;
 
     const cart = await Cart.findOne({ user: req.user.id });
 
@@ -74,8 +100,10 @@ exports.updateCartItem = async (req, res) => {
       return res.status(404).json({ message: 'Cart not found' });
     }
 
+    // Find item with same product AND same variant selections
     const itemIndex = cart.items.findIndex(item =>
-      item.product.toString() === productId
+      item.product.toString() === productId &&
+      variantsMatch(item.selectedVariants, selectedVariants)
     );
 
     if (itemIndex === -1) {
@@ -101,6 +129,7 @@ exports.updateCartItem = async (req, res) => {
 exports.removeFromCart = async (req, res) => {
   try {
     const { productId } = req.params;
+    const { selectedVariants } = req.body;
 
     const cart = await Cart.findOne({ user: req.user.id });
 
@@ -108,8 +137,10 @@ exports.removeFromCart = async (req, res) => {
       return res.status(404).json({ message: 'Cart not found' });
     }
 
+    // Filter out item with matching product AND variant selections
     cart.items = cart.items.filter(item =>
-      item.product.toString() !== productId
+      !(item.product.toString() === productId &&
+        variantsMatch(item.selectedVariants, selectedVariants))
     );
 
     await cart.save();

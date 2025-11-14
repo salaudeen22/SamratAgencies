@@ -43,9 +43,12 @@ export const productAPI = {
 // Cart APIs
 export const cartAPI = {
   getCart: () => api.get('/cart'),
-  addItem: (productId, quantity) => api.post('/cart', { productId, quantity }),
-  updateItem: (productId, quantity) => api.put('/cart', { productId, quantity }),
-  removeItem: (productId) => api.delete(`/cart/${productId}`),
+  addItem: (productId, quantity, selectedVariants, calculatedPrice) =>
+    api.post('/cart', { productId, quantity, selectedVariants, calculatedPrice }),
+  updateItem: (productId, quantity, selectedVariants) =>
+    api.put('/cart', { productId, quantity, selectedVariants }),
+  removeItem: (productId, selectedVariants) =>
+    api.delete(`/cart/${productId}`, { data: { selectedVariants } }),
   clearCart: () => api.delete('/cart'),
 };
 
