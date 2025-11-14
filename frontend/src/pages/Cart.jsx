@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import Button from '../components/Button';
 
@@ -11,9 +12,8 @@ const Cart = () => {
   };
 
   const handleRemove = async (productId, selectedVariants) => {
-    if (window.confirm('Remove this item from cart?')) {
-      await removeFromCart(productId, selectedVariants);
-    }
+    await removeFromCart(productId, selectedVariants);
+    toast.success('Item removed from cart');
   };
 
   if (!cart.items || cart.items.length === 0) {

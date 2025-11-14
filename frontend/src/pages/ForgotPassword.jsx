@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { MdEmail } from 'react-icons/md';
 import axios from 'axios';
 
@@ -23,9 +24,12 @@ const ForgotPassword = () => {
       if (response.data.success) {
         setSuccess(true);
         setEmail('');
+        toast.success('Password reset link sent to your email!');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to send reset email. Please try again.');
+      const errorMsg = err.response?.data?.message || 'Failed to send reset email. Please try again.';
+      setError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }

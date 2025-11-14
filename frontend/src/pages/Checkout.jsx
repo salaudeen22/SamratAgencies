@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { orderAPI, userAPI, paymentAPI } from '../services/api';
@@ -100,13 +101,13 @@ const Checkout = () => {
     e.preventDefault();
 
     if (!isAuthenticated) {
-      alert('Please login to place an order');
+      toast.error('Please login to place an order');
       navigate('/login');
       return;
     }
 
     if (cart.items.length === 0) {
-      alert('Your cart is empty');
+      toast.error('Your cart is empty');
       return;
     }
 
@@ -147,7 +148,7 @@ const Checkout = () => {
       }
     } catch (err) {
       console.error('Order failed:', err);
-      alert(err.response?.data?.message || 'Failed to place order');
+      toast.error(err.response?.data?.message || 'Failed to place order');
     } finally {
       setLoading(false);
     }
@@ -194,11 +195,11 @@ const Checkout = () => {
               await clearCart();
               navigate(`/order-confirmation/${orderId}`);
             } else {
-              alert('Payment verification failed');
+              toast.error('Payment verification failed');
             }
           } catch (error) {
             console.error('Payment verification failed:', error);
-            alert('Payment verification failed');
+            toast.error('Payment verification failed');
           }
         },
         prefill: {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { MdLock } from 'react-icons/md';
 import axios from 'axios';
 
@@ -62,6 +63,7 @@ const ResetPassword = () => {
 
       if (response.data.success) {
         setSuccess(true);
+        toast.success('Password reset successful! Redirecting to login...');
 
         // If JWT token is returned, store it
         if (response.data.token) {
@@ -74,7 +76,9 @@ const ResetPassword = () => {
         }, 2000);
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to reset password. The link may have expired.');
+      const errorMsg = err.response?.data?.message || 'Failed to reset password. The link may have expired.';
+      setError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }

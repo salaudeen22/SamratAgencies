@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { productAPI } from '../services/api';
 import { useCart } from '../context/CartContext';
 import Button from '../components/Button';
@@ -55,7 +56,7 @@ const ProductDetail = () => {
     const finalPrice = displayPrice || product.price;
     const result = await addToCart(product._id, quantity, selectedVariantOptions, finalPrice);
     if (result.success) {
-      alert('Added to cart!');
+      toast.success('Added to cart!');
     }
   };
 

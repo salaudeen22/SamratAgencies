@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import AdminLayout from '../../components/admin/AdminLayout';
 import Modal from '../../components/admin/Modal';
 import { adminAPI } from '../../services/api';
@@ -48,13 +49,15 @@ const AttributeSets = () => {
     try {
       if (editingSet) {
         await adminAPI.updateAttributeSet(editingSet._id, formData);
+        toast.success('Attribute set updated successfully');
       } else {
         await adminAPI.createAttributeSet(formData);
+        toast.success('Attribute set created successfully');
       }
       fetchData();
       resetForm();
     } catch (err) {
-      alert(err.response?.data?.message || 'Failed to save attribute set');
+      toast.error(err.response?.data?.message || 'Failed to save attribute set');
     }
   };
 
@@ -89,13 +92,12 @@ const AttributeSets = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure? This attribute set may be used in products.')) {
-      try {
-        await adminAPI.deleteAttributeSet(id);
-        fetchData();
-      } catch (err) {
-        alert(err.response?.data?.message || 'Failed to delete attribute set');
-      }
+    try {
+      await adminAPI.deleteAttributeSet(id);
+      fetchData();
+      toast.success('Attribute set deleted successfully');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to delete attribute set');
     }
   };
 
@@ -104,7 +106,7 @@ const AttributeSets = () => {
 
     // Check if already added
     if (formData.attributes.some(attr => attr.attribute === selectedAttributeId)) {
-      alert('This attribute is already in the set');
+      toast.error('This attribute is already in the set');
       return;
     }
 

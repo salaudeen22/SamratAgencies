@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
 import { FcGoogle } from 'react-icons/fc';
@@ -27,6 +28,7 @@ const Login = () => {
     const result = await login(formData.email, formData.password);
 
     if (result.success) {
+      toast.success('Login successful!');
       navigate('/');
     } else {
       setError(result.error || 'Login failed');

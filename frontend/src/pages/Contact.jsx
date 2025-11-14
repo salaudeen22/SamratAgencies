@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { contactAPI } from '../services/api';
 
 const Contact = () => {
@@ -38,6 +39,7 @@ const Contact = () => {
           subject: '',
           message: ''
         });
+        toast.success('Message sent successfully! We\'ll get back to you soon.');
 
         // Auto-hide success message after 5 seconds
         setTimeout(() => {
@@ -45,7 +47,9 @@ const Contact = () => {
         }, 5000);
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to send message. Please try again.');
+      const errorMsg = err.response?.data?.message || 'Failed to send message. Please try again.';
+      setError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }

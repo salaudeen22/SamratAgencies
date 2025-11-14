@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import AdminLayout from '../../components/admin/AdminLayout';
 import Modal from '../../components/admin/Modal';
 import { adminAPI } from '../../services/api';
@@ -60,13 +61,15 @@ const Attributes = () => {
     try {
       if (editingAttribute) {
         await adminAPI.updateAttribute(editingAttribute._id, formData);
+        toast.success('Attribute updated successfully');
       } else {
         await adminAPI.createAttribute(formData);
+        toast.success('Attribute created successfully');
       }
       fetchAttributes();
       resetForm();
     } catch (err) {
-      alert(err.response?.data?.message || 'Failed to save attribute');
+      toast.error(err.response?.data?.message || 'Failed to save attribute');
     }
   };
 
@@ -102,13 +105,12 @@ const Attributes = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure? This attribute may be used in attribute sets.')) {
-      try {
-        await adminAPI.deleteAttribute(id);
-        fetchAttributes();
-      } catch (err) {
-        alert(err.response?.data?.message || 'Failed to delete attribute');
-      }
+    try {
+      await adminAPI.deleteAttribute(id);
+      fetchAttributes();
+      toast.success('Attribute deleted successfully');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to delete attribute');
     }
   };
 

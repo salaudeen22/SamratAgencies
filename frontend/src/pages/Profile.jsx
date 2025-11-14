@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { orderAPI, userAPI } from '../services/api';
 import Button from '../components/Button';
@@ -85,10 +86,10 @@ const Profile = () => {
     e.preventDefault();
     try {
       await userAPI.updateProfile(profileData);
-      alert('Profile updated successfully!');
+      toast.success('Profile updated successfully!');
       setEditMode(false);
     } catch (err) {
-      alert(err.response?.data?.message || 'Failed to update profile');
+      toast.error(err.response?.data?.message || 'Failed to update profile');
     }
   };
 
@@ -98,15 +99,15 @@ const Profile = () => {
       if (editingAddress) {
         const response = await userAPI.updateAddress(editingAddress._id, addressData);
         setAddresses(response.data);
-        alert('Address updated successfully!');
+        toast.success('Address updated successfully!');
       } else {
         const response = await userAPI.addAddress(addressData);
         setAddresses(response.data);
-        alert('Address added successfully!');
+        toast.success('Address added successfully!');
       }
       resetAddressForm();
     } catch (err) {
-      alert(err.response?.data?.message || 'Failed to save address');
+      toast.error(err.response?.data?.message || 'Failed to save address');
     }
   };
 
@@ -127,14 +128,12 @@ const Profile = () => {
   };
 
   const handleDeleteAddress = async (addressId) => {
-    if (!confirm('Are you sure you want to delete this address?')) return;
-
     try {
       const response = await userAPI.deleteAddress(addressId);
       setAddresses(response.data);
-      alert('Address deleted successfully!');
+      toast.success('Address deleted successfully!');
     } catch (err) {
-      alert(err.response?.data?.message || 'Failed to delete address');
+      toast.error(err.response?.data?.message || 'Failed to delete address');
     }
   };
 

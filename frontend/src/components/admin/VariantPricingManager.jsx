@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 /**
  * VariantPricingManager Component
@@ -148,7 +149,7 @@ const VariantPricingManager = ({
         setPricingConfig(newConfig);
         onVariantPricingChange(newConfig);
       } catch (error) {
-        alert('Failed to upload image');
+        toast.error('Failed to upload image');
       }
     }
   };

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { adminAPI } from '../../services/api';
 
@@ -24,17 +25,12 @@ const Users = () => {
   };
 
   const toggleAdmin = async (userId, currentStatus) => {
-    if (
-      window.confirm(
-        `Are you sure you want to ${currentStatus ? 'remove' : 'grant'} admin privileges?`
-      )
-    ) {
-      try {
-        await adminAPI.updateUserAdmin(userId, !currentStatus);
-        fetchUsers();
-      } catch (err) {
-        alert(err.response?.data?.message || 'Failed to update user');
-      }
+    try {
+      await adminAPI.updateUserAdmin(userId, !currentStatus);
+      fetchUsers();
+      toast.success(`Admin privileges ${currentStatus ? 'removed' : 'granted'} successfully`);
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to update user');
     }
   };
 

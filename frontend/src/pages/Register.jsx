@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
 import { FcGoogle } from 'react-icons/fc';
@@ -44,6 +45,7 @@ const Register = () => {
     });
 
     if (result.success) {
+      toast.success('Registration successful! Welcome to Samrat Agencies');
       navigate('/');
     } else {
       setError(result.error || 'Registration failed');

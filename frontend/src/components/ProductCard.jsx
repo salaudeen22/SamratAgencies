@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import QuickLook from './QuickLook';
@@ -22,7 +23,7 @@ const ProductCard = ({ product }) => {
 
     const result = await addToCart(product._id, 1);
     if (result.success) {
-      alert('Added to cart!');
+      toast.success('Added to cart!');
     }
   };
 
@@ -34,11 +35,13 @@ const ProductCard = ({ product }) => {
       const result = await removeFromWishlist(product._id);
       if (result.success) {
         setIsWishlisted(false);
+        toast.success('Removed from wishlist');
       }
     } else {
       const result = await addToWishlist(product._id);
       if (result.success) {
         setIsWishlisted(true);
+        toast.success('Added to wishlist!');
       }
     }
   };

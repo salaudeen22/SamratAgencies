@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import AdminLayout from '../../components/admin/AdminLayout';
 import Modal from '../../components/admin/Modal';
 import { adminAPI } from '../../services/api';
@@ -43,13 +44,15 @@ const Categories = () => {
     try {
       if (editingCategory) {
         await adminAPI.updateCategory(editingCategory._id, form);
+        toast.success('Category updated successfully');
       } else {
         await adminAPI.createCategory(form);
+        toast.success('Category created successfully');
       }
       fetchCategories();
       resetForm();
     } catch (err) {
-      alert(err.response?.data?.message || 'Failed to save category');
+      toast.error(err.response?.data?.message || 'Failed to save category');
     }
   };
 
@@ -78,13 +81,12 @@ const Categories = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this category?')) {
-      try {
-        await adminAPI.deleteCategory(id);
-        fetchCategories();
-      } catch (err) {
-        alert(err.response?.data?.message || 'Failed to delete category');
-      }
+    try {
+      await adminAPI.deleteCategory(id);
+      fetchCategories();
+      toast.success('Category deleted successfully');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to delete category');
     }
   };
 

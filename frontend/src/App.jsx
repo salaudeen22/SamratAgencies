@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
@@ -51,6 +52,7 @@ const LoadingFallback = () => (
 function App() {
   return (
     <Router>
+      <Toaster position="top-right" />
       <AuthProvider>
         <CartProvider>
           <WishlistProvider>

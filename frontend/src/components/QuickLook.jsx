@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 
 const QuickLook = ({ product, isOpen, onClose }) => {
@@ -12,7 +13,7 @@ const QuickLook = ({ product, isOpen, onClose }) => {
   const handleAddToCart = async () => {
     const result = await addToCart(product._id, quantity);
     if (result.success) {
-      alert('Added to cart!');
+      toast.success('Added to cart!');
       onClose();
     }
   };

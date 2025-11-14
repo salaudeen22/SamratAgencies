@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { adminAPI } from '../../services/api';
 
@@ -31,7 +32,7 @@ const Orders = () => {
       setSelectedOrder(response.data);
       setShowDetails(true);
     } catch (err) {
-      alert(err.response?.data?.message || 'Failed to fetch order details');
+      toast.error(err.response?.data?.message || 'Failed to fetch order details');
     }
   };
 
@@ -46,8 +47,9 @@ const Orders = () => {
       if (selectedOrder?._id === orderId) {
         viewDetails(orderId);
       }
+      toast.success(`Order status updated to ${status}`);
     } catch (err) {
-      alert(err.response?.data?.message || 'Failed to update order status');
+      toast.error(err.response?.data?.message || 'Failed to update order status');
     }
   };
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import AdminLayout from '../../components/admin/AdminLayout';
 import Modal from '../../components/admin/Modal';
 import VariantPricingManager from '../../components/admin/VariantPricingManager';
@@ -78,13 +79,15 @@ const Products = () => {
 
       if (editingProduct) {
         await adminAPI.updateProduct(editingProduct._id, submitData);
+        toast.success('Product updated successfully');
       } else {
         await adminAPI.createProduct(submitData);
+        toast.success('Product created successfully');
       }
       fetchData();
       resetForm();
     } catch (err) {
-      alert(err.response?.data?.message || 'Failed to save product');
+      toast.error(err.response?.data?.message || 'Failed to save product');
     }
   };
 
@@ -152,13 +155,12 @@ const Products = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this product?')) {
-      try {
-        await adminAPI.deleteProduct(id);
-        fetchData();
-      } catch (err) {
-        alert(err.response?.data?.message || 'Failed to delete product');
-      }
+    try {
+      await adminAPI.deleteProduct(id);
+      fetchData();
+      toast.success('Product deleted successfully');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to delete product');
     }
   };
 
@@ -214,7 +216,7 @@ const Products = () => {
 
     // Check if adding these files would exceed 5 images
     if (formData.images.length + files.length > 5) {
-      alert('Maximum 5 images allowed per product');
+      toast.error('Maximum 5 images allowed per product');
       return;
     }
 
@@ -235,7 +237,7 @@ const Products = () => {
         images: [...formData.images, ...uploadedImages]
       });
     } catch (error) {
-      alert(error.response?.data?.message || 'Failed to upload images');
+      toast.error(error.response?.data?.message || 'Failed to upload images');
     } finally {
       setUploadingImages(false);
     }
@@ -244,22 +246,21 @@ const Products = () => {
   const handleRemoveImage = async (index) => {
     const image = formData.images[index];
 
-    if (window.confirm('Remove this image?')) {
-      try {
-        // Delete from S3
-        await uploadAPI.deleteImage(image.public_id);
+    try {
+      // Delete from S3
+      await uploadAPI.deleteImage(image.public_id);
 
-        // Remove from form data
-        const newImages = formData.images.filter((_, i) => i !== index);
-        setFormData({ ...formData, images: newImages });
+      // Remove from form data
+      const newImages = formData.images.filter((_, i) => i !== index);
+      setFormData({ ...formData, images: newImages });
 
-        // Adjust primary image index if needed
-        if (primaryImageIndex >= newImages.length) {
-          setPrimaryImageIndex(Math.max(0, newImages.length - 1));
-        }
-      } catch (error) {
-        alert('Failed to remove image');
+      // Adjust primary image index if needed
+      if (primaryImageIndex >= newImages.length) {
+        setPrimaryImageIndex(Math.max(0, newImages.length - 1));
       }
+      toast.success('Image removed successfully');
+    } catch (error) {
+      toast.error('Failed to remove image');
     }
   };
 

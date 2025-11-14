@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useWishlist } from '../context/WishlistContext';
 import { useCart } from '../context/CartContext';
 import Button from '../components/Button';
@@ -8,15 +9,14 @@ const Wishlist = () => {
   const { addToCart } = useCart();
 
   const handleRemove = async (productId) => {
-    if (window.confirm('Remove this item from wishlist?')) {
-      await removeFromWishlist(productId);
-    }
+    await removeFromWishlist(productId);
+    toast.success('Removed from wishlist');
   };
 
   const handleAddToCart = async (productId) => {
     const result = await addToCart(productId, 1);
     if (result.success) {
-      alert('Added to cart!');
+      toast.success('Added to cart!');
     }
   };
 
