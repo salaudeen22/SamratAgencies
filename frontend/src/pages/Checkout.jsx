@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { orderAPI, userAPI, paymentAPI } from '../services/api';
+import { orderAPI, userAPI, paymentAPI, deliveryAPI } from '../services/api';
 import Button from '../components/Button';
 
 const Checkout = () => {
@@ -15,6 +15,9 @@ const Checkout = () => {
   const [savedAddresses, setSavedAddresses] = useState([]);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [useNewAddress, setUseNewAddress] = useState(false);
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
+  const [deliveryInfo, setDeliveryInfo] = useState(null);
+  const [checkingDelivery, setCheckingDelivery] = useState(false);
 
   // Get coupon data from cart page
   const appliedCoupon = location.state?.appliedCoupon || null;
@@ -32,8 +35,39 @@ const Checkout = () => {
     paymentMethod: 'cod',
   });
 
+  // Calculate delivery charge when pincode is entered
+  const calculateDeliveryCharge = async (pincode) => {
+    if (!pincode || pincode.length < 6) {
+      setDeliveryCharge(0);
+      setDeliveryInfo(null);
+      return;
+    }
+
+    try {
+      setCheckingDelivery(true);
+      const response = await deliveryAPI.calculateDeliveryCharge(pincode, getCartTotal());
+
+      if (response.data.available) {
+        // If coupon provides free shipping, use that instead
+        const finalDeliveryCharge = freeShipping ? 0 : response.data.deliveryCharge;
+        setDeliveryCharge(finalDeliveryCharge);
+        setDeliveryInfo(response.data);
+      } else {
+        setDeliveryCharge(0);
+        setDeliveryInfo(null);
+        toast.error('Delivery not available for this pincode');
+      }
+    } catch (error) {
+      console.error('Failed to calculate delivery charge:', error);
+      setDeliveryCharge(0);
+      setDeliveryInfo(null);
+    } finally {
+      setCheckingDelivery(false);
+    }
+  };
+
   const getFinalTotal = () => {
-    return Math.max(0, getCartTotal() - couponDiscount);
+    return Math.max(0, getCartTotal() - couponDiscount + deliveryCharge);
   };
 
   // Load Razorpay script
@@ -80,6 +114,10 @@ const Checkout = () => {
       state: address.state,
       pincode: address.pincode,
     });
+    // Calculate delivery charge for this address
+    if (address.pincode) {
+      calculateDeliveryCharge(address.pincode);
+    }
   };
 
   // Handle address selection
@@ -105,7 +143,16 @@ const Checkout = () => {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Calculate delivery charge when pincode is entered/changed
+    if (name === 'pincode' && value.length === 6) {
+      calculateDeliveryCharge(value);
+    } else if (name === 'pincode' && value.length < 6) {
+      setDeliveryCharge(0);
+      setDeliveryInfo(null);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -147,6 +194,7 @@ const Checkout = () => {
         totalAmount: getFinalTotal(),
         coupon: appliedCoupon?._id || null,
         discount: couponDiscount || 0,
+        deliveryCharge: deliveryCharge || 0,
       };
 
       if (formData.paymentMethod === 'online') {
@@ -423,9 +471,21 @@ const Checkout = () => {
                     value={formData.pincode}
                     onChange={handleChange}
                     required
+                    maxLength="6"
                     className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
                     style={{ borderColor: '#BDD7EB' }}
                   />
+                  {checkingDelivery && (
+                    <p className="text-xs mt-1" style={{ color: '#895F42' }}>
+                      Checking delivery availability...
+                    </p>
+                  )}
+                  {deliveryInfo && (
+                    <p className="text-xs mt-1 text-green-600">
+                      ✓ Delivery available in {deliveryInfo.estimatedDays?.min}-{deliveryInfo.estimatedDays?.max} days
+                      {deliveryInfo.isFree && ' (Free delivery)'}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -503,13 +563,21 @@ const Checkout = () => {
                 )}
 
                 <div className="flex justify-between" style={{ color: '#94A1AB' }}>
-                  <span>Shipping</span>
-                  {freeShipping ? (
-                    <span className="text-green-600 font-medium">Free (Coupon)</span>
+                  <span>Delivery Charge</span>
+                  {deliveryCharge === 0 ? (
+                    <span className="text-green-600 font-medium">
+                      {freeShipping ? 'Free (Coupon)' : deliveryInfo?.isFree ? 'Free' : 'Free'}
+                    </span>
                   ) : (
-                    <span className="text-green-600 font-medium">Free</span>
+                    <span style={{ color: '#1F2D38' }}>₹{deliveryCharge.toLocaleString()}</span>
                   )}
                 </div>
+
+                {deliveryInfo && !deliveryInfo.isFree && deliveryInfo.freeDeliveryThreshold && deliveryCharge > 0 && (
+                  <p className="text-xs" style={{ color: '#94A1AB' }}>
+                    Add ₹{(deliveryInfo.freeDeliveryThreshold - getCartTotal()).toLocaleString()} more for free delivery
+                  </p>
+                )}
 
                 <div className="pt-2 flex justify-between text-lg font-bold" style={{ borderTop: '2px solid #BDD7EB' }}>
                   <span style={{ color: '#1F2D38' }}>Total</span>

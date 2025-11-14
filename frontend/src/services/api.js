@@ -192,4 +192,19 @@ export const couponAPI = {
     api.post(`/coupons/${id}/use`, { userId, orderId, discountApplied }),
 };
 
+// Delivery APIs
+export const deliveryAPI = {
+  // Public
+  calculateDeliveryCharge: (pincode, cartTotal) =>
+    api.post('/delivery/calculate', { pincode, cartTotal }),
+  checkPincode: (pincode) => api.get(`/delivery/check/${pincode}`),
+
+  // Admin
+  getAllZones: () => api.get('/delivery/zones'),
+  getZoneById: (id) => api.get(`/delivery/zones/${id}`),
+  createZone: (zoneData) => api.post('/delivery/zones', zoneData),
+  updateZone: (id, zoneData) => api.put(`/delivery/zones/${id}`, zoneData),
+  deleteZone: (id) => api.delete(`/delivery/zones/${id}`),
+};
+
 export default api;

@@ -42,6 +42,7 @@ const AdminProducts = lazy(() => import('./pages/admin/Products'));
 const AdminOrders = lazy(() => import('./pages/admin/Orders'));
 const AdminUsers = lazy(() => import('./pages/admin/Users'));
 const AdminCoupons = lazy(() => import('./pages/admin/Coupons'));
+const AdminDeliveryZones = lazy(() => import('./pages/admin/DeliveryZones'));
 
 // Loading component for Suspense fallback
 const LoadingFallback = () => (
@@ -130,6 +131,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <AdminCoupons />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/delivery-zones"
+                element={
+                  <AdminRoute>
+                    <AdminDeliveryZones />
                   </AdminRoute>
                 }
               />
