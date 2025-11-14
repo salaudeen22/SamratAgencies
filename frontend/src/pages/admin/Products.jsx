@@ -38,6 +38,20 @@ const Products = () => {
   const [uploadingImages, setUploadingImages] = useState(false);
   const [primaryImageIndex, setPrimaryImageIndex] = useState(0);
 
+  // Collapsible sections state
+  const [expandedSections, setExpandedSections] = useState({
+    basic: true,
+    pricing: true,
+    specifications: false,
+    availability: false,
+    images: false,
+    variants: false
+  });
+
+  const toggleSection = (section) => {
+    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -469,10 +483,26 @@ const Products = () => {
           title={editingProduct ? 'Edit Product' : 'Add New Product'}
           size="xlarge"
         >
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
               {/* Basic Information */}
-              <div>
-                <h4 className="font-semibold text-md mb-3 text-gray-700 border-b pb-2">Basic Information</h4>
+              <div className="border rounded-lg">
+                <button
+                  type="button"
+                  onClick={() => toggleSection('basic')}
+                  className="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 rounded-t-lg transition"
+                >
+                  <h4 className="font-semibold text-md text-gray-700">Basic Information</h4>
+                  <svg
+                    className={`w-5 h-5 transition-transform ${expandedSections.basic ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {expandedSections.basic && (
+                <div className="p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">Product Name *</label>
@@ -600,11 +630,29 @@ const Products = () => {
                     />
                   </div>
                 </div>
+                </div>
+                )}
               </div>
 
               {/* Product Images */}
-              <div>
-                <h4 className="font-semibold text-md mb-3 text-gray-700 border-b pb-2">Product Images (Max 5)</h4>
+              <div className="border rounded-lg">
+                <button
+                  type="button"
+                  onClick={() => toggleSection('images')}
+                  className="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 rounded-t-lg transition"
+                >
+                  <h4 className="font-semibold text-md text-gray-700">Product Images (Max 5)</h4>
+                  <svg
+                    className={`w-5 h-5 transition-transform ${expandedSections.images ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {expandedSections.images && (
+                <div className="p-4">
                 <div className="space-y-4">
                   {/* Upload Button */}
                   <div>
@@ -675,14 +723,32 @@ const Products = () => {
                     </div>
                   )}
                 </div>
+                </div>
+                )}
               </div>
 
               {/* Dynamic Specifications - Only show non-variant attributes */}
               {selectedAttributeSet && selectedAttributeSet.attributes && selectedAttributeSet.attributes.filter(attr => !attr.attribute?.isVariant).length > 0 && (
-                <div>
-                  <h4 className="font-semibold text-md mb-3 text-gray-700 border-b pb-2">
-                    Specifications ({selectedAttributeSet.name})
-                  </h4>
+                <div className="border rounded-lg">
+                  <button
+                    type="button"
+                    onClick={() => toggleSection('specifications')}
+                    className="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 rounded-t-lg transition"
+                  >
+                    <h4 className="font-semibold text-md text-gray-700">
+                      Specifications ({selectedAttributeSet.name})
+                    </h4>
+                    <svg
+                      className={`w-5 h-5 transition-transform ${expandedSections.specifications ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {expandedSections.specifications && (
+                  <div className="p-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {selectedAttributeSet.attributes
                       .filter(attr => !attr.attribute?.isVariant)
@@ -700,27 +766,63 @@ const Products = () => {
                         </div>
                       ))}
                   </div>
+                  </div>
+                  )}
                 </div>
               )}
 
               {/* Variant Pricing Configuration */}
               {selectedAttributeSet && (
-                <div>
-                  <h4 className="font-semibold text-md mb-3 text-gray-700 border-b pb-2">
-                    Variant Pricing Configuration
-                  </h4>
+                <div className="border rounded-lg">
+                  <button
+                    type="button"
+                    onClick={() => toggleSection('variants')}
+                    className="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 rounded-t-lg transition"
+                  >
+                    <h4 className="font-semibold text-md text-gray-700">
+                      Variant Pricing Configuration
+                    </h4>
+                    <svg
+                      className={`w-5 h-5 transition-transform ${expandedSections.variants ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {expandedSections.variants && (
+                  <div className="p-4">
                   <VariantPricingManager
                     selectedAttributeSet={selectedAttributeSet}
                     variantPricing={formData.variantPricing}
                     onVariantPricingChange={handleVariantPricingChange}
                     onUploadImage={handleUploadVariantImage}
                   />
+                  </div>
+                  )}
                 </div>
               )}
 
               {/* Pricing & Inventory */}
-              <div>
-                <h4 className="font-semibold text-md mb-3 text-gray-700 border-b pb-2">Pricing & Inventory</h4>
+              <div className="border rounded-lg">
+                <button
+                  type="button"
+                  onClick={() => toggleSection('pricing')}
+                  className="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 rounded-t-lg transition"
+                >
+                  <h4 className="font-semibold text-md text-gray-700">Pricing & Discount</h4>
+                  <svg
+                    className={`w-5 h-5 transition-transform ${expandedSections.pricing ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {expandedSections.pricing && (
+                <div className="p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">
@@ -829,11 +931,29 @@ const Products = () => {
                     </div>
                   </div>
                 )}
+                </div>
+                )}
               </div>
 
               {/* Availability & Other Settings */}
-              <div>
-                <h4 className="font-semibold text-md mb-3 text-gray-700 border-b pb-2">Availability & Settings</h4>
+              <div className="border rounded-lg">
+                <button
+                  type="button"
+                  onClick={() => toggleSection('availability')}
+                  className="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 rounded-t-lg transition"
+                >
+                  <h4 className="font-semibold text-md text-gray-700">Availability & Settings</h4>
+                  <svg
+                    className={`w-5 h-5 transition-transform ${expandedSections.availability ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {expandedSections.availability && (
+                <div className="p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">Availability Type *</label>
@@ -875,6 +995,8 @@ const Products = () => {
                     </label>
                   </div>
                 </div>
+                </div>
+                )}
               </div>
 
               {/* Submit Buttons */}
