@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { useWishlist } from '../context/WishlistContext';
 import { couponAPI, recommendationAPI } from '../services/api';
 import Button from '../components/Button';
 import ProductRecommendations from '../components/ProductRecommendations';
@@ -10,6 +11,7 @@ import ProductRecommendations from '../components/ProductRecommendations';
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, getCartTotal } = useCart();
   const { user } = useAuth();
+  const { addToWishlist } = useWishlist();
   const navigate = useNavigate();
 
   const [couponCode, setCouponCode] = useState('');
@@ -108,6 +110,63 @@ const Cart = () => {
     return Math.max(0, getCartTotal() - couponDiscount);
   };
 
+  // Calculate total savings from discounts
+  const getTotalSavings = () => {
+    if (!cart.items) return 0;
+
+    return cart.items.reduce((total, item) => {
+      const product = item.product;
+      if (!product.discount || product.discount === 0) return total;
+
+      const originalPrice = item.price || product.price;
+      let discountAmount = 0;
+
+      if (product.discountType === 'percentage') {
+        discountAmount = (originalPrice * product.discount / 100) * item.quantity;
+      } else {
+        discountAmount = product.discount * item.quantity;
+      }
+
+      return total + discountAmount;
+    }, 0);
+  };
+
+  // Move item to wishlist
+  const handleMoveToWishlist = async (productId, selectedVariants) => {
+    const result = await addToWishlist(productId);
+    if (result.success) {
+      await removeFromCart(productId, selectedVariants);
+      toast.success('Moved to wishlist!');
+    }
+  };
+
+  // Save all items to wishlist
+  const handleSaveAllToWishlist = async () => {
+    if (!cart.items || cart.items.length === 0) return;
+
+    let successCount = 0;
+    for (const item of cart.items) {
+      const result = await addToWishlist(item.product._id);
+      if (result.success) successCount++;
+    }
+
+    if (successCount > 0) {
+      toast.success(`${successCount} item(s) saved to wishlist!`);
+    }
+  };
+
+  // Get original price before discount
+  const getOriginalPrice = (product) => {
+    if (!product.discount || product.discount === 0) return null;
+
+    const currentPrice = product.price;
+    if (product.discountType === 'percentage') {
+      return currentPrice / (1 - product.discount / 100);
+    } else {
+      return currentPrice + product.discount;
+    }
+  };
+
   if (!cart.items || cart.items.length === 0) {
     return (
       <div className="min-h-screen py-8 sm:py-12 md:py-16" style={{ backgroundColor: '#fafaf9' }}>
@@ -130,7 +189,28 @@ const Cart = () => {
   return (
     <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 md:mb-8" style={{ color: '#1F2D38' }}>Shopping Cart</h1>
+        {/* Header with Item Count and Actions */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 sm:mb-6 md:mb-8">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: '#1F2D38' }}>Shopping Cart</h1>
+            <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>
+              {cart.items.length} {cart.items.length === 1 ? 'item' : 'items'} in your cart
+            </p>
+          </div>
+
+          <button
+            onClick={handleSaveAllToWishlist}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all hover:shadow-md"
+            style={{ backgroundColor: '#E0EAF0', color: '#895F42' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#BDD7EB'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+            Save All to Wishlist
+          </button>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {/* Cart Items */}
@@ -174,9 +254,11 @@ const Cart = () => {
                       >
                         {item.product.name}
                       </Link>
-                      <p className="text-xs sm:text-sm mt-1" style={{ color: '#94A1AB' }}>
-                        {item.product.category}
-                      </p>
+                      {item.product.category && (
+                        <p className="text-xs sm:text-sm mt-1" style={{ color: '#94A1AB' }}>
+                          {typeof item.product.category === 'object' ? item.product.category.name : item.product.category}
+                        </p>
+                      )}
 
                       {/* Display Selected Variants */}
                       {item.selectedVariants && Object.keys(item.selectedVariants).length > 0 && (
@@ -193,9 +275,30 @@ const Cart = () => {
                         </div>
                       )}
 
-                      <p className="font-bold mt-2 text-base sm:text-lg" style={{ color: '#895F42' }}>
-                        ₹{itemPrice.toLocaleString()}
-                      </p>
+                      {/* Price with discount indication */}
+                      <div className="mt-2">
+                        {item.product.discount > 0 ? (
+                          <div className="flex flex-col gap-1">
+                            <div className="flex items-center gap-2">
+                              <p className="font-bold text-base sm:text-lg" style={{ color: '#895F42' }}>
+                                ₹{itemPrice.toLocaleString()}
+                              </p>
+                              <span className="text-xs line-through" style={{ color: '#94A1AB' }}>
+                                ₹{Math.round(getOriginalPrice(item.product)).toLocaleString()}
+                              </span>
+                            </div>
+                            <span className="text-xs font-semibold text-green-600">
+                              {item.product.discountType === 'percentage'
+                                ? `${item.product.discount}% OFF`
+                                : `₹${item.product.discount} OFF`}
+                            </span>
+                          </div>
+                        ) : (
+                          <p className="font-bold text-base sm:text-lg" style={{ color: '#895F42' }}>
+                            ₹{itemPrice.toLocaleString()}
+                          </p>
+                        )}
+                      </div>
                     </div>
 
                     {/* Quantity Controls */}
@@ -222,17 +325,28 @@ const Cart = () => {
                         </button>
                       </div>
 
-                      {/* Subtotal & Remove */}
+                      {/* Subtotal & Actions */}
                       <div className="text-right">
-                        <p className="text-base sm:text-lg font-bold mb-1 sm:mb-2" style={{ color: '#1F2D38' }}>
+                        <p className="text-base sm:text-lg font-bold mb-2" style={{ color: '#1F2D38' }}>
                           ₹{(itemPrice * item.quantity).toLocaleString()}
                         </p>
-                        <button
-                          onClick={() => handleRemove(item.product._id, item.selectedVariants)}
-                          className="text-red-500 hover:text-red-700 text-xs sm:text-sm"
-                        >
-                          Remove
-                        </button>
+                        <div className="flex flex-col gap-1">
+                          <button
+                            onClick={() => handleMoveToWishlist(item.product._id, item.selectedVariants)}
+                            className="text-xs sm:text-sm font-medium transition-colors"
+                            style={{ color: '#895F42' }}
+                            onMouseEnter={(e) => e.currentTarget.style.color = '#9F8065'}
+                            onMouseLeave={(e) => e.currentTarget.style.color = '#895F42'}
+                          >
+                            Move to Wishlist
+                          </button>
+                          <button
+                            onClick={() => handleRemove(item.product._id, item.selectedVariants)}
+                            className="text-red-500 hover:text-red-700 text-xs sm:text-sm font-medium"
+                          >
+                            Remove
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -301,6 +415,15 @@ const Cart = () => {
                   <span>₹{getCartTotal().toLocaleString()}</span>
                 </div>
 
+                {/* Product Discounts */}
+                {getTotalSavings() > 0 && (
+                  <div className="flex justify-between text-sm sm:text-base text-green-600 font-medium">
+                    <span>Product Discounts</span>
+                    <span>-₹{Math.round(getTotalSavings()).toLocaleString()}</span>
+                  </div>
+                )}
+
+                {/* Coupon Discount */}
                 {couponDiscount > 0 && (
                   <div className="flex justify-between text-sm sm:text-base text-green-600 font-medium">
                     <span>Coupon Discount</span>
@@ -321,6 +444,15 @@ const Cart = () => {
                   <span style={{ color: '#1F2D38' }}>Total</span>
                   <span style={{ color: '#895F42' }}>₹{getFinalTotal().toLocaleString()}</span>
                 </div>
+
+                {/* Total Savings Badge */}
+                {(getTotalSavings() + couponDiscount) > 0 && (
+                  <div className="p-3 rounded-lg text-center" style={{ backgroundColor: '#ECFDF5' }}>
+                    <p className="text-sm font-bold text-green-700">
+                      🎉 You're saving ₹{Math.round(getTotalSavings() + couponDiscount).toLocaleString()}!
+                    </p>
+                  </div>
+                )}
               </div>
 
               <Button
@@ -336,6 +468,28 @@ const Cart = () => {
               >
                 Proceed to Checkout
               </Button>
+
+              {/* Trust Badges */}
+              <div className="mt-4 grid grid-cols-3 gap-2 text-center py-4" style={{ borderTop: '1px solid #E5E7EB', borderBottom: '1px solid #E5E7EB' }}>
+                <div className="flex flex-col items-center gap-1">
+                  <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  <span className="text-xs font-medium" style={{ color: '#1F2D38' }}>Secure Payment</span>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                  </svg>
+                  <span className="text-xs font-medium" style={{ color: '#1F2D38' }}>Free Delivery</span>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="text-xs font-medium" style={{ color: '#1F2D38' }}>Quality Assured</span>
+                </div>
+              </div>
 
               <Link to="/products">
                 <button className="w-full mt-3 sm:mt-4 font-medium transition text-sm sm:text-base" style={{ color: '#895F42' }} onMouseEnter={(e) => e.currentTarget.style.color = '#9F8065'} onMouseLeave={(e) => e.currentTarget.style.color = '#895F42'}>
