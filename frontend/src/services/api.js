@@ -207,4 +207,20 @@ export const deliveryAPI = {
   deleteZone: (id) => api.delete(`/delivery/zones/${id}`),
 };
 
+// Recommendation APIs
+export const recommendationAPI = {
+  getSimilarProducts: (productId, limit = 6) =>
+    api.get(`/recommendations/similar/${productId}`, { params: { limit } }),
+  getFrequentlyBoughtTogether: (productId, limit = 3) =>
+    api.get(`/recommendations/frequently-bought/${productId}`, { params: { limit } }),
+  getCartBasedRecommendations: (cartItemIds, limit = 6) =>
+    api.post('/recommendations/cart-based', { cartItemIds }, { params: { limit } }),
+  getCompleteTheLook: (productId, limit = 4) =>
+    api.get(`/recommendations/complete-look/${productId}`, { params: { limit } }),
+  getTrendingProducts: (limit = 8) =>
+    api.get('/recommendations/trending', { params: { limit } }),
+  getNewArrivals: (limit = 8) =>
+    api.get('/recommendations/new-arrivals', { params: { limit } }),
+};
+
 export default api;

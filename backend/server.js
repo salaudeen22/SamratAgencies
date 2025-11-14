@@ -53,6 +53,7 @@ app.use('/api/upload', require('./src/routes/uploadRoutes'));
 app.use('/api/contact', require('./src/routes/contactRoutes'));
 app.use('/api/coupons', require('./src/routes/couponRoutes'));
 app.use('/api/delivery', require('./src/routes/deliveryRoutes'));
+app.use('/api/recommendations', require('./src/routes/recommendationRoutes'));
 app.use('/', require('./src/routes/sitemapRoutes'));
 
 // API info route

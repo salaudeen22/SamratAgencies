@@ -1,10 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { couponAPI } from '../services/api';
+import { couponAPI, recommendationAPI } from '../services/api';
 import Button from '../components/Button';
+import ProductRecommendations from '../components/ProductRecommendations';
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, getCartTotal } = useCart();
@@ -16,6 +17,33 @@ const Cart = () => {
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [freeShipping, setFreeShipping] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
+
+  // Recommendations state
+  const [recommendations, setRecommendations] = useState([]);
+  const [loadingRecommendations, setLoadingRecommendations] = useState(false);
+
+  // Fetch cart-based recommendations
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      if (!cart.items || cart.items.length === 0) {
+        setRecommendations([]);
+        return;
+      }
+
+      try {
+        setLoadingRecommendations(true);
+        const cartItemIds = cart.items.map(item => item.product._id);
+        const response = await recommendationAPI.getCartBasedRecommendations(cartItemIds, 6);
+        setRecommendations(response.data || []);
+      } catch (err) {
+        console.error('Failed to fetch recommendations:', err);
+      } finally {
+        setLoadingRecommendations(false);
+      }
+    };
+
+    fetchRecommendations();
+  }, [cart.items]);
 
   const handleQuantityChange = async (productId, newQuantity, selectedVariants) => {
     await updateQuantity(productId, newQuantity, selectedVariants);
@@ -317,6 +345,17 @@ const Cart = () => {
             </div>
           </div>
         </div>
+
+        {/* You May Also Like - Recommendations */}
+        {recommendations.length > 0 && (
+          <div className="mt-12">
+            <ProductRecommendations
+              title="You May Also Like"
+              products={recommendations}
+              loading={loadingRecommendations}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
