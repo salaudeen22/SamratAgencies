@@ -15,6 +15,7 @@ const Navbar = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isShopMenuOpen, setIsShopMenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [expandedCategory, setExpandedCategory] = useState(null);
 
   const isActive = (path) => location.pathname === path;
 
@@ -220,7 +221,10 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={() => {
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+                setExpandedCategory(null); // Reset expanded category when toggling menu
+              }}
               className="md:hidden"
               style={{ color: '#1F2D38' }}
             >
@@ -274,21 +278,45 @@ const Navbar = () => {
                 <div className="pl-4 mt-2 space-y-2">
                   {categories.map((category) => (
                     <div key={category._id}>
-                      <Link
-                        to={`/products?category=${category._id}`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="block py-1.5 text-xs font-semibold uppercase"
-                        style={{ color: '#895F42' }}
-                      >
-                        {category.name}
-                      </Link>
-                      {category.children && category.children.length > 0 && (
-                        <div className="pl-3 space-y-1">
+                      <div className="flex items-center justify-between">
+                        <Link
+                          to={`/products?category=${category._id}`}
+                          onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            setExpandedCategory(null);
+                          }}
+                          className="block py-1.5 text-xs font-semibold uppercase flex-1"
+                          style={{ color: '#895F42' }}
+                        >
+                          {category.name}
+                        </Link>
+                        {category.children && category.children.length > 0 && (
+                          <button
+                            onClick={() => setExpandedCategory(expandedCategory === category._id ? null : category._id)}
+                            className="p-1"
+                            style={{ color: '#895F42' }}
+                          >
+                            <svg
+                              className={`w-4 h-4 transition-transform ${expandedCategory === category._id ? 'rotate-180' : ''}`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                        )}
+                      </div>
+                      {category.children && category.children.length > 0 && expandedCategory === category._id && (
+                        <div className="pl-3 space-y-1 mt-1">
                           {category.children.map((child) => (
                             <Link
                               key={child._id}
                               to={`/products?category=${child._id}`}
-                              onClick={() => setIsMobileMenuOpen(false)}
+                              onClick={() => {
+                                setIsMobileMenuOpen(false);
+                                setExpandedCategory(null);
+                              }}
                               className="block py-1 text-xs"
                               style={{ color: '#94A1AB' }}
                             >
