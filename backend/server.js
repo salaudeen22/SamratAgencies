@@ -51,6 +51,7 @@ app.use('/api/admin', require('./src/routes/adminRoutes'));
 app.use('/api/admin', require('./src/routes/attributeRoutes'));
 app.use('/api/upload', require('./src/routes/uploadRoutes'));
 app.use('/api/contact', require('./src/routes/contactRoutes'));
+app.use('/api/coupons', require('./src/routes/couponRoutes'));
 app.use('/', require('./src/routes/sitemapRoutes'));
 
 // API info route
@@ -69,7 +70,8 @@ app.get('/api', (req, res) => {
       users: '/api/users',
       admin: '/api/admin',
       upload: '/api/upload',
-      contact: '/api/contact'
+      contact: '/api/contact',
+      coupons: '/api/coupons'
     }
   });
 });

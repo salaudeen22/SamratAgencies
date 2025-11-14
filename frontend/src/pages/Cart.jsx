@@ -1,11 +1,21 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import { couponAPI } from '../services/api';
 import Button from '../components/Button';
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, getCartTotal } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
+
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [freeShipping, setFreeShipping] = useState(false);
+  const [isValidating, setIsValidating] = useState(false);
 
   const handleQuantityChange = async (productId, newQuantity, selectedVariants) => {
     await updateQuantity(productId, newQuantity, selectedVariants);
@@ -14,6 +24,60 @@ const Cart = () => {
   const handleRemove = async (productId, selectedVariants) => {
     await removeFromCart(productId, selectedVariants);
     toast.success('Item removed from cart');
+
+    // Revalidate coupon if applied
+    if (appliedCoupon) {
+      handleApplyCoupon();
+    }
+  };
+
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) {
+      toast.error('Please enter a coupon code');
+      return;
+    }
+
+    setIsValidating(true);
+    try {
+      const cartTotal = getCartTotal();
+      const cartItems = cart.items?.map(item => ({
+        product: item.product._id,
+        category: item.product.category?._id || item.product.category,
+        price: item.price || item.product.price,
+        quantity: item.quantity
+      })) || [];
+
+      const response = await couponAPI.validateCoupon(
+        couponCode,
+        user?._id,
+        cartTotal,
+        cartItems
+      );
+
+      setAppliedCoupon(response.data.coupon);
+      setCouponDiscount(response.data.discount);
+      setFreeShipping(response.data.freeShipping || false);
+      toast.success(response.data.message || 'Coupon applied successfully!');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Invalid coupon code');
+      setAppliedCoupon(null);
+      setCouponDiscount(0);
+      setFreeShipping(false);
+    } finally {
+      setIsValidating(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponDiscount(0);
+    setFreeShipping(false);
+    setCouponCode('');
+    toast.success('Coupon removed');
+  };
+
+  const getFinalTotal = () => {
+    return Math.max(0, getCartTotal() - couponDiscount);
   };
 
   if (!cart.items || cart.items.length === 0) {
@@ -155,23 +219,90 @@ const Cart = () => {
             <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-20" style={{ border: '2px solid #BDD7EB' }}>
               <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Order Summary</h2>
 
+              {/* Coupon Code Section */}
+              <div className="mb-4 sm:mb-6">
+                <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                  Have a coupon code?
+                </label>
+                {appliedCoupon ? (
+                  <div className="flex items-center justify-between p-3 rounded-md" style={{ backgroundColor: '#E0EAF0' }}>
+                    <div className="flex items-center space-x-2">
+                      <svg className="w-5 h-5" style={{ color: '#22c55e' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="font-semibold text-sm" style={{ color: '#1F2D38' }}>
+                        {appliedCoupon.code}
+                      </span>
+                    </div>
+                    <button
+                      onClick={handleRemoveCoupon}
+                      className="text-red-500 hover:text-red-700 text-sm font-medium"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex space-x-2">
+                    <input
+                      type="text"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      placeholder="Enter code"
+                      className="flex-1 px-3 py-2 border-2 rounded-md focus:outline-none text-sm"
+                      style={{ borderColor: '#BDD7EB' }}
+                      onFocus={(e) => e.currentTarget.style.borderColor = '#895F42'}
+                      onBlur={(e) => e.currentTarget.style.borderColor = '#BDD7EB'}
+                    />
+                    <button
+                      onClick={handleApplyCoupon}
+                      disabled={isValidating}
+                      className="px-4 py-2 rounded-md font-medium text-sm transition disabled:opacity-50"
+                      style={{ backgroundColor: '#895F42', color: 'white' }}
+                      onMouseEnter={(e) => !isValidating && (e.currentTarget.style.backgroundColor = '#9F8065')}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
+                    >
+                      {isValidating ? 'Validating...' : 'Apply'}
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                 <div className="flex justify-between text-sm sm:text-base" style={{ color: '#94A1AB' }}>
                   <span>Subtotal</span>
                   <span>₹{getCartTotal().toLocaleString()}</span>
                 </div>
+
+                {couponDiscount > 0 && (
+                  <div className="flex justify-between text-sm sm:text-base text-green-600 font-medium">
+                    <span>Coupon Discount</span>
+                    <span>-₹{couponDiscount.toLocaleString()}</span>
+                  </div>
+                )}
+
                 <div className="flex justify-between text-sm sm:text-base" style={{ color: '#94A1AB' }}>
                   <span>Shipping</span>
-                  <span className="text-green-600 font-medium">Free</span>
+                  {freeShipping ? (
+                    <span className="text-green-600 font-medium">Free (Coupon)</span>
+                  ) : (
+                    <span className="text-green-600 font-medium">Free</span>
+                  )}
                 </div>
+
                 <div className="pt-2 sm:pt-3 flex justify-between text-base sm:text-lg font-bold" style={{ borderTop: '2px solid #BDD7EB' }}>
                   <span style={{ color: '#1F2D38' }}>Total</span>
-                  <span style={{ color: '#895F42' }}>₹{getCartTotal().toLocaleString()}</span>
+                  <span style={{ color: '#895F42' }}>₹{getFinalTotal().toLocaleString()}</span>
                 </div>
               </div>
 
               <Button
-                onClick={() => navigate('/checkout')}
+                onClick={() => navigate('/checkout', {
+                  state: {
+                    appliedCoupon,
+                    couponDiscount,
+                    freeShipping
+                  }
+                })}
                 className="w-full"
                 size="lg"
               >

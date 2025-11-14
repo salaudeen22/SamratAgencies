@@ -17,6 +17,18 @@ const variantSchema = new mongoose.Schema({
     required: true,
     min: 0
   },
+  // Discount fields for variant
+  discount: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 100
+  },
+  discountType: {
+    type: String,
+    enum: ['percentage', 'fixed'],
+    default: 'percentage'
+  },
   availabilityType: {
     type: String,
     enum: ['immediate', 'made-to-order'],
@@ -107,6 +119,18 @@ const productSchema = new mongoose.Schema({
     type: Number,
     min: 0
   },
+  // Discount fields for main product
+  discount: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 100
+  },
+  discountType: {
+    type: String,
+    enum: ['percentage', 'fixed'],
+    default: 'percentage'
+  },
   availabilityType: {
     type: String,
     enum: ['immediate', 'made-to-order'],
@@ -181,15 +205,59 @@ productSchema.virtual('hasImmediateAvailability').get(function() {
   return this.availabilityType === 'immediate' && this.isActive;
 });
 
+// Helper function to calculate discounted price
+const calculateDiscountedPrice = (price, discount, discountType) => {
+  // Check if discount is active
+  if (discount <= 0) {
+    return price;
+  }
+
+  if (discountType === 'percentage') {
+    return price - (price * discount / 100);
+  } else if (discountType === 'fixed') {
+    return Math.max(0, price - discount);
+  }
+
+  return price;
+};
+
+// Virtual field for variant discounted price
+variantSchema.virtual('discountedPrice').get(function() {
+  return calculateDiscountedPrice(
+    this.price,
+    this.discount,
+    this.discountType
+  );
+});
+
+// Virtual field to check if variant has active discount
+variantSchema.virtual('hasActiveDiscount').get(function() {
+  return this.discount > 0;
+});
+
+// Virtual field for product discounted price
+productSchema.virtual('discountedPrice').get(function() {
+  return calculateDiscountedPrice(
+    this.price,
+    this.discount,
+    this.discountType
+  );
+});
+
+// Virtual field to check if product has active discount
+productSchema.virtual('hasActiveDiscount').get(function() {
+  return this.discount > 0;
+});
+
 // Virtual field to get price range (for products with variants)
 productSchema.virtual('priceRange').get(function() {
   if (this.hasVariants) {
-    const prices = this.variants.map(v => v.price);
+    const prices = this.variants.map(v => v.discountedPrice || v.price);
     const min = Math.min(...prices);
     const max = Math.max(...prices);
     return min === max ? { min, max, isSame: true } : { min, max, isSame: false };
   }
-  return { min: this.price, max: this.price, isSame: true };
+  return { min: this.discountedPrice || this.price, max: this.discountedPrice || this.price, isSame: true };
 });
 
 module.exports = mongoose.model('Product', productSchema);

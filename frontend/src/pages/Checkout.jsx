@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -8,12 +8,19 @@ import Button from '../components/Button';
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { cart, getCartTotal, clearCart } = useCart();
   const { isAuthenticated } = useAuth();
   const [loading, setLoading] = useState(false);
   const [savedAddresses, setSavedAddresses] = useState([]);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [useNewAddress, setUseNewAddress] = useState(false);
+
+  // Get coupon data from cart page
+  const appliedCoupon = location.state?.appliedCoupon || null;
+  const couponDiscount = location.state?.couponDiscount || 0;
+  const freeShipping = location.state?.freeShipping || false;
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,6 +31,10 @@ const Checkout = () => {
     pincode: '',
     paymentMethod: 'cod',
   });
+
+  const getFinalTotal = () => {
+    return Math.max(0, getCartTotal() - couponDiscount);
+  };
 
   // Load Razorpay script
   useEffect(() => {
@@ -133,7 +144,9 @@ const Checkout = () => {
           pincode: formData.pincode,
         },
         paymentMethod: formData.paymentMethod,
-        totalAmount: getCartTotal(),
+        totalAmount: getFinalTotal(),
+        coupon: appliedCoupon?._id || null,
+        discount: couponDiscount || 0,
       };
 
       if (formData.paymentMethod === 'online') {
@@ -479,13 +492,28 @@ const Checkout = () => {
                   <span>Subtotal</span>
                   <span>₹{getCartTotal().toLocaleString()}</span>
                 </div>
+
+                {appliedCoupon && couponDiscount > 0 && (
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-600 font-medium">Coupon ({appliedCoupon.code})</span>
+                    </div>
+                    <span className="text-green-600 font-medium">-₹{couponDiscount.toLocaleString()}</span>
+                  </div>
+                )}
+
                 <div className="flex justify-between" style={{ color: '#94A1AB' }}>
                   <span>Shipping</span>
-                  <span className="text-green-600 font-medium">Free</span>
+                  {freeShipping ? (
+                    <span className="text-green-600 font-medium">Free (Coupon)</span>
+                  ) : (
+                    <span className="text-green-600 font-medium">Free</span>
+                  )}
                 </div>
+
                 <div className="pt-2 flex justify-between text-lg font-bold" style={{ borderTop: '2px solid #BDD7EB' }}>
                   <span style={{ color: '#1F2D38' }}>Total</span>
-                  <span style={{ color: '#895F42' }}>₹{getCartTotal().toLocaleString()}</span>
+                  <span style={{ color: '#895F42' }}>₹{getFinalTotal().toLocaleString()}</span>
                 </div>
               </div>
             </div>

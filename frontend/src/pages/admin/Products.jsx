@@ -23,6 +23,8 @@ const Products = () => {
     attributeSet: '',
     specifications: {},
     price: '',
+    discount: 0,
+    discountType: 'percentage',
     availabilityType: 'immediate',
     deliveryDays: 7,
     sku: '',
@@ -69,6 +71,8 @@ const Products = () => {
         ...formData,
         category: finalCategory,
         price: parseFloat(formData.price),
+        discount: parseFloat(formData.discount) || 0,
+        discountType: formData.discountType,
         availabilityType: formData.availabilityType,
         deliveryDays: parseInt(formData.deliveryDays),
       };
@@ -142,6 +146,8 @@ const Products = () => {
       attributeSet: product.attributeSet?._id || product.attributeSet || '',
       specifications: specs,
       price: product.price || '',
+      discount: product.discount || 0,
+      discountType: product.discountType || 'percentage',
       availabilityType: product.availabilityType || 'immediate',
       deliveryDays: product.deliveryDays || 7,
       sku: product.sku || '',
@@ -195,6 +201,8 @@ const Products = () => {
       attributeSet: '',
       specifications: {},
       price: '',
+      discount: 0,
+      discountType: 'percentage',
       availabilityType: 'immediate',
       deliveryDays: 7,
       sku: '',
@@ -733,6 +741,100 @@ const Products = () => {
                       </p>
                     )}
                   </div>
+
+                  {/* Discount Type */}
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Discount Type</label>
+                    <select
+                      value={formData.discountType}
+                      onChange={(e) => setFormData({ ...formData, discountType: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-lg"
+                    >
+                      <option value="percentage">Percentage (%)</option>
+                      <option value="fixed">Fixed Amount (₹)</option>
+                    </select>
+                  </div>
+
+                  {/* Discount Value */}
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Discount Value {formData.discountType === 'percentage' ? '(%)' : '(₹)'}
+                    </label>
+                    <input
+                      type="number"
+                      value={formData.discount}
+                      onChange={(e) => setFormData({ ...formData, discount: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-lg"
+                      min="0"
+                      max={formData.discountType === 'percentage' ? '100' : undefined}
+                      step="0.01"
+                      placeholder="0"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Leave as 0 for no discount
+                    </p>
+                  </div>
+                </div>
+
+                {/* Discount Preview */}
+                {formData.price > 0 && formData.discount > 0 && (
+                  <div className="mt-4 p-4 bg-green-50 border-2 border-green-200 rounded-lg">
+                    <h5 className="font-semibold text-sm mb-3 text-gray-700 flex items-center gap-2">
+                      <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Discount Preview
+                    </h5>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <p className="text-xs text-gray-600 mb-1">Original Price</p>
+                        <p className="text-lg font-bold text-gray-800">
+                          ₹{parseFloat(formData.price).toLocaleString()}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-600 mb-1">Discount</p>
+                        <p className="text-lg font-bold text-red-600">
+                          {formData.discountType === 'percentage'
+                            ? `${formData.discount}% (₹${Math.round((parseFloat(formData.price) * parseFloat(formData.discount) / 100)).toLocaleString()})`
+                            : `₹${parseFloat(formData.discount).toLocaleString()}`
+                          }
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-600 mb-1">Final Price (Customer Pays)</p>
+                        <p className="text-2xl font-bold text-green-600">
+                          ₹{(() => {
+                            const price = parseFloat(formData.price);
+                            const discount = parseFloat(formData.discount);
+                            if (formData.discountType === 'percentage') {
+                              return Math.round(price - (price * discount / 100)).toLocaleString();
+                            } else {
+                              return Math.round(Math.max(0, price - discount)).toLocaleString();
+                            }
+                          })()}
+                        </p>
+                        <p className="text-xs text-green-700 mt-1 font-medium">
+                          Savings: ₹{(() => {
+                            const price = parseFloat(formData.price);
+                            const discount = parseFloat(formData.discount);
+                            if (formData.discountType === 'percentage') {
+                              return Math.round(price * discount / 100).toLocaleString();
+                            } else {
+                              return Math.round(Math.min(price, discount)).toLocaleString();
+                            }
+                          })()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Availability & Other Settings */}
+              <div>
+                <h4 className="font-semibold text-md mb-3 text-gray-700 border-b pb-2">Availability & Settings</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">Availability Type *</label>
                     <select

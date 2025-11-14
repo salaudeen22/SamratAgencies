@@ -1,14 +1,11 @@
 import { Component } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 
 // Error Boundary UI Component
 const ErrorFallback = ({ error, resetError }) => {
-  const navigate = useNavigate();
-
   const handleGoHome = () => {
     resetError();
-    navigate('/');
+    window.location.href = '/';
   };
 
   const handleReload = () => {

@@ -116,6 +116,13 @@ const ProductCard = ({ product }) => {
               Made to Order
             </div>
           )}
+
+          {/* Discount Badge */}
+          {product.hasActiveDiscount && product.discount > 0 && (
+            <div className="absolute bottom-2 left-2 text-white px-3 py-1 rounded-md text-sm font-bold shadow-lg" style={{ backgroundColor: '#ef4444' }}>
+              {product.discountType === 'percentage' ? `${product.discount}% OFF` : `₹${product.discount} OFF`}
+            </div>
+          )}
         </div>
 
         <div className="p-4">
@@ -145,6 +152,44 @@ const ProductCard = ({ product }) => {
                     });
                   });
 
+                  // Apply discount to min and max prices
+                  if (product.hasActiveDiscount && product.discount > 0) {
+                    const calculateDiscount = (price) => {
+                      if (product.discountType === 'percentage') {
+                        return price - (price * product.discount / 100);
+                      } else {
+                        return Math.max(0, price - product.discount);
+                      }
+                    };
+
+                    const discountedMin = calculateDiscount(minPrice);
+                    const discountedMax = calculateDiscount(maxPrice);
+
+                    return (
+                      <div className="flex flex-col">
+                        {minPrice === maxPrice ? (
+                          <>
+                            <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
+                              ₹{Math.round(discountedMin).toLocaleString()}
+                            </span>
+                            <span className="text-sm line-through" style={{ color: '#94A1AB' }}>
+                              ₹{minPrice.toLocaleString()}
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="text-xl font-bold" style={{ color: '#895F42' }}>
+                              ₹{Math.round(discountedMin).toLocaleString()} - ₹{Math.round(discountedMax).toLocaleString()}
+                            </span>
+                            <span className="text-xs line-through" style={{ color: '#94A1AB' }}>
+                              ₹{minPrice.toLocaleString()} - ₹{maxPrice.toLocaleString()}
+                            </span>
+                          </>
+                        )}
+                      </div>
+                    );
+                  }
+
                   return (
                     <div>
                       {minPrice === maxPrice ? (
@@ -160,9 +205,22 @@ const ProductCard = ({ product }) => {
                   );
                 })()
               ) : (
-                <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
-                  ₹{product.price?.toLocaleString()}
-                </span>
+                <>
+                  {product.hasActiveDiscount && product.discount > 0 && product.discountedPrice ? (
+                    <div className="flex flex-col">
+                      <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
+                        ₹{Math.round(product.discountedPrice).toLocaleString()}
+                      </span>
+                      <span className="text-sm line-through" style={{ color: '#94A1AB' }}>
+                        ₹{product.price?.toLocaleString()}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
+                      ₹{product.price?.toLocaleString()}
+                    </span>
+                  )}
+                </>
               )}
               {product.category && (
                 <p className="text-xs mt-1" style={{ color: '#94A1AB' }}>

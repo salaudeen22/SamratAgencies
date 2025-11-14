@@ -174,4 +174,22 @@ export const contactAPI = {
   submitForm: (formData) => api.post('/contact', formData),
 };
 
+// Coupon APIs
+export const couponAPI = {
+  // Public/Customer
+  getActiveCoupons: () => api.get('/coupons/active'),
+  validateCoupon: (code, userId, cartTotal, cartItems) =>
+    api.post('/coupons/validate', { code, userId, cartTotal, cartItems }),
+
+  // Admin
+  getAllCoupons: (params) => api.get('/coupons', { params }),
+  getCouponById: (id) => api.get(`/coupons/${id}`),
+  createCoupon: (couponData) => api.post('/coupons', couponData),
+  updateCoupon: (id, couponData) => api.put(`/coupons/${id}`, couponData),
+  deleteCoupon: (id) => api.delete(`/coupons/${id}`),
+  getCouponStats: (id) => api.get(`/coupons/${id}/stats`),
+  useCoupon: (id, userId, orderId, discountApplied) =>
+    api.post(`/coupons/${id}/use`, { userId, orderId, discountApplied }),
+};
+
 export default api;
