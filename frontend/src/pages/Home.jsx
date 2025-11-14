@@ -37,7 +37,7 @@ const Home = () => {
         url="/"
         type="website"
       />
-      <div className="min-h-screen" style={{ backgroundColor: '#E5EFF2' }}>
+      <div className="min-h-screen" style={{ backgroundColor: '#f8fafc' }}>
         <HeroSection />
         <CategoriesSection />
         <FeaturedProductsSection products={featuredProducts} loading={loading} />

@@ -3,10 +3,10 @@ import Button from '../Button';
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden bg-[#E5EFF2] md:bg-transparent h-[80vh] flex items-center">
+    <section className="relative overflow-hidden bg-[#f8fafc] md:bg-transparent h-[80vh] flex items-center">
       {/* Desktop only: Reversed Golden Ratio split (62:38) */}
       <div className="absolute inset-0 hidden md:block" style={{
-        background: 'linear-gradient(to right, #1F2D38 0%, #1F2D38 62%, #E5EFF2 62%, #E5EFF2 100%)'
+        background: 'linear-gradient(to right, #1F2D38 0%, #1F2D38 62%, #f8fafc 62%, #f8fafc 100%)'
       }}></div>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">

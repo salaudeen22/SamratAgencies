@@ -30,7 +30,7 @@ const FeaturedProductsSection = ({ products, loading }) => {
       </section>
 
       {/* New Arrivals Section */}
-      <section className="py-8 sm:py-12 md:py-20" style={{ backgroundColor: '#E5EFF2' }}>
+      <section className="py-8 sm:py-12 md:py-20" style={{ backgroundColor: '#f8fafc' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-12">
             <div>

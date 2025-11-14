@@ -34,7 +34,7 @@ const PromotionalCards = () => {
       </section>
 
       {/* Premium Card Layout Section */}
-      <section className="py-8 sm:py-12 md:py-20" style={{ backgroundColor: '#E5EFF2' }}>
+      <section className="py-8 sm:py-12 md:py-20" style={{ backgroundColor: '#f8fafc' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {/* Large Left Card */}
