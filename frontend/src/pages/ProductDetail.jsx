@@ -804,40 +804,40 @@ const ProductDetail = () => {
           className="fixed bottom-0 left-0 right-0 bg-white shadow-2xl border-t-2 z-40 transform transition-transform duration-300"
           style={{ borderColor: '#BDD7EB' }}
         >
-          <div className="max-w-7xl mx-auto px-4 py-3">
-            <div className="flex items-center justify-between gap-4">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
+            <div className="flex items-center justify-between gap-2 sm:gap-4">
               {/* Product Info */}
-              <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                 {product.images && product.images[0] && (
                   <img
                     src={product.images[0].url}
                     alt={product.name}
-                    className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
+                    className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-lg flex-shrink-0"
                     style={{ border: '2px solid #BDD7EB' }}
                   />
                 )}
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-sm truncate" style={{ color: '#1F2D38' }}>
+                  <h3 className="font-semibold text-xs sm:text-sm truncate" style={{ color: '#1F2D38' }}>
                     {product.name}
                   </h3>
-                  <p className="text-sm font-bold" style={{ color: '#895F42' }}>
+                  <p className="text-xs sm:text-sm font-bold" style={{ color: '#895F42' }}>
                     ₹{(displayPrice || product.price)?.toLocaleString()}
                   </p>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 {/* Wishlist */}
                 <button
                   onClick={handleWishlistToggle}
-                  className="p-2 rounded-full transition-all hover:scale-110 hidden sm:block"
+                  className="p-1.5 sm:p-2 rounded-full transition-all hover:scale-110 hidden sm:block"
                   style={{
                     backgroundColor: isWishlisted ? '#FEE2E2' : '#F3F4F6',
                     color: isWishlisted ? '#ef4444' : '#94A1AB'
                   }}
                 >
-                  <svg className="w-5 h-5" fill={isWishlisted ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill={isWishlisted ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </button>
@@ -845,25 +845,27 @@ const ProductDetail = () => {
                 {/* Add to Cart */}
                 <button
                   onClick={handleAddToCart}
-                  className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:shadow-lg flex items-center gap-2"
+                  className="px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all hover:shadow-lg flex items-center gap-1 sm:gap-2"
                   style={{ backgroundColor: '#895F42', color: 'white' }}
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                   <span className="hidden sm:inline">Add to Cart</span>
+                  <span className="sm:hidden">Add</span>
                 </button>
 
                 {/* Buy Now */}
                 <button
                   onClick={handleBuyNow}
-                  className="px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:shadow-lg flex items-center gap-2"
+                  className="px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all hover:shadow-lg flex items-center gap-1 sm:gap-2"
                   style={{ backgroundColor: '#10B981', color: 'white' }}
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                   <span className="hidden sm:inline">Buy Now</span>
+                  <span className="sm:hidden">Buy</span>
                 </button>
               </div>
             </div>

@@ -38,12 +38,12 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white border-b sticky top-0 z-50" style={{ borderColor: '#E0EAF0' }}>
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <img src={logo} alt="Samrat Agencies" className="h-8 w-auto" />
-            <span className="text-lg font-semibold tracking-tight" style={{ color: '#1F2D38' }}>Samrat Agencies</span>
+          <Link to="/" className="flex items-center space-x-1.5 sm:space-x-2">
+            <img src={logo} alt="Samrat Agencies" className="h-6 sm:h-8 w-auto" />
+            <span className="text-sm sm:text-base lg:text-lg font-semibold tracking-tight" style={{ color: '#1F2D38' }}>Samrat Agencies</span>
           </Link>
 
           {/* Desktop Navigation - Centered */}
@@ -130,10 +130,10 @@ const Navbar = () => {
           </div>
 
           {/* Right Side */}
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-6">
             {/* Wishlist */}
             <Link to="/wishlist" className="relative group">
-              <svg className="w-5 h-5 transition-colors" style={{ color: '#1F2D38' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-5 sm:h-5 transition-colors" style={{ color: '#1F2D38' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
               {getWishlistCount() > 0 && (
@@ -145,7 +145,7 @@ const Navbar = () => {
 
             {/* Cart */}
             <Link to="/cart" className="relative group">
-              <svg className="w-5 h-5 transition-colors" style={{ color: '#1F2D38' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-5 sm:h-5 transition-colors" style={{ color: '#1F2D38' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
               {getCartCount() > 0 && (

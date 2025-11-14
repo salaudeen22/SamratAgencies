@@ -212,6 +212,13 @@ const Compare = () => {
 
         {/* Comparison Table */}
         <div className="bg-white rounded-xl shadow-lg overflow-hidden border-2" style={{ borderColor: '#BDD7EB' }}>
+          {/* Mobile Scroll Hint */}
+          <div className="md:hidden bg-blue-50 px-4 py-2 text-xs text-center" style={{ color: '#895F42' }}>
+            <svg className="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+            </svg>
+            Scroll horizontally to see all products
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <tbody>
@@ -221,21 +228,21 @@ const Compare = () => {
                     className={index % 2 === 0 ? '' : 'bg-gray-50'}
                   >
                     {/* Attribute Label */}
-                    <td className="p-4 font-bold text-sm sm:text-base sticky left-0 bg-white z-20" style={{ color: '#1F2D38', minWidth: '150px', borderRight: '2px solid #BDD7EB' }}>
+                    <td className="p-3 sm:p-4 font-bold text-xs sm:text-sm md:text-base sticky left-0 bg-white z-20" style={{ color: '#1F2D38', minWidth: '120px', borderRight: '2px solid #BDD7EB' }}>
                       {attr.label}
                     </td>
 
                     {/* Product Values */}
                     {compareList.map((product) => (
-                      <td key={product._id} className="p-4 text-center align-top" style={{ minWidth: '250px', maxWidth: '300px' }}>
+                      <td key={product._id} className="p-3 sm:p-4 text-center align-top" style={{ minWidth: '200px', maxWidth: '250px' }}>
                         <div className="relative">
                           {attr.key === 'product' && (
                             <button
                               onClick={() => removeFromCompare(product._id)}
-                              className="absolute top-2 right-2 p-1.5 rounded-full bg-red-500 text-white shadow-lg hover:bg-red-600 transition-all z-10"
+                              className="absolute top-1 sm:top-2 right-1 sm:right-2 p-1 sm:p-1.5 rounded-full bg-red-500 text-white shadow-lg hover:bg-red-600 transition-all z-10"
                               title="Remove"
                             >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                               </svg>
                             </button>
@@ -249,15 +256,15 @@ const Compare = () => {
 
                 {/* Action Row */}
                 <tr style={{ backgroundColor: '#F9FAFB' }}>
-                  <td className="p-4 font-bold sticky left-0 bg-white z-20" style={{ borderRight: '2px solid #BDD7EB' }}>
+                  <td className="p-3 sm:p-4 font-bold text-xs sm:text-sm sticky left-0 bg-white z-20" style={{ borderRight: '2px solid #BDD7EB' }}>
                     Actions
                   </td>
                   {compareList.map((product) => (
-                    <td key={product._id} className="p-4">
+                    <td key={product._id} className="p-3 sm:p-4">
                       <div className="flex flex-col gap-2">
                         <button
                           onClick={() => handleAddToCart(product._id)}
-                          className="w-full px-4 py-2 rounded-lg font-bold transition-all shadow-md hover:shadow-lg text-sm"
+                          className="w-full px-3 sm:px-4 py-2 rounded-lg font-bold transition-all shadow-md hover:shadow-lg text-xs sm:text-sm"
                           style={{
                             backgroundColor: '#895F42',
                             color: 'white'
@@ -267,7 +274,7 @@ const Compare = () => {
                         </button>
                         <Link to={`/products/${product.slug || product._id}`}>
                           <button
-                            className="w-full px-4 py-2 rounded-lg font-medium transition-all text-sm"
+                            className="w-full px-3 sm:px-4 py-2 rounded-lg font-medium transition-all text-xs sm:text-sm"
                             style={{
                               backgroundColor: '#E0EAF0',
                               color: '#895F42'
