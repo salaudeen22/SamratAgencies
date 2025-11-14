@@ -4,8 +4,10 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
+import { CompareProvider } from './context/CompareContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import CompareBar from './components/CompareBar';
 import AdminRoute from './components/AdminRoute';
 import ErrorBoundary from './components/ErrorBoundary';
 import ErrorPage from './components/ErrorPage';
@@ -17,6 +19,7 @@ const Products = lazy(() => import('./pages/Products'));
 const ProductDetail = lazy(() => import('./pages/ProductDetail'));
 const Cart = lazy(() => import('./pages/Cart'));
 const Wishlist = lazy(() => import('./pages/Wishlist'));
+const Compare = lazy(() => import('./pages/Compare'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'));
 const Login = lazy(() => import('./pages/Login'));
@@ -67,7 +70,8 @@ function App() {
         <AuthProvider>
           <CartProvider>
             <WishlistProvider>
-              <Suspense fallback={<LoadingFallback />}>
+              <CompareProvider>
+                <Suspense fallback={<LoadingFallback />}>
                 <Routes>
               {/* Admin Routes */}
               <Route
@@ -163,6 +167,7 @@ function App() {
                         <Route path="/products/:id" element={<ProductDetail />} />
                         <Route path="/cart" element={<Cart />} />
                         <Route path="/wishlist" element={<Wishlist />} />
+                        <Route path="/compare" element={<Compare />} />
                         <Route path="/checkout" element={<Checkout />} />
                         <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
                         <Route path="/profile" element={<Profile />} />
@@ -176,12 +181,14 @@ function App() {
                         <Route path="*" element={<NotFound />} />
                       </Routes>
                     </main>
+                    <CompareBar />
                     <Footer />
                   </div>
                 }
               />
               </Routes>
             </Suspense>
+              </CompareProvider>
           </WishlistProvider>
         </CartProvider>
       </AuthProvider>

@@ -3,12 +3,15 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import { useCompare } from '../context/CompareContext';
 import QuickLook from './QuickLook';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { addToCompare, removeFromCompare, isInCompare } = useCompare();
   const [isWishlisted, setIsWishlisted] = useState(isInWishlist(product._id));
+  const [isComparing, setIsComparing] = useState(isInCompare(product._id));
   const [showQuickLook, setShowQuickLook] = useState(false);
 
   const handleAddToCart = async (e) => {
@@ -42,6 +45,21 @@ const ProductCard = ({ product }) => {
       if (result.success) {
         setIsWishlisted(true);
         toast.success('Added to wishlist!');
+      }
+    }
+  };
+
+  const handleCompareToggle = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isComparing) {
+      removeFromCompare(product._id);
+      setIsComparing(false);
+    } else {
+      const result = addToCompare(product);
+      if (result.success) {
+        setIsComparing(true);
       }
     }
   };
@@ -87,29 +105,54 @@ const ProductCard = ({ product }) => {
             </svg>
           </button>
 
-          {/* Quick Look Button */}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setShowQuickLook(true);
-            }}
-            className="absolute top-2 right-2 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all opacity-0 group-hover:opacity-100"
-            style={{ color: '#895F42' }}
-            title="Quick Look"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
+          {/* Action Buttons Top Right */}
+          <div className="absolute top-2 right-2 flex gap-2">
+            {/* Compare Button */}
+            <button
+              onClick={handleCompareToggle}
+              className="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
+              style={{
+                color: isComparing ? '#895F42' : '#94A1AB',
+                backgroundColor: isComparing ? '#FFF8F3' : 'white'
+              }}
+              title={isComparing ? 'Remove from compare' : 'Add to compare'}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </button>
+
+            {/* Quick Look Button */}
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowQuickLook(true);
+              }}
+              className="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all opacity-0 group-hover:opacity-100"
+              style={{ color: '#895F42' }}
+              title="Quick Look"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </button>
+          </div>
 
           {product.availabilityType === 'made-to-order' && (
             <div className="absolute bottom-2 right-2 text-white px-3 py-1 rounded-md text-sm font-semibold shadow-lg" style={{ backgroundColor: '#895F42' }}>
