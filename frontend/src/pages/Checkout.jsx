@@ -117,8 +117,11 @@ const Checkout = () => {
           .filter(item => item.product)
           .map(item => ({
             product: item.product._id,
+            name: item.product.name,
             quantity: item.quantity,
-            price: item.product.price,
+            price: item.price || item.product.price,
+            image: item.product.images?.[0]?.url || '',
+            selectedVariants: item.selectedVariants || {},
           })),
         shippingAddress: {
           name: formData.name,
@@ -137,10 +140,10 @@ const Checkout = () => {
         await handleRazorpayPayment(orderData);
       } else {
         // Handle COD
-        await orderAPI.create(orderData);
+        const response = await orderAPI.create(orderData);
+        const orderId = response.data._id;
         await clearCart();
-        alert('Order placed successfully!');
-        navigate(`/profile`);
+        navigate(`/order-confirmation/${orderId}`);
       }
     } catch (err) {
       console.error('Order failed:', err);
@@ -189,8 +192,7 @@ const Checkout = () => {
 
             if (verifyResponse.data.success) {
               await clearCart();
-              alert('Payment successful! Order placed.');
-              navigate('/profile');
+              navigate(`/order-confirmation/${orderId}`);
             } else {
               alert('Payment verification failed');
             }
