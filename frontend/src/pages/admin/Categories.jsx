@@ -116,10 +116,10 @@ const Categories = () => {
       return (
         <div key={category._id}>
           <div
-            className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 mb-3"
-            style={{ marginLeft: `${level * 24}px` }}
+            className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow p-3 sm:p-4 mb-3"
+            style={{ marginLeft: `${level * (window.innerWidth < 640 ? 12 : 24)}px` }}
           >
-            <div className="flex justify-between items-start gap-4">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 sm:gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   {hasChildren && (
@@ -137,20 +137,20 @@ const Categories = () => {
                       </svg>
                     </button>
                   )}
-                  <h3 className="text-lg font-semibold text-gray-800">{category.name}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800 break-words">{category.name}</h3>
                 </div>
                 {category.description && (
-                  <p className="text-sm text-gray-600 mt-2 ml-7">{category.description}</p>
+                  <p className="text-xs sm:text-sm text-gray-600 mt-2 ml-0 sm:ml-7 break-words">{category.description}</p>
                 )}
                 {category.parent && (
-                  <p className="text-xs text-gray-500 mt-1 ml-7 flex items-center gap-1">
+                  <p className="text-xs text-gray-500 mt-1 ml-0 sm:ml-7 flex items-center gap-1">
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                     </svg>
                     Parent: {category.parent.name}
                   </p>
                 )}
-                <div className="flex flex-wrap gap-2 mt-3 ml-7">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-3 ml-0 sm:ml-7">
                   <span
                     className={`text-xs px-2.5 py-1 rounded-full font-medium ${
                       category.isActive
@@ -170,36 +170,37 @@ const Categories = () => {
                   )}
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
                 <button
                   onClick={() => handleAddChild(category)}
-                  className="px-4 py-2 text-sm bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors flex items-center gap-1.5 shadow-sm"
+                  className="px-3 sm:px-4 py-2 text-xs sm:text-sm bg-green-500 hover:bg-green-600 active:bg-green-700 text-white rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-sm"
                   title="Add child category"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
-                  Add Child
+                  <span className="hidden sm:inline">Add Child</span>
+                  <span className="sm:hidden">Add</span>
                 </button>
                 <button
                   onClick={() => handleEdit(category)}
-                  className="px-4 py-2 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center gap-1.5 shadow-sm"
+                  className="px-3 sm:px-4 py-2 text-xs sm:text-sm bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-sm"
                   title="Edit category"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
-                  Edit
+                  <span>Edit</span>
                 </button>
                 <button
                   onClick={() => handleDelete(category._id)}
-                  className="px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors flex items-center gap-1.5 shadow-sm"
+                  className="px-3 sm:px-4 py-2 text-xs sm:text-sm bg-red-500 hover:bg-red-600 active:bg-red-700 text-white rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-sm"
                   title="Delete category"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
-                  Delete
+                  <span>Delete</span>
                 </button>
               </div>
             </div>
