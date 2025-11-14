@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import AdminLayout from '../../components/admin/AdminLayout';
+import PageHeader from '../../components/admin/ui/PageHeader';
 import Modal from '../../components/admin/Modal';
 import { adminAPI } from '../../services/api';
 
@@ -116,8 +117,8 @@ const Categories = () => {
       return (
         <div key={category._id}>
           <div
-            className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow p-3 sm:p-4 mb-3"
-            style={{ marginLeft: `${level * (window.innerWidth < 640 ? 12 : 24)}px` }}
+            className="bg-white border rounded-xl shadow-sm hover:shadow-md transition-all p-3 sm:p-4 mb-3"
+            style={{ marginLeft: `${level * (window.innerWidth < 640 ? 12 : 24)}px`, borderColor: '#e2e8f0' }}
           >
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 sm:gap-4">
               <div className="flex-1">
@@ -125,7 +126,10 @@ const Categories = () => {
                   {hasChildren && (
                     <button
                       onClick={() => toggleExpand(category._id)}
-                      className="text-gray-500 hover:text-gray-700 transition-colors"
+                      className="transition-colors"
+                      style={{ color: '#64748b' }}
+                      onMouseEnter={(e) => e.currentTarget.style.color = '#1e293b'}
+                      onMouseLeave={(e) => e.currentTarget.style.color = '#64748b'}
                     >
                       <svg
                         className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
@@ -137,15 +141,15 @@ const Categories = () => {
                       </svg>
                     </button>
                   )}
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-800 break-words">{category.name}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold break-words" style={{ color: '#1e293b' }}>{category.name}</h3>
                 </div>
                 {category.description && (
-                  <p className="text-xs sm:text-sm text-gray-600 mt-2 ml-0 sm:ml-7 break-words">{category.description}</p>
+                  <p className="text-xs sm:text-sm mt-2 ml-0 sm:ml-7 break-words" style={{ color: '#64748b' }}>{category.description}</p>
                 )}
                 {category.parent && (
-                  <p className="text-xs text-gray-500 mt-1 ml-0 sm:ml-7 flex items-center gap-1">
+                  <p className="text-xs mt-1 ml-0 sm:ml-7 flex items-center gap-1" style={{ color: '#94a3b8' }}>
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002 2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                     </svg>
                     Parent: {category.parent.name}
                   </p>
@@ -299,55 +303,74 @@ const Categories = () => {
 
   return (
     <AdminLayout>
-      <div>
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-          <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">Categories Management</h2>
+      <PageHeader
+        title="Categories Management"
+        subtitle={`Manage all ${filteredCategories.length} categories with hierarchical structure`}
+        action={
           <button
             onClick={() => setShowModal(true)}
-            className="w-full sm:w-auto px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-4 lg:px-5 py-2 lg:py-2.5 text-white rounded-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm lg:text-base font-medium"
+            style={{ backgroundColor: '#895F42' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#6d4a33'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
             Add Category
           </button>
-        </div>
+        }
+      />
 
-        {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative">
-            <svg
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              type="text"
-              placeholder="Search categories by name or description..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-            />
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            )}
-          </div>
+      {/* Search Bar */}
+      <div className="mb-6">
+        <div className="relative">
+          <svg
+            className="absolute left-3 lg:left-4 top-1/2 transform -translate-y-1/2 w-5 h-5"
+            style={{ color: '#94a3b8' }}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search categories by name or description..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 lg:pl-12 pr-10 lg:pr-12 py-2.5 lg:py-3 border rounded-lg transition-all text-sm lg:text-base"
+            style={{ borderColor: '#e2e8f0', color: '#1e293b' }}
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = '#895F42';
+              e.currentTarget.style.outline = 'none';
+              e.currentTarget.style.boxShadow = '0 0 0 3px rgba(137, 95, 66, 0.1)';
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = '#e2e8f0';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          />
           {searchTerm && (
-            <p className="text-sm text-gray-600 mt-2">
-              Found {filteredCategories.length} {filteredCategories.length === 1 ? 'category' : 'categories'}
-            </p>
+            <button
+              onClick={() => setSearchTerm('')}
+              className="absolute right-3 lg:right-4 top-1/2 transform -translate-y-1/2 transition-colors"
+              style={{ color: '#94a3b8' }}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#64748b'}
+              onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           )}
         </div>
+        {searchTerm && (
+          <p className="text-sm mt-2" style={{ color: '#64748b' }}>
+            Found {filteredCategories.length} {filteredCategories.length === 1 ? 'category' : 'categories'}
+          </p>
+        )}
+      </div>
 
         {/* Category Modal */}
         <Modal
@@ -443,37 +466,42 @@ const Categories = () => {
           </form>
         </Modal>
 
-        {/* Categories List */}
-        {loading ? (
-          <div className="flex flex-col items-center justify-center py-12">
-            <svg className="animate-spin h-10 w-10 text-blue-500 mb-4" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <p className="text-gray-600">Loading categories...</p>
+      {/* Categories List */}
+      {loading ? (
+        <div className="flex items-center justify-center py-12">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#895F42' }}></div>
+            <p className="text-lg font-medium" style={{ color: '#64748b' }}>Loading categories...</p>
           </div>
-        ) : error ? (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-            <svg className="w-12 h-12 text-red-500 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p className="text-red-600 font-medium">{error}</p>
-          </div>
-        ) : (
+        </div>
+      ) : error ? (
+        <div className="text-center py-12">
+          <p className="text-lg font-semibold text-red-600 mb-2">Error loading categories</p>
+          <p className="text-sm" style={{ color: '#64748b' }}>{error}</p>
+        </div>
+      ) : (
           <>
             <div>
               {paginatedCategories.length === 0 ? (
-                <div className="bg-gray-50 border border-gray-200 rounded-lg p-12 text-center">
-                  <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                  </svg>
-                  <p className="text-gray-500 text-lg">
+                <div className="rounded-xl p-12 text-center border" style={{ backgroundColor: '#f8fafc', borderColor: '#e2e8f0' }}>
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center mb-4 mx-auto" style={{ backgroundColor: '#f1f5f9' }}>
+                    <svg className="w-10 h-10 lg:w-12 lg:h-12" style={{ color: '#94a3b8' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                    </svg>
+                  </div>
+                  <p className="text-lg font-semibold mb-2" style={{ color: '#1e293b' }}>
                     {searchTerm ? 'No categories match your search' : 'No categories found'}
+                  </p>
+                  <p className="text-sm mb-6" style={{ color: '#64748b' }}>
+                    {searchTerm ? 'Try adjusting your search criteria' : 'Get started by creating your first category'}
                   </p>
                   {searchTerm && (
                     <button
                       onClick={() => setSearchTerm('')}
-                      className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+                      className="px-4 py-2 text-white rounded-lg transition-colors font-medium"
+                      style={{ backgroundColor: '#895F42' }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#6d4a33'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
                     >
                       Clear Search
                     </button>
@@ -485,8 +513,8 @@ const Categories = () => {
 
                   {/* Pagination Controls */}
                   {totalPages > 1 && (
-                    <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white border border-gray-200 rounded-lg p-4">
-                      <div className="text-sm text-gray-600">
+                    <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white border rounded-xl p-4 shadow-sm" style={{ borderColor: '#e2e8f0' }}>
+                      <div className="text-sm" style={{ color: '#64748b' }}>
                         Showing {startIndex + 1} to {Math.min(endIndex, filteredCategories.length)} of {filteredCategories.length} categories
                       </div>
 
@@ -496,9 +524,14 @@ const Categories = () => {
                           disabled={currentPage === 1}
                           className={`px-3 py-1.5 rounded-lg border transition-colors ${
                             currentPage === 1
-                              ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
-                              : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                              ? 'cursor-not-allowed opacity-50'
+                              : 'hover:bg-gray-50'
                           }`}
+                          style={
+                            currentPage === 1
+                              ? { backgroundColor: '#f8fafc', color: '#94a3b8', borderColor: '#e2e8f0' }
+                              : { backgroundColor: 'white', color: '#64748b', borderColor: '#e2e8f0' }
+                          }
                         >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -517,17 +550,28 @@ const Categories = () => {
                               <button
                                 key={page}
                                 onClick={() => handlePageChange(page)}
-                                className={`px-3 py-1.5 rounded-lg border transition-colors min-w-10 ${
+                                className="px-3 py-1.5 rounded-lg border transition-colors min-w-10 font-medium"
+                                style={
                                   currentPage === page
-                                    ? 'bg-blue-500 text-white border-blue-500'
-                                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                                }`}
+                                    ? { backgroundColor: '#895F42', color: 'white', borderColor: '#895F42' }
+                                    : { backgroundColor: 'white', color: '#64748b', borderColor: '#e2e8f0' }
+                                }
+                                onMouseEnter={(e) => {
+                                  if (currentPage !== page) {
+                                    e.currentTarget.style.backgroundColor = '#f8fafc';
+                                  }
+                                }}
+                                onMouseLeave={(e) => {
+                                  if (currentPage !== page) {
+                                    e.currentTarget.style.backgroundColor = 'white';
+                                  }
+                                }}
                               >
                                 {page}
                               </button>
                             );
                           } else if (page === currentPage - 2 || page === currentPage + 2) {
-                            return <span key={page} className="text-gray-400">...</span>;
+                            return <span key={page} style={{ color: '#94a3b8' }}>...</span>;
                           }
                           return null;
                         })}
@@ -537,9 +581,14 @@ const Categories = () => {
                           disabled={currentPage === totalPages}
                           className={`px-3 py-1.5 rounded-lg border transition-colors ${
                             currentPage === totalPages
-                              ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
-                              : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                              ? 'cursor-not-allowed opacity-50'
+                              : 'hover:bg-gray-50'
                           }`}
+                          style={
+                            currentPage === totalPages
+                              ? { backgroundColor: '#f8fafc', color: '#94a3b8', borderColor: '#e2e8f0' }
+                              : { backgroundColor: 'white', color: '#64748b', borderColor: '#e2e8f0' }
+                          }
                         >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -553,7 +602,6 @@ const Categories = () => {
             </div>
           </>
         )}
-      </div>
     </AdminLayout>
   );
 };

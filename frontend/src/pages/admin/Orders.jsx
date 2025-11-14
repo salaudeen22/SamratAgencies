@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import AdminLayout from '../../components/admin/AdminLayout';
+import PageHeader from '../../components/admin/ui/PageHeader';
+import Card from '../../components/admin/ui/Card';
 import { adminAPI } from '../../services/api';
 
 const Orders = () => {
@@ -68,27 +70,40 @@ const Orders = () => {
 
   return (
     <AdminLayout>
-      <div>
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 lg:mb-6">
-          <h2 className="text-2xl lg:text-3xl font-bold">Orders Management</h2>
-          {showDetails && (
+      <PageHeader
+        title="Orders Management"
+        subtitle={`Manage and track all ${orders.length} orders`}
+        action={
+          showDetails && (
             <button
               onClick={() => setShowDetails(false)}
-              className="lg:hidden inline-flex items-center gap-2 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg text-sm"
+              className="lg:hidden inline-flex items-center gap-2 px-4 py-2 text-white rounded-lg text-sm font-medium transition-colors"
+              style={{ backgroundColor: '#64748b' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#475569'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#64748b'}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
-              Back to Orders
+              Back to List
             </button>
-          )}
-        </div>
+          )
+        }
+      />
 
-        {loading ? (
-          <div className="text-center py-8">Loading orders...</div>
-        ) : error ? (
-          <div className="text-center text-red-600 py-8">{error}</div>
-        ) : (
+      {loading ? (
+        <div className="flex items-center justify-center py-12">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#895F42' }}></div>
+            <p className="text-lg font-medium" style={{ color: '#64748b' }}>Loading orders...</p>
+          </div>
+        </div>
+      ) : error ? (
+        <div className="text-center py-12">
+          <p className="text-lg font-semibold text-red-600 mb-2">Error loading orders</p>
+          <p className="text-sm" style={{ color: '#64748b' }}>{error}</p>
+        </div>
+      ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
             {/* Orders List */}
             <div className={`bg-white rounded-lg shadow overflow-hidden ${showDetails ? 'hidden lg:block' : ''}`}>

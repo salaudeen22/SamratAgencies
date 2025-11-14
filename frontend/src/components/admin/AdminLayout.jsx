@@ -123,44 +123,71 @@ const AdminLayout = ({ children }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen overflow-x-hidden" style={{ backgroundColor: '#f8fafc', overscrollBehavior: 'none' }}>
       {/* Top Navigation */}
-      <div className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="flex items-center justify-between px-4 lg:px-6 py-4">
-          <div className="flex items-center gap-4">
+      <div className="bg-white border-b fixed top-0 left-0 right-0 z-50 shadow-sm" style={{ borderColor: '#e2e8f0' }}>
+        <div className="flex items-center justify-between px-4 lg:px-6 py-3 lg:py-4">
+          <div className="flex items-center gap-3 lg:gap-4">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="lg:hidden p-2 hover:bg-gray-100 rounded-lg"
+              className="lg:hidden p-2 hover:bg-gray-50 rounded-lg transition-colors"
+              style={{ color: '#64748b' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <h1 className="text-xl lg:text-2xl font-bold text-gray-800">Admin Panel</h1>
+            <div className="flex items-center gap-2 lg:gap-3">
+              <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm lg:text-base" style={{ backgroundColor: '#895F42' }}>
+                SA
+              </div>
+              <div>
+                <h1 className="text-base lg:text-xl font-bold" style={{ color: '#1e293b' }}>Admin Panel</h1>
+                <p className="hidden lg:block text-xs" style={{ color: '#94a3b8' }}>Samrat Agencies</p>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2 lg:gap-4">
-            <span className="hidden md:inline text-sm lg:text-base text-gray-600">Welcome, {user?.name}</span>
+          <div className="flex items-center gap-2 lg:gap-3">
+            <div className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg" style={{ backgroundColor: '#f1f5f9' }}>
+              <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-semibold" style={{ backgroundColor: '#895F42' }}>
+                {user?.name?.charAt(0).toUpperCase() || 'A'}
+              </div>
+              <span className="text-sm font-medium" style={{ color: '#334155' }}>{user?.name}</span>
+            </div>
             <Link
               to="/"
-              className="px-3 py-2 text-xs lg:text-sm bg-gray-200 hover:bg-gray-300 rounded-lg transition"
+              className="hidden sm:flex items-center gap-2 px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium rounded-lg transition-colors" style={{ color: '#64748b', backgroundColor: 'white', border: '1px solid #e2e8f0' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
             >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
               View Site
             </Link>
             <button
               onClick={logout}
-              className="px-3 py-2 text-xs lg:text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg transition"
+              className="flex items-center gap-1.5 lg:gap-2 px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium text-white rounded-lg transition-all hover:shadow-md"
+              style={{ backgroundColor: '#ef4444' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#dc2626'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ef4444'}
             >
-              Logout
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              <span>Logout</span>
             </button>
           </div>
         </div>
       </div>
 
-      <div className="flex relative">
+      <div className="flex relative pt-[65px] lg:pt-[73px]">
         {/* Mobile Overlay */}
         {isSidebarOpen && (
           <div
-            className="fixed inset-0 bg-white/30 backdrop-blur-sm z-40 lg:hidden"
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden animate-fadeIn"
+            style={{ top: '65px' }}
             onClick={() => setIsSidebarOpen(false)}
           />
         )}
@@ -168,14 +195,17 @@ const AdminLayout = ({ children }) => {
         {/* Sidebar */}
         <aside
           className={`
-            fixed lg:static inset-y-0 left-0 z-50
-            w-64 bg-gradient-to-b from-gray-900 to-gray-800 shadow-xl min-h-[calc(100vh-73px)]
+            fixed top-[65px] lg:top-[73px] bottom-0 left-0 z-50
+            w-64 lg:w-72 shadow-2xl flex flex-col
+            h-[calc(100vh-65px)] lg:h-[calc(100vh-73px)]
             transform transition-transform duration-300 ease-in-out
             ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           `}
+          style={{ backgroundColor: '#1e293b', borderRight: '1px solid #334155' }}
         >
-          <nav className="p-4 h-full overflow-y-auto">
-            <div className="space-y-6">
+          {/* Scrollable Navigation */}
+          <nav className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 p-3 lg:p-4">
+            <div className="space-y-4 lg:space-y-6">
               {navigationStructure.map((section) => (
                 <div key={section.category}>
                   {section.items.length === 1 && section.category === 'overview' ? (
@@ -183,30 +213,38 @@ const AdminLayout = ({ children }) => {
                     <Link
                       to={section.items[0].path}
                       onClick={() => setIsSidebarOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-                        location.pathname === section.items[0].path
-                          ? 'bg-blue-600 text-white shadow-lg'
-                          : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                      }`}
+                      className={`
+                        group flex items-center gap-3 px-3 lg:px-4 py-2.5 lg:py-3 rounded-lg
+                        transition-all duration-200 font-medium text-sm lg:text-base
+                        ${location.pathname === section.items[0].path
+                          ? 'text-white shadow-md'
+                          : 'text-gray-300 hover:text-white hover:bg-slate-700'
+                        }
+                      `}
+                      style={location.pathname === section.items[0].path ? { backgroundColor: '#895F42' } : {}}
                     >
-                      {section.items[0].icon}
-                      <span className="font-medium">{section.items[0].label}</span>
+                      <div className={`${location.pathname === section.items[0].path ? 'scale-110' : 'group-hover:scale-110'} transition-transform`}>
+                        {section.items[0].icon}
+                      </div>
+                      <span>{section.items[0].label}</span>
                     </Link>
                   ) : (
                     // Category with subcategories
-                    <div>
+                    <div className="space-y-1">
                       <button
                         onClick={() => toggleCategory(section.category)}
-                        className="w-full flex items-center justify-between px-4 py-2 text-gray-400 hover:text-white transition-colors"
+                        className="w-full flex items-center justify-between px-3 lg:px-4 py-2 rounded-lg hover:bg-slate-800 transition-all duration-200 group"
                       >
                         <div className="flex items-center gap-2">
-                          {section.icon}
-                          <span className="text-xs uppercase font-semibold tracking-wider">
+                          <div className="text-slate-400 group-hover:text-slate-200 transition-colors">
+                            {section.icon}
+                          </div>
+                          <span className="text-xs lg:text-sm uppercase font-bold tracking-wide text-slate-400 group-hover:text-slate-200 transition-colors">
                             {section.label}
                           </span>
                         </div>
                         <svg
-                          className={`w-4 h-4 transition-transform ${
+                          className={`w-4 h-4 text-slate-400 group-hover:text-slate-200 transition-all duration-300 ${
                             expandedCategories.includes(section.category) ? 'rotate-180' : ''
                           }`}
                           fill="none"
@@ -218,20 +256,26 @@ const AdminLayout = ({ children }) => {
                       </button>
 
                       {expandedCategories.includes(section.category) && (
-                        <div className="mt-2 ml-2 space-y-1">
+                        <div className="mt-1 space-y-0.5 pl-2 border-l-2 border-slate-700 ml-5">
                           {section.items.map((item) => (
                             <Link
                               key={item.path}
                               to={item.path}
                               onClick={() => setIsSidebarOpen(false)}
-                              className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition ${
-                                location.pathname === item.path
-                                  ? 'bg-blue-600 text-white shadow-lg'
-                                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                              }`}
+                              className={`
+                                group flex items-center gap-3 px-3 py-2 rounded-lg
+                                transition-all duration-200 text-sm font-medium
+                                ${location.pathname === item.path
+                                  ? 'text-white shadow-md'
+                                  : 'text-gray-300 hover:text-white hover:bg-slate-700'
+                                }
+                              `}
+                              style={location.pathname === item.path ? { backgroundColor: '#895F42' } : {}}
                             >
-                              {item.icon}
-                              <span className="text-sm font-medium">{item.label}</span>
+                              <div className={`${location.pathname === item.path ? 'scale-110' : 'group-hover:scale-110'} transition-transform shrink-0`}>
+                                {item.icon}
+                              </div>
+                              <span className="truncate">{item.label}</span>
                             </Link>
                           ))}
                         </div>
@@ -241,26 +285,36 @@ const AdminLayout = ({ children }) => {
                 </div>
               ))}
             </div>
+          </nav>
 
-            {/* Sidebar Footer */}
-            <div className="mt-8 pt-6 border-t border-gray-700">
-              <div className="px-4 py-3 bg-gray-700 bg-opacity-50 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-semibold">
-                    {user?.name?.charAt(0).toUpperCase() || 'A'}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{user?.name}</p>
-                    <p className="text-xs text-gray-400 truncate">Admin</p>
-                  </div>
+          {/* Fixed Footer at Bottom */}
+          <div className="border-t-2 border-slate-700 p-3 lg:p-4 shrink-0">
+            <div className="px-3 lg:px-4 py-3 rounded-lg bg-slate-800 hover:bg-slate-750 transition-colors mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md shrink-0" style={{ backgroundColor: '#895F42' }}>
+                  {user?.name?.charAt(0).toUpperCase() || 'A'}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-white truncate">{user?.name}</p>
+                  <p className="text-xs text-slate-400 truncate">Administrator</p>
                 </div>
               </div>
             </div>
-          </nav>
+            <div className="px-3 lg:px-4 text-right">
+              <p className="text-xs text-slate-500">
+                © {new Date().getFullYear()} Samrat Agencies
+              </p>
+              <p className="text-xs text-slate-600 mt-1">v1.0.0</p>
+            </div>
+          </div>
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-6 w-full lg:w-auto">{children}</main>
+        <main className="flex-1 p-4 lg:p-6 xl:p-8 w-full lg:ml-72">
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   );
