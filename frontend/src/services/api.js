@@ -64,7 +64,7 @@ export const wishlistAPI = {
 // Order APIs
 export const orderAPI = {
   create: (orderData) => api.post('/orders', orderData),
-  getMyOrders: () => api.get('/orders/my-orders'),
+  getMyOrders: () => api.get('/orders'),
   getById: (id) => api.get(`/orders/${id}`),
   updateStatus: (id, status) => api.put(`/orders/${id}/status`, { status }),
 };
