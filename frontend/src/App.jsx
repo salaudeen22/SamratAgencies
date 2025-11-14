@@ -7,6 +7,8 @@ import { WishlistProvider } from './context/WishlistContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AdminRoute from './components/AdminRoute';
+import ErrorBoundary from './components/ErrorBoundary';
+import ErrorPage from './components/ErrorPage';
 import './App.css';
 
 // Lazy load all page components
@@ -29,6 +31,7 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const ShippingAndDelivery = lazy(() => import('./pages/ShippingAndDelivery'));
 const CancellationAndRefund = lazy(() => import('./pages/CancellationAndRefund'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Lazy load admin pages
 const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
@@ -49,15 +52,21 @@ const LoadingFallback = () => (
   </div>
 );
 
+// Error fallback for lazy loading failures
+const LazyLoadErrorFallback = ({ error, resetErrorBoundary }) => (
+  <ErrorPage error={error} resetErrorBoundary={resetErrorBoundary} />
+);
+
 function App() {
   return (
-    <Router>
-      <Toaster position="top-right" />
-      <AuthProvider>
-        <CartProvider>
-          <WishlistProvider>
-            <Suspense fallback={<LoadingFallback />}>
-              <Routes>
+    <ErrorBoundary>
+      <Router>
+        <Toaster position="top-right" />
+        <AuthProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <Suspense fallback={<LoadingFallback />}>
+                <Routes>
               {/* Admin Routes */}
               <Route
                 path="/admin"
@@ -145,6 +154,8 @@ function App() {
                         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                         <Route path="/shipping-and-delivery" element={<ShippingAndDelivery />} />
                         <Route path="/cancellation-and-refund" element={<CancellationAndRefund />} />
+                        {/* 404 Catch-all route */}
+                        <Route path="*" element={<NotFound />} />
                       </Routes>
                     </main>
                     <Footer />
@@ -156,7 +167,8 @@ function App() {
           </WishlistProvider>
         </CartProvider>
       </AuthProvider>
-    </Router>
+      </Router>
+    </ErrorBoundary>
   );
 }
 
