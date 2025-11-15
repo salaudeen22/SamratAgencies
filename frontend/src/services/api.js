@@ -339,4 +339,15 @@ export const bulkAPI = {
   downloadTemplate: (type) => api.get(`/bulk/template/${type}`, { responseType: 'blob' }),
 };
 
+// Banner APIs
+export const bannerAPI = {
+  getAll: (position) => api.get('/banners', { params: { position } }),
+
+  // Admin
+  getAllAdmin: () => api.get('/banners/admin/all'),
+  create: (bannerData) => api.post('/banners/admin', bannerData),
+  update: (id, bannerData) => api.put(`/banners/admin/${id}`, bannerData),
+  delete: (id) => api.delete(`/banners/admin/${id}`),
+};
+
 export default api;

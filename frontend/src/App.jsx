@@ -60,6 +60,7 @@ const AdminReports = lazy(() => import('./pages/admin/Reports'));
 const AdminMediaLibrary = lazy(() => import('./pages/admin/MediaLibrary'));
 const AdminBulkOperations = lazy(() => import('./pages/admin/BulkOperations'));
 const AdminSupportSystem = lazy(() => import('./pages/admin/SupportSystem'));
+const AdminBanners = lazy(() => import('./pages/admin/Banners'));
 
 // Loading component for Suspense fallback
 const LoadingFallback = () => (
@@ -238,6 +239,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <AdminSupportSystem />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/banners"
+                element={
+                  <AdminRoute>
+                    <AdminBanners />
                   </AdminRoute>
                 }
               />

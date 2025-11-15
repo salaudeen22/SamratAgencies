@@ -83,6 +83,7 @@ app.use('/api/newsletter', newsletterLimiter, require('./src/routes/newsletterRo
 app.use('/api/settings', require('./src/routes/settingsRoutes'));
 app.use('/api/tickets', require('./src/routes/ticketRoutes'));
 app.use('/api/bulk', require('./src/routes/bulkRoutes'));
+app.use('/api/banners', require('./src/routes/bannerRoutes'));
 app.use('/', require('./src/routes/sitemapRoutes'));
 
 // API info route
