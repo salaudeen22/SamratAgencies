@@ -5,7 +5,12 @@ const Product = require('../models/Product');
 const Order = require('../models/Order');
 const User = require('../models/User');
 const { sendEmail } = require('../config/email');
-const { orderStatusUpdateEmail } = require('../utils/emailTemplates');
+const {
+  orderStatusUpdateEmail,
+  passwordResetEmail,
+  orderConfirmationEmail,
+  returnStatusUpdateEmail
+} = require('../utils/emailTemplates');
 
 // Admin middleware - all routes require auth and admin
 router.use(auth);
@@ -385,6 +390,237 @@ router.get('/stats', async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// ============ TEST EMAIL TEMPLATES ============
+
+// Send test emails
+router.post('/test-emails', async (req, res) => {
+  try {
+    const testEmail = 'salaudeensalu@gmail.com';
+    const results = [];
+
+    // Sample data for emails
+    const sampleUser = {
+      _id: '507f1f77bcf86cd799439011',
+      name: 'Test User',
+      email: testEmail
+    };
+
+    const sampleOrder = {
+      _id: '507f1f77bcf86cd799439012',
+      user: sampleUser,
+      items: [
+        {
+          product: '507f1f77bcf86cd799439013',
+          name: 'Premium Wooden Chair',
+          quantity: 2,
+          price: 4500
+        },
+        {
+          product: '507f1f77bcf86cd799439014',
+          name: 'Modern Dining Table',
+          quantity: 1,
+          price: 12000
+        }
+      ],
+      shippingAddress: {
+        name: 'Test User',
+        address: 'Babu Reddy Complex, Begur Main Road',
+        city: 'Bengaluru',
+        state: 'Karnataka',
+        pincode: '560114',
+        country: 'India',
+        phone: '+91 98809 14457'
+      },
+      paymentMethod: 'cod',
+      itemsPrice: 21000,
+      shippingPrice: 0,
+      taxPrice: 0,
+      totalPrice: 21000,
+      isPaid: false,
+      isDelivered: false,
+      status: 'Pending',
+      createdAt: new Date()
+    };
+
+    const sampleReturn = {
+      _id: '507f1f77bcf86cd799439015',
+      order: sampleOrder,
+      user: sampleUser._id,
+      items: [
+        {
+          product: '507f1f77bcf86cd799439013',
+          name: 'Premium Wooden Chair',
+          quantity: 1,
+          price: 4500
+        }
+      ],
+      returnReason: 'defective',
+      returnDescription: 'Product has manufacturing defects',
+      refundAmount: 4500,
+      status: 'Approved',
+      adminNotes: 'Return approved. Pickup will be scheduled within 2 business days.',
+      isRefunded: false,
+      createdAt: new Date()
+    };
+
+    // 1. Order Confirmation Email
+    try {
+      const orderConfEmail = orderConfirmationEmail(sampleOrder);
+      await sendEmail({
+        to: testEmail,
+        ...orderConfEmail
+      });
+      results.push({ type: 'Order Confirmation', status: 'sent' });
+    } catch (error) {
+      results.push({ type: 'Order Confirmation', status: 'failed', error: error.message });
+    }
+
+    // 2. Order Status Update - Processing
+    try {
+      const processingEmail = orderStatusUpdateEmail(sampleOrder, 'Processing');
+      await sendEmail({
+        to: testEmail,
+        ...processingEmail
+      });
+      results.push({ type: 'Order Status - Processing', status: 'sent' });
+    } catch (error) {
+      results.push({ type: 'Order Status - Processing', status: 'failed', error: error.message });
+    }
+
+    // 3. Order Status Update - Shipped
+    try {
+      const shippedEmail = orderStatusUpdateEmail(sampleOrder, 'Shipped');
+      await sendEmail({
+        to: testEmail,
+        ...shippedEmail
+      });
+      results.push({ type: 'Order Status - Shipped', status: 'sent' });
+    } catch (error) {
+      results.push({ type: 'Order Status - Shipped', status: 'failed', error: error.message });
+    }
+
+    // 4. Order Status Update - Delivered
+    try {
+      const deliveredEmail = orderStatusUpdateEmail(sampleOrder, 'Delivered');
+      await sendEmail({
+        to: testEmail,
+        ...deliveredEmail
+      });
+      results.push({ type: 'Order Status - Delivered', status: 'sent' });
+    } catch (error) {
+      results.push({ type: 'Order Status - Delivered', status: 'failed', error: error.message });
+    }
+
+    // 5. Order Status Update - Cancelled
+    try {
+      const cancelledOrder = {
+        ...sampleOrder,
+        cancellationReason: 'Customer requested cancellation'
+      };
+      const cancelledEmail = orderStatusUpdateEmail(cancelledOrder, 'Cancelled');
+      await sendEmail({
+        to: testEmail,
+        ...cancelledEmail
+      });
+      results.push({ type: 'Order Status - Cancelled', status: 'sent' });
+    } catch (error) {
+      results.push({ type: 'Order Status - Cancelled', status: 'failed', error: error.message });
+    }
+
+    // 6. Password Reset Email
+    try {
+      const resetEmail = passwordResetEmail(sampleUser, 'test-reset-token-123456');
+      await sendEmail({
+        to: testEmail,
+        ...resetEmail
+      });
+      results.push({ type: 'Password Reset', status: 'sent' });
+    } catch (error) {
+      results.push({ type: 'Password Reset', status: 'failed', error: error.message });
+    }
+
+    // 7. Return Status - Approved
+    try {
+      const returnApprovedEmail = returnStatusUpdateEmail(sampleReturn, sampleUser);
+      await sendEmail({
+        to: testEmail,
+        ...returnApprovedEmail
+      });
+      results.push({ type: 'Return Status - Approved', status: 'sent' });
+    } catch (error) {
+      results.push({ type: 'Return Status - Approved', status: 'failed', error: error.message });
+    }
+
+    // 8. Return Status - Refunded
+    try {
+      const refundedReturn = {
+        ...sampleReturn,
+        status: 'Refunded',
+        isRefunded: true,
+        refundedAt: new Date()
+      };
+      const returnRefundedEmail = returnStatusUpdateEmail(refundedReturn, sampleUser);
+      await sendEmail({
+        to: testEmail,
+        ...returnRefundedEmail
+      });
+      results.push({ type: 'Return Status - Refunded', status: 'sent' });
+    } catch (error) {
+      results.push({ type: 'Return Status - Refunded', status: 'failed', error: error.message });
+    }
+
+    // 9. Return Status - Rejected
+    try {
+      const rejectedReturn = {
+        ...sampleReturn,
+        status: 'Rejected',
+        adminNotes: 'Return request rejected as the product does not meet our return policy criteria.'
+      };
+      const returnRejectedEmail = returnStatusUpdateEmail(rejectedReturn, sampleUser);
+      await sendEmail({
+        to: testEmail,
+        ...returnRejectedEmail
+      });
+      results.push({ type: 'Return Status - Rejected', status: 'sent' });
+    } catch (error) {
+      results.push({ type: 'Return Status - Rejected', status: 'failed', error: error.message });
+    }
+
+    // 10. Return Status - Picked Up
+    try {
+      const pickedUpReturn = {
+        ...sampleReturn,
+        status: 'Picked Up',
+        adminNotes: 'Your item has been picked up and is being inspected.'
+      };
+      const returnPickedUpEmail = returnStatusUpdateEmail(pickedUpReturn, sampleUser);
+      await sendEmail({
+        to: testEmail,
+        ...returnPickedUpEmail
+      });
+      results.push({ type: 'Return Status - Picked Up', status: 'sent' });
+    } catch (error) {
+      results.push({ type: 'Return Status - Picked Up', status: 'failed', error: error.message });
+    }
+
+    const successCount = results.filter(r => r.status === 'sent').length;
+    const failCount = results.filter(r => r.status === 'failed').length;
+
+    res.json({
+      message: `Test emails sent to ${testEmail}`,
+      summary: {
+        total: results.length,
+        sent: successCount,
+        failed: failCount
+      },
+      results
+    });
+  } catch (error) {
+    console.error('Test email error:', error);
+    res.status(500).json({ message: 'Failed to send test emails', error: error.message });
   }
 });
 

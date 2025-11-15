@@ -2,6 +2,7 @@ const Return = require('../models/Return');
 const Order = require('../models/Order');
 const User = require('../models/User');
 const { sendEmail } = require('../config/email');
+const { returnStatusUpdateEmail } = require('../utils/emailTemplates');
 
 // Create return request
 exports.createReturn = async (req, res) => {
@@ -159,16 +160,10 @@ exports.updateReturnStatus = async (req, res) => {
     // Send email notification to user
     const user = await User.findById(returnRequest.user);
     if (user && user.email) {
+      const emailContent = returnStatusUpdateEmail(returnRequest, user);
       await sendEmail({
         to: user.email,
-        subject: `Return Request ${status}`,
-        html: `
-          <h2>Return Request Update</h2>
-          <p>Your return request status has been updated to: <strong>${status}</strong></p>
-          ${adminNotes ? `<p>Admin Notes: ${adminNotes}</p>` : ''}
-          <p>Return ID: ${returnRequest._id}</p>
-        `,
-        text: `Your return request status has been updated to: ${status}`
+        ...emailContent
       });
     }
 
