@@ -249,40 +249,33 @@ const Returns = () => {
                   {selectedReturn.images && selectedReturn.images.length > 0 && (
                     <div className="mb-6">
                       <h4 className="font-semibold mb-2">Attached Images ({selectedReturn.images.length})</h4>
-                      {console.log('Return Images:', selectedReturn.images)}
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {selectedReturn.images.map((image, index) => {
-                          console.log(`Image ${index + 1}:`, image);
-                          return (
-                            <div key={index} className="relative group">
-                              {!image || imageErrors[`${selectedReturn._id}-${index}`] ? (
-                                <div className="w-full h-32 bg-gray-100 rounded border flex items-center justify-center">
-                                  <div className="text-center text-xs text-gray-500">
-                                    <svg className="w-8 h-8 mx-auto mb-1" fill="currentColor" viewBox="0 0 20 20">
-                                      <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                                    </svg>
-                                    <p className="text-xs">{!image ? 'No URL' : 'Failed to load'}</p>
-                                    {image && <p className="text-xs mt-1 break-all px-2">{image.substring(0, 30)}...</p>}
-                                  </div>
+                        {selectedReturn.images.map((image, index) => (
+                          <div key={index} className="relative group">
+                            {!image || imageErrors[`${selectedReturn._id}-${index}`] ? (
+                              <div className="w-full h-32 bg-gray-100 rounded border flex items-center justify-center">
+                                <div className="text-center text-xs text-gray-500">
+                                  <svg className="w-8 h-8 mx-auto mb-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                                  </svg>
+                                  <p className="text-xs">{!image ? 'No URL' : 'Failed to load'}</p>
+                                  {image && <p className="text-xs mt-1 break-all px-2">{image.substring(0, 30)}...</p>}
                                 </div>
-                              ) : (
-                                <img
-                                  src={image}
-                                  alt={`Return evidence ${index + 1}`}
-                                  className="w-full h-32 object-cover rounded border cursor-pointer hover:opacity-80 transition-opacity"
-                                  onClick={() => setSelectedImage(image)}
-                                  onError={(e) => {
-                                    console.error(`Failed to load image ${index + 1}:`, image);
-                                    setImageErrors(prev => ({ ...prev, [`${selectedReturn._id}-${index}`]: true }));
-                                  }}
-                                />
-                              )}
-                              <div className="absolute bottom-1 right-1 bg-black bg-opacity-60 text-white text-xs px-2 py-0.5 rounded">
-                                {index + 1}
                               </div>
+                            ) : (
+                              <img
+                                src={image}
+                                alt={`Return evidence ${index + 1}`}
+                                className="w-full h-32 object-cover rounded border cursor-pointer hover:opacity-80 transition-opacity"
+                                onClick={() => setSelectedImage(image)}
+                                onError={() => setImageErrors(prev => ({ ...prev, [`${selectedReturn._id}-${index}`]: true }))}
+                              />
+                            )}
+                            <div className="absolute bottom-1 right-1 bg-black bg-opacity-60 text-white text-xs px-2 py-0.5 rounded">
+                              {index + 1}
                             </div>
-                          );
-                        })}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   )}

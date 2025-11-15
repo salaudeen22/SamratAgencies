@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HiUser, HiShoppingBag, HiMapPin, HiArrowRightOnRectangle } from 'react-icons/hi2';
+import { HiUser, HiShoppingBag, HiMapPin, HiArrowRightOnRectangle, HiReceiptRefund } from 'react-icons/hi2';
 import { useAuth } from '../context/AuthContext';
 import ProfileTab from '../components/profile/ProfileTab';
 import AddressesTab from '../components/profile/AddressesTab';
 import OrdersTab from '../components/profile/OrdersTab';
+import ReturnsTab from '../components/profile/ReturnsTab';
 
 const Profile = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -25,6 +26,7 @@ const Profile = () => {
   const tabs = [
     { id: 'profile', label: 'Profile', icon: HiUser },
     { id: 'orders', label: 'Orders', icon: HiShoppingBag },
+    { id: 'returns', label: 'Returns', icon: HiReceiptRefund },
     { id: 'addresses', label: 'Addresses', icon: HiMapPin }
   ];
 
@@ -85,8 +87,9 @@ const Profile = () => {
         {/* Tab Content */}
         <div>
           {activeTab === 'profile' && <ProfileTab user={user} />}
-          {activeTab === 'addresses' && <AddressesTab />}
           {activeTab === 'orders' && <OrdersTab />}
+          {activeTab === 'returns' && <ReturnsTab />}
+          {activeTab === 'addresses' && <AddressesTab />}
         </div>
       </div>
     </div>
