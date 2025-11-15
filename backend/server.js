@@ -61,7 +61,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes with specific rate limiters
-app.use('/api/auth', authLimiter, require('./src/routes/authRoutes'));
+app.use('/api/auth', require('./src/routes/authRoutes'));
 app.use('/api/products', require('./src/routes/productRoutes'));
 app.use('/api/categories', require('./src/routes/categoryRoutes'));
 app.use('/api/cart', require('./src/routes/cartRoutes'));
