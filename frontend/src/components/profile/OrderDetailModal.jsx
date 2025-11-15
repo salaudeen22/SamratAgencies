@@ -1,12 +1,61 @@
+import { useState, useEffect } from 'react';
 import { HiPhone } from 'react-icons/hi2';
 import Modal from '../Modal';
+import ReturnRequestModal from './ReturnRequestModal';
+import { returnAPI } from '../../services/api';
+import toast from 'react-hot-toast';
 
-const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor }) => {
+const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubmitted }) => {
+  const [showReturnModal, setShowReturnModal] = useState(false);
+  const [existingReturn, setExistingReturn] = useState(null);
+  const [checkingReturn, setCheckingReturn] = useState(false);
+
+  const canReturn = order?.status?.toLowerCase() === 'delivered';
+
+  useEffect(() => {
+    if (isOpen && order && canReturn) {
+      checkExistingReturn();
+    }
+  }, [isOpen, order?._id, canReturn]);
+
+  const checkExistingReturn = async () => {
+    if (!order) return;
+
+    try {
+      setCheckingReturn(true);
+      const response = await returnAPI.getUserReturns();
+      const activeReturn = response.data.find(
+        ret => ret.order._id === order._id &&
+        ['Pending', 'Approved', 'Picked Up'].includes(ret.status)
+      );
+      setExistingReturn(activeReturn);
+    } catch (error) {
+      console.error('Error checking returns:', error);
+    } finally {
+      setCheckingReturn(false);
+    }
+  };
+
   if (!order) return null;
 
+  const handleReturnSuccess = () => {
+    setShowReturnModal(false);
+    onReturnSubmitted?.();
+    onClose();
+  };
+
+  const handleRequestReturn = () => {
+    if (existingReturn) {
+      toast.error(`A ${existingReturn.status.toLowerCase()} return request already exists for this order`);
+      return;
+    }
+    setShowReturnModal(true);
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Order Details">
-      <div className="space-y-6">
+    <>
+      <Modal isOpen={isOpen} onClose={onClose} title="Order Details">
+        <div className="space-y-6">
         {/* Order Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 pb-4 border-b" style={{ borderColor: '#BDD7EB' }}>
           <div>
@@ -143,8 +192,44 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor }) => {
             )}
           </div>
         </div>
+
+        {/* Return Button */}
+        {canReturn && (
+          <div className="border-t pt-4" style={{ borderColor: '#BDD7EB' }}>
+            {existingReturn ? (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <p className="text-sm font-semibold text-yellow-800 mb-1">
+                  Return Request Already Submitted
+                </p>
+                <p className="text-xs text-yellow-700">
+                  Status: <span className="font-semibold">{existingReturn.status}</span>
+                </p>
+                <p className="text-xs text-yellow-600 mt-2">
+                  Please wait for the existing return request to be resolved before submitting a new one.
+                </p>
+              </div>
+            ) : (
+              <button
+                onClick={handleRequestReturn}
+                disabled={checkingReturn}
+                className="w-full py-3 px-4 rounded-lg font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ backgroundColor: '#895F42' }}
+              >
+                {checkingReturn ? 'Checking...' : 'Request Return'}
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </Modal>
+
+    <ReturnRequestModal
+      isOpen={showReturnModal}
+      onClose={() => setShowReturnModal(false)}
+      order={order}
+      onSuccess={handleReturnSuccess}
+    />
+    </>
   );
 };
 

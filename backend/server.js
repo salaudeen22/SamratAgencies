@@ -45,6 +45,7 @@ app.use('/api/categories', require('./src/routes/categoryRoutes'));
 app.use('/api/cart', require('./src/routes/cartRoutes'));
 app.use('/api/wishlist', require('./src/routes/wishlistRoutes'));
 app.use('/api/orders', require('./src/routes/orderRoutes'));
+app.use('/api/returns', require('./src/routes/returnRoutes'));
 app.use('/api/payment', require('./src/routes/paymentRoutes'));
 app.use('/api/users', require('./src/routes/userRoutes'));
 app.use('/api/admin', require('./src/routes/adminRoutes'));

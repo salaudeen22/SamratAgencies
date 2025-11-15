@@ -106,6 +106,7 @@ const OrdersTab = () => {
         onClose={() => setShowOrderDetail(false)}
         order={selectedOrder}
         getStatusColor={getStatusColor}
+        onReturnSubmitted={fetchOrders}
       />
     </div>
   );

@@ -4,6 +4,8 @@ const { auth, adminAuth } = require('../middleware/auth');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
 const User = require('../models/User');
+const { sendEmail } = require('../config/email');
+const { orderStatusUpdateEmail } = require('../utils/emailTemplates');
 
 // Admin middleware - all routes require auth and admin
 router.use(auth);
@@ -137,27 +139,142 @@ router.get('/orders/:id', async (req, res) => {
 // Update order status
 router.put('/orders/:id/status', async (req, res) => {
   try {
-    const { status, isDelivered, isPaid } = req.body;
-    const order = await Order.findById(req.params.id);
+    const { status, isDelivered, isPaid, note } = req.body;
+    const order = await Order.findById(req.params.id)
+      .populate('user', 'name email')
+      .populate('items.product', 'name');
 
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    if (status) order.status = status;
+    const oldStatus = order.status;
+
+    // Track status history
+    if (status && status !== order.status) {
+      order.statusHistory.push({
+        status,
+        timestamp: Date.now(),
+        note: note || `Status changed to ${status}`,
+        updatedBy: req.user.id
+      });
+      order.status = status;
+
+      if (status === 'Cancelled') {
+        order.cancelledAt = Date.now();
+        order.cancelledBy = req.user.id;
+      }
+    }
+
     if (isDelivered !== undefined) {
       order.isDelivered = isDelivered;
       if (isDelivered) order.deliveredAt = Date.now();
     }
     if (isPaid !== undefined) {
       order.isPaid = isPaid;
-      if (isPaid) order.paidAt = Date.now();
+      if (isPaid) {
+        order.paidAt = Date.now();
+      } else {
+        order.paidAt = null;
+      }
     }
 
     await order.save();
+
+    // Send email notification if status changed
+    if (status && status !== oldStatus && order.user && order.user.email) {
+      try {
+        const emailContent = orderStatusUpdateEmail(order, status);
+        await sendEmail({
+          to: order.user.email,
+          subject: emailContent.subject,
+          html: emailContent.html,
+          text: emailContent.text
+        });
+      } catch (emailError) {
+        console.error('Failed to send status update email:', emailError);
+        // Don't fail the request if email fails
+      }
+    }
+
     res.json({ message: 'Order updated successfully', order });
   } catch (error) {
     res.status(400).json({ message: 'Failed to update order', error: error.message });
+  }
+});
+
+// Cancel order
+router.put('/orders/:id/cancel', async (req, res) => {
+  try {
+    const { cancellationReason, note } = req.body;
+    const order = await Order.findById(req.params.id)
+      .populate('user', 'name email')
+      .populate('items.product', 'name');
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    if (order.status === 'Delivered') {
+      return res.status(400).json({ message: 'Cannot cancel delivered orders' });
+    }
+
+    order.status = 'Cancelled';
+    order.cancellationReason = cancellationReason;
+    order.cancelledBy = req.user.id;
+    order.cancelledAt = Date.now();
+
+    // Add to status history
+    order.statusHistory.push({
+      status: 'Cancelled',
+      timestamp: Date.now(),
+      note: note || cancellationReason || 'Order cancelled',
+      updatedBy: req.user.id
+    });
+
+    await order.save();
+
+    // Send email notification
+    if (order.user && order.user.email) {
+      try {
+        const emailContent = orderStatusUpdateEmail(order, 'Cancelled');
+        await sendEmail({
+          to: order.user.email,
+          subject: emailContent.subject,
+          html: emailContent.html,
+          text: emailContent.text
+        });
+      } catch (emailError) {
+        console.error('Failed to send cancellation email:', emailError);
+      }
+    }
+
+    res.json({ message: 'Order cancelled successfully', order });
+  } catch (error) {
+    res.status(400).json({ message: 'Failed to cancel order', error: error.message });
+  }
+});
+
+// Toggle payment status
+router.put('/orders/:id/payment', async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    order.isPaid = !order.isPaid;
+    if (order.isPaid) {
+      order.paidAt = Date.now();
+    } else {
+      order.paidAt = null;
+    }
+
+    await order.save();
+    res.json({ message: 'Payment status updated', order });
+  } catch (error) {
+    res.status(400).json({ message: 'Failed to update payment status', error: error.message });
   }
 });
 

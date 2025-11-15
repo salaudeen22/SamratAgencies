@@ -46,6 +46,7 @@ const AdminAttributes = lazy(() => import('./pages/admin/Attributes'));
 const AdminAttributeSets = lazy(() => import('./pages/admin/AttributeSets'));
 const AdminProducts = lazy(() => import('./pages/admin/Products'));
 const AdminOrders = lazy(() => import('./pages/admin/Orders'));
+const AdminReturns = lazy(() => import('./pages/admin/Returns'));
 const AdminUsers = lazy(() => import('./pages/admin/Users'));
 const AdminCoupons = lazy(() => import('./pages/admin/Coupons'));
 const AdminDeliveryZones = lazy(() => import('./pages/admin/DeliveryZones'));
@@ -125,6 +126,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <AdminOrders />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/returns"
+                element={
+                  <AdminRoute>
+                    <AdminReturns />
                   </AdminRoute>
                 }
               />

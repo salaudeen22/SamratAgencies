@@ -107,6 +107,8 @@ export const adminAPI = {
   getOrders: (params) => api.get('/admin/orders', { params }),
   getOrderById: (id) => api.get(`/admin/orders/${id}`),
   updateOrderStatus: (id, statusData) => api.put(`/admin/orders/${id}/status`, statusData),
+  cancelOrder: (id, data) => api.put(`/admin/orders/${id}/cancel`, data),
+  togglePaymentStatus: (id) => api.put(`/admin/orders/${id}/payment`),
 
   // Users
   getUsers: (params) => api.get('/admin/users', { params }),
@@ -256,6 +258,18 @@ export const newsletterAPI = {
   updateStatus: (id, status) => api.patch(`/newsletter/admin/subscribers/${id}/status`, { status }),
   delete: (id) => api.delete(`/newsletter/admin/subscribers/${id}`),
   export: () => api.get('/newsletter/admin/export'),
+};
+
+// Return APIs
+export const returnAPI = {
+  create: (returnData) => api.post('/returns', returnData),
+  getUserReturns: () => api.get('/returns'),
+  getById: (id) => api.get(`/returns/${id}`),
+  cancel: (id) => api.put(`/returns/${id}/cancel`),
+
+  // Admin
+  getAllReturns: (params) => api.get('/returns/all', { params }),
+  updateReturnStatus: (id, data) => api.put(`/returns/${id}/status`, data),
 };
 
 export default api;
