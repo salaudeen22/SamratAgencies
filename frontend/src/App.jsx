@@ -52,6 +52,9 @@ const AdminCoupons = lazy(() => import('./pages/admin/Coupons'));
 const AdminDeliveryZones = lazy(() => import('./pages/admin/DeliveryZones'));
 const AdminArticles = lazy(() => import('./pages/admin/Articles'));
 const AdminNewsletter = lazy(() => import('./pages/admin/Newsletter'));
+const AdminReviews = lazy(() => import('./pages/admin/Reviews'));
+const AdminSettings = lazy(() => import('./pages/admin/Settings'));
+const AdminContactMessages = lazy(() => import('./pages/admin/ContactMessages'));
 
 // Loading component for Suspense fallback
 const LoadingFallback = () => (
@@ -174,6 +177,30 @@ function App() {
                 element={
                   <AdminRoute>
                     <AdminNewsletter />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/reviews"
+                element={
+                  <AdminRoute>
+                    <AdminReviews />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/settings"
+                element={
+                  <AdminRoute>
+                    <AdminSettings />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/contact-messages"
+                element={
+                  <AdminRoute>
+                    <AdminContactMessages />
                   </AdminRoute>
                 }
               />

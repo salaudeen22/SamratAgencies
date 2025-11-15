@@ -246,6 +246,11 @@ export const reviewAPI = {
   create: (reviewData) => api.post('/reviews', reviewData),
   update: (reviewId, reviewData) => api.put(`/reviews/${reviewId}`, reviewData),
   delete: (reviewId) => api.delete(`/reviews/${reviewId}`),
+
+  // Admin
+  getAllReviews: (params) => api.get('/reviews/admin/all', { params }),
+  updateReviewStatus: (reviewId, isApproved) => api.patch(`/reviews/admin/${reviewId}/status`, { isApproved }),
+  adminDelete: (reviewId) => api.delete(`/reviews/admin/${reviewId}`),
 };
 
 // Newsletter APIs
@@ -271,6 +276,20 @@ export const returnAPI = {
   // Admin
   getAllReturns: (params) => api.get('/returns/all', { params }),
   updateReturnStatus: (id, data) => api.put(`/returns/${id}/status`, data),
+};
+
+// Settings APIs
+export const settingsAPI = {
+  getSettings: () => api.get('/settings'),
+  updateSettings: (settingsData) => api.put('/settings', settingsData),
+};
+
+// Contact Messages APIs
+export const contactMessagesAPI = {
+  getAll: (params) => api.get('/contact/admin/messages', { params }),
+  getById: (id) => api.get(`/contact/admin/messages/${id}`),
+  markAsRead: (id) => api.patch(`/contact/admin/messages/${id}/read`),
+  delete: (id) => api.delete(`/contact/admin/messages/${id}`),
 };
 
 export default api;

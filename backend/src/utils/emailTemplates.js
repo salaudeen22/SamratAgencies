@@ -610,5 +610,7 @@ module.exports = {
   orderConfirmationEmail,
   passwordResetEmail,
   orderStatusUpdateEmail,
-  returnStatusUpdateEmail
+  returnStatusUpdateEmail,
+  contactFormEmail,
+  contactFormThankYouEmail
 };

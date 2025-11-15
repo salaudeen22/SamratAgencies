@@ -172,9 +172,95 @@ const deleteReview = async (req, res) => {
   }
 };
 
+// Admin: Get all reviews
+const getAllReviews = async (req, res) => {
+  try {
+    const { page = 1, limit = 10, status } = req.query;
+
+    const query = {};
+    if (status === 'approved') {
+      query.isApproved = true;
+    } else if (status === 'pending') {
+      query.isApproved = false;
+    }
+
+    const skip = (page - 1) * limit;
+
+    const reviews = await Review.find(query)
+      .populate('user', 'name email')
+      .populate('product', 'name images')
+      .sort({ createdAt: -1 })
+      .limit(parseInt(limit))
+      .skip(skip);
+
+    const total = await Review.countDocuments(query);
+
+    res.json({
+      reviews,
+      totalPages: Math.ceil(total / limit),
+      currentPage: parseInt(page),
+      total
+    });
+  } catch (error) {
+    console.error('Error fetching all reviews:', error);
+    res.status(500).json({ message: 'Failed to fetch reviews' });
+  }
+};
+
+// Admin: Update review approval status
+const updateReviewStatus = async (req, res) => {
+  try {
+    const { reviewId } = req.params;
+    const { isApproved } = req.body;
+
+    const review = await Review.findById(reviewId);
+
+    if (!review) {
+      return res.status(404).json({ message: 'Review not found' });
+    }
+
+    review.isApproved = isApproved;
+    await review.save();
+
+    // Update product rating
+    await updateProductRating(review.product);
+
+    await review.populate('user', 'name email');
+    await review.populate('product', 'name images');
+
+    res.json(review);
+  } catch (error) {
+    console.error('Error updating review status:', error);
+    res.status(500).json({ message: 'Failed to update review status' });
+  }
+};
+
+// Admin: Delete any review
+const adminDeleteReview = async (req, res) => {
+  try {
+    const { reviewId } = req.params;
+
+    const review = await Review.findByIdAndDelete(reviewId);
+
+    if (!review) {
+      return res.status(404).json({ message: 'Review not found' });
+    }
+
+    await updateProductRating(review.product);
+
+    res.json({ message: 'Review deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting review:', error);
+    res.status(500).json({ message: 'Failed to delete review' });
+  }
+};
+
 module.exports = {
   getProductReviews,
   createReview,
   updateReview,
-  deleteReview
+  deleteReview,
+  getAllReviews,
+  updateReviewStatus,
+  adminDeleteReview
 };
