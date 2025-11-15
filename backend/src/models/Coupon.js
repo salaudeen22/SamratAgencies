@@ -294,7 +294,7 @@ couponSchema.methods.markAsUsed = function(userId, orderId, discountApplied) {
 };
 
 // Index for faster lookups
-couponSchema.index({ code: 1 });
+// Note: code already has unique index from schema definition (line 8)
 couponSchema.index({ isActive: 1, startDate: 1, endDate: 1 });
 couponSchema.index({ 'usageHistory.user': 1 });
 
