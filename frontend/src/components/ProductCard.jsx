@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useCompare } from '../context/CompareContext';
 import QuickLook from './QuickLook';
+import ProductBadge from './ProductBadge';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
@@ -68,6 +69,7 @@ const ProductCard = ({ product }) => {
     <Link to={`/products/${product.slug || product._id}`} className="group">
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border-2" style={{ borderColor: 'transparent' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#BDD7EB'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}>
         <div className="relative h-64 overflow-hidden" style={{ backgroundColor: '#E0EAF0' }}>
+          <ProductBadge product={product} />
           {product.images && product.images.length > 0 && product.images[0].url ? (
             <img
               src={product.images[0].url}

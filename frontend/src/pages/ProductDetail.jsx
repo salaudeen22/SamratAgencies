@@ -4,16 +4,19 @@ import toast from 'react-hot-toast';
 import { productAPI, recommendationAPI, deliveryAPI } from '../services/api';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import { useRecentlyViewed } from '../context/RecentlyViewedContext';
 import Button from '../components/Button';
 import SEO from '../components/SEO';
 import ProductRecommendations from '../components/ProductRecommendations';
 import VariantSelector from '../components/VariantSelector';
+import ProductReviews from '../components/ProductReviews';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { addToRecentlyViewed } = useRecentlyViewed();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -46,9 +49,12 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+        setLoading(true);
         const response = await productAPI.getById(id);
         setProduct(response.data);
         setIsWishlisted(isInWishlist(response.data._id));
+        // Add to recently viewed
+        addToRecentlyViewed(response.data);
       } catch (err) {
         console.error('Failed to fetch product:', err);
       } finally {
@@ -57,7 +63,8 @@ const ProductDetail = () => {
     };
 
     fetchProduct();
-  }, [id, isInWishlist]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   // Sticky bar scroll detection
   useEffect(() => {
@@ -74,8 +81,6 @@ const ProductDetail = () => {
 
   // Fetch recommendations separately
   useEffect(() => {
-    if (!product) return;
-
     const fetchRecommendations = async () => {
       try {
         setLoadingRecommendations(true);
@@ -98,7 +103,7 @@ const ProductDetail = () => {
     };
 
     fetchRecommendations();
-  }, [id, product]);
+  }, [id]);
 
   const handleAddToCart = async () => {
     // Use displayPrice if variants are selected, otherwise use product.price
@@ -761,41 +766,48 @@ const ProductDetail = () => {
           )}
         </div>
 
-        {/* Recommendations Sections */}
-        <div className="mt-8 space-y-8">
-          {/* Frequently Bought Together */}
-          {frequentlyBought.length > 0 && (
-            <div className="border-t-2 pt-8" style={{ borderColor: '#BDD7EB' }}>
-              <ProductRecommendations
-                title="Frequently Bought Together"
-                products={frequentlyBought}
-                loading={loadingRecommendations}
-              />
-            </div>
-          )}
-
-          {/* Complete the Look */}
-          {completeTheLook.length > 0 && (
-            <div className="border-t-2 pt-8" style={{ borderColor: '#BDD7EB' }}>
-              <ProductRecommendations
-                title="Complete the Look"
-                products={completeTheLook}
-                loading={loadingRecommendations}
-              />
-            </div>
-          )}
-
-          {/* Similar Products - You May Also Like */}
-          {similarProducts.length > 0 && (
-            <div className="border-t-2 pt-8" style={{ borderColor: '#BDD7EB' }}>
-              <ProductRecommendations
-                title="You May Also Like"
-                products={similarProducts}
-                loading={loadingRecommendations}
-              />
-            </div>
-          )}
+        {/* Product Reviews Section */}
+        <div className="mt-8 bg-white rounded-xl shadow-xl overflow-hidden p-8">
+          <ProductReviews productId={product?._id} />
         </div>
+
+        {/* Recommendations Sections */}
+        {!loadingRecommendations && (frequentlyBought.length > 0 || similarProducts.length > 0 || completeTheLook.length > 0) && (
+          <div className="mt-8 space-y-8">
+            {/* Frequently Bought Together */}
+            {frequentlyBought.length > 0 && (
+              <div className="border-t-2 pt-8" style={{ borderColor: '#BDD7EB' }}>
+                <ProductRecommendations
+                  title="Frequently Bought Together"
+                  products={frequentlyBought}
+                  loading={false}
+                />
+              </div>
+            )}
+
+            {/* Complete the Look */}
+            {completeTheLook.length > 0 && (
+              <div className="border-t-2 pt-8" style={{ borderColor: '#BDD7EB' }}>
+                <ProductRecommendations
+                  title="Complete the Look"
+                  products={completeTheLook}
+                  loading={false}
+                />
+              </div>
+            )}
+
+            {/* Similar Products - You May Also Like */}
+            {similarProducts.length > 0 && (
+              <div className="border-t-2 pt-8" style={{ borderColor: '#BDD7EB' }}>
+                <ProductRecommendations
+                  title="You May Also Like"
+                  products={similarProducts}
+                  loading={false}
+                />
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Sticky Add-to-Cart Bar */}

@@ -25,7 +25,7 @@ const AdminLayout = ({ children }) => {
           path: '/admin',
           label: 'Dashboard',
           icon: (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
             </svg>
           )
@@ -36,7 +36,7 @@ const AdminLayout = ({ children }) => {
       category: 'catalog',
       label: 'Catalog',
       icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
         </svg>
       ),
@@ -83,7 +83,7 @@ const AdminLayout = ({ children }) => {
       category: 'sales',
       label: 'Sales',
       icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
         </svg>
       ),
@@ -122,7 +122,7 @@ const AdminLayout = ({ children }) => {
       category: 'system',
       label: 'System',
       icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
@@ -134,6 +134,24 @@ const AdminLayout = ({ children }) => {
           icon: (
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          )
+        },
+        {
+          path: '/admin/articles',
+          label: 'Articles',
+          icon: (
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          )
+        },
+        {
+          path: '/admin/newsletter',
+          label: 'Newsletter',
+          icon: (
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           )
         }
@@ -215,7 +233,7 @@ const AdminLayout = ({ children }) => {
         <aside
           className={`
             fixed top-[65px] lg:top-[73px] bottom-0 left-0 z-50
-            w-64 lg:w-72 shadow-2xl flex flex-col
+            w-56 lg:w-60 shadow-2xl flex flex-col
             h-[calc(100vh-65px)] lg:h-[calc(100vh-73px)]
             transform transition-transform duration-300 ease-in-out
             ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
@@ -223,8 +241,8 @@ const AdminLayout = ({ children }) => {
           style={{ backgroundColor: '#1e293b', borderRight: '1px solid #334155' }}
         >
           {/* Scrollable Navigation */}
-          <nav className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 p-3 lg:p-4">
-            <div className="space-y-4 lg:space-y-6">
+          <nav className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 p-2 lg:p-3">
+            <div className="space-y-2 lg:space-y-3">
               {navigationStructure.map((section) => (
                 <div key={section.category}>
                   {section.items.length === 1 && section.category === 'overview' ? (
@@ -233,8 +251,8 @@ const AdminLayout = ({ children }) => {
                       to={section.items[0].path}
                       onClick={() => setIsSidebarOpen(false)}
                       className={`
-                        group flex items-center gap-3 px-3 lg:px-4 py-2.5 lg:py-3 rounded-lg
-                        transition-all duration-200 font-medium text-sm lg:text-base
+                        group flex items-center gap-2 px-2.5 py-2 rounded-lg
+                        transition-all duration-200 font-medium text-xs lg:text-sm
                         ${location.pathname === section.items[0].path
                           ? 'text-white shadow-md'
                           : 'text-gray-300 hover:text-white hover:bg-slate-700'
@@ -249,21 +267,21 @@ const AdminLayout = ({ children }) => {
                     </Link>
                   ) : (
                     // Category with subcategories
-                    <div className="space-y-1">
+                    <div className="space-y-0.5">
                       <button
                         onClick={() => toggleCategory(section.category)}
-                        className="w-full flex items-center justify-between px-3 lg:px-4 py-2 rounded-lg hover:bg-slate-800 transition-all duration-200 group"
+                        className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-slate-800 transition-all duration-200 group"
                       >
-                        <div className="flex items-center gap-2">
-                          <div className="text-slate-400 group-hover:text-slate-200 transition-colors">
+                        <div className="flex items-center gap-1.5">
+                          <div className="text-slate-400 group-hover:text-slate-200 transition-colors w-4 h-4">
                             {section.icon}
                           </div>
-                          <span className="text-xs lg:text-sm uppercase font-bold tracking-wide text-slate-400 group-hover:text-slate-200 transition-colors">
+                          <span className="text-[10px] lg:text-xs uppercase font-bold tracking-wide text-slate-400 group-hover:text-slate-200 transition-colors">
                             {section.label}
                           </span>
                         </div>
                         <svg
-                          className={`w-4 h-4 text-slate-400 group-hover:text-slate-200 transition-all duration-300 ${
+                          className={`w-3 h-3 text-slate-400 group-hover:text-slate-200 transition-all duration-300 ${
                             expandedCategories.includes(section.category) ? 'rotate-180' : ''
                           }`}
                           fill="none"
@@ -275,15 +293,15 @@ const AdminLayout = ({ children }) => {
                       </button>
 
                       {expandedCategories.includes(section.category) && (
-                        <div className="mt-1 space-y-0.5 pl-2 border-l-2 border-slate-700 ml-5">
+                        <div className="mt-0.5 space-y-0.5 pl-1.5 border-l-2 border-slate-700 ml-4">
                           {section.items.map((item) => (
                             <Link
                               key={item.path}
                               to={item.path}
                               onClick={() => setIsSidebarOpen(false)}
                               className={`
-                                group flex items-center gap-3 px-3 py-2 rounded-lg
-                                transition-all duration-200 text-sm font-medium
+                                group flex items-center gap-2 px-2 py-1.5 rounded-lg
+                                transition-all duration-200 text-xs font-medium
                                 ${location.pathname === item.path
                                   ? 'text-white shadow-md'
                                   : 'text-gray-300 hover:text-white hover:bg-slate-700'
@@ -307,29 +325,23 @@ const AdminLayout = ({ children }) => {
           </nav>
 
           {/* Fixed Footer at Bottom */}
-          <div className="border-t-2 border-slate-700 p-3 lg:p-4 shrink-0">
-            <div className="px-3 lg:px-4 py-3 rounded-lg bg-slate-800 hover:bg-slate-750 transition-colors mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md shrink-0" style={{ backgroundColor: '#895F42' }}>
+          <div className="border-t-2 border-slate-700 p-2 lg:p-2.5 shrink-0">
+            <div className="px-2 py-2 rounded-lg bg-slate-800 hover:bg-slate-750 transition-colors">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-md shrink-0" style={{ backgroundColor: '#895F42' }}>
                   {user?.name?.charAt(0).toUpperCase() || 'A'}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-white truncate">{user?.name}</p>
-                  <p className="text-xs text-slate-400 truncate">Administrator</p>
+                  <p className="text-xs font-semibold text-white truncate">{user?.name}</p>
+                  <p className="text-[10px] text-slate-400 truncate">Administrator</p>
                 </div>
               </div>
-            </div>
-            <div className="px-3 lg:px-4 text-right">
-              <p className="text-xs text-slate-500">
-                © {new Date().getFullYear()} Samrat Agencies
-              </p>
-              <p className="text-xs text-slate-600 mt-1">v1.0.0</p>
             </div>
           </div>
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-6 xl:p-8 w-full lg:ml-72">
+        <main className="flex-1 p-4 lg:p-6 xl:p-8 w-full lg:ml-60">
           <div className="max-w-7xl mx-auto">
             {children}
           </div>

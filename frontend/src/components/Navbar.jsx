@@ -21,6 +21,7 @@ const Navbar = () => {
 
   const navLinks = [
     { path: '/', label: 'Home' },
+    { path: '/blog', label: 'Blog' },
   ];
 
   useEffect(() => {

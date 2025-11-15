@@ -163,6 +163,14 @@ const productSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  isNewArrival: {
+    type: Boolean,
+    default: false
+  },
+  onSale: {
+    type: Boolean,
+    default: false
+  },
   isActive: {
     type: Boolean,
     default: true

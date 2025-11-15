@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { CompareProvider } from './context/CompareContext';
+import { RecentlyViewedProvider } from './context/RecentlyViewedContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CompareBar from './components/CompareBar';
@@ -29,6 +30,8 @@ const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 const Profile = lazy(() => import('./pages/Profile'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogArticle = lazy(() => import('./pages/BlogArticle'));
 const GoogleAuthSuccess = lazy(() => import('./pages/GoogleAuthSuccess'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
@@ -46,6 +49,8 @@ const AdminOrders = lazy(() => import('./pages/admin/Orders'));
 const AdminUsers = lazy(() => import('./pages/admin/Users'));
 const AdminCoupons = lazy(() => import('./pages/admin/Coupons'));
 const AdminDeliveryZones = lazy(() => import('./pages/admin/DeliveryZones'));
+const AdminArticles = lazy(() => import('./pages/admin/Articles'));
+const AdminNewsletter = lazy(() => import('./pages/admin/Newsletter'));
 
 // Loading component for Suspense fallback
 const LoadingFallback = () => (
@@ -71,7 +76,8 @@ function App() {
           <CartProvider>
             <WishlistProvider>
               <CompareProvider>
-                <Suspense fallback={<LoadingFallback />}>
+                <RecentlyViewedProvider>
+                  <Suspense fallback={<LoadingFallback />}>
                 <Routes>
               {/* Admin Routes */}
               <Route
@@ -146,6 +152,22 @@ function App() {
                   </AdminRoute>
                 }
               />
+              <Route
+                path="/admin/articles"
+                element={
+                  <AdminRoute>
+                    <AdminArticles />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/newsletter"
+                element={
+                  <AdminRoute>
+                    <AdminNewsletter />
+                  </AdminRoute>
+                }
+              />
 
               {/* Auth Routes (without Navbar/Footer) */}
               <Route path="/login" element={<Login />} />
@@ -173,6 +195,8 @@ function App() {
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/contact" element={<Contact />} />
+                        <Route path="/blog/:slug" element={<BlogArticle />} />
+                        <Route path="/blog" element={<Blog />} />
                         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                         <Route path="/shipping-and-delivery" element={<ShippingAndDelivery />} />
@@ -188,6 +212,7 @@ function App() {
               />
               </Routes>
             </Suspense>
+                </RecentlyViewedProvider>
               </CompareProvider>
           </WishlistProvider>
         </CartProvider>

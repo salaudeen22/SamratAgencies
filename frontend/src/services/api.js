@@ -223,4 +223,26 @@ export const recommendationAPI = {
     api.get('/recommendations/new-arrivals', { params: { limit } }),
 };
 
+// Article/Blog APIs
+export const articleAPI = {
+  getAll: (params) => api.get('/articles', { params }),
+  getBySlug: (slug) => api.get(`/articles/${slug}`),
+  getFeatured: (limit = 3) => api.get('/articles/featured', { params: { limit } }),
+
+  // Admin
+  getAllAdmin: (params) => api.get('/articles/admin/all', { params }),
+  create: (articleData) => api.post('/articles/admin', articleData),
+  update: (id, articleData) => api.put(`/articles/admin/${id}`, articleData),
+  delete: (id) => api.delete(`/articles/admin/${id}`),
+  togglePublish: (id) => api.patch(`/articles/admin/${id}/toggle-publish`),
+};
+
+// Review APIs
+export const reviewAPI = {
+  getProductReviews: (productId, params) => api.get(`/reviews/product/${productId}`, { params }),
+  create: (reviewData) => api.post('/reviews', reviewData),
+  update: (reviewId, reviewData) => api.put(`/reviews/${reviewId}`, reviewData),
+  delete: (reviewId) => api.delete(`/reviews/${reviewId}`),
+};
+
 export default api;

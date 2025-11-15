@@ -54,6 +54,9 @@ app.use('/api/contact', require('./src/routes/contactRoutes'));
 app.use('/api/coupons', require('./src/routes/couponRoutes'));
 app.use('/api/delivery', require('./src/routes/deliveryRoutes'));
 app.use('/api/recommendations', require('./src/routes/recommendationRoutes'));
+app.use('/api/articles', require('./src/routes/articleRoutes'));
+app.use('/api/reviews', require('./src/routes/reviewRoutes'));
+app.use('/api/newsletter', require('./src/routes/newsletterRoutes'));
 app.use('/', require('./src/routes/sitemapRoutes'));
 
 // API info route

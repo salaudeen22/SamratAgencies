@@ -8,6 +8,8 @@ import StatsSection from '../components/home/StatsSection';
 import BrandLogosSection from '../components/home/BrandLogosSection';
 import PromotionalCards from '../components/home/PromotionalCards';
 import TestimonialsSection from '../components/home/TestimonialsSection';
+import RecentlyViewedSection from '../components/home/RecentlyViewedSection';
+import NewsletterSignup from '../components/common/NewsletterSignup';
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -41,10 +43,12 @@ const Home = () => {
         <HeroSection />
         <CategoriesSection />
         <FeaturedProductsSection products={featuredProducts} loading={loading} />
+        <RecentlyViewedSection />
         <StatsSection />
         <BrandLogosSection />
         <PromotionalCards />
         <TestimonialsSection />
+        <NewsletterSignup />
       </div>
     </>
   );

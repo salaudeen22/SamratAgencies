@@ -30,6 +30,8 @@ const Products = () => {
     sku: '',
     brand: '',
     featured: false,
+    isNewArrival: false,
+    onSale: false,
     images: [],
     variantPricing: []
   });
@@ -167,6 +169,8 @@ const Products = () => {
       sku: product.sku || '',
       brand: product.brand || '',
       featured: product.featured || false,
+      isNewArrival: product.isNewArrival || false,
+      onSale: product.onSale || false,
       images: product.images || [],
       variantPricing: product.variantPricing || []
     });
@@ -222,6 +226,8 @@ const Products = () => {
       sku: '',
       brand: '',
       featured: false,
+      isNewArrival: false,
+      onSale: false,
       images: [],
       variantPricing: []
     });
@@ -983,7 +989,7 @@ const Products = () => {
                         : 'Days to manufacture and deliver (e.g., 15-30 days)'}
                     </p>
                   </div>
-                  <div className="flex items-center">
+                  <div className="flex flex-wrap gap-4">
                     <label className="flex items-center gap-2">
                       <input
                         type="checkbox"
@@ -992,6 +998,24 @@ const Products = () => {
                         className="w-4 h-4"
                       />
                       <span className="text-sm font-medium">Featured Product</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={formData.isNewArrival}
+                        onChange={(e) => setFormData({ ...formData, isNewArrival: e.target.checked })}
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm font-medium">New Arrival</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={formData.onSale}
+                        onChange={(e) => setFormData({ ...formData, onSale: e.target.checked })}
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm font-medium">On Sale</span>
                     </label>
                   </div>
                 </div>
