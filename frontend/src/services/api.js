@@ -38,6 +38,7 @@ export const productAPI = {
   update: (id, productData) => api.put(`/products/${id}`, productData),
   delete: (id) => api.delete(`/products/${id}`),
   getCategories: () => api.get('/products/categories'),
+  search: (params) => api.get('/products/search', { params }),
 };
 
 // Cart APIs

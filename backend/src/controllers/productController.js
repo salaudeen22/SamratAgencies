@@ -259,3 +259,60 @@ exports.removeProductImage = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Advanced search endpoint
+exports.searchProducts = async (req, res) => {
+  try {
+    const { q, category, minPrice, maxPrice, inStock, limit = 20 } = req.query;
+
+    if (!q || q.trim().length < 2) {
+      return res.json({ products: [], message: 'Search query too short' });
+    }
+
+    const searchQuery = {
+      $or: [
+        { name: { $regex: q, $options: 'i' } },
+        { description: { $regex: q, $options: 'i' } },
+        { sku: { $regex: q, $options: 'i' } }
+      ]
+    };
+
+    // Additional filters
+    if (category) {
+      const categoryDoc = await Category.findOne({
+        $or: [
+          { slug: category },
+          { name: { $regex: new RegExp(`^${category}$`, 'i') } }
+        ]
+      });
+      if (categoryDoc) {
+        const allCategoryIds = await getAllChildCategoryIds(categoryDoc._id);
+        searchQuery.category = { $in: allCategoryIds };
+      }
+    }
+
+    if (minPrice || maxPrice) {
+      searchQuery.price = {};
+      if (minPrice) searchQuery.price.$gte = Number(minPrice);
+      if (maxPrice) searchQuery.price.$lte = Number(maxPrice);
+    }
+
+    if (inStock === 'true') {
+      searchQuery.stock = { $gt: 0 };
+    }
+
+    const products = await Product.find(searchQuery)
+      .populate('category', 'name slug')
+      .limit(parseInt(limit))
+      .sort({ createdAt: -1 })
+      .select('name description price images rating stock slug sku');
+
+    res.json({
+      products,
+      count: products.length,
+      query: q
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

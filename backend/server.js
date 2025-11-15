@@ -6,6 +6,9 @@ dotenv.config();
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const hpp = require('hpp');
 const passport = require('./src/config/passport');
 const connectDB = require('./src/config/db');
 const { apiLimiter, authLimiter, passwordResetLimiter, uploadLimiter, paymentLimiter, newsletterLimiter, contactLimiter } = require('./src/middleware/rateLimiter');
@@ -15,13 +18,28 @@ connectDB();
 
 const app = express();
 
-// Middleware
+// Security Middleware
+// Set security headers
+app.use(helmet({
+  contentSecurityPolicy: false, // Disable CSP for now to avoid breaking things
+  crossOriginEmbedderPolicy: false
+}));
+
+// Sanitize data to prevent NoSQL injection
+app.use(mongoSanitize());
+
+// Prevent HTTP Parameter Pollution
+app.use(hpp());
+
+// Body parser middleware
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// CORS
 app.use(cors({
   origin: [process.env.FRONTEND_URL, 'https://samratagencies.netlify.app'],
   credentials: true
 }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // Apply general rate limiting to all API routes
 app.use('/api/', apiLimiter);

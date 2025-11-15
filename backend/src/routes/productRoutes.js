@@ -8,11 +8,13 @@ const {
   deleteProduct,
   getFeaturedProducts,
   addProductImages,
-  removeProductImage
+  removeProductImage,
+  searchProducts
 } = require('../controllers/productController');
 const { auth, adminAuth } = require('../middleware/auth');
 
 router.get('/', getAllProducts);
+router.get('/search', searchProducts);
 router.get('/featured', getFeaturedProducts);
 router.get('/:id', getProductById);
 router.post('/', auth, adminAuth, createProduct);

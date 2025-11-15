@@ -9,11 +9,11 @@ const apiLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// Auth rate limiter - stricter for login/register - 5 requests per 15 minutes
+// Auth rate limiter - stricter for login/register - 10 requests per 15 minutes
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5,
-  message: 'Too many authentication attempts, please try again after 15 minutes',
+  max: 10,
+  message: 'Too many authentication attempts, please try again later',
   standardHeaders: true,
   legacyHeaders: false,
   skipSuccessfulRequests: false,
