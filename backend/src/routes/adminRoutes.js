@@ -4,6 +4,7 @@ const { auth, adminAuth } = require('../middleware/auth');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
 const User = require('../models/User');
+const Cart = require('../models/Cart');
 const { sendEmail } = require('../config/email');
 const {
   orderStatusUpdateEmail,
