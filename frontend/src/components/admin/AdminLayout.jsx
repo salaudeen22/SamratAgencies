@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import logo from '../../assets/samrat-logo.png';
 
 const AdminLayout = ({ children }) => {
   const location = useLocation();
@@ -184,9 +185,11 @@ const AdminLayout = ({ children }) => {
               </svg>
             </button>
             <div className="flex items-center gap-2 lg:gap-3">
-              <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm lg:text-base" style={{ backgroundColor: '#895F42' }}>
-                SA
-              </div>
+              <img
+                src={logo}
+                alt="Samrat Agencies Logo"
+                className="w-8 h-8 lg:w-10 lg:h-10 object-contain"
+              />
               <div>
                 <h1 className="text-base lg:text-xl font-bold" style={{ color: '#1e293b' }}>Admin Panel</h1>
                 <p className="hidden lg:block text-xs" style={{ color: '#94a3b8' }}>Samrat Agencies</p>
