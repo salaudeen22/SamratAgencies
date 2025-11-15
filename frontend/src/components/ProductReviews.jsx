@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { reviewAPI } from '../services/api';
+import { reviewAPI, uploadAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
-import { FiStar, FiUser } from 'react-icons/fi';
+import { FiStar, FiUser, FiImage, FiX } from 'react-icons/fi';
 
 const ProductReviews = ({ productId }) => {
   const { isAuthenticated } = useAuth();
@@ -13,6 +13,8 @@ const ProductReviews = ({ productId }) => {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [uploadingImages, setUploadingImages] = useState(false);
 
   const fetchReviews = useCallback(async () => {
     if (!productId) return; // Don't fetch if no productId
@@ -40,6 +42,29 @@ const ProductReviews = ({ productId }) => {
     return null;
   }
 
+  const handleImageSelect = (e) => {
+    const files = Array.from(e.target.files);
+
+    // Limit to 5 images
+    if (selectedImages.length + files.length > 5) {
+      toast.error('Maximum 5 images allowed');
+      return;
+    }
+
+    // Check file sizes (max 5MB each)
+    const oversizedFiles = files.filter(file => file.size > 5 * 1024 * 1024);
+    if (oversizedFiles.length > 0) {
+      toast.error('Each image must be less than 5MB');
+      return;
+    }
+
+    setSelectedImages([...selectedImages, ...files]);
+  };
+
+  const handleRemoveImage = (index) => {
+    setSelectedImages(selectedImages.filter((_, i) => i !== index));
+  };
+
   const handleSubmitReview = async (e) => {
     e.preventDefault();
 
@@ -55,15 +80,34 @@ const ProductReviews = ({ productId }) => {
 
     try {
       setSubmitting(true);
+
+      let uploadedImages = [];
+
+      // Upload images if any selected
+      if (selectedImages.length > 0) {
+        setUploadingImages(true);
+        try {
+          const response = await uploadAPI.uploadImages(selectedImages);
+          uploadedImages = response.data.images || [];
+        } catch (error) {
+          toast.error('Failed to upload images');
+          console.error('Image upload error:', error);
+        } finally {
+          setUploadingImages(false);
+        }
+      }
+
       await reviewAPI.create({
         product: productId,
         rating,
-        comment: comment.trim()
+        comment: comment.trim(),
+        images: uploadedImages
       });
 
       toast.success('Review submitted successfully!');
       setComment('');
       setRating(5);
+      setSelectedImages([]);
       setShowReviewForm(false);
       fetchReviews(); // Refresh reviews
     } catch (error) {
@@ -169,14 +213,59 @@ const ProductReviews = ({ productId }) => {
             <p className="text-xs text-gray-500 mt-1">Minimum 10 characters</p>
           </div>
 
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+              Add Photos (Optional)
+            </label>
+            <div className="flex flex-wrap gap-3">
+              {/* Selected Images Preview */}
+              {selectedImages.map((file, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt={`Preview ${index + 1}`}
+                    className="w-20 h-20 object-cover rounded-lg border-2"
+                    style={{ borderColor: '#BDD7EB' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(index)}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                  >
+                    <FiX className="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+
+              {/* Upload Button */}
+              {selectedImages.length < 5 && (
+                <label className="w-20 h-20 flex items-center justify-center border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                  style={{ borderColor: '#BDD7EB' }}
+                >
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleImageSelect}
+                    className="hidden"
+                  />
+                  <FiImage className="w-6 h-6" style={{ color: '#895F42' }} />
+                </label>
+              )}
+            </div>
+            <p className="text-xs text-gray-500 mt-2">
+              You can upload up to 5 images (max 5MB each)
+            </p>
+          </div>
+
           <div className="flex gap-3">
             <button
               type="submit"
-              disabled={submitting || comment.trim().length < 10}
+              disabled={submitting || uploadingImages || comment.trim().length < 10}
               className="px-6 py-2 rounded-lg text-white font-medium transition-colors disabled:opacity-50"
               style={{ backgroundColor: '#895F42' }}
             >
-              {submitting ? 'Submitting...' : 'Submit Review'}
+              {uploadingImages ? 'Uploading images...' : submitting ? 'Submitting...' : 'Submit Review'}
             </button>
             <button
               type="button"
@@ -184,6 +273,7 @@ const ProductReviews = ({ productId }) => {
                 setShowReviewForm(false);
                 setComment('');
                 setRating(5);
+                setSelectedImages([]);
               }}
               className="px-6 py-2 rounded-lg font-medium transition-colors border-2"
               style={{ borderColor: '#BDD7EB', color: '#1F2D38' }}
@@ -254,6 +344,28 @@ const ProductReviews = ({ productId }) => {
               </div>
 
               <p className="text-gray-700 leading-relaxed">{review.comment}</p>
+
+              {/* Review Images */}
+              {review.images && review.images.length > 0 && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {review.images.map((image, index) => (
+                    <a
+                      key={index}
+                      href={image.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <img
+                        src={image.url}
+                        alt={`Review image ${index + 1}`}
+                        className="w-24 h-24 object-cover rounded-lg border-2 hover:opacity-80 transition-opacity cursor-pointer"
+                        style={{ borderColor: '#BDD7EB' }}
+                      />
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>

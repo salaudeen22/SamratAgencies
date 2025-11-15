@@ -32,9 +32,9 @@ router.post('/image', auth, adminAuth, (req, res) => {
 });
 
 // @route   POST /api/upload/images
-// @desc    Upload multiple images
-// @access  Private/Admin
-router.post('/images', auth, adminAuth, (req, res) => {
+// @desc    Upload multiple images (for reviews, etc.)
+// @access  Private (authenticated users)
+router.post('/images', auth, (req, res) => {
   uploadMultiple(req, res, function (err) {
     if (err) {
       return handleUploadError(err, req, res, () => {});
@@ -45,16 +45,14 @@ router.post('/images', auth, adminAuth, (req, res) => {
     }
 
     // Return the uploaded files information
-    const files = req.files.map(file => ({
+    const images = req.files.map(file => ({
       url: file.location,
-      key: file.key,
-      size: file.size,
-      mimetype: file.mimetype,
+      public_id: file.key,
     }));
 
     res.json({
-      message: `${files.length} image(s) uploaded successfully`,
-      files: files
+      message: `${images.length} image(s) uploaded successfully`,
+      images: images
     });
   });
 });
