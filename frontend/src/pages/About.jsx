@@ -1031,14 +1031,14 @@ const About = () => {
 
               <div className="h-full min-h-[400px]">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.6182127385005!2d77.62370421048396!3d12.897791687358367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1916ceba133f%3A0xf0ae92158946e5c3!2sSamrat%20Agencies%20(Dealer)%20(Samsung)(furniture%20expert)!5e1!3m2!1sen!2sin!4v1762612477783!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/d/embed?mid=18aWLW17D7q98_ilr1CsNogtQoa78XzI&ehbc=2E312F"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen=""
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Samrat Agencies Location"
+                  title="Samrat Agencies - Parent and Children Brands Map"
                 ></iframe>
               </div>
             </div>
