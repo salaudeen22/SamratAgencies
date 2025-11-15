@@ -340,9 +340,14 @@ const Banners = () => {
               onChange={(e) => setForm({ ...form, position: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
             >
-              <option value="hero">Hero</option>
-              <option value="promotional">Promotional</option>
-              <option value="sidebar">Sidebar</option>
+              <option value="hero">Hero (Top Carousel)</option>
+              <option value="promotional">Promotional (Below Bajaj)</option>
+              <option value="section1">Section 1 (After Hero)</option>
+              <option value="section2">Section 2 (After Categories)</option>
+              <option value="section3">Section 3 (After Featured Products)</option>
+              <option value="section4">Section 4 (After Recently Viewed)</option>
+              <option value="section5">Section 5 (After Promotional Cards)</option>
+              <option value="section6">Section 6 (After Testimonials)</option>
             </select>
           </div>
 

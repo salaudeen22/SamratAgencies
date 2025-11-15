@@ -27,7 +27,7 @@ const bannerSchema = new mongoose.Schema({
   },
   position: {
     type: String,
-    enum: ['hero', 'promotional', 'sidebar'],
+    enum: ['hero', 'promotional', 'section1', 'section2', 'section3', 'section4', 'section5', 'section6'],
     default: 'hero'
   },
   isActive: {

@@ -9,6 +9,7 @@ import BrandLogosSection from '../components/home/BrandLogosSection';
 import PromotionalCards from '../components/home/PromotionalCards';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import RecentlyViewedSection from '../components/home/RecentlyViewedSection';
+import BannerSection from '../components/home/BannerSection';
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -40,13 +41,19 @@ const Home = () => {
       />
       <div className="min-h-screen" style={{ backgroundColor: '#f8fafc' }}>
         <HeroSection />
+        <BannerSection position="section1" />
         <CategoriesSection />
+        <BannerSection position="section2" />
         <FeaturedProductsSection products={featuredProducts} loading={loading} />
+        <BannerSection position="section3" />
         <RecentlyViewedSection />
+        <BannerSection position="section4" />
         <StatsSection />
         <BrandLogosSection />
         <PromotionalCards />
+        <BannerSection position="section5" />
         <TestimonialsSection />
+        <BannerSection position="section6" />
       </div>
     </>
   );
