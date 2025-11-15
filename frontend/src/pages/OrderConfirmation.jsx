@@ -366,8 +366,14 @@ const OrderConfirmation = () => {
                 <span>Subtotal</span>
                 <span>₹{order.itemsPrice.toLocaleString()}</span>
               </div>
+              {order.discount > 0 && (
+                <div className="flex justify-between text-sm text-green-600 font-medium">
+                  <span>Discount</span>
+                  <span>-₹{order.discount.toLocaleString()}</span>
+                </div>
+              )}
               <div className="flex justify-between text-sm" style={{ color: '#94A1AB' }}>
-                <span>Tax</span>
+                <span>GST (18%)</span>
                 <span>₹{order.taxPrice.toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-sm" style={{ color: '#94A1AB' }}>
@@ -461,7 +467,7 @@ const OrderConfirmation = () => {
             className="flex-1 w-full sm:w-auto"
             size="lg"
           >
-            View Order Details
+            Back to My Orders
           </Button>
           <button
             onClick={() => navigate('/products')}
