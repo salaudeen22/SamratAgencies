@@ -72,7 +72,7 @@ app.use('/api/payment', paymentLimiter, require('./src/routes/paymentRoutes'));
 app.use('/api/users', require('./src/routes/userRoutes'));
 app.use('/api/admin', require('./src/routes/adminRoutes'));
 app.use('/api/admin', require('./src/routes/attributeRoutes'));
-app.use('/api/upload', uploadLimiter, require('./src/routes/uploadRoutes'));
+app.use('/api/upload', require('./src/routes/uploadRoutes'));
 app.use('/api/contact', contactLimiter, require('./src/routes/contactRoutes'));
 app.use('/api/coupons', require('./src/routes/couponRoutes'));
 app.use('/api/delivery', require('./src/routes/deliveryRoutes'));
