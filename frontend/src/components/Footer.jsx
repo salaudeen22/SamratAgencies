@@ -1,6 +1,32 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { newsletterAPI } from '../services/api';
+import toast from 'react-hot-toast';
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [subscribing, setSubscribing] = useState(false);
+
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email || !email.includes('@')) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+
+    try {
+      setSubscribing(true);
+      await newsletterAPI.subscribe({ email });
+      toast.success('Successfully subscribed to our newsletter!');
+      setEmail('');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to subscribe');
+    } finally {
+      setSubscribing(false);
+    }
+  };
+
   return (
     <footer className="mt-auto" style={{ backgroundColor: '#1F2D38' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12">
@@ -120,7 +146,49 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-xs sm:text-sm" style={{ borderTop: '1px solid #94A1AB', color: '#BDD7EB' }}>
+      </div>
+
+      {/* Newsletter Section */}
+      <div className="border-t" style={{ borderColor: '#334155' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="max-w-2xl mx-auto text-center">
+            <h3 className="text-2xl font-bold mb-2" style={{ color: '#E5EFF3' }}>
+              Stay in the Loop
+            </h3>
+            <p className="mb-6" style={{ color: '#BDD7EB' }}>
+              Get exclusive deals, design tips, and new arrival alerts delivered to your inbox
+            </p>
+            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email address"
+                className="flex-1 px-4 py-3 rounded-lg focus:outline-none focus:ring-2"
+                style={{ backgroundColor: '#2D3748', color: '#E0EAF0', borderColor: '#475569' }}
+                required
+              />
+              <button
+                type="submit"
+                disabled={subscribing}
+                className="px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50"
+                style={{ backgroundColor: '#895F42', color: 'white' }}
+                onMouseEnter={(e) => !subscribing && (e.currentTarget.style.backgroundColor = '#9F8065')}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
+              >
+                {subscribing ? 'Subscribing...' : 'Subscribe'}
+              </button>
+            </form>
+            <p className="text-xs mt-3" style={{ color: '#94A1AB' }}>
+              We respect your privacy. Unsubscribe anytime.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Copyright */}
+      <div className="border-t" style={{ borderColor: '#334155' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-xs sm:text-sm" style={{ color: '#BDD7EB' }}>
           <p>&copy; {new Date().getFullYear()} Samrat Agencies. All rights reserved.</p>
         </div>
       </div>

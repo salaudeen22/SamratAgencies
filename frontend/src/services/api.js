@@ -245,4 +245,17 @@ export const reviewAPI = {
   delete: (reviewId) => api.delete(`/reviews/${reviewId}`),
 };
 
+// Newsletter APIs
+export const newsletterAPI = {
+  subscribe: (data) => api.post('/newsletter/subscribe', data),
+  unsubscribe: (email) => api.post('/newsletter/unsubscribe', { email }),
+
+  // Admin
+  getAll: (params) => api.get('/newsletter/admin/subscribers', { params }),
+  getStats: () => api.get('/newsletter/admin/stats'),
+  updateStatus: (id, status) => api.patch(`/newsletter/admin/subscribers/${id}/status`, { status }),
+  delete: (id) => api.delete(`/newsletter/admin/subscribers/${id}`),
+  export: () => api.get('/newsletter/admin/export'),
+};
+
 export default api;

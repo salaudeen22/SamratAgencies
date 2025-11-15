@@ -9,7 +9,6 @@ import BrandLogosSection from '../components/home/BrandLogosSection';
 import PromotionalCards from '../components/home/PromotionalCards';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import RecentlyViewedSection from '../components/home/RecentlyViewedSection';
-import NewsletterSignup from '../components/common/NewsletterSignup';
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -48,7 +47,6 @@ const Home = () => {
         <BrandLogosSection />
         <PromotionalCards />
         <TestimonialsSection />
-        <NewsletterSignup />
       </div>
     </>
   );
