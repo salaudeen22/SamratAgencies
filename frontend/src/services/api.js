@@ -67,6 +67,7 @@ export const orderAPI = {
   getMyOrders: () => api.get('/orders'),
   getById: (id) => api.get(`/orders/${id}`),
   updateStatus: (id, status) => api.put(`/orders/${id}/status`, { status }),
+  cancelOrder: (id, data) => api.put(`/orders/${id}/cancel`, data),
 };
 
 // Payment APIs

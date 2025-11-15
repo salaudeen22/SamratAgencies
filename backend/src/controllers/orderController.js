@@ -3,7 +3,7 @@ const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const User = require('../models/User');
 const { sendEmail } = require('../config/email');
-const { orderConfirmationEmail } = require('../utils/emailTemplates');
+const { orderConfirmationEmail, orderStatusUpdateEmail } = require('../utils/emailTemplates');
 
 // Create new order
 exports.createOrder = async (req, res) => {
@@ -149,6 +149,66 @@ exports.getAllOrders = async (req, res) => {
       .sort({ createdAt: -1 });
 
     res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Cancel order (User can cancel their own orders)
+exports.cancelOrder = async (req, res) => {
+  try {
+    const { cancellationReason } = req.body;
+
+    const order = await Order.findById(req.params.id)
+      .populate('user', 'name email');
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // Check if user owns this order
+    if (order.user._id.toString() !== req.user.id) {
+      return res.status(403).json({ message: 'Not authorized to cancel this order' });
+    }
+
+    // Only allow cancellation of Pending or Processing orders
+    if (!['Pending', 'Processing'].includes(order.status)) {
+      return res.status(400).json({
+        message: `Cannot cancel order with status: ${order.status}. Only Pending or Processing orders can be cancelled.`
+      });
+    }
+
+    // Update order status to Cancelled
+    order.status = 'Cancelled';
+    order.cancellationReason = cancellationReason || 'Cancelled by customer';
+    order.cancelledBy = req.user.id;
+    order.cancelledAt = Date.now();
+
+    // Add to status history
+    order.statusHistory.push({
+      status: 'Cancelled',
+      timestamp: Date.now(),
+      note: cancellationReason || 'Cancelled by customer',
+      updatedBy: req.user.id
+    });
+
+    const updatedOrder = await order.save();
+
+    // Send cancellation email
+    if (order.user && order.user.email) {
+      const emailContent = orderStatusUpdateEmail(updatedOrder, 'Cancelled');
+      await sendEmail({
+        to: order.user.email,
+        subject: emailContent.subject,
+        html: emailContent.html,
+        text: emailContent.text
+      });
+    }
+
+    res.json({
+      message: 'Order cancelled successfully',
+      order: updatedOrder
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

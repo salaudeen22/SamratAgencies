@@ -6,7 +6,8 @@ const {
   getOrderById,
   updateOrderToPaid,
   updateOrderStatus,
-  getAllOrders
+  getAllOrders,
+  cancelOrder
 } = require('../controllers/orderController');
 const { auth, adminAuth } = require('../middleware/auth');
 
@@ -15,6 +16,7 @@ router.get('/', auth, getUserOrders);
 router.get('/all', auth, adminAuth, getAllOrders);
 router.get('/:id', auth, getOrderById);
 router.put('/:id/pay', auth, updateOrderToPaid);
+router.put('/:id/cancel', auth, cancelOrder);
 router.put('/:id/status', auth, adminAuth, updateOrderStatus);
 
 module.exports = router;

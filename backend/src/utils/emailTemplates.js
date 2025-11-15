@@ -416,7 +416,7 @@ const orderStatusUpdateEmail = (order, newStatus) => {
   };
 
   return {
-    subject: `${statusInfo.icon} ${statusInfo.title} - Order #${order._id.slice(-8)}`,
+    subject: `${statusInfo.icon} ${statusInfo.title} - Order #${order._id.toString().slice(-8)}`,
     html: `
       <!DOCTYPE html>
       <html lang="en">
@@ -443,7 +443,7 @@ const orderStatusUpdateEmail = (order, newStatus) => {
             <!-- Order Details -->
             <div style="background-color: #fafafa; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
               <h3 style="color: #1F2D38; margin: 0 0 15px 0; font-size: 16px; font-weight: 700;">Order Information</h3>
-              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Order ID:</strong> #${order._id.slice(-12)}</p>
+              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Order ID:</strong> #${order._id.toString().slice(-12)}</p>
               <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Order Date:</strong> ${new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
               <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Total Amount:</strong> <span style="color: #895F42; font-weight: 600;">₹${order.totalPrice?.toLocaleString('en-IN')}</span></p>
             </div>
@@ -529,7 +529,7 @@ const returnStatusUpdateEmail = (returnRequest, user) => {
   };
 
   return {
-    subject: `${config.title} - Return #${returnRequest._id.slice(-8)}`,
+    subject: `${config.title} - Return #${returnRequest._id.toString().slice(-8)}`,
     html: `
       <!DOCTYPE html>
       <html lang="en">
@@ -555,8 +555,8 @@ const returnStatusUpdateEmail = (returnRequest, user) => {
             <!-- Return Details -->
             <div style="background-color: #fafafa; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
               <h3 style="color: #1F2D38; margin: 0 0 15px 0; font-size: 16px; font-weight: 700;">Return Details</h3>
-              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Return ID:</strong> #${returnRequest._id.slice(-12)}</p>
-              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Order ID:</strong> #${returnRequest.order?._id?.slice(-12) || 'N/A'}</p>
+              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Return ID:</strong> #${returnRequest._id.toString().slice(-12)}</p>
+              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Order ID:</strong> #${returnRequest.order?._id?.toString().slice(-12) || 'N/A'}</p>
               <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Refund Amount:</strong> <span style="color: #895F42; font-weight: 600;">₹${returnRequest.refundAmount?.toLocaleString('en-IN')}</span></p>
             </div>
 

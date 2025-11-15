@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react';
-import { HiPhone } from 'react-icons/hi2';
+import { HiPhone, HiXCircle } from 'react-icons/hi2';
 import Modal from '../Modal';
 import ReturnRequestModal from './ReturnRequestModal';
-import { returnAPI } from '../../services/api';
+import { returnAPI, orderAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
 const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubmitted }) => {
   const [showReturnModal, setShowReturnModal] = useState(false);
   const [existingReturn, setExistingReturn] = useState(null);
   const [checkingReturn, setCheckingReturn] = useState(false);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+  const [cancelReason, setCancelReason] = useState('');
+  const [cancelling, setCancelling] = useState(false);
 
   const canReturn = order?.status?.toLowerCase() === 'delivered';
+  const canCancel = ['Pending', 'Processing'].includes(order?.status);
 
   useEffect(() => {
     if (isOpen && order && canReturn) {
@@ -50,6 +54,27 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
       return;
     }
     setShowReturnModal(true);
+  };
+
+  const handleCancelOrder = async () => {
+    if (!cancelReason.trim()) {
+      toast.error('Please provide a reason for cancellation');
+      return;
+    }
+
+    try {
+      setCancelling(true);
+      await orderAPI.cancelOrder(order._id, { cancellationReason: cancelReason });
+      toast.success('Order cancelled successfully');
+      setShowCancelConfirm(false);
+      setCancelReason('');
+      onReturnSubmitted?.(); // Refresh orders list
+      onClose();
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to cancel order');
+    } finally {
+      setCancelling(false);
+    }
   };
 
   return (
@@ -192,6 +217,57 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
             )}
           </div>
         </div>
+
+        {/* Cancel Order Button */}
+        {canCancel && (
+          <div className="border-t pt-4" style={{ borderColor: '#BDD7EB' }}>
+            {!showCancelConfirm ? (
+              <button
+                onClick={() => setShowCancelConfirm(true)}
+                className="w-full py-3 px-4 rounded-lg font-semibold transition-all hover:opacity-90 flex items-center justify-center gap-2"
+                style={{ backgroundColor: '#fee2e2', color: '#991b1b' }}
+              >
+                <HiXCircle className="w-5 h-5" />
+                Cancel Order
+              </button>
+            ) : (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <p className="text-sm font-semibold text-red-800 mb-3">
+                  Are you sure you want to cancel this order?
+                </p>
+                <textarea
+                  value={cancelReason}
+                  onChange={(e) => setCancelReason(e.target.value)}
+                  placeholder="Please provide a reason for cancellation..."
+                  className="w-full px-3 py-2 border rounded-lg text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  rows="3"
+                  style={{ borderColor: '#fecaca' }}
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleCancelOrder}
+                    disabled={cancelling || !cancelReason.trim()}
+                    className="flex-1 py-2.5 px-4 rounded-lg font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{ backgroundColor: '#dc2626' }}
+                  >
+                    {cancelling ? 'Cancelling...' : 'Confirm Cancellation'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowCancelConfirm(false);
+                      setCancelReason('');
+                    }}
+                    disabled={cancelling}
+                    className="flex-1 py-2.5 px-4 rounded-lg font-semibold transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{ backgroundColor: '#E0EAF0', color: '#1F2D38' }}
+                  >
+                    Keep Order
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Return Button */}
         {canReturn && (
