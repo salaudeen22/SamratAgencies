@@ -93,7 +93,7 @@ router.get('/sitemap.xml', async (req, res) => {
     categories.forEach((category) => {
       const slug = category.slug || category._id;
       sitemap += `  <url>\n`;
-      sitemap += `    <loc>${baseUrl}/products?category=${category._id}</loc>\n`;
+      sitemap += `    <loc>${baseUrl}/products?category=${slug}</loc>\n`;
       sitemap += `    <changefreq>weekly</changefreq>\n`;
       sitemap += `    <priority>0.7</priority>\n`;
       sitemap += `    <lastmod>${category.updatedAt.toISOString()}</lastmod>\n`;
