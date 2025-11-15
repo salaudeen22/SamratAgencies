@@ -8,6 +8,7 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('./src/config/passport');
 const connectDB = require('./src/config/db');
+const { apiLimiter, authLimiter, passwordResetLimiter, uploadLimiter, paymentLimiter, newsletterLimiter, contactLimiter } = require('./src/middleware/rateLimiter');
 
 // Connect to database
 connectDB();
@@ -21,6 +22,9 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Apply general rate limiting to all API routes
+app.use('/api/', apiLimiter);
 
 // Session configuration
 app.use(session({
@@ -38,26 +42,26 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
-app.use('/api/auth', require('./src/routes/authRoutes'));
+// Routes with specific rate limiters
+app.use('/api/auth', authLimiter, require('./src/routes/authRoutes'));
 app.use('/api/products', require('./src/routes/productRoutes'));
 app.use('/api/categories', require('./src/routes/categoryRoutes'));
 app.use('/api/cart', require('./src/routes/cartRoutes'));
 app.use('/api/wishlist', require('./src/routes/wishlistRoutes'));
 app.use('/api/orders', require('./src/routes/orderRoutes'));
 app.use('/api/returns', require('./src/routes/returnRoutes'));
-app.use('/api/payment', require('./src/routes/paymentRoutes'));
+app.use('/api/payment', paymentLimiter, require('./src/routes/paymentRoutes'));
 app.use('/api/users', require('./src/routes/userRoutes'));
 app.use('/api/admin', require('./src/routes/adminRoutes'));
 app.use('/api/admin', require('./src/routes/attributeRoutes'));
-app.use('/api/upload', require('./src/routes/uploadRoutes'));
-app.use('/api/contact', require('./src/routes/contactRoutes'));
+app.use('/api/upload', uploadLimiter, require('./src/routes/uploadRoutes'));
+app.use('/api/contact', contactLimiter, require('./src/routes/contactRoutes'));
 app.use('/api/coupons', require('./src/routes/couponRoutes'));
 app.use('/api/delivery', require('./src/routes/deliveryRoutes'));
 app.use('/api/recommendations', require('./src/routes/recommendationRoutes'));
 app.use('/api/articles', require('./src/routes/articleRoutes'));
 app.use('/api/reviews', require('./src/routes/reviewRoutes'));
-app.use('/api/newsletter', require('./src/routes/newsletterRoutes'));
+app.use('/api/newsletter', newsletterLimiter, require('./src/routes/newsletterRoutes'));
 app.use('/api/settings', require('./src/routes/settingsRoutes'));
 app.use('/api/tickets', require('./src/routes/ticketRoutes'));
 app.use('/api/bulk', require('./src/routes/bulkRoutes'));

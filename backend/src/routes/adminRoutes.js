@@ -333,29 +333,70 @@ router.put('/users/:id/admin', async (req, res) => {
 
 // ============ DASHBOARD STATISTICS ============
 
-// Get dashboard statistics
+// Get dashboard statistics with date range filtering
 router.get('/stats', async (req, res) => {
   try {
+    const { dateRange, startDate, endDate } = req.query;
+
+    // Calculate date filter
+    let dateFilter = {};
+    if (dateRange) {
+      const now = new Date();
+      let start;
+
+      switch (dateRange) {
+        case 'week':
+          start = new Date(now.setDate(now.getDate() - 7));
+          break;
+        case 'month':
+          start = new Date(now.setMonth(now.getMonth() - 1));
+          break;
+        case 'year':
+          start = new Date(now.setFullYear(now.getFullYear() - 1));
+          break;
+        default:
+          start = null;
+      }
+
+      if (start) {
+        dateFilter = { createdAt: { $gte: start } };
+      }
+    } else if (startDate && endDate) {
+      dateFilter = {
+        createdAt: {
+          $gte: new Date(startDate),
+          $lte: new Date(endDate)
+        }
+      };
+    }
+
     const totalProducts = await Product.countDocuments();
-    const totalOrders = await Order.countDocuments();
-    const totalUsers = await User.countDocuments();
+    const totalOrders = await Order.countDocuments(dateFilter);
+    const totalUsers = await User.countDocuments(dateFilter);
 
     const totalRevenue = await Order.aggregate([
-      { $match: { isPaid: true } },
+      { $match: { isPaid: true, ...dateFilter } },
       { $group: { _id: null, total: { $sum: '$totalPrice' } } }
     ]);
 
-    const pendingOrders = await Order.countDocuments({ status: 'Pending' });
-    const deliveredOrders = await Order.countDocuments({ status: 'Delivered' });
-    const immediateProducts = await Product.countDocuments({ availabilityType: 'immediate' });
-    const madeToOrderProducts = await Product.countDocuments({ availabilityType: 'made-to-order' });
+    const pendingOrders = await Order.countDocuments({ status: 'Pending', ...dateFilter });
+    const processingOrders = await Order.countDocuments({ status: 'Processing', ...dateFilter });
+    const shippedOrders = await Order.countDocuments({ status: 'Shipped', ...dateFilter });
+    const deliveredOrders = await Order.countDocuments({ status: 'Delivered', ...dateFilter });
 
-    const recentOrders = await Order.find()
+    // Stock status
+    const inStockProducts = await Product.countDocuments({ stock: { $gt: 10 } });
+    const lowStockProducts = await Product.countDocuments({ stock: { $gt: 0, $lte: 10 } });
+    const outOfStockProducts = await Product.countDocuments({ stock: 0 });
+
+    const recentOrders = await Order.find(dateFilter)
       .populate('user', 'name email')
       .sort({ createdAt: -1 })
       .limit(5);
 
+    // Top selling products with proper lookup
     const topProducts = await Order.aggregate([
+      { $match: dateFilter },
       { $unwind: '$items' },
       {
         $group: {
@@ -373,8 +414,22 @@ router.get('/stats', async (req, res) => {
           foreignField: '_id',
           as: 'productInfo'
         }
+      },
+      { $unwind: { path: '$productInfo', preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          productId: '$_id',
+          name: { $ifNull: ['$productInfo.name', 'Unknown Product'] },
+          category: { $ifNull: ['$productInfo.category', 'Unknown'] },
+          image: { $ifNull: ['$productInfo.images.0', ''] },
+          totalSold: 1,
+          revenue: 1
+        }
       }
     ]);
+
+    // New customers (users registered in the date range)
+    const newCustomers = await User.countDocuments(dateFilter);
 
     res.json({
       totalProducts,
@@ -382,9 +437,13 @@ router.get('/stats', async (req, res) => {
       totalUsers,
       totalRevenue: totalRevenue[0]?.total || 0,
       pendingOrders,
+      processingOrders,
+      shippedOrders,
       deliveredOrders,
-      immediateProducts,
-      madeToOrderProducts,
+      inStockProducts,
+      lowStockProducts,
+      outOfStockProducts,
+      newCustomers,
       recentOrders,
       topProducts
     });

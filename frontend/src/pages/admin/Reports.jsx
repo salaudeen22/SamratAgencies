@@ -16,12 +16,17 @@ const Reports = () => {
 
   useEffect(() => {
     fetchStats();
-  }, [dateRange]);
+  }, [dateRange, startDate, endDate]);
 
   const fetchStats = async () => {
     try {
       setLoading(true);
-      const response = await adminAPI.getStats();
+      const params = { dateRange };
+      if (startDate && endDate) {
+        params.startDate = startDate;
+        params.endDate = endDate;
+      }
+      const response = await adminAPI.getStats(params);
       setStats(response.data);
     } catch (error) {
       toast.error('Failed to fetch statistics');
@@ -316,23 +321,35 @@ const Reports = () => {
                 </tr>
               </thead>
               <tbody>
-                {[1, 2, 3, 4, 5].map((item) => (
-                  <tr key={item} className="border-b" style={{ borderColor: '#e2e8f0' }}>
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded bg-gray-100"></div>
-                        <span className="font-medium" style={{ color: '#1F2D38' }}>Product {item}</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4" style={{ color: '#64748b' }}>Category</td>
-                    <td className="py-3 px-4 text-right font-medium" style={{ color: '#1F2D38' }}>
-                      {(50 - item * 5)}
-                    </td>
-                    <td className="py-3 px-4 text-right font-bold" style={{ color: '#895F42' }}>
-                      ₹{((50 - item * 5) * 5000).toLocaleString()}
+                {stats?.topProducts && stats.topProducts.length > 0 ? (
+                  stats.topProducts.map((product, index) => (
+                    <tr key={product.productId || index} className="border-b" style={{ borderColor: '#e2e8f0' }}>
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-3">
+                          {product.image ? (
+                            <img src={product.image} alt={product.name} className="w-10 h-10 rounded object-cover bg-gray-100" />
+                          ) : (
+                            <div className="w-10 h-10 rounded bg-gray-100"></div>
+                          )}
+                          <span className="font-medium" style={{ color: '#1F2D38' }}>{product.name}</span>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4" style={{ color: '#64748b' }}>{product.category}</td>
+                      <td className="py-3 px-4 text-right font-medium" style={{ color: '#1F2D38' }}>
+                        {product.totalSold}
+                      </td>
+                      <td className="py-3 px-4 text-right font-bold" style={{ color: '#895F42' }}>
+                        ₹{product.revenue.toLocaleString()}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="py-8 text-center text-sm" style={{ color: '#64748b' }}>
+                      No sales data available for this period
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

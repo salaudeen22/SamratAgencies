@@ -49,10 +49,7 @@ const MediaLibrary = () => {
 
     for (const file of selectedFiles) {
       try {
-        const formData = new FormData();
-        formData.append('image', file);
-
-        const response = await uploadAPI.uploadImage(formData);
+        const response = await uploadAPI.uploadImage(file);
 
         setFiles(prev => [...prev, {
           _id: Date.now() + Math.random(),
@@ -65,6 +62,7 @@ const MediaLibrary = () => {
 
         successCount++;
       } catch (error) {
+        console.error('Upload error:', error);
         failCount++;
       }
     }
@@ -205,11 +203,11 @@ const MediaLibrary = () => {
             </div>
 
             <div className="flex gap-2">
-              <label htmlFor="file-upload">
-                <Button variant="primary" size="sm" disabled={uploading}>
+              <label htmlFor="file-upload" className="cursor-pointer">
+                <span className={`inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`} style={{ backgroundColor: '#895F42', color: 'white' }}>
                   <FaUpload className="mr-2" size={12} />
                   {uploading ? 'Uploading...' : 'Upload Files'}
-                </Button>
+                </span>
               </label>
               <input
                 id="file-upload"
@@ -236,11 +234,11 @@ const MediaLibrary = () => {
                 {searchTerm ? 'Try a different search term' : 'Upload your first file to get started'}
               </p>
               {!searchTerm && (
-                <label htmlFor="file-upload-empty">
-                  <Button variant="primary">
+                <label htmlFor="file-upload-empty" className="cursor-pointer">
+                  <span className="inline-flex items-center px-6 py-3 text-sm font-medium rounded-lg transition-colors" style={{ backgroundColor: '#895F42', color: 'white' }}>
                     <FaUpload className="mr-2" />
                     Upload Files
-                  </Button>
+                  </span>
                 </label>
               )}
               <input
