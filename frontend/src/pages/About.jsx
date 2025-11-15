@@ -1,6 +1,31 @@
+import { Helmet } from 'react-helmet-async';
+
 const About = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#fafaf9' }}>
+      <Helmet>
+        <title>About Samrat Agencies - 30+ Years of Trust & Quality | Furniture & Mattress Store Bangalore</title>
+        <meta name="description" content="Discover the legacy of Samrat Agencies since 1991. Authorized dealer for Nilkamal, Sleepwell, Duroflex, Kurl-on & more. Manufacturing units in Jigani, Hongasandra & Lakkasandra. 5-star rated service." />
+        <meta name="keywords" content="Samrat Agencies, furniture store Bangalore, mattress dealer, Nilkamal, Sleepwell, Duroflex, Kurl-on, Peps, furniture manufacturing, Hongasandra showroom, Bangalore furniture" />
+
+        {/* Open Graph Meta Tags */}
+        <meta property="og:title" content="About Samrat Agencies - A Legacy of Trust & Quality Since 1991" />
+        <meta property="og:description" content="From a small electronics shop to Bangalore's trusted furniture destination. Authorized dealer for India's top brands with own manufacturing units." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://samratagencies.com/about" />
+        <meta property="og:image" content="https://samrat-agencies.s3.ap-south-1.amazonaws.com/Gemini_Generated_Image_u4zctmu4zctmu4zc.png" />
+
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About Samrat Agencies - 30+ Years of Trust & Quality" />
+        <meta name="twitter:description" content="Discover our journey from 1991 to becoming Bangalore's premier furniture and mattress destination." />
+        <meta name="twitter:image" content="https://samrat-agencies.s3.ap-south-1.amazonaws.com/Gemini_Generated_Image_u4zctmu4zctmu4zc.png" />
+
+        {/* Additional SEO Tags */}
+        <link rel="canonical" href="https://samratagencies.com/about" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Samrat Agencies" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative text-white py-24 md:py-32 overflow-hidden" style={{
         backgroundImage: 'linear-gradient(135deg, #1F2D38 0%, #895F42 100%)'
