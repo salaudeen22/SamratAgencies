@@ -401,6 +401,8 @@ router.get('/stats', async (req, res) => {
       {
         $group: {
           _id: '$items.product',
+          itemName: { $first: '$items.name' },
+          itemImage: { $first: '$items.image' },
           totalSold: { $sum: '$items.quantity' },
           revenue: { $sum: { $multiply: ['$items.quantity', '$items.price'] } }
         }
@@ -419,9 +421,29 @@ router.get('/stats', async (req, res) => {
       {
         $project: {
           productId: '$_id',
-          name: { $ifNull: ['$productInfo.name', 'Unknown Product'] },
-          category: { $ifNull: ['$productInfo.category', 'Unknown'] },
-          image: { $ifNull: ['$productInfo.images.0', ''] },
+          // Use item name if available, fallback to product name, then "Deleted Product"
+          name: {
+            $cond: {
+              if: { $and: [{ $ne: ['$itemName', null] }, { $ne: ['$itemName', ''] }] },
+              then: '$itemName',
+              else: { $ifNull: ['$productInfo.name', 'Deleted Product'] }
+            }
+          },
+          category: { $ifNull: ['$productInfo.category', null] },
+          // Use item image if available, fallback to product image
+          image: {
+            $cond: {
+              if: { $and: [{ $ne: ['$itemImage', null] }, { $ne: ['$itemImage', ''] }] },
+              then: '$itemImage',
+              else: {
+                $cond: {
+                  if: { $gt: [{ $size: { $ifNull: ['$productInfo.images', []] } }, 0] },
+                  then: { $arrayElemAt: ['$productInfo.images.url', 0] },
+                  else: ''
+                }
+              }
+            }
+          },
           totalSold: 1,
           revenue: 1
         }
@@ -431,11 +453,320 @@ router.get('/stats', async (req, res) => {
     // New customers (users registered in the date range)
     const newCustomers = await User.countDocuments(dateFilter);
 
+    // ============ NEW ENHANCED METRICS ============
+
+    // 1. Average Order Value (AOV)
+    const revenue = totalRevenue[0]?.total || 0;
+    const avgOrderValue = totalOrders > 0 ? Math.round(revenue / totalOrders) : 0;
+
+    // 2. Revenue by Payment Method
+    const paymentMethodStats = await Order.aggregate([
+      { $match: { isPaid: true, ...dateFilter } },
+      {
+        $group: {
+          _id: '$paymentMethod',
+          count: { $sum: 1 },
+          revenue: { $sum: '$totalPrice' }
+        }
+      }
+    ]);
+
+    // 3. Sales by City (Top 10)
+    const salesByCity = await Order.aggregate([
+      { $match: { isPaid: true, ...dateFilter } },
+      {
+        $group: {
+          _id: '$shippingAddress.city',
+          orders: { $sum: 1 },
+          revenue: { $sum: '$totalPrice' }
+        }
+      },
+      { $sort: { revenue: -1 } },
+      { $limit: 10 }
+    ]);
+
+    // 4. Sales by State (Top 10)
+    const salesByState = await Order.aggregate([
+      { $match: { isPaid: true, ...dateFilter } },
+      {
+        $group: {
+          _id: '$shippingAddress.state',
+          orders: { $sum: 1 },
+          revenue: { $sum: '$totalPrice' }
+        }
+      },
+      { $sort: { revenue: -1 } },
+      { $limit: 10 }
+    ]);
+
+    // 5. Category Performance
+    const Category = require('../models/Category');
+    const categoryPerformance = await Order.aggregate([
+      { $match: { isPaid: true, ...dateFilter } },
+      { $unwind: '$items' },
+      {
+        $lookup: {
+          from: 'products',
+          localField: 'items.product',
+          foreignField: '_id',
+          as: 'productData'
+        }
+      },
+      { $unwind: { path: '$productData', preserveNullAndEmptyArrays: true } },
+      {
+        $group: {
+          _id: '$productData.category',
+          totalSold: { $sum: '$items.quantity' },
+          revenue: { $sum: { $multiply: ['$items.price', '$items.quantity'] } },
+          orders: { $sum: 1 }
+        }
+      },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'categoryInfo'
+        }
+      },
+      { $unwind: { path: '$categoryInfo', preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          categoryId: '$_id',
+          name: { $ifNull: ['$categoryInfo.name', 'Uncategorized'] },
+          totalSold: 1,
+          revenue: 1,
+          orders: 1
+        }
+      },
+      { $sort: { revenue: -1 } },
+      { $limit: 10 }
+    ]);
+
+    // 6. Return Rate
+    const Return = require('../models/Return');
+    const totalReturns = await Return.countDocuments(dateFilter);
+    const returnRate = totalOrders > 0 ? ((totalReturns / totalOrders) * 100).toFixed(2) : 0;
+
+    // 7. Repeat Customer Rate
+    const repeatCustomerData = await Order.aggregate([
+      { $match: dateFilter },
+      { $group: { _id: '$user', orderCount: { $sum: 1 } } },
+      {
+        $group: {
+          _id: null,
+          totalCustomers: { $sum: 1 },
+          repeatCustomers: {
+            $sum: { $cond: [{ $gt: ['$orderCount', 1] }, 1, 0] }
+          }
+        }
+      }
+    ]);
+
+    const repeatCustomerRate = repeatCustomerData[0]
+      ? ((repeatCustomerData[0].repeatCustomers / repeatCustomerData[0].totalCustomers) * 100).toFixed(2)
+      : 0;
+
+    // 8. Revenue Trend (Last 30 days)
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const revenueTrend = await Order.aggregate([
+      {
+        $match: {
+          isPaid: true,
+          createdAt: { $gte: thirtyDaysAgo }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: '$createdAt' },
+            month: { $month: '$createdAt' },
+            day: { $dayOfMonth: '$createdAt' }
+          },
+          revenue: { $sum: '$totalPrice' },
+          orders: { $sum: 1 }
+        }
+      },
+      { $sort: { '_id.year': 1, '_id.month': 1, '_id.day': 1 } },
+      {
+        $project: {
+          date: {
+            $dateFromParts: {
+              year: '$_id.year',
+              month: '$_id.month',
+              day: '$_id.day'
+            }
+          },
+          revenue: 1,
+          orders: 1
+        }
+      }
+    ]);
+
+    // 9. Today's Sales
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+
+    const todaySales = await Order.aggregate([
+      {
+        $match: {
+          isPaid: true,
+          createdAt: { $gte: todayStart, $lte: todayEnd }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          revenue: { $sum: '$totalPrice' },
+          orders: { $sum: 1 }
+        }
+      }
+    ]);
+
+    const todayRevenue = todaySales[0]?.revenue || 0;
+    const todayOrders = todaySales[0]?.orders || 0;
+
+    // 10. Previous Period Comparison (for growth calculation)
+    let previousPeriodFilter = {};
+    if (dateRange) {
+      const now = new Date();
+      let prevStart, prevEnd;
+
+      switch (dateRange) {
+        case 'week':
+          prevEnd = new Date(now.setDate(now.getDate() - 7));
+          prevStart = new Date(prevEnd);
+          prevStart.setDate(prevStart.getDate() - 7);
+          break;
+        case 'month':
+          prevEnd = new Date(now.setMonth(now.getMonth() - 1));
+          prevStart = new Date(prevEnd);
+          prevStart.setMonth(prevStart.getMonth() - 1);
+          break;
+        case 'year':
+          prevEnd = new Date(now.setFullYear(now.getFullYear() - 1));
+          prevStart = new Date(prevEnd);
+          prevStart.setFullYear(prevStart.getFullYear() - 1);
+          break;
+      }
+
+      if (prevStart && prevEnd) {
+        previousPeriodFilter = {
+          createdAt: { $gte: prevStart, $lte: prevEnd }
+        };
+      }
+    }
+
+    const previousRevenue = previousPeriodFilter.createdAt ? await Order.aggregate([
+      { $match: { isPaid: true, ...previousPeriodFilter } },
+      { $group: { _id: null, total: { $sum: '$totalPrice' } } }
+    ]) : [];
+
+    const prevRevenue = previousRevenue[0]?.total || 0;
+    const revenueGrowth = prevRevenue > 0
+      ? (((revenue - prevRevenue) / prevRevenue) * 100).toFixed(2)
+      : 0;
+
+    // ============ ADDITIONAL METRICS ============
+
+    // 11. Cart Abandonment Rate
+    const totalCarts = await Cart.countDocuments(dateFilter);
+    const cartAbandonmentRate = totalCarts > 0 && totalOrders > 0
+      ? (((totalCarts - totalOrders) / totalCarts) * 100).toFixed(2)
+      : 0;
+
+    // 12. Order Cancellation Rate
+    const cancelledOrders = await Order.countDocuments({ status: 'Cancelled', ...dateFilter });
+    const cancellationRate = totalOrders > 0
+      ? ((cancelledOrders / totalOrders) * 100).toFixed(2)
+      : 0;
+
+    // 13. Average Delivery Time (in days) - for delivered orders
+    const deliveredOrdersWithTime = await Order.find({
+      status: 'Delivered',
+      deliveredAt: { $exists: true },
+      ...dateFilter
+    }).select('createdAt deliveredAt');
+
+    let avgDeliveryTime = 0;
+    if (deliveredOrdersWithTime.length > 0) {
+      const totalDeliveryDays = deliveredOrdersWithTime.reduce((sum, order) => {
+        const days = Math.ceil((order.deliveredAt - order.createdAt) / (1000 * 60 * 60 * 24));
+        return sum + days;
+      }, 0);
+      avgDeliveryTime = (totalDeliveryDays / deliveredOrdersWithTime.length).toFixed(1);
+    }
+
+    // 14. Coupon Usage Statistics
+    const Coupon = require('../models/Coupon');
+    const couponUsage = await Coupon.aggregate([
+      {
+        $project: {
+          code: 1,
+          usedCount: 1,
+          discountType: 1,
+          discountValue: 1,
+          totalSaved: {
+            $reduce: {
+              input: '$usageHistory',
+              initialValue: 0,
+              in: { $add: ['$$value', '$$this.discountApplied'] }
+            }
+          }
+        }
+      },
+      { $sort: { usedCount: -1 } },
+      { $limit: 5 }
+    ]);
+
+    const totalCouponUsage = await Coupon.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalUsed: { $sum: '$usedCount' },
+          totalSavings: {
+            $sum: {
+              $reduce: {
+                input: '$usageHistory',
+                initialValue: 0,
+                in: { $add: ['$$value', '$$this.discountApplied'] }
+              }
+            }
+          }
+        }
+      }
+    ]);
+
+    const ordersWithCoupons = totalOrders > 0 && totalCouponUsage[0]
+      ? ((totalCouponUsage[0].totalUsed / totalOrders) * 100).toFixed(2)
+      : 0;
+
+    // 15. Active Support Tickets
+    const Ticket = require('../models/Ticket');
+    const activeSupportTickets = await Ticket.countDocuments({
+      status: { $in: ['open', 'in-progress'] }
+    });
+
+    // 16. Gross Profit (Revenue - Discount)
+    const totalDiscount = await Order.aggregate([
+      { $match: { isPaid: true, ...dateFilter } },
+      { $group: { _id: null, total: { $sum: '$discount' } } }
+    ]);
+    const grossProfit = revenue - (totalDiscount[0]?.total || 0);
+    const grossProfitMargin = revenue > 0
+      ? ((grossProfit / revenue) * 100).toFixed(2)
+      : 0;
+
     res.json({
+      // Original metrics
       totalProducts,
       totalOrders,
       totalUsers,
-      totalRevenue: totalRevenue[0]?.total || 0,
+      totalRevenue: revenue,
       pendingOrders,
       processingOrders,
       shippedOrders,
@@ -445,7 +776,35 @@ router.get('/stats', async (req, res) => {
       outOfStockProducts,
       newCustomers,
       recentOrders,
-      topProducts
+      topProducts,
+
+      // New enhanced metrics
+      avgOrderValue,
+      paymentMethodStats,
+      salesByCity,
+      salesByState,
+      categoryPerformance,
+      returnRate: parseFloat(returnRate),
+      totalReturns,
+      repeatCustomerRate: parseFloat(repeatCustomerRate),
+      revenueTrend,
+      todayRevenue,
+      todayOrders,
+      revenueGrowth: parseFloat(revenueGrowth),
+      previousPeriodRevenue: prevRevenue,
+
+      // Additional new metrics
+      cartAbandonmentRate: parseFloat(cartAbandonmentRate),
+      totalCarts,
+      cancelledOrders,
+      cancellationRate: parseFloat(cancellationRate),
+      avgDeliveryTime: parseFloat(avgDeliveryTime),
+      couponUsage,
+      totalCouponUsage: totalCouponUsage[0] || { totalUsed: 0, totalSavings: 0 },
+      ordersWithCoupons: parseFloat(ordersWithCoupons),
+      activeSupportTickets,
+      grossProfit,
+      grossProfitMargin: parseFloat(grossProfitMargin)
     });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });

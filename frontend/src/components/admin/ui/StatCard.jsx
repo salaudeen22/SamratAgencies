@@ -1,4 +1,4 @@
-const StatCard = ({ label, value, icon, color = '#895F42', trend, trendValue }) => {
+const StatCard = ({ label, value, icon, color = '#895F42', trend, trendValue, subValue, subColor }) => {
   return (
     <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-5 lg:p-6 border" style={{ borderColor: '#e2e8f0' }}>
       <div className="flex items-start justify-between">
@@ -28,6 +28,11 @@ const StatCard = ({ label, value, icon, color = '#895F42', trend, trendValue }) 
               </span>
               <span className="text-xs" style={{ color: '#94a3b8' }}>vs last month</span>
             </div>
+          )}
+          {subValue && (
+            <p className="text-xs font-medium mt-1" style={{ color: subColor || '#64748b' }}>
+              {subValue}
+            </p>
           )}
         </div>
         <div
