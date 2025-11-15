@@ -4,10 +4,10 @@ import { GiSofa } from 'react-icons/gi';
 
 const CategoriesSection = () => {
   const categories = [
-    { name: 'Sofas', icon: GiSofa, link: '/products?category=69134da33c6b5d0f9ef0f2fa' },
-    { name: 'Beds', icon: MdOutlineBedroomParent, link: '/products?category=69134fa33c6b5d0f9ef0f36f' },
-    { name: 'Dining', icon: MdTableRestaurant, link: '/products?category=691352b863378e6200012b11' },
-    { name: 'Office', icon: MdChair, link: '/products?category=6913533b63378e6200012b48' },
+    { name: 'Sofas', icon: GiSofa, link: '/products?category=sofas' },
+    { name: 'Beds', icon: MdOutlineBedroomParent, link: '/products?category=beds' },
+    { name: 'Dining', icon: MdTableRestaurant, link: '/products?category=dining' },
+    { name: 'Office', icon: MdChair, link: '/products?category=office' },
   ];
 
   return (

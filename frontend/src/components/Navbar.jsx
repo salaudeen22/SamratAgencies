@@ -97,7 +97,7 @@ const Navbar = () => {
                       {categories.map((category) => (
                         <div key={category._id}>
                           <Link
-                            to={`/products?category=${category._id}`}
+                            to={`/products?category=${category.slug || category._id}`}
                             className="text-sm font-bold mb-4 uppercase tracking-wide block transition-colors"
                             style={{ color: '#895F42' }}
                             onMouseEnter={(e) => e.currentTarget.style.color = '#9F8065'}
@@ -110,7 +110,7 @@ const Navbar = () => {
                               {category.children.map((child) => (
                                 <li key={child._id}>
                                   <Link
-                                    to={`/products?category=${child._id}`}
+                                    to={`/products?category=${child.slug || child._id}`}
                                     className="text-sm transition-colors block"
                                     style={{ color: '#94A1AB' }}
                                     onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
@@ -281,7 +281,7 @@ const Navbar = () => {
                     <div key={category._id}>
                       <div className="flex items-center justify-between">
                         <Link
-                          to={`/products?category=${category._id}`}
+                          to={`/products?category=${category.slug || category._id}`}
                           onClick={() => {
                             setIsMobileMenuOpen(false);
                             setExpandedCategory(null);
@@ -313,7 +313,7 @@ const Navbar = () => {
                           {category.children.map((child) => (
                             <Link
                               key={child._id}
-                              to={`/products?category=${child._id}`}
+                              to={`/products?category=${child.slug || child._id}`}
                               onClick={() => {
                                 setIsMobileMenuOpen(false);
                                 setExpandedCategory(null);
