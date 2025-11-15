@@ -52,6 +52,7 @@ const Footer = () => {
               <li><Link to="/about" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>About Us</Link></li>
               <li><Link to="/blog" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Blog</Link></li>
               <li><Link to="/contact" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Contact</Link></li>
+              <li><Link to="/support" className="transition" style={{ color: '#BDD7EB' }} onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'} onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}>Support</Link></li>
             </ul>
           </div>
 

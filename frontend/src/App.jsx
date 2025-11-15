@@ -37,6 +37,7 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const ShippingAndDelivery = lazy(() => import('./pages/ShippingAndDelivery'));
 const CancellationAndRefund = lazy(() => import('./pages/CancellationAndRefund'));
+const Support = lazy(() => import('./pages/Support'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Lazy load admin pages
@@ -55,6 +56,10 @@ const AdminNewsletter = lazy(() => import('./pages/admin/Newsletter'));
 const AdminReviews = lazy(() => import('./pages/admin/Reviews'));
 const AdminSettings = lazy(() => import('./pages/admin/Settings'));
 const AdminContactMessages = lazy(() => import('./pages/admin/ContactMessages'));
+const AdminReports = lazy(() => import('./pages/admin/Reports'));
+const AdminMediaLibrary = lazy(() => import('./pages/admin/MediaLibrary'));
+const AdminBulkOperations = lazy(() => import('./pages/admin/BulkOperations'));
+const AdminSupportSystem = lazy(() => import('./pages/admin/SupportSystem'));
 
 // Loading component for Suspense fallback
 const LoadingFallback = () => (
@@ -204,6 +209,38 @@ function App() {
                   </AdminRoute>
                 }
               />
+              <Route
+                path="/admin/reports"
+                element={
+                  <AdminRoute>
+                    <AdminReports />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/media-library"
+                element={
+                  <AdminRoute>
+                    <AdminMediaLibrary />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/bulk-operations"
+                element={
+                  <AdminRoute>
+                    <AdminBulkOperations />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/support"
+                element={
+                  <AdminRoute>
+                    <AdminSupportSystem />
+                  </AdminRoute>
+                }
+              />
 
               {/* Auth Routes (without Navbar/Footer) */}
               <Route path="/login" element={<Login />} />
@@ -237,6 +274,7 @@ function App() {
                         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                         <Route path="/shipping-and-delivery" element={<ShippingAndDelivery />} />
                         <Route path="/cancellation-and-refund" element={<CancellationAndRefund />} />
+                        <Route path="/support" element={<Support />} />
                         {/* 404 Catch-all route */}
                         <Route path="*" element={<NotFound />} />
                       </Routes>

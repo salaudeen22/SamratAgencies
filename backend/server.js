@@ -59,6 +59,8 @@ app.use('/api/articles', require('./src/routes/articleRoutes'));
 app.use('/api/reviews', require('./src/routes/reviewRoutes'));
 app.use('/api/newsletter', require('./src/routes/newsletterRoutes'));
 app.use('/api/settings', require('./src/routes/settingsRoutes'));
+app.use('/api/tickets', require('./src/routes/ticketRoutes'));
+app.use('/api/bulk', require('./src/routes/bulkRoutes'));
 app.use('/', require('./src/routes/sitemapRoutes'));
 
 // API info route

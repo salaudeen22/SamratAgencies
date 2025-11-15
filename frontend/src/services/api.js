@@ -162,6 +162,9 @@ export const uploadAPI = {
     });
   },
 
+  // List all S3 files
+  getFiles: () => api.get('/upload/files'),
+
   // Delete image from S3
   deleteImage: (key) => api.delete('/upload/image', { data: { key } }),
 
@@ -290,6 +293,49 @@ export const contactMessagesAPI = {
   getById: (id) => api.get(`/contact/admin/messages/${id}`),
   markAsRead: (id) => api.patch(`/contact/admin/messages/${id}/read`),
   delete: (id) => api.delete(`/contact/admin/messages/${id}`),
+};
+
+// Ticket APIs (Support System)
+export const ticketAPI = {
+  // Customer
+  create: (data) => api.post('/tickets', data),
+  getMyTickets: (params) => api.get('/tickets', { params }),
+  getById: (id) => api.get(`/tickets/${id}`),
+  addMessage: (id, message) => api.post(`/tickets/${id}/messages`, { message }),
+
+  // Admin
+  getAllTickets: (params) => api.get('/tickets/admin/all', { params }),
+  updateStatus: (id, status) => api.put(`/tickets/admin/${id}/status`, { status }),
+  updatePriority: (id, priority) => api.put(`/tickets/admin/${id}/priority`, { priority }),
+  assign: (id, assignedTo) => api.put(`/tickets/admin/${id}/assign`, { assignedTo }),
+  delete: (id) => api.delete(`/tickets/admin/${id}`),
+};
+
+// Bulk Operations APIs
+export const bulkAPI = {
+  // Import
+  importProducts: (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return api.post('/bulk/import/products', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+  },
+  importUsers: (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return api.post('/bulk/import/users', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+  },
+
+  // Export
+  exportProducts: () => api.get('/bulk/export/products', { responseType: 'blob' }),
+  exportUsers: () => api.get('/bulk/export/users', { responseType: 'blob' }),
+  exportOrders: () => api.get('/bulk/export/orders', { responseType: 'blob' }),
+
+  // Templates
+  downloadTemplate: (type) => api.get(`/bulk/template/${type}`, { responseType: 'blob' }),
 };
 
 export default api;

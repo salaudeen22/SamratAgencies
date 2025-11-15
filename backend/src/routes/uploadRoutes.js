@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { uploadSingle, uploadMultiple, handleUploadError } = require('../middleware/uploadS3');
 const { auth, adminAuth } = require('../middleware/auth');
-const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { DeleteObjectCommand, ListObjectsV2Command } = require('@aws-sdk/client-s3');
 const { s3Client, bucketConfig } = require('../config/s3');
 
 // @route   POST /api/upload/image
@@ -55,6 +55,38 @@ router.post('/images', auth, (req, res) => {
       images: images
     });
   });
+});
+
+// @route   GET /api/upload/files
+// @desc    List all files from S3
+// @access  Private/Admin
+router.get('/files', auth, adminAuth, async (req, res) => {
+  try {
+    const listParams = {
+      Bucket: bucketConfig.bucketName,
+      MaxKeys: 1000 // Adjust as needed
+    };
+
+    const command = new ListObjectsV2Command(listParams);
+    const response = await s3Client.send(command);
+
+    const files = (response.Contents || []).map(file => ({
+      key: file.Key,
+      url: `https://${bucketConfig.bucketName}.s3.${bucketConfig.region}.amazonaws.com/${file.Key}`,
+      size: file.Size,
+      lastModified: file.LastModified,
+      name: file.Key.split('/').pop() // Extract filename from key
+    }));
+
+    res.json({
+      message: 'Files retrieved successfully',
+      files,
+      count: files.length
+    });
+  } catch (error) {
+    console.error('Error listing files:', error);
+    res.status(500).json({ message: 'Failed to list files', error: error.message });
+  }
 });
 
 // @route   DELETE /api/upload/image
