@@ -12,21 +12,30 @@ exports.createOrder = async (req, res) => {
       items,
       shippingAddress,
       paymentMethod,
-      totalAmount
+      totalAmount,
+      gstAmount,
+      deliveryCharge,
+      discount
     } = req.body;
 
     if (!items || items.length === 0) {
       return res.status(400).json({ message: 'No order items' });
     }
 
+    // Calculate items price (subtotal before GST and delivery)
+    const itemsPrice = items.reduce((total, item) => {
+      return total + (item.price * item.quantity);
+    }, 0);
+
     const order = await Order.create({
       user: req.user.id,
       items,
       shippingAddress,
       paymentMethod,
-      itemsPrice: totalAmount,
-      taxPrice: 0,
-      shippingPrice: 0,
+      itemsPrice: itemsPrice,
+      taxPrice: gstAmount || 0,
+      shippingPrice: deliveryCharge || 0,
+      discount: discount || 0,
       totalPrice: totalAmount
     });
 

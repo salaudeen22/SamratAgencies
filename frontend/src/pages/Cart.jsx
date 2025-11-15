@@ -106,8 +106,15 @@ const Cart = () => {
     toast.success('Coupon removed');
   };
 
+  const getGSTAmount = () => {
+    const subtotal = getCartTotal();
+    return Math.round((subtotal * 0.18) * 100) / 100; // 18% GST
+  };
+
   const getFinalTotal = () => {
-    return Math.max(0, getCartTotal() - couponDiscount);
+    const subtotal = getCartTotal();
+    const gst = getGSTAmount();
+    return Math.max(0, subtotal - couponDiscount + gst);
   };
 
   // Calculate total savings from discounts
@@ -430,6 +437,11 @@ const Cart = () => {
                     <span>-₹{couponDiscount.toLocaleString()}</span>
                   </div>
                 )}
+
+                <div className="flex justify-between text-sm sm:text-base" style={{ color: '#94A1AB' }}>
+                  <span>GST (18%)</span>
+                  <span style={{ color: '#1F2D38' }}>₹{getGSTAmount().toLocaleString()}</span>
+                </div>
 
                 <div className="flex justify-between text-sm sm:text-base" style={{ color: '#94A1AB' }}>
                   <span>Shipping</span>

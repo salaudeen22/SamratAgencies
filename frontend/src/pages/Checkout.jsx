@@ -69,8 +69,15 @@ const Checkout = () => {
     }
   };
 
+  const getGSTAmount = () => {
+    const subtotal = getCartTotal();
+    return Math.round((subtotal * 0.18) * 100) / 100; // 18% GST
+  };
+
   const getFinalTotal = () => {
-    return Math.max(0, getCartTotal() - couponDiscount + deliveryCharge);
+    const subtotal = getCartTotal();
+    const gst = getGSTAmount();
+    return Math.max(0, subtotal - couponDiscount + gst + deliveryCharge);
   };
 
   // Calculate expected delivery date range
@@ -232,6 +239,7 @@ const Checkout = () => {
         },
         paymentMethod: formData.paymentMethod,
         totalAmount: getFinalTotal(),
+        gstAmount: getGSTAmount(),
         coupon: appliedCoupon?._id || null,
         discount: couponDiscount || 0,
         deliveryCharge: deliveryCharge || 0,
@@ -741,6 +749,11 @@ const Checkout = () => {
                     <span className="text-green-600 font-medium">-₹{couponDiscount.toLocaleString()}</span>
                   </div>
                 )}
+
+                <div className="flex justify-between" style={{ color: '#94A1AB' }}>
+                  <span>GST (18%)</span>
+                  <span style={{ color: '#1F2D38' }}>₹{getGSTAmount().toLocaleString()}</span>
+                </div>
 
                 <div className="flex justify-between" style={{ color: '#94A1AB' }}>
                   <span>Delivery Charge</span>
