@@ -172,6 +172,203 @@ const About = () => {
         </div>
       </section>
 
+      {/* Timeline Section */}
+      <section className="py-16 sm:py-20 bg-linear-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: '#1F2D38' }}>
+              Our Journey Through the Years
+            </h2>
+            <p className="text-lg max-w-3xl mx-auto" style={{ color: '#94A1AB' }}>
+              Key milestones that shaped Samrat Agencies into what it is today
+            </p>
+          </div>
+
+          <div className="relative">
+            {/* Timeline Line */}
+            <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full" style={{ backgroundColor: '#BDD7EB' }}></div>
+
+            {/* Timeline Items */}
+            <div className="space-y-12">
+              {/* 1991 - Foundation */}
+              <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="lg:text-right lg:pr-12">
+                  <div className="inline-block bg-white rounded-2xl p-8 shadow-xl" style={{ border: '2px solid #BDD7EB' }}>
+                    <div className="text-sm font-bold mb-2" style={{ color: '#895F42' }}>1991 • THE BEGINNING</div>
+                    <h3 className="text-2xl font-bold mb-3" style={{ color: '#1F2D38' }}>Samrat Agencies Founded</h3>
+                    <p className="leading-relaxed" style={{ color: '#94A1AB' }}>
+                      Mr. Nizamudeen S.A. opens the first electronics store with a vision to serve Bangalore with quality products and honest service.
+                    </p>
+                  </div>
+                </div>
+                <div className="hidden lg:flex justify-center">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl z-10" style={{ backgroundColor: '#895F42' }}>
+                    1991
+                  </div>
+                </div>
+                <div className="lg:hidden">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mb-4" style={{ backgroundColor: '#895F42' }}>
+                    1991
+                  </div>
+                </div>
+              </div>
+
+              {/* 1995 - First Expansion */}
+              <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="hidden lg:flex justify-center">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl z-10" style={{ backgroundColor: '#895F42' }}>
+                    1995
+                  </div>
+                </div>
+                <div className="lg:pl-12">
+                  <div className="inline-block bg-white rounded-2xl p-8 shadow-xl" style={{ border: '2px solid #BDD7EB' }}>
+                    <div className="text-sm font-bold mb-2" style={{ color: '#895F42' }}>1995 • EXPANSION</div>
+                    <h3 className="text-2xl font-bold mb-3" style={{ color: '#1F2D38' }}>Opening New Branches</h3>
+                    <p className="leading-relaxed" style={{ color: '#94A1AB' }}>
+                      Growing customer trust leads to expansion across Bangalore with multiple showrooms serving diverse neighborhoods.
+                    </p>
+                  </div>
+                </div>
+                <div className="lg:hidden">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mb-4" style={{ backgroundColor: '#895F42' }}>
+                    1995
+                  </div>
+                </div>
+              </div>
+
+              {/* 2005 - Transformation */}
+              <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="lg:text-right lg:pr-12">
+                  <div className="inline-block bg-white rounded-2xl p-8 shadow-xl" style={{ border: '2px solid #BDD7EB' }}>
+                    <div className="text-sm font-bold mb-2" style={{ color: '#895F42' }}>2005 • TRANSFORMATION</div>
+                    <h3 className="text-2xl font-bold mb-3" style={{ color: '#1F2D38' }}>Entering Furniture Market</h3>
+                    <p className="leading-relaxed" style={{ color: '#94A1AB' }}>
+                      Strategic pivot into furniture and mattresses, partnering with India's top brands to offer complete home solutions.
+                    </p>
+                  </div>
+                </div>
+                <div className="hidden lg:flex justify-center">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl z-10" style={{ backgroundColor: '#895F42' }}>
+                    2005
+                  </div>
+                </div>
+                <div className="lg:hidden">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mb-4" style={{ backgroundColor: '#895F42' }}>
+                    2005
+                  </div>
+                </div>
+              </div>
+
+              {/* 2010 - Manufacturing */}
+              <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="hidden lg:flex justify-center">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl z-10" style={{ backgroundColor: '#895F42' }}>
+                    2010
+                  </div>
+                </div>
+                <div className="lg:pl-12">
+                  <div className="inline-block bg-white rounded-2xl p-8 shadow-xl" style={{ border: '2px solid #BDD7EB' }}>
+                    <div className="text-sm font-bold mb-2" style={{ color: '#895F42' }}>2010 • MANUFACTURING</div>
+                    <h3 className="text-2xl font-bold mb-3" style={{ color: '#1F2D38' }}>First Manufacturing Unit</h3>
+                    <p className="leading-relaxed" style={{ color: '#94A1AB' }}>
+                      Establishing our first manufacturing facility in Jigani to ensure quality control and craftsmanship excellence.
+                    </p>
+                  </div>
+                </div>
+                <div className="lg:hidden">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mb-4" style={{ backgroundColor: '#895F42' }}>
+                    2010
+                  </div>
+                </div>
+              </div>
+
+              {/* 2015 - Leadership Transition */}
+              <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="lg:text-right lg:pr-12">
+                  <div className="inline-block bg-white rounded-2xl p-8 shadow-xl" style={{ border: '2px solid #BDD7EB' }}>
+                    <div className="text-sm font-bold mb-2" style={{ color: '#895F42' }}>2015 • LEGACY CONTINUES</div>
+                    <h3 className="text-2xl font-bold mb-3" style={{ color: '#1F2D38' }}>Second Generation Leadership</h3>
+                    <p className="leading-relaxed" style={{ color: '#94A1AB' }}>
+                      Mr. Azarudeen takes the helm, bringing fresh vision while preserving the family values that built the business.
+                    </p>
+                  </div>
+                </div>
+                <div className="hidden lg:flex justify-center">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl z-10" style={{ backgroundColor: '#895F42' }}>
+                    2015
+                  </div>
+                </div>
+                <div className="lg:hidden">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mb-4" style={{ backgroundColor: '#895F42' }}>
+                    2015
+                  </div>
+                </div>
+              </div>
+
+              {/* 2020 - Brand Partnerships */}
+              <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="hidden lg:flex justify-center">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl z-10" style={{ backgroundColor: '#895F42' }}>
+                    2020
+                  </div>
+                </div>
+                <div className="lg:pl-12">
+                  <div className="inline-block bg-white rounded-2xl p-8 shadow-xl" style={{ border: '2px solid #BDD7EB' }}>
+                    <div className="text-sm font-bold mb-2" style={{ color: '#895F42' }}>2020 • PARTNERSHIPS</div>
+                    <h3 className="text-2xl font-bold mb-3" style={{ color: '#1F2D38' }}>Authorized Dealer Network</h3>
+                    <p className="leading-relaxed" style={{ color: '#94A1AB' }}>
+                      Becoming authorized dealer for 10+ premium brands including Sleepwell, Duroflex, Nilkamal, and Kurl-on.
+                    </p>
+                  </div>
+                </div>
+                <div className="lg:hidden">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mb-4" style={{ backgroundColor: '#895F42' }}>
+                    2020
+                  </div>
+                </div>
+              </div>
+
+              {/* 2025 - Today */}
+              <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="lg:text-right lg:pr-12">
+                  <div className="inline-block bg-white rounded-2xl p-8 shadow-xl" style={{ border: '2px solid #895F42', boxShadow: '0 10px 40px rgba(137, 95, 66, 0.2)' }}>
+                    <div className="text-sm font-bold mb-2" style={{ color: '#895F42' }}>2025 • TODAY</div>
+                    <h3 className="text-2xl font-bold mb-3" style={{ color: '#1F2D38' }}>A Trusted Name in Every Home</h3>
+                    <p className="leading-relaxed mb-4" style={{ color: '#94A1AB' }}>
+                      Serving 1000+ customers weekly with 3 manufacturing units, premium showroom, and unwavering commitment to quality.
+                    </p>
+                    <div className="flex flex-wrap gap-3 justify-start lg:justify-end">
+                      <div className="text-center px-4 py-2 rounded-lg" style={{ backgroundColor: '#E0EAF0' }}>
+                        <div className="font-bold text-lg" style={{ color: '#895F42' }}>5.0★</div>
+                        <div className="text-xs" style={{ color: '#1F2D38' }}>Rating</div>
+                      </div>
+                      <div className="text-center px-4 py-2 rounded-lg" style={{ backgroundColor: '#E0EAF0' }}>
+                        <div className="font-bold text-lg" style={{ color: '#895F42' }}>1Cr+</div>
+                        <div className="text-xs" style={{ color: '#1F2D38' }}>Customers</div>
+                      </div>
+                      <div className="text-center px-4 py-2 rounded-lg" style={{ backgroundColor: '#E0EAF0' }}>
+                        <div className="font-bold text-lg" style={{ color: '#895F42' }}>30+</div>
+                        <div className="text-xs" style={{ color: '#1F2D38' }}>Years</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="hidden lg:flex justify-center">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl z-10 animate-pulse" style={{ backgroundColor: '#895F42' }}>
+                    2025
+                  </div>
+                </div>
+                <div className="lg:hidden">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mb-4 animate-pulse" style={{ backgroundColor: '#895F42' }}>
+                    2025
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Awards & Recognition */}
       <section className="py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -586,6 +783,182 @@ const About = () => {
                 Rated 5.0 stars with 108+ verified reviews across multiple platforms.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Customer Testimonials Section */}
+      <section className="py-16 sm:py-20 bg-linear-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: '#1F2D38' }}>
+              What Our Customers Say
+            </h2>
+            <p className="text-lg max-w-3xl mx-auto" style={{ color: '#94A1AB' }}>
+              Real stories from real families who chose Samrat Agencies for their homes
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Testimonial 1 */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all" style={{ border: '2px solid #BDD7EB' }}>
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#1F2D38' }}>
+                "We furnished our entire home from Samrat Agencies. The quality of mattresses and furniture is outstanding, and the prices were better than online stores. Mr. Azarudeen personally helped us choose the right products. Highly recommended!"
+              </p>
+              <div className="flex items-center">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: '#895F42' }}>
+                  RS
+                </div>
+                <div className="ml-4">
+                  <p className="font-bold" style={{ color: '#1F2D38' }}>Rajesh Sharma</p>
+                  <p className="text-sm" style={{ color: '#94A1AB' }}>Google Review - ⭐ 5.0</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all" style={{ border: '2px solid #BDD7EB' }}>
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#1F2D38' }}>
+                "Best furniture showroom in Bangalore! Genuine products from top brands at affordable prices. The staff is very helpful and knowledgeable. We bought a Sleepwell mattress and Nilkamal furniture - all excellent quality."
+              </p>
+              <div className="flex items-center">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: '#895F42' }}>
+                  PK
+                </div>
+                <div className="ml-4">
+                  <p className="font-bold" style={{ color: '#1F2D38' }}>Priya Krishnan</p>
+                  <p className="text-sm" style={{ color: '#94A1AB' }}>Facebook Review - ⭐ 5.0</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all" style={{ border: '2px solid #BDD7EB' }}>
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#1F2D38' }}>
+                "Samrat Agencies is a trusted name for over 30 years. I've been buying from them since 1995. The owner's family maintains the same quality and service standards. EMI options made it easy for us to furnish our new home."
+              </p>
+              <div className="flex items-center">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: '#895F42' }}>
+                  AM
+                </div>
+                <div className="ml-4">
+                  <p className="font-bold" style={{ color: '#1F2D38' }}>Arjun Mehta</p>
+                  <p className="text-sm" style={{ color: '#94A1AB' }}>JustDial Review - ⭐ 5.0</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 4 */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all" style={{ border: '2px solid #BDD7EB' }}>
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#1F2D38' }}>
+                "Excellent customer service! They have a huge collection of mattresses and furniture. We compared prices with other stores and online - Samrat Agencies offered the best deal with genuine warranty. Delivery was prompt too!"
+              </p>
+              <div className="flex items-center">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: '#895F42' }}>
+                  SK
+                </div>
+                <div className="ml-4">
+                  <p className="font-bold" style={{ color: '#1F2D38' }}>Sneha Kapoor</p>
+                  <p className="text-sm" style={{ color: '#94A1AB' }}>Google Review - ⭐ 5.0</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 5 */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all" style={{ border: '2px solid #BDD7EB' }}>
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#1F2D38' }}>
+                "Very professional service. They helped us select the perfect Duroflex mattress based on our requirements. The showroom is well-maintained with all branded products on display. Their card offers saved us additional money!"
+              </p>
+              <div className="flex items-center">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: '#895F42' }}>
+                  VR
+                </div>
+                <div className="ml-4">
+                  <p className="font-bold" style={{ color: '#1F2D38' }}>Vikram Rao</p>
+                  <p className="text-sm" style={{ color: '#94A1AB' }}>Facebook Review - ⭐ 5.0</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 6 */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all" style={{ border: '2px solid #BDD7EB' }}>
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#1F2D38' }}>
+                "A family business with family values. They treat customers with respect and honesty. We bought our entire bedroom set and dining furniture here. Quality is top-notch and prices are very competitive. Will definitely return!"
+              </p>
+              <div className="flex items-center">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: '#895F42' }}>
+                  MN
+                </div>
+                <div className="ml-4">
+                  <p className="font-bold" style={{ color: '#1F2D38' }}>Meena Nair</p>
+                  <p className="text-sm" style={{ color: '#94A1AB' }}>Google Review - ⭐ 5.0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Review Summary */}
+          <div className="mt-12 text-center">
+            <p className="text-lg font-medium mb-2" style={{ color: '#1F2D38' }}>
+              Rated 5.0 ⭐ across all platforms
+            </p>
+            <p className="text-base" style={{ color: '#94A1AB' }}>
+              Based on 108+ verified customer reviews
+            </p>
           </div>
         </div>
       </section>
