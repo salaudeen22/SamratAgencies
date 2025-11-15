@@ -44,10 +44,10 @@ const HeroSection = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="text-center md:text-left">
               <span className="inline-block px-4 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm font-bold rounded-full mb-3 sm:mb-4 shadow-md" style={{ backgroundColor: '#895F42', color: '#FFFFFF' }}>Your Home Deserves This</span>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight" style={{ color: '#FFFFFF' }}>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight text-black md:text-white">
                 Furniture Made for <span className="font-black" style={{ color: '#C97B63' }}>Real Life</span>
               </h1>
-              <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 leading-relaxed font-medium" style={{ color: '#FFFFFF', opacity: 0.9 }}>
+              <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 leading-relaxed font-medium text-black md:text-white opacity-90">
                 Beautiful pieces designed for the way you live. Thoughtfully crafted, honestly priced, and built to be part of your everyday moments.
               </p>
               <Link to="/products">
@@ -81,11 +81,11 @@ const HeroSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="text-center md:text-left">
             <span className="inline-block px-4 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm font-bold rounded-full mb-3 sm:mb-4 shadow-md" style={{ backgroundColor: '#895F42', color: '#FFFFFF' }}>Your Home Deserves This</span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight" style={{ color: '#FFFFFF' }}>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight text-black md:text-white">
               {currentBanner.title}
             </h1>
             {currentBanner.description && (
-              <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 leading-relaxed font-medium" style={{ color: '#FFFFFF', opacity: 0.9 }}>
+              <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 leading-relaxed font-medium text-black md:text-white opacity-90">
                 {currentBanner.description}
               </p>
             )}
