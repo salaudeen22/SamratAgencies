@@ -18,8 +18,7 @@ connectDB();
 
 const app = express();
 
-// Security Middleware
-// Set security headers
+
 app.use(helmet({
   contentSecurityPolicy: false, // Disable CSP for now to avoid breaking things
   crossOriginEmbedderPolicy: false

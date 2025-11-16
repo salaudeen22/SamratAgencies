@@ -52,7 +52,7 @@ const CompareBar = () => {
               ))}
             </div>
 
-            {/* Right: Action Buttons */}
+      
             <div className="flex items-center gap-2 sm:gap-3">
               <button
                 onClick={clearCompare}
