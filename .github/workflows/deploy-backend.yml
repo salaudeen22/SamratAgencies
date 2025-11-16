@@ -36,13 +36,13 @@ jobs:
           cd ~/SamratAgencies
           git pull origin main
           docker pull salaudeen22/samrat-backend:latest
-          docker-compose up -d backend
-          docker-compose ps
+          /usr/local/bin/docker-compose up -d backend
+          /usr/local/bin/docker-compose ps
 
       - name: Check backend health
         run: |
           sleep 10
-          docker-compose logs backend --tail=50
+          /usr/local/bin/docker-compose logs backend --tail=50
 
       - name: Clean up old images
         run: docker image prune -af
