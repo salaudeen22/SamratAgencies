@@ -53,6 +53,9 @@ jobs:
       - name: Pull latest image
         run: docker pull salaudeen22/samrat-frontend:latest
 
+      - name: Create Docker network if not exists
+        run: docker network create samrat-network || true
+
       - name: Run new container
         run: |
           docker run -d \
