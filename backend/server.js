@@ -36,7 +36,13 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // CORS
 app.use(cors({
-  origin: [process.env.FRONTEND_URL, 'https://samratagencies.netlify.app'],
+  origin: [
+    process.env.FRONTEND_URL,
+    'https://samratagencies.in',
+    'https://www.samratagencies.in',
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ],
   credentials: true
 }));
 
