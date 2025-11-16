@@ -164,7 +164,7 @@ const Login = () => {
 
               <div className="mt-6">
                 <a
-                  href={`${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}/auth/google`}
+                  href={`${import.meta.env.VITE_API_URL}/auth/google`}
                   className="w-full inline-flex justify-center items-center px-6 py-3 border-2 rounded-xl text-base font-semibold hover:shadow-md transition-all duration-300"
                   style={{ borderColor: '#E0EAF0', color: '#1F2D38', backgroundColor: '#ffffff' }}
                 >
