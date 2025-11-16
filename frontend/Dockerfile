@@ -11,7 +11,8 @@ RUN npm ci --legacy-peer-deps
 # Copy application code
 COPY . .
 
-# Build application
+# Build application with optimizations
+ENV NODE_OPTIONS="--max-old-space-size=512"
 RUN npm run build
 
 # Production stage with nginx

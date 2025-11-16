@@ -77,5 +77,7 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 500, // Warn if chunk exceeds 500KB
     sourcemap: false, // Disable sourcemaps in production to reduce bundle size
+    minify: 'esbuild', // Faster minification
+    target: 'es2015', // Reduce transform overhead
   },
 })
