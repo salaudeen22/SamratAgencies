@@ -18,9 +18,9 @@ connectDB();
 
 const app = express();
 
-// CORS - Must be first! (Disabled for testing)
+// CORS - Must be first! (Allow all for testing)
 app.use(cors({
-  origin: '*',
+  origin: true,
   credentials: true
 }));
 
