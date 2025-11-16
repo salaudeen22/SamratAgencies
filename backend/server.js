@@ -21,11 +21,8 @@ const app = express();
 // CORS - Must be first!
 app.use(cors({
   origin: [
-    process.env.FRONTEND_URL,
-    'https://samratagencies.in',
-    'https://www.samratagencies.in',
-    'http://localhost:5173',
-    'http://localhost:3000'
+      'https://samratagencies.in',
+    'https://www.samratagencies.in','https://samratagencies.in/'
   ],
   credentials: true
 }));
