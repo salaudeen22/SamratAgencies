@@ -20,7 +20,7 @@ const app = express();
 
 
 app.use(helmet({
-  contentSecurityPolicy: false, // Disable CSP for now to avoid breaking things
+  contentSecurityPolicy: false, 
   crossOriginEmbedderPolicy: false
 }));
 
