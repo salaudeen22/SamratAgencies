@@ -13,7 +13,7 @@ const passport = require('./src/config/passport');
 const connectDB = require('./src/config/db');
 const { apiLimiter, authLimiter, passwordResetLimiter, uploadLimiter, paymentLimiter, newsletterLimiter, contactLimiter } = require('./src/middleware/rateLimiter');
 
-// Connect to database
+
 connectDB();
 
 const app = express();

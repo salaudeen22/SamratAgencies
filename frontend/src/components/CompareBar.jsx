@@ -38,7 +38,7 @@ const CompareBar = () => {
                       </div>
                     )}
                   </div>
-                  {/* Remove Button */}
+              
                   <button
                     onClick={() => removeFromCompare(product._id)}
                     className="absolute -top-2 -right-2 p-1 rounded-full bg-red-500 text-white shadow-lg hover:bg-red-600 transition-all opacity-0 group-hover:opacity-100"
