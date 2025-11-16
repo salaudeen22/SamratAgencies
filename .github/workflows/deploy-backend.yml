@@ -23,7 +23,7 @@ jobs:
       - name: Build backend image
         run: |
           cd backend
-          docker build -t salaudeen22/samrat-backend:latest .
+          docker build --no-cache -t salaudeen22/samrat-backend:latest .
           docker tag salaudeen22/samrat-backend:latest salaudeen22/samrat-backend:${{ github.sha }}
 
       - name: Push backend image
