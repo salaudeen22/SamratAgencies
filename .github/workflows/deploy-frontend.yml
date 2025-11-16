@@ -61,7 +61,7 @@ jobs:
           docker run -d \
             --name samrat-frontend \
             --restart unless-stopped \
-            -p 80:80 \
+            -p 8080:80 \
             --network samrat-network \
             salaudeen22/samrat-frontend:latest
 
