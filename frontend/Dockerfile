@@ -11,6 +11,12 @@ RUN npm ci --legacy-peer-deps
 # Copy application code
 COPY . .
 
+# Set production environment variables for build
+ARG VITE_API_URL
+ARG VITE_GOOGLE_CLIENT_ID
+ENV VITE_API_URL=$VITE_API_URL
+ENV VITE_GOOGLE_CLIENT_ID=$VITE_GOOGLE_CLIENT_ID
+
 # Build application with optimizations
 ENV NODE_OPTIONS="--max-old-space-size=512"
 RUN npm run build

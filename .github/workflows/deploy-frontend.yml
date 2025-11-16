@@ -23,7 +23,10 @@ jobs:
       - name: Build frontend image
         run: |
           cd frontend
-          docker build -t salaudeen22/samrat-frontend:latest .
+          docker build \
+            --build-arg VITE_API_URL=${{ secrets.VITE_API_URL }} \
+            --build-arg VITE_GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }} \
+            -t salaudeen22/samrat-frontend:latest .
           docker tag salaudeen22/samrat-frontend:latest salaudeen22/samrat-frontend:${{ github.sha }}
 
       - name: Push frontend image
