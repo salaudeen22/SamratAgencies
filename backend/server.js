@@ -47,7 +47,7 @@ app.use(cors({
 }));
 
 // Apply general rate limiting to all API routes
-app.use('/api/', apiLimiter);
+// app.use('/api/', apiLimiter);
 
 // Session configuration
 app.use(session({
