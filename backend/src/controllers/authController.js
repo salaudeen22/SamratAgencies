@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const logger = require('../config/logger');
 const { sendEmail } = require('../config/email');
 const { passwordResetEmail } = require('../utils/emailTemplates');
 
@@ -30,6 +31,7 @@ exports.register = async (req, res) => {
     });
 
     if (user) {
+      logger.info(`User registered successfully: ${user.email}`);
       res.status(201).json({
         _id: user._id,
         name: user.name,
@@ -39,6 +41,7 @@ exports.register = async (req, res) => {
       });
     }
   } catch (error) {
+    logger.error(`Registration failed: ${error.message}`, { error: error.stack });
     res.status(500).json({ message: error.message });
   }
 };
@@ -52,6 +55,7 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await user.comparePassword(password))) {
+      logger.info(`User logged in successfully: ${user.email}`);
       res.json({
         _id: user._id,
         name: user.name,
@@ -60,9 +64,11 @@ exports.login = async (req, res) => {
         token: generateToken(user._id)
       });
     } else {
+      logger.warn(`Failed login attempt for email: ${email}`);
       res.status(401).json({ message: 'Invalid email or password' });
     }
   } catch (error) {
+    logger.error(`Login error: ${error.message}`, { error: error.stack });
     res.status(500).json({ message: error.message });
   }
 };

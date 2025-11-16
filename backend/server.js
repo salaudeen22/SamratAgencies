@@ -11,9 +11,11 @@ const mongoSanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
 const passport = require('./src/config/passport');
 const connectDB = require('./src/config/db');
+const logger = require('./src/config/logger');
+const requestLogger = require('./src/middleware/requestLogger');
 const { apiLimiter, authLimiter, passwordResetLimiter, uploadLimiter, paymentLimiter, newsletterLimiter, contactLimiter } = require('./src/middleware/rateLimiter');
 
-
+// Connect to database
 connectDB();
 
 const app = express();
@@ -45,6 +47,9 @@ app.use(mongoSanitize());
 
 // Prevent HTTP Parameter Pollution
 app.use(hpp());
+
+// HTTP request logging
+app.use(requestLogger);
 
 // Body parser middleware
 app.use(express.json({ limit: '10mb' }));
@@ -123,8 +128,21 @@ app.get('/', (req, res) => {
   res.json({ message: 'Furniture Ecommerce API' });
 });
 
+// Global error handler
+app.use((err, req, res, next) => {
+  logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`, {
+    error: err.stack
+  });
+
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error',
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+  });
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.info(`Server running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
 });
