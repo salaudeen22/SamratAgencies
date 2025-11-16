@@ -1,0 +1,48 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/deploy-frontend.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy-frontend:
+    name: Build and Deploy Frontend
+    runs-on: [self-hosted, frontend]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u salaudeen22 --password-stdin
+
+      - name: Build frontend image
+        run: |
+          cd frontend
+          docker build -t salaudeen22/samrat-frontend:latest .
+          docker tag salaudeen22/samrat-frontend:latest salaudeen22/samrat-frontend:${{ github.sha }}
+
+      - name: Push frontend image
+        run: |
+          docker push salaudeen22/samrat-frontend:latest
+          docker push salaudeen22/samrat-frontend:${{ github.sha }}
+
+      - name: Deploy frontend container
+        run: |
+          cd ~/SamratAgencies
+          git pull origin main
+          docker pull salaudeen22/samrat-frontend:latest
+          docker-compose up -d frontend
+          docker-compose ps
+
+      - name: Check frontend health
+        run: |
+          sleep 5
+          docker-compose logs frontend --tail=50
+
+      - name: Clean up old images
+        run: docker image prune -af

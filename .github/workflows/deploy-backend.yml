@@ -1,0 +1,48 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy-backend:
+    name: Build and Deploy Backend
+    runs-on: [self-hosted, backend]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u salaudeen22 --password-stdin
+
+      - name: Build backend image
+        run: |
+          cd backend
+          docker build -t salaudeen22/samrat-backend:latest .
+          docker tag salaudeen22/samrat-backend:latest salaudeen22/samrat-backend:${{ github.sha }}
+
+      - name: Push backend image
+        run: |
+          docker push salaudeen22/samrat-backend:latest
+          docker push salaudeen22/samrat-backend:${{ github.sha }}
+
+      - name: Deploy backend container
+        run: |
+          cd ~/SamratAgencies
+          git pull origin main
+          docker pull salaudeen22/samrat-backend:latest
+          docker-compose up -d backend
+          docker-compose ps
+
+      - name: Check backend health
+        run: |
+          sleep 10
+          docker-compose logs backend --tail=50
+
+      - name: Clean up old images
+        run: docker image prune -af
