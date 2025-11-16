@@ -9,9 +9,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy-frontend:
-    name: Build and Deploy Frontend
-    runs-on: [self-hosted, frontend]
+  build-frontend:
+    name: Build Frontend Image
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -31,18 +31,48 @@ jobs:
           docker push salaudeen22/samrat-frontend:latest
           docker push salaudeen22/samrat-frontend:${{ github.sha }}
 
-      - name: Deploy frontend container
-        run: |
-          cd ~/SamratAgencies
-          git pull origin main
-          docker pull salaudeen22/samrat-frontend:latest
-          /usr/local/bin/docker-compose up -d frontend
-          /usr/local/bin/docker-compose ps
+  deploy-frontend:
+    name: Deploy Frontend to EC2
+    needs: build-frontend
+    runs-on: [self-hosted, frontend]
 
-      - name: Check frontend health
+    steps:
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u salaudeen22 --password-stdin
+
+      - name: Stop and remove old container
         run: |
-          sleep 5
-          /usr/local/bin/docker-compose logs frontend --tail=50
+          docker stop samrat-frontend || true
+          docker rm samrat-frontend || true
+
+      - name: Free up disk space
+        run: |
+          docker system prune -af
+          docker image prune -af
+
+      - name: Pull latest image
+        run: docker pull salaudeen22/samrat-frontend:latest
+
+      - name: Run new container
+        run: |
+          docker run -d \
+            --name samrat-frontend \
+            --restart unless-stopped \
+            -p 80:80 \
+            --network samrat-network \
+            salaudeen22/samrat-frontend:latest
+
+      - name: Verify deployment
+        run: |
+          sleep 10
+          if docker ps | grep -q samrat-frontend; then
+            echo "Frontend deployment successful!"
+            docker logs samrat-frontend --tail 20
+          else
+            echo "Frontend deployment failed!"
+            docker logs samrat-frontend --tail 50 || true
+            exit 1
+          fi
 
       - name: Clean up old images
         run: docker image prune -af

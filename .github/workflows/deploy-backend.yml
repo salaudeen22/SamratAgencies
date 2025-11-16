@@ -9,9 +9,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy-backend:
-    name: Build and Deploy Backend
-    runs-on: [self-hosted, backend]
+  build-backend:
+    name: Build Backend Image
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -31,18 +31,52 @@ jobs:
           docker push salaudeen22/samrat-backend:latest
           docker push salaudeen22/samrat-backend:${{ github.sha }}
 
-      - name: Deploy backend container
-        run: |
-          cd ~/SamratAgencies
-          git pull origin main
-          docker pull salaudeen22/samrat-backend:latest
-          /usr/local/bin/docker-compose up -d backend
-          /usr/local/bin/docker-compose ps
+  deploy-backend:
+    name: Deploy Backend to EC2
+    needs: build-backend
+    runs-on: [self-hosted, backend]
 
-      - name: Check backend health
+    steps:
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u salaudeen22 --password-stdin
+
+      - name: Stop and remove old container
+        run: |
+          docker stop samrat-backend || true
+          docker rm samrat-backend || true
+
+      - name: Free up disk space
+        run: |
+          docker system prune -af
+          docker image prune -af
+
+      - name: Pull latest image
+        run: docker pull salaudeen22/samrat-backend:latest
+
+      - name: Create Docker network if not exists
+        run: docker network create samrat-network || true
+
+      - name: Run new container
+        run: |
+          docker run -d \
+            --name samrat-backend \
+            --restart unless-stopped \
+            --env-file ~/SamratAgencies/backend/.env \
+            -p 5000:5000 \
+            --network samrat-network \
+            salaudeen22/samrat-backend:latest
+
+      - name: Verify deployment
         run: |
           sleep 10
-          /usr/local/bin/docker-compose logs backend --tail=50
+          if docker ps | grep -q samrat-backend; then
+            echo "Backend deployment successful!"
+            docker logs samrat-backend --tail 20
+          else
+            echo "Backend deployment failed!"
+            docker logs samrat-backend --tail 50 || true
+            exit 1
+          fi
 
       - name: Clean up old images
         run: docker image prune -af
