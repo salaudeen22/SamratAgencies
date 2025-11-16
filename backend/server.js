@@ -18,9 +18,15 @@ connectDB();
 
 const app = express();
 
-// CORS - Must be first! (Allow all for testing)
+// CORS - Must be first!
 app.use(cors({
-  origin: true,
+  origin: [
+    'https://samratagencies.in',
+    'https://www.samratagencies.in',
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'http://localhost:8000'
+  ],
   credentials: true
 }));
 
