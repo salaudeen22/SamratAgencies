@@ -77,7 +77,7 @@ articleSchema.pre('save', function(next) {
   next();
 });
 
-// Auto-calculate read time based on content length
+// Auto-calculate read time based on content
 articleSchema.pre('save', function(next) {
   if (this.isModified('content')) {
     const wordsPerMinute = 200;
