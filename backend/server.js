@@ -18,9 +18,20 @@ connectDB();
 
 const app = express();
 
+// CORS - Must be first!
+app.use(cors({
+  origin: [
+    process.env.FRONTEND_URL,
+    'https://samratagencies.in',
+    'https://www.samratagencies.in',
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ],
+  credentials: true
+}));
 
 app.use(helmet({
-  contentSecurityPolicy: false, 
+  contentSecurityPolicy: false,
   crossOriginEmbedderPolicy: false
 }));
 
@@ -33,18 +44,6 @@ app.use(hpp());
 // Body parser middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// CORS
-app.use(cors({
-  origin: [
-    process.env.FRONTEND_URL,
-    'https://samratagencies.in',
-    'https://www.samratagencies.in',
-    'http://localhost:5173',
-    'http://localhost:3000'
-  ],
-  credentials: true
-}));
 
 // Apply general rate limiting to all API routes
 // app.use('/api/', apiLimiter);
