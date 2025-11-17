@@ -37,31 +37,19 @@ export const AuthProvider = ({ children }) => {
     return timeSinceLastActivity > SESSION_TIMEOUT;
   }, []);
 
-  useEffect(() => {
-    checkAuth();
+  // Logout function (defined early to avoid dependency issues)
+  const logout = useCallback((isSessionTimeout = false) => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('lastActivity');
+    setUser(null);
 
-    // Set up activity listeners
-    const activityEvents = ['mousedown', 'keydown', 'scroll', 'touchstart', 'click'];
-    activityEvents.forEach(event => {
-      window.addEventListener(event, updateLastActivity);
-    });
+    if (isSessionTimeout) {
+      toast.error('Your session has expired. Please login again.');
+    }
+  }, []);
 
-    // Check session periodically
-    const sessionCheckInterval = setInterval(() => {
-      if (isSessionExpired() && user) {
-        logout(true); // true indicates session timeout
-      }
-    }, SESSION_CHECK_INTERVAL);
-
-    return () => {
-      activityEvents.forEach(event => {
-        window.removeEventListener(event, updateLastActivity);
-      });
-      clearInterval(sessionCheckInterval);
-    };
-  }, [user, updateLastActivity, isSessionExpired]);
-
-  const checkAuth = async () => {
+  // Memoize checkAuth to prevent unnecessary calls
+  const checkAuth = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       if (token) {
@@ -84,7 +72,33 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [isSessionExpired, updateLastActivity, logout]);
+
+  useEffect(() => {
+    // Only check auth once on mount
+    checkAuth();
+
+    // Set up activity listeners
+    const activityEvents = ['mousedown', 'keydown', 'scroll', 'touchstart', 'click'];
+    activityEvents.forEach(event => {
+      window.addEventListener(event, updateLastActivity);
+    });
+
+    // Check session periodically
+    const sessionCheckInterval = setInterval(() => {
+      if (isSessionExpired() && user) {
+        logout(true); // true indicates session timeout
+      }
+    }, SESSION_CHECK_INTERVAL);
+
+    return () => {
+      activityEvents.forEach(event => {
+        window.removeEventListener(event, updateLastActivity);
+      });
+      clearInterval(sessionCheckInterval);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount
 
   const login = async (email, password) => {
     try {
@@ -115,16 +129,6 @@ export const AuthProvider = ({ children }) => {
       const message = err.response?.data?.message || 'Registration failed';
       setError(message);
       return { success: false, error: message };
-    }
-  };
-
-  const logout = (isSessionTimeout = false) => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('lastActivity');
-    setUser(null);
-
-    if (isSessionTimeout) {
-      toast.error('Your session has expired. Please login again.');
     }
   };
 

@@ -10,6 +10,15 @@ const api = axios.create({
   },
 });
 
+// Request deduplication cache
+const pendingRequests = new Map();
+
+// Generate unique key for request
+const generateRequestKey = (config) => {
+  const { method, url, params, data } = config;
+  return `${method}-${url}-${JSON.stringify(params)}-${JSON.stringify(data)}`;
+};
+
 // Add token to requests if available
 api.interceptors.request.use(
   (config) => {
@@ -17,6 +26,21 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // Request deduplication - prevent duplicate simultaneous requests
+    const requestKey = generateRequestKey(config);
+
+    // If same request is already pending, return the pending promise
+    if (pendingRequests.has(requestKey)) {
+      const controller = new AbortController();
+      config.signal = controller.signal;
+      controller.abort('Duplicate request');
+      return config;
+    }
+
+    // Store this request as pending
+    pendingRequests.set(requestKey, true);
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -24,8 +48,24 @@ api.interceptors.request.use(
 
 // Handle response errors, especially 401 (unauthorized/expired token)
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Clear this request from pending cache
+    const requestKey = generateRequestKey(response.config);
+    pendingRequests.delete(requestKey);
+    return response;
+  },
   (error) => {
+    // Clear this request from pending cache
+    if (error.config) {
+      const requestKey = generateRequestKey(error.config);
+      pendingRequests.delete(requestKey);
+    }
+
+    // Ignore aborted duplicate requests
+    if (error.message === 'Duplicate request') {
+      return Promise.reject(error);
+    }
+
     if (error.response?.status === 401) {
       // Token is invalid or expired
       const token = localStorage.getItem('token');
@@ -34,11 +74,15 @@ api.interceptors.response.use(
         localStorage.removeItem('token');
         localStorage.removeItem('lastActivity');
 
-        // Show error message
-        toast.error('Your session has expired. Please login again.');
+        // Show error message only once
+        if (!sessionStorage.getItem('sessionExpiredShown')) {
+          toast.error('Your session has expired. Please login again.');
+          sessionStorage.setItem('sessionExpiredShown', 'true');
+        }
 
         // Redirect to login page after a short delay
         setTimeout(() => {
+          sessionStorage.removeItem('sessionExpiredShown');
           window.location.href = '/login';
         }, 1500);
       }
