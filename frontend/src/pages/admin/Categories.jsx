@@ -310,9 +310,9 @@ const Categories = () => {
           <button
             onClick={() => setShowModal(true)}
             className="w-full sm:w-auto px-4 lg:px-5 py-2 lg:py-2.5 text-white rounded-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm lg:text-base font-medium"
-            style={{ backgroundColor: '#895F42' }}
+            style={{ backgroundColor: '#816047' }}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#6d4a33'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#816047'}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -342,7 +342,7 @@ const Categories = () => {
             className="w-full pl-10 lg:pl-12 pr-10 lg:pr-12 py-2.5 lg:py-3 border rounded-lg transition-all text-sm lg:text-base"
             style={{ borderColor: '#e2e8f0', color: '#1e293b' }}
             onFocus={(e) => {
-              e.currentTarget.style.borderColor = '#895F42';
+              e.currentTarget.style.borderColor = '#816047';
               e.currentTarget.style.outline = 'none';
               e.currentTarget.style.boxShadow = '0 0 0 3px rgba(137, 95, 66, 0.1)';
             }}
@@ -470,7 +470,7 @@ const Categories = () => {
       {loading ? (
         <div className="flex items-center justify-center py-12">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#895F42' }}></div>
+            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#816047' }}></div>
             <p className="text-lg font-medium" style={{ color: '#64748b' }}>Loading categories...</p>
           </div>
         </div>
@@ -499,9 +499,9 @@ const Categories = () => {
                     <button
                       onClick={() => setSearchTerm('')}
                       className="px-4 py-2 text-white rounded-lg transition-colors font-medium"
-                      style={{ backgroundColor: '#895F42' }}
+                      style={{ backgroundColor: '#816047' }}
                       onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#6d4a33'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#816047'}
                     >
                       Clear Search
                     </button>
@@ -553,7 +553,7 @@ const Categories = () => {
                                 className="px-3 py-1.5 rounded-lg border transition-colors min-w-10 font-medium"
                                 style={
                                   currentPage === page
-                                    ? { backgroundColor: '#895F42', color: 'white', borderColor: '#895F42' }
+                                    ? { backgroundColor: '#816047', color: 'white', borderColor: '#816047' }
                                     : { backgroundColor: 'white', color: '#64748b', borderColor: '#e2e8f0' }
                                 }
                                 onMouseEnter={(e) => {

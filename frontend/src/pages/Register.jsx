@@ -60,7 +60,7 @@ const Register = () => {
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-md w-full">
           {/* Form Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 border" style={{ borderColor: '#BDD7EB' }}>
+          <div className="bg-white rounded-2xl shadow-xl p-8 border" style={{ borderColor: '#D7B790' }}>
             {/* Logo/Brand inside card */}
             <div className="text-center mb-8">
               <div className="flex items-center justify-center mb-4">
@@ -70,24 +70,24 @@ const Register = () => {
                   className="h-16 w-auto"
                 />
               </div>
-              <h3 className="text-2xl font-bold mb-2" style={{ color: '#1F2D38' }}>Create Your Account</h3>
-              <p style={{ color: '#94A1AB' }}>Join us and discover premium furniture</p>
+              <h3 className="text-2xl font-bold mb-2" style={{ color: '#2F1A0F' }}>Create Your Account</h3>
+              <p style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Join us and discover premium furniture</p>
             </div>
 
             {error && (
-              <div className="bg-red-50 border-l-4 text-red-700 px-4 py-3 rounded mb-6" style={{ borderColor: '#895F42' }}>
+              <div className="bg-red-50 border-l-4 text-red-700 px-4 py-3 rounded mb-6" style={{ borderColor: '#816047' }}>
                 <p className="text-sm">{error}</p>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                   Full Name
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <MdPerson className="h-5 w-5" style={{ color: '#94A1AB' }} />
+                    <MdPerson className="h-5 w-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} />
                   </div>
                   <input
                     type="text"
@@ -97,19 +97,19 @@ const Register = () => {
                     required
                     autoComplete="name"
                     className="w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all"
-                    style={{ borderColor: '#E0EAF0' }}
+                    style={{ borderColor: '#E6CDB1' }}
                     placeholder="John Doe"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                   Email Address
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <MdEmail className="h-5 w-5" style={{ color: '#94A1AB' }} />
+                    <MdEmail className="h-5 w-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} />
                   </div>
                   <input
                     type="email"
@@ -119,19 +119,19 @@ const Register = () => {
                     required
                     autoComplete="email"
                     className="w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all"
-                    style={{ borderColor: '#E0EAF0' }}
+                    style={{ borderColor: '#E6CDB1' }}
                     placeholder="your@email.com"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                   Password
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <MdLock className="h-5 w-5" style={{ color: '#94A1AB' }} />
+                    <MdLock className="h-5 w-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} />
                   </div>
                   <input
                     type="password"
@@ -141,19 +141,19 @@ const Register = () => {
                     required
                     autoComplete="new-password"
                     className="w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all"
-                    style={{ borderColor: '#E0EAF0' }}
+                    style={{ borderColor: '#E6CDB1' }}
                     placeholder="••••••••"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                   Confirm Password
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <MdLock className="h-5 w-5" style={{ color: '#94A1AB' }} />
+                    <MdLock className="h-5 w-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} />
                   </div>
                   <input
                     type="password"
@@ -163,7 +163,7 @@ const Register = () => {
                     required
                     autoComplete="new-password"
                     className="w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all"
-                    style={{ borderColor: '#E0EAF0' }}
+                    style={{ borderColor: '#E6CDB1' }}
                     placeholder="••••••••"
                   />
                 </div>
@@ -177,10 +177,10 @@ const Register = () => {
             <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t" style={{ borderColor: '#E0EAF0' }}></div>
+                  <div className="w-full border-t" style={{ borderColor: '#E6CDB1' }}></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white font-medium" style={{ color: '#94A1AB' }}>Or continue with</span>
+                  <span className="px-4 bg-white font-medium" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Or continue with</span>
                 </div>
               </div>
 
@@ -188,7 +188,7 @@ const Register = () => {
                 <a
                   href={`${import.meta.env.VITE_API_URL}/auth/google`}
                   className="w-full inline-flex justify-center items-center px-6 py-3 border-2 rounded-xl text-base font-semibold hover:shadow-md transition-all duration-300"
-                  style={{ borderColor: '#E0EAF0', color: '#1F2D38', backgroundColor: '#ffffff' }}
+                  style={{ borderColor: '#E6CDB1', color: '#2F1A0F', backgroundColor: '#ffffff' }}
                 >
                   <FcGoogle className="w-6 h-6 mr-3" />
                   Continue with Google
@@ -197,12 +197,12 @@ const Register = () => {
             </div>
 
             <div className="mt-8 text-center">
-              <p className="text-sm" style={{ color: '#94A1AB' }}>
+              <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                 Already have an account?{' '}
                 <Link
                   to="/login"
                   className="font-bold transition-colors duration-200 hover:underline"
-                  style={{ color: '#895F42' }}
+                  style={{ color: '#816047' }}
                 >
                   Sign In
                 </Link>

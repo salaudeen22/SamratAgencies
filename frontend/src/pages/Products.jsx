@@ -161,21 +161,21 @@ const Products = () => {
       />
       <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 md:mb-8" style={{ color: '#1F2D38' }}>Our Products</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 md:mb-8" style={{ color: '#2F1A0F' }}>Our Products</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {/* Filters Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-20" style={{ border: '2px solid #BDD7EB' }}>
+            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-20" style={{ border: '2px solid #D7B790' }}>
               <div className="flex items-center justify-between mb-3 sm:mb-4">
-                <h2 className="text-lg sm:text-xl font-semibold" style={{ color: '#1F2D38' }}>Filters</h2>
+                <h2 className="text-lg sm:text-xl font-semibold" style={{ color: '#2F1A0F' }}>Filters</h2>
                 {(filters.category || filters.search || filters.minPrice || filters.maxPrice || filters.sortBy || filters.availabilityType) && (
                   <button
                     onClick={clearFilters}
                     className="text-xs font-medium transition"
-                    style={{ color: '#895F42' }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = '#9F8065'}
-                    onMouseLeave={(e) => e.currentTarget.style.color = '#895F42'}
+                    style={{ color: '#816047' }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#D7B790'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = '#816047'}
                   >
                     Clear All
                   </button>
@@ -184,7 +184,7 @@ const Products = () => {
 
               {/* Search */}
               <div className="mb-4 sm:mb-6">
-                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#2F1A0F' }}>
                   <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
@@ -197,14 +197,14 @@ const Products = () => {
                   onChange={handleFilterChange}
                   placeholder="Search products..."
                   className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2"
-                  style={{ border: '1px solid #BDD7EB', focusRingColor: '#895F42' }}
+                  style={{ border: '1px solid #D7B790', focusRingColor: '#816047' }}
                 />
               </div>
 
               {/* Category Dropdowns */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-                  <label className="block text-xs sm:text-sm font-medium" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium" style={{ color: '#2F1A0F' }}>
                     <svg className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                     </svg>
@@ -219,7 +219,7 @@ const Products = () => {
                         setFilters(prev => ({ ...prev, category: '' }));
                       }}
                       className="text-xs font-medium transition"
-                      style={{ color: '#895F42' }}
+                      style={{ color: '#816047' }}
                     >
                       Clear
                     </button>
@@ -232,7 +232,7 @@ const Products = () => {
                     value={selectedLevel1}
                     onChange={(e) => handleLevel1Change(e.target.value)}
                     className="w-full px-3 py-1.5 sm:py-2 rounded-md focus:outline-none focus:ring-2 text-xs sm:text-sm"
-                    style={{ border: '1px solid #BDD7EB', color: '#1F2D38' }}
+                    style={{ border: '1px solid #D7B790', color: '#2F1A0F' }}
                   >
                     <option value="">All Categories</option>
                     {categories.map((category) => (
@@ -248,7 +248,7 @@ const Products = () => {
                       value={selectedLevel2}
                       onChange={(e) => handleLevel2Change(e.target.value)}
                       className="w-full px-3 py-1.5 sm:py-2 rounded-md focus:outline-none focus:ring-2 text-xs sm:text-sm"
-                      style={{ border: '1px solid #BDD7EB', color: '#1F2D38' }}
+                      style={{ border: '1px solid #D7B790', color: '#2F1A0F' }}
                     >
                       <option value="">All in {categories.find(c => c._id === selectedLevel1)?.name}</option>
                       {getLevel2Categories().map((category) => (
@@ -265,7 +265,7 @@ const Products = () => {
                       value={selectedLevel3}
                       onChange={(e) => handleLevel3Change(e.target.value)}
                       className="w-full px-3 py-1.5 sm:py-2 rounded-md focus:outline-none focus:ring-2 text-xs sm:text-sm"
-                      style={{ border: '1px solid #BDD7EB', color: '#1F2D38' }}
+                      style={{ border: '1px solid #D7B790', color: '#2F1A0F' }}
                     >
                       <option value="">All in {getLevel2Categories().find(c => c._id === selectedLevel2)?.name}</option>
                       {getLevel3Categories().map((category) => (
@@ -280,7 +280,7 @@ const Products = () => {
 
               {/* Sort By */}
               <div className="mb-4 sm:mb-6">
-                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#2F1A0F' }}>
                   <svg className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
                   </svg>
@@ -291,7 +291,7 @@ const Products = () => {
                   value={filters.sortBy}
                   onChange={handleFilterChange}
                   className="w-full px-3 py-1.5 sm:py-2 rounded-md focus:outline-none focus:ring-2 text-xs sm:text-sm"
-                  style={{ border: '1px solid #BDD7EB', color: '#1F2D38' }}
+                  style={{ border: '1px solid #D7B790', color: '#2F1A0F' }}
                 >
                   <option value="">Default</option>
                   <option value="price_asc">Price: Low to High</option>
@@ -304,7 +304,7 @@ const Products = () => {
 
               {/* Price Range */}
               <div className="mb-4 sm:mb-6">
-                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#2F1A0F' }}>
                   <svg className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -318,7 +318,7 @@ const Products = () => {
                     onChange={handleFilterChange}
                     placeholder="Min"
                     className="px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm rounded-md focus:outline-none focus:ring-2"
-                    style={{ border: '1px solid #BDD7EB' }}
+                    style={{ border: '1px solid #D7B790' }}
                   />
                   <input
                     type="number"
@@ -327,14 +327,14 @@ const Products = () => {
                     onChange={handleFilterChange}
                     placeholder="Max"
                     className="px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm rounded-md focus:outline-none focus:ring-2"
-                    style={{ border: '1px solid #BDD7EB' }}
+                    style={{ border: '1px solid #D7B790' }}
                   />
                 </div>
               </div>
 
               {/* Availability Type */}
               <div className="mb-4 sm:mb-6">
-                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#2F1A0F' }}>
                   <svg className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -345,7 +345,7 @@ const Products = () => {
                   value={filters.availabilityType}
                   onChange={handleFilterChange}
                   className="w-full px-3 py-1.5 sm:py-2 rounded-md focus:outline-none focus:ring-2 text-xs sm:text-sm"
-                  style={{ border: '1px solid #BDD7EB', color: '#1F2D38' }}
+                  style={{ border: '1px solid #D7B790', color: '#2F1A0F' }}
                 >
                   <option value="">All Products</option>
                   <option value="immediate">Immediate Delivery</option>
@@ -356,9 +356,9 @@ const Products = () => {
               <button
                 onClick={clearFilters}
                 className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base rounded-md transition font-medium shadow-sm"
-                style={{ backgroundColor: '#895F42', color: 'white' }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#9F8065'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
+                style={{ backgroundColor: '#816047', color: 'white' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#D7B790'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#816047'}
               >
                 Reset All Filters
               </button>
@@ -370,7 +370,7 @@ const Products = () => {
             {/* Results Header */}
             <div className="mb-4 sm:mb-6 flex items-center justify-between">
               <div>
-                <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>
+                <p className="text-xs sm:text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   {loading ? 'Loading...' : `${products.length} ${products.length === 1 ? 'product' : 'products'} found`}
                 </p>
                 {(filters.category || filters.search || filters.minPrice || filters.maxPrice || filters.sortBy || filters.availabilityType) && (
@@ -431,8 +431,8 @@ const Products = () => {
 
             {loading ? (
               <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-4 mx-auto" style={{ borderColor: '#895F42' }}></div>
-                <p className="mt-4" style={{ color: '#94A1AB' }}>Loading products...</p>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-4 mx-auto" style={{ borderColor: '#816047' }}></div>
+                <p className="mt-4" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Loading products...</p>
               </div>
             ) : products.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -442,13 +442,13 @@ const Products = () => {
               </div>
             ) : (
               <div className="text-center py-12">
-                <p className="text-lg" style={{ color: '#94A1AB' }}>No products found</p>
+                <p className="text-lg" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>No products found</p>
                 <button
                   onClick={clearFilters}
                   className="mt-4 font-medium transition"
-                  style={{ color: '#895F42' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#9F8065'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#895F42'}
+                  style={{ color: '#816047' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#D7B790'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#816047'}
                 >
                   Clear filters
                 </button>

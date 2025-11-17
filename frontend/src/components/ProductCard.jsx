@@ -67,8 +67,8 @@ const ProductCard = ({ product }) => {
 
   return (
     <Link to={`/products/${product.slug || product._id}`} className="group">
-      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border-2" style={{ borderColor: 'transparent' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#BDD7EB'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}>
-        <div className="relative h-64 overflow-hidden" style={{ backgroundColor: '#E0EAF0' }}>
+      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border-2" style={{ borderColor: 'transparent' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#D7B790'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}>
+        <div className="relative h-64 overflow-hidden" style={{ backgroundColor: '#E6CDB1' }}>
           <ProductBadge product={product} />
           {product.images && product.images.length > 0 && product.images[0].url ? (
             <img
@@ -78,7 +78,7 @@ const ProductCard = ({ product }) => {
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center" style={{ color: '#94A1AB' }}>
+            <div className="w-full h-full flex items-center justify-center" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
               No Image
             </div>
           )}
@@ -88,7 +88,7 @@ const ProductCard = ({ product }) => {
             onClick={handleWishlistToggle}
             className="absolute top-2 left-2 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
             style={{
-              color: isWishlisted ? '#ef4444' : '#94A1AB',
+              color: isWishlisted ? '#ef4444' : 'rgba(129, 96, 71, 0.6)',
             }}
             title={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
           >
@@ -115,8 +115,8 @@ const ProductCard = ({ product }) => {
               onClick={handleCompareToggle}
               className="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all"
               style={{
-                color: isComparing ? '#895F42' : '#94A1AB',
-                backgroundColor: isComparing ? '#FFF8F3' : 'white'
+                color: isComparing ? '#816047' : 'rgba(129, 96, 71, 0.6)',
+                backgroundColor: isComparing ? '#E6CDB1' : 'white'
               }}
               title={isComparing ? 'Remove from compare' : 'Add to compare'}
             >
@@ -140,7 +140,7 @@ const ProductCard = ({ product }) => {
                 setShowQuickLook(true);
               }}
               className="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-all opacity-0 group-hover:opacity-100"
-              style={{ color: '#895F42' }}
+              style={{ color: '#816047' }}
               title="Quick Look"
             >
               <svg
@@ -158,7 +158,7 @@ const ProductCard = ({ product }) => {
           </div>
 
           {product.availabilityType === 'made-to-order' && (
-            <div className="absolute bottom-2 right-2 text-white px-3 py-1 rounded-md text-sm font-semibold shadow-lg" style={{ backgroundColor: '#895F42' }}>
+            <div className="absolute bottom-2 right-2 text-white px-3 py-1 rounded-md text-sm font-semibold shadow-lg" style={{ backgroundColor: '#816047' }}>
               Made to Order
             </div>
           )}
@@ -172,11 +172,11 @@ const ProductCard = ({ product }) => {
         </div>
 
         <div className="p-4">
-          <h3 className="text-lg font-semibold mb-2 line-clamp-2" style={{ color: '#1F2D38' }}>
+          <h3 className="text-lg font-semibold mb-2 line-clamp-2" style={{ color: '#2F1A0F' }}>
             {product.name}
           </h3>
 
-          <p className="text-sm mb-3 line-clamp-2" style={{ color: '#94A1AB' }}>
+          <p className="text-sm mb-3 line-clamp-2" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
             {product.description}
           </p>
 
@@ -215,19 +215,19 @@ const ProductCard = ({ product }) => {
                       <div className="flex flex-col">
                         {minPrice === maxPrice ? (
                           <>
-                            <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
+                            <span className="text-2xl font-bold" style={{ color: '#816047' }}>
                               ₹{Math.round(discountedMin).toLocaleString()}
                             </span>
-                            <span className="text-sm line-through" style={{ color: '#94A1AB' }}>
+                            <span className="text-sm line-through" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                               ₹{minPrice.toLocaleString()}
                             </span>
                           </>
                         ) : (
                           <>
-                            <span className="text-xl font-bold" style={{ color: '#895F42' }}>
+                            <span className="text-xl font-bold" style={{ color: '#816047' }}>
                               ₹{Math.round(discountedMin).toLocaleString()} - ₹{Math.round(discountedMax).toLocaleString()}
                             </span>
-                            <span className="text-xs line-through" style={{ color: '#94A1AB' }}>
+                            <span className="text-xs line-through" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                               ₹{minPrice.toLocaleString()} - ₹{maxPrice.toLocaleString()}
                             </span>
                           </>
@@ -239,11 +239,11 @@ const ProductCard = ({ product }) => {
                   return (
                     <div>
                       {minPrice === maxPrice ? (
-                        <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
+                        <span className="text-2xl font-bold" style={{ color: '#816047' }}>
                           ₹{minPrice.toLocaleString()}
                         </span>
                       ) : (
-                        <span className="text-xl font-bold" style={{ color: '#895F42' }}>
+                        <span className="text-xl font-bold" style={{ color: '#816047' }}>
                           ₹{minPrice.toLocaleString()} - ₹{maxPrice.toLocaleString()}
                         </span>
                       )}
@@ -254,31 +254,31 @@ const ProductCard = ({ product }) => {
                 <>
                   {product.hasActiveDiscount && product.discount > 0 && product.discountedPrice ? (
                     <div className="flex flex-col">
-                      <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
+                      <span className="text-2xl font-bold" style={{ color: '#816047' }}>
                         ₹{Math.round(product.discountedPrice).toLocaleString()}
                       </span>
-                      <span className="text-sm line-through" style={{ color: '#94A1AB' }}>
+                      <span className="text-sm line-through" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                         ₹{product.price?.toLocaleString()}
                       </span>
                     </div>
                   ) : (
-                    <span className="text-2xl font-bold" style={{ color: '#895F42' }}>
+                    <span className="text-2xl font-bold" style={{ color: '#816047' }}>
                       ₹{product.price?.toLocaleString()}
                     </span>
                   )}
                 </>
               )}
               {product.category && (
-                <p className="text-xs mt-1" style={{ color: '#94A1AB' }}>
+                <p className="text-xs mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   {typeof product.category === 'object' ? product.category.name : product.category}
                 </p>
               )}
               {product.availabilityType === 'made-to-order' && product.deliveryDays && (
                 <div className="flex items-center gap-1 mt-1">
-                  <svg className="w-3 h-3" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3 h-3" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <span className="text-xs" style={{ color: '#895F42' }}>
+                  <span className="text-xs" style={{ color: '#816047' }}>
                     {product.deliveryDays} {product.deliveryDays === 1 ? 'day' : 'days'}
                   </span>
                 </div>
@@ -289,11 +289,11 @@ const ProductCard = ({ product }) => {
               onClick={handleAddToCart}
               className="px-4 py-2 rounded-md transition-all"
               style={{
-                backgroundColor: '#895F42',
-                color: '#E5EFF3'
+                backgroundColor: '#816047',
+                color: '#E6CDB1'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#9F8065'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#D7B790'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#816047'}
             >
               {product.variantPricing && product.variantPricing.length > 0
                 ? 'Select Options'

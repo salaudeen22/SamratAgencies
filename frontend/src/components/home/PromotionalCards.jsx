@@ -21,9 +21,9 @@ const PromotionalCards = () => {
   return (
     <>
       {/* Bajaj Finserv Banner - Always Hardcoded */}
-      <section className="py-4" style={{ backgroundColor: '#E0EAF0' }}>
+      <section className="py-4" style={{ backgroundColor: '#E6CDB1' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-xl shadow-lg p-4 border" style={{ borderColor: '#895F42' }}>
+          <div className="bg-white rounded-xl shadow-lg p-4 border" style={{ borderColor: '#816047' }}>
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               {/* Logo */}
               <div className="flex items-center gap-4">
@@ -32,16 +32,16 @@ const PromotionalCards = () => {
                   alt="Bajaj Finserv"
                   className="h-8 object-contain"
                 />
-                <div className="h-8 w-px" style={{ backgroundColor: '#BDD7EB' }}></div>
+                <div className="h-8 w-px" style={{ backgroundColor: '#D7B790' }}></div>
                 <div>
-                  <p className="text-lg md:text-xl font-black" style={{ color: '#895F42' }}>₹0 Down Payment</p>
-                  <p className="text-xs" style={{ color: '#94A1AB' }}>*T&C apply</p>
+                  <p className="text-lg md:text-xl font-black" style={{ color: '#816047' }}>₹0 Down Payment</p>
+                  <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>*T&C apply</p>
                 </div>
               </div>
 
               {/* CTA */}
               <Link to="/products">
-                <button className="px-6 py-2 text-sm font-bold rounded-full shadow-md transition-all duration-300 hover:scale-105 whitespace-nowrap" style={{ backgroundColor: '#895F42', color: '#E5EFF3' }}>
+                <button className="px-6 py-2 text-sm font-bold rounded-full shadow-md transition-all duration-300 hover:scale-105 whitespace-nowrap" style={{ backgroundColor: '#816047', color: '#E6CDB1' }}>
                   Take It Home Today
                 </button>
               </Link>
@@ -76,7 +76,7 @@ const PromotionalCards = () => {
                         </p>
                       )}
                       {banner.buttonText && (
-                        <button className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-bold transition-all duration-300 hover:scale-105 shadow-xl" style={{ backgroundColor: '#895F42', color: '#FFFFFF' }}>
+                        <button className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-bold transition-all duration-300 hover:scale-105 shadow-xl" style={{ backgroundColor: '#816047', color: '#FFFFFF' }}>
                           {banner.buttonText}
                         </button>
                       )}
@@ -108,7 +108,7 @@ const PromotionalCards = () => {
                   Tables That Bring Everyone Together
                 </h2>
                 <Link to="/products?category=table">
-                  <button className="px-6 sm:px-8 py-2 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-xl" style={{ backgroundColor: '#1F2D38', color: '#E5EFF3' }}>
+                  <button className="px-6 sm:px-8 py-2 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-xl" style={{ backgroundColor: '#2F1A0F', color: '#E6CDB1' }}>
                     Shop Tables
                   </button>
                 </Link>
@@ -118,14 +118,14 @@ const PromotionalCards = () => {
             {/* Right Side - Two Stacked Cards */}
             <div className="flex flex-col gap-4 sm:gap-6 lg:gap-8">
               {/* Top Card - Pottery Products */}
-              <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-lg group cursor-pointer h-[200px] sm:h-[250px] md:h-[290px]" style={{ backgroundColor: '#E0EAF0' }}>
+              <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-lg group cursor-pointer h-[200px] sm:h-[250px] md:h-[290px]" style={{ backgroundColor: '#E6CDB1' }}>
                 <div className="grid grid-cols-2 h-full items-center">
                   <div className="p-4 sm:p-6 md:p-8 lg:p-10">
-                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold mb-3 sm:mb-4 md:mb-6 leading-tight" style={{ color: '#1F2D38' }}>
+                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold mb-3 sm:mb-4 md:mb-6 leading-tight" style={{ color: '#2F1A0F' }}>
                       Add Your Personal Touch
                     </h3>
                     <Link to="/products">
-                      <button className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-md" style={{ backgroundColor: '#1F2D38', color: '#E5EFF3' }}>
+                      <button className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-md" style={{ backgroundColor: '#2F1A0F', color: '#E6CDB1' }}>
                         Shop Decor
                       </button>
                     </Link>
@@ -151,11 +151,11 @@ const PromotionalCards = () => {
                     />
                   </div>
                   <div className="p-4 sm:p-6 md:p-8 lg:p-10">
-                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold mb-3 sm:mb-4 md:mb-6 leading-tight" style={{ color: '#1F2D38' }}>
+                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold mb-3 sm:mb-4 md:mb-6 leading-tight" style={{ color: '#2F1A0F' }}>
                       Sleep Better, Live Better
                     </h3>
                     <Link to="/products?category=bed">
-                      <button className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-md" style={{ backgroundColor: '#1F2D38', color: '#E5EFF3' }}>
+                      <button className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-md" style={{ backgroundColor: '#2F1A0F', color: '#E6CDB1' }}>
                         Shop Beds
                       </button>
                     </Link>

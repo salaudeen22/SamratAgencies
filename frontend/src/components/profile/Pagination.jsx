@@ -11,9 +11,9 @@ const Pagination = ({
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   return (
-    <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t" style={{ borderColor: '#BDD7EB' }}>
+    <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t" style={{ borderColor: '#D7B790' }}>
       {/* Page info */}
-      <div className="text-sm" style={{ color: '#94A1AB' }}>
+      <div className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
         Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, totalItems)} of {totalItems} orders
       </div>
 
@@ -25,8 +25,8 @@ const Pagination = ({
           disabled={currentPage === 1}
           className="px-3 py-1.5 rounded-md border transition-all text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           style={{
-            borderColor: '#BDD7EB',
-            color: currentPage === 1 ? '#94A1AB' : '#1F2D38'
+            borderColor: '#D7B790',
+            color: currentPage === 1 ? 'rgba(129, 96, 71, 0.6)' : '#2F1A0F'
           }}
         >
           Previous
@@ -53,8 +53,8 @@ const Pagination = ({
                   }`}
                   style={
                     currentPage === pageNumber
-                      ? { backgroundColor: '#895F42' }
-                      : { borderColor: '#BDD7EB', color: '#1F2D38' }
+                      ? { backgroundColor: '#816047' }
+                      : { borderColor: '#D7B790', color: '#2F1A0F' }
                   }
                 >
                   {pageNumber}
@@ -65,7 +65,7 @@ const Pagination = ({
               pageNumber === currentPage + 2
             ) {
               return (
-                <span key={pageNumber} className="w-8 h-8 flex items-center justify-center text-sm" style={{ color: '#94A1AB' }}>
+                <span key={pageNumber} className="w-8 h-8 flex items-center justify-center text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   ...
                 </span>
               );
@@ -80,8 +80,8 @@ const Pagination = ({
           disabled={currentPage === totalPages}
           className="px-3 py-1.5 rounded-md border transition-all text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           style={{
-            borderColor: '#BDD7EB',
-            color: currentPage === totalPages ? '#94A1AB' : '#1F2D38'
+            borderColor: '#D7B790',
+            color: currentPage === totalPages ? 'rgba(129, 96, 71, 0.6)' : '#2F1A0F'
           }}
         >
           Next

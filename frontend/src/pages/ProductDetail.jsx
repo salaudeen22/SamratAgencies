@@ -186,7 +186,7 @@ const ProductDetail = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#fafaf9' }}>
-        <div className="animate-spin rounded-full h-12 w-12 border-b-4" style={{ borderColor: '#895F42' }}></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-4" style={{ borderColor: '#816047' }}></div>
       </div>
     );
   }
@@ -195,7 +195,7 @@ const ProductDetail = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4" style={{ color: '#1F2D38' }}>Product not found</h2>
+          <h2 className="text-2xl font-bold mb-4" style={{ color: '#2F1A0F' }}>Product not found</h2>
           <Button onClick={() => navigate('/products')}>Back to Products</Button>
         </div>
       </div>
@@ -216,11 +216,11 @@ const ProductDetail = () => {
       <div className="min-h-screen py-4 lg:py-8" style={{ backgroundColor: '#fafaf9' }}>
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-12">
         {/* Breadcrumb Navigation */}
-        <div className="mb-4 flex items-center text-sm" style={{ color: '#94A1AB' }}>
+        <div className="mb-4 flex items-center text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
           <button
             onClick={() => navigate('/')}
             className="hover:underline"
-            style={{ color: '#895F42' }}
+            style={{ color: '#816047' }}
           >
             Home
           </button>
@@ -228,12 +228,12 @@ const ProductDetail = () => {
           <button
             onClick={() => navigate('/products')}
             className="hover:underline"
-            style={{ color: '#895F42' }}
+            style={{ color: '#816047' }}
           >
             Products
           </button>
           <span className="mx-2">/</span>
-          <span className="font-medium" style={{ color: '#1F2D38' }}>{product.name}</span>
+          <span className="font-medium" style={{ color: '#2F1A0F' }}>{product.name}</span>
         </div>
 
         <div className="bg-white rounded-xl shadow-xl overflow-hidden">
@@ -241,7 +241,7 @@ const ProductDetail = () => {
             {/* Product Image Gallery - Takes 3 columns on large screens */}
             <div className="lg:col-span-3 p-4 lg:p-8 space-y-4" style={{ backgroundColor: '#FAFAF9' }}>
               {/* Main Image Display */}
-              <div className="relative rounded-2xl h-[400px] lg:h-[600px] flex items-center justify-center overflow-hidden shadow-2xl group" style={{ backgroundColor: 'white', border: '4px solid #BDD7EB' }}>
+              <div className="relative rounded-2xl h-[400px] lg:h-[600px] flex items-center justify-center overflow-hidden shadow-2xl group" style={{ backgroundColor: 'white', border: '4px solid #D7B790' }}>
                 {product.images && product.images.length > 0 ? (
                   <>
                     <img
@@ -257,7 +257,7 @@ const ProductDetail = () => {
                         <button
                           onClick={() => setSelectedImageIndex((selectedImageIndex - 1 + product.images.length) % product.images.length)}
                           className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-lg transition"
-                          style={{ color: '#895F42' }}
+                          style={{ color: '#816047' }}
                         >
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -268,7 +268,7 @@ const ProductDetail = () => {
                         <button
                           onClick={() => setSelectedImageIndex((selectedImageIndex + 1) % product.images.length)}
                           className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-lg transition"
-                          style={{ color: '#895F42' }}
+                          style={{ color: '#816047' }}
                         >
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -283,7 +283,7 @@ const ProductDetail = () => {
                     )}
                   </>
                 ) : (
-                  <div className="text-lg" style={{ color: '#94A1AB' }}>No Image Available</div>
+                  <div className="text-lg" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>No Image Available</div>
                 )}
               </div>
 
@@ -300,9 +300,9 @@ const ProductDetail = () => {
                           : 'hover:scale-105 hover:shadow-md opacity-70 hover:opacity-100'
                       }`}
                       style={{
-                        borderColor: selectedImageIndex === index ? '#895F42' : '#BDD7EB',
+                        borderColor: selectedImageIndex === index ? '#816047' : '#D7B790',
                         borderWidth: '3px',
-                        ringColor: '#895F42'
+                        ringColor: '#816047'
                       }}
                     >
                       <img
@@ -334,7 +334,7 @@ const ProductDetail = () => {
 
                 {/* Title with Wishlist & Share */}
                 <div className="flex items-start justify-between gap-3 mb-3">
-                  <h1 className="text-3xl lg:text-4xl font-bold leading-tight flex-1" style={{ color: '#1F2D38' }}>
+                  <h1 className="text-3xl lg:text-4xl font-bold leading-tight flex-1" style={{ color: '#2F1A0F' }}>
                     {product.name}
                   </h1>
 
@@ -346,7 +346,7 @@ const ProductDetail = () => {
                       className="p-2.5 rounded-full transition-all hover:scale-110"
                       style={{
                         backgroundColor: isWishlisted ? '#FEE2E2' : '#F3F4F6',
-                        color: isWishlisted ? '#ef4444' : '#94A1AB'
+                        color: isWishlisted ? '#ef4444' : 'rgba(129, 96, 71, 0.6)'
                       }}
                       title={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
                     >
@@ -359,7 +359,7 @@ const ProductDetail = () => {
                     <div className="relative group">
                       <button
                         className="p-2.5 rounded-full transition-all hover:scale-110"
-                        style={{ backgroundColor: '#F3F4F6', color: '#895F42' }}
+                        style={{ backgroundColor: '#F3F4F6', color: '#816047' }}
                         title="Share"
                       >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -369,7 +369,7 @@ const ProductDetail = () => {
 
                       {/* Share Dropdown Menu */}
                       <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10"
-                        style={{ backgroundColor: 'white', border: '2px solid #BDD7EB' }}
+                        style={{ backgroundColor: 'white', border: '2px solid #D7B790' }}
                       >
                         <button
                           onClick={() => handleShare('whatsapp')}
@@ -394,7 +394,7 @@ const ProductDetail = () => {
                         <button
                           onClick={() => handleShare('copy')}
                           className="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center gap-2 rounded-b-lg"
-                          style={{ color: '#895F42' }}
+                          style={{ color: '#816047' }}
                         >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -422,11 +422,11 @@ const ProductDetail = () => {
                         </svg>
                       ))}
                     </div>
-                    <span className="text-sm font-medium" style={{ color: '#1F2D38' }}>
+                    <span className="text-sm font-medium" style={{ color: '#2F1A0F' }}>
                       {product.rating.toFixed(1)}
                     </span>
                     {product.numReviews > 0 && (
-                      <span className="text-sm" style={{ color: '#94A1AB' }}>
+                      <span className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                         ({product.numReviews} {product.numReviews === 1 ? 'review' : 'reviews'})
                       </span>
                     )}
@@ -436,7 +436,7 @@ const ProductDetail = () => {
                 {/* Category & Brand */}
                 <div className="flex flex-wrap gap-2">
                   {product.category && (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium" style={{ backgroundColor: '#E0EAF0', color: '#895F42' }}>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium" style={{ backgroundColor: '#E6CDB1', color: '#816047' }}>
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                       </svg>
@@ -444,7 +444,7 @@ const ProductDetail = () => {
                     </span>
                   )}
                   {product.brand && (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100" style={{ color: '#1F2D38' }}>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100" style={{ color: '#2F1A0F' }}>
                       {product.brand}
                     </span>
                   )}
@@ -460,9 +460,9 @@ const ProductDetail = () => {
                   />
                 </div>
               ) : (
-                <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#FFF8F3', border: '2px solid #895F42' }}>
+                <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#E6CDB1', border: '2px solid #816047' }}>
                   <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-3xl lg:text-4xl font-bold" style={{ color: '#895F42' }}>
+                    <span className="text-3xl lg:text-4xl font-bold" style={{ color: '#816047' }}>
                       ₹{product.price?.toLocaleString()}
                     </span>
                   </div>
@@ -476,8 +476,8 @@ const ProductDetail = () => {
                       </>
                     ) : (
                       <>
-                        <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#895F42' }}></div>
-                        <span className="text-sm font-semibold" style={{ color: '#895F42' }}>Made to Order</span>
+                        <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#816047' }}></div>
+                        <span className="text-sm font-semibold" style={{ color: '#816047' }}>Made to Order</span>
                       </>
                     )}
                   </div>
@@ -486,25 +486,25 @@ const ProductDetail = () => {
 
               {/* Quantity Selector */}
               <div className="mb-6">
-                <label className="block text-sm font-semibold mb-3" style={{ color: '#1F2D38' }}>
+                <label className="block text-sm font-semibold mb-3" style={{ color: '#2F1A0F' }}>
                   Select Quantity
                 </label>
-                <div className="inline-flex items-center rounded-lg overflow-hidden" style={{ border: '2px solid #BDD7EB' }}>
+                <div className="inline-flex items-center rounded-lg overflow-hidden" style={{ border: '2px solid #D7B790' }}>
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     className="px-5 py-3 font-bold text-lg transition hover:bg-gray-50"
-                    style={{ color: '#895F42', borderRight: '2px solid #BDD7EB' }}
+                    style={{ color: '#816047', borderRight: '2px solid #D7B790' }}
                     disabled={quantity <= 1}
                   >
                     −
                   </button>
-                  <span className="px-8 py-3 text-xl font-bold bg-white" style={{ color: '#1F2D38' }}>
+                  <span className="px-8 py-3 text-xl font-bold bg-white" style={{ color: '#2F1A0F' }}>
                     {quantity}
                   </span>
                   <button
                     onClick={() => setQuantity(Math.min(100, quantity + 1))}
                     className="px-5 py-3 font-bold text-lg transition hover:bg-gray-50"
-                    style={{ color: '#895F42', borderLeft: '2px solid #BDD7EB' }}
+                    style={{ color: '#816047', borderLeft: '2px solid #D7B790' }}
                     disabled={quantity >= 100}
                   >
                     +
@@ -518,7 +518,7 @@ const ProductDetail = () => {
                   onClick={handleAddToCart}
                   className="flex-1 px-6 py-4 rounded-lg font-semibold text-base transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-lg transform hover:-translate-y-0.5"
                   style={{
-                    backgroundColor: '#895F42',
+                    backgroundColor: '#816047',
                     color: 'white'
                   }}
                 >
@@ -544,24 +544,24 @@ const ProductDetail = () => {
 
               {/* Product Highlights */}
               <div className="grid grid-cols-2 gap-3 mb-6">
-                <div className="flex items-center gap-2 p-3 rounded-lg" style={{ backgroundColor: '#F0F9FF', border: '1px solid #BDD7EB' }}>
-                  <svg className="w-5 h-5 flex-shrink-0" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-center gap-2 p-3 rounded-lg" style={{ backgroundColor: '#F0F9FF', border: '1px solid #D7B790' }}>
+                  <svg className="w-5 h-5 flex-shrink-0" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="text-xs font-medium" style={{ color: '#1F2D38' }}>Quality Assured</span>
+                  <span className="text-xs font-medium" style={{ color: '#2F1A0F' }}>Quality Assured</span>
                 </div>
-                <div className="flex items-center gap-2 p-3 rounded-lg" style={{ backgroundColor: '#F0F9FF', border: '1px solid #BDD7EB' }}>
-                  <svg className="w-5 h-5 flex-shrink-0" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-center gap-2 p-3 rounded-lg" style={{ backgroundColor: '#F0F9FF', border: '1px solid #D7B790' }}>
+                  <svg className="w-5 h-5 flex-shrink-0" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                   </svg>
-                  <span className="text-xs font-medium" style={{ color: '#1F2D38' }}>Free Delivery</span>
+                  <span className="text-xs font-medium" style={{ color: '#2F1A0F' }}>Free Delivery</span>
                 </div>
                 {product.availabilityType === 'made-to-order' && product.deliveryDays && (
-                  <div className="flex items-center gap-2 p-3 rounded-lg col-span-2" style={{ backgroundColor: '#FFF8F3', border: '1px solid #895F42' }}>
-                    <svg className="w-5 h-5 flex-shrink-0" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-2 p-3 rounded-lg col-span-2" style={{ backgroundColor: '#E6CDB1', border: '1px solid #816047' }}>
+                    <svg className="w-5 h-5 flex-shrink-0" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span className="text-xs font-semibold" style={{ color: '#895F42' }}>
+                    <span className="text-xs font-semibold" style={{ color: '#816047' }}>
                       Manufacturing time: {product.deliveryDays} {product.deliveryDays === 1 ? 'day' : 'days'}
                     </span>
                   </div>
@@ -571,13 +571,13 @@ const ProductDetail = () => {
               {/* Quick Info */}
               <div className="p-4 rounded-lg space-y-2 mb-6" style={{ backgroundColor: '#F9FAFB', border: '1px solid #E5E7EB' }}>
                 <div className="flex items-center justify-between text-sm">
-                  <span style={{ color: '#94A1AB' }}>SKU:</span>
-                  <span className="font-mono text-xs" style={{ color: '#1F2D38' }}>{product.sku || product._id.slice(-8)}</span>
+                  <span style={{ color: 'rgba(129, 96, 71, 0.6)' }}>SKU:</span>
+                  <span className="font-mono text-xs" style={{ color: '#2F1A0F' }}>{product.sku || product._id.slice(-8)}</span>
                 </div>
                 {product.attributeSet && (
                   <div className="flex items-center justify-between text-sm">
-                    <span style={{ color: '#94A1AB' }}>Product Type:</span>
-                    <span className="font-medium" style={{ color: '#1F2D38' }}>
+                    <span style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Product Type:</span>
+                    <span className="font-medium" style={{ color: '#2F1A0F' }}>
                       {typeof product.attributeSet === 'object' ? product.attributeSet.name : product.attributeSet}
                     </span>
                   </div>
@@ -585,13 +585,13 @@ const ProductDetail = () => {
               </div>
 
               {/* Pincode Delivery Checker */}
-              <div className="p-4 rounded-lg" style={{ backgroundColor: '#F0F9FF', border: '2px solid #BDD7EB' }}>
+              <div className="p-4 rounded-lg" style={{ backgroundColor: '#F0F9FF', border: '2px solid #D7B790' }}>
                 <div className="flex items-center gap-2 mb-3">
-                  <svg className="w-5 h-5" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <span className="text-sm font-semibold" style={{ color: '#1F2D38' }}>Check Delivery Availability</span>
+                  <span className="text-sm font-semibold" style={{ color: '#2F1A0F' }}>Check Delivery Availability</span>
                 </div>
 
                 <div className="flex gap-2">
@@ -601,16 +601,16 @@ const ProductDetail = () => {
                     onChange={(e) => setPincode(e.target.value.replace(/\D/g, '').slice(0, 6))}
                     placeholder="Enter Pincode"
                     className="flex-1 px-3 py-2 border-2 rounded-md focus:outline-none text-sm"
-                    style={{ borderColor: '#BDD7EB' }}
-                    onFocus={(e) => e.currentTarget.style.borderColor = '#895F42'}
-                    onBlur={(e) => e.currentTarget.style.borderColor = '#BDD7EB'}
+                    style={{ borderColor: '#D7B790' }}
+                    onFocus={(e) => e.currentTarget.style.borderColor = '#816047'}
+                    onBlur={(e) => e.currentTarget.style.borderColor = '#D7B790'}
                     maxLength={6}
                   />
                   <button
                     onClick={handleCheckDelivery}
                     disabled={checkingDelivery || pincode.length !== 6}
                     className="px-4 py-2 rounded-md font-medium text-sm transition disabled:opacity-50 whitespace-nowrap"
-                    style={{ backgroundColor: '#895F42', color: 'white' }}
+                    style={{ backgroundColor: '#816047', color: 'white' }}
                   >
                     {checkingDelivery ? 'Checking...' : 'Check'}
                   </button>
@@ -661,26 +661,26 @@ const ProductDetail = () => {
           {/* Specifications Section - Accordion */}
           {product.specifications && Object.keys(product.specifications).length > 0 && (
             <div className="px-4 sm:px-8 py-6">
-              <div className="pt-6" style={{ borderTop: '2px solid #BDD7EB' }}>
+              <div className="pt-6" style={{ borderTop: '2px solid #D7B790' }}>
                 <button
                   onClick={() => setSpecsOpen(!specsOpen)}
                   className="w-full flex items-center justify-between gap-3 mb-4 p-4 rounded-lg transition-all hover:shadow-md"
-                  style={{ backgroundColor: specsOpen ? '#E0EAF0' : '#F9FAFB' }}
+                  style={{ backgroundColor: specsOpen ? '#E6CDB1' : '#F9FAFB' }}
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2 rounded-lg" style={{ backgroundColor: 'white' }}>
-                      <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                       </svg>
                     </div>
-                    <h3 className="text-xl lg:text-2xl font-bold text-left" style={{ color: '#1F2D38' }}>
+                    <h3 className="text-xl lg:text-2xl font-bold text-left" style={{ color: '#2F1A0F' }}>
                       Technical Specifications
                     </h3>
                   </div>
                   <svg
                     className="w-6 h-6 transition-transform duration-300 flex-shrink-0"
                     style={{
-                      color: '#895F42',
+                      color: '#816047',
                       transform: specsOpen ? 'rotate(180deg)' : 'rotate(0deg)'
                     }}
                     fill="none"
@@ -700,11 +700,11 @@ const ProductDetail = () => {
                 >
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pb-2">
                     {Object.entries(product.specifications).map(([key, value]) => (
-                      <div key={key} className="p-4 rounded-lg border-l-4 hover:shadow-md transition-shadow" style={{ backgroundColor: '#F9FAFB', borderLeftColor: '#895F42' }}>
-                        <div className="text-xs font-semibold mb-1 uppercase tracking-wide" style={{ color: '#895F42' }}>
+                      <div key={key} className="p-4 rounded-lg border-l-4 hover:shadow-md transition-shadow" style={{ backgroundColor: '#F9FAFB', borderLeftColor: '#816047' }}>
+                        <div className="text-xs font-semibold mb-1 uppercase tracking-wide" style={{ color: '#816047' }}>
                           {key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
                         </div>
-                        <div className="text-sm lg:text-base font-bold" style={{ color: '#1F2D38' }}>
+                        <div className="text-sm lg:text-base font-bold" style={{ color: '#2F1A0F' }}>
                           {Array.isArray(value) ? value.join(', ') : value}
                         </div>
                       </div>
@@ -718,26 +718,26 @@ const ProductDetail = () => {
           {/* Description Section - Accordion */}
           {product.description && (
             <div className="px-4 sm:px-8 py-6">
-              <div className="pt-6" style={{ borderTop: '2px solid #BDD7EB' }}>
+              <div className="pt-6" style={{ borderTop: '2px solid #D7B790' }}>
                 <button
                   onClick={() => setDescriptionOpen(!descriptionOpen)}
                   className="w-full flex items-center justify-between gap-3 mb-4 p-4 rounded-lg transition-all hover:shadow-md"
-                  style={{ backgroundColor: descriptionOpen ? '#E0EAF0' : '#F9FAFB' }}
+                  style={{ backgroundColor: descriptionOpen ? '#E6CDB1' : '#F9FAFB' }}
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2 rounded-lg" style={{ backgroundColor: 'white' }}>
-                      <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
                       </svg>
                     </div>
-                    <h3 className="text-xl lg:text-2xl font-bold text-left" style={{ color: '#1F2D38' }}>
+                    <h3 className="text-xl lg:text-2xl font-bold text-left" style={{ color: '#2F1A0F' }}>
                       Product Description
                     </h3>
                   </div>
                   <svg
                     className="w-6 h-6 transition-transform duration-300 flex-shrink-0"
                     style={{
-                      color: '#895F42',
+                      color: '#816047',
                       transform: descriptionOpen ? 'rotate(180deg)' : 'rotate(0deg)'
                     }}
                     fill="none"
@@ -776,7 +776,7 @@ const ProductDetail = () => {
           <div className="mt-8 space-y-8">
             {/* Frequently Bought Together */}
             {frequentlyBought.length > 0 && (
-              <div className="border-t-2 pt-8" style={{ borderColor: '#BDD7EB' }}>
+              <div className="border-t-2 pt-8" style={{ borderColor: '#D7B790' }}>
                 <ProductRecommendations
                   title="Frequently Bought Together"
                   products={frequentlyBought}
@@ -787,7 +787,7 @@ const ProductDetail = () => {
 
             {/* Complete the Look */}
             {completeTheLook.length > 0 && (
-              <div className="border-t-2 pt-8" style={{ borderColor: '#BDD7EB' }}>
+              <div className="border-t-2 pt-8" style={{ borderColor: '#D7B790' }}>
                 <ProductRecommendations
                   title="Complete the Look"
                   products={completeTheLook}
@@ -798,7 +798,7 @@ const ProductDetail = () => {
 
             {/* Similar Products - You May Also Like */}
             {similarProducts.length > 0 && (
-              <div className="border-t-2 pt-8" style={{ borderColor: '#BDD7EB' }}>
+              <div className="border-t-2 pt-8" style={{ borderColor: '#D7B790' }}>
                 <ProductRecommendations
                   title="You May Also Like"
                   products={similarProducts}
@@ -814,7 +814,7 @@ const ProductDetail = () => {
       {showStickyBar && (
         <div
           className="fixed bottom-0 left-0 right-0 bg-white shadow-2xl border-t-2 z-40 transform transition-transform duration-300"
-          style={{ borderColor: '#BDD7EB' }}
+          style={{ borderColor: '#D7B790' }}
         >
           <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
             <div className="flex items-center justify-between gap-2 sm:gap-4">
@@ -825,14 +825,14 @@ const ProductDetail = () => {
                     src={product.images[0].url}
                     alt={product.name}
                     className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-lg flex-shrink-0"
-                    style={{ border: '2px solid #BDD7EB' }}
+                    style={{ border: '2px solid #D7B790' }}
                   />
                 )}
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-xs sm:text-sm truncate" style={{ color: '#1F2D38' }}>
+                  <h3 className="font-semibold text-xs sm:text-sm truncate" style={{ color: '#2F1A0F' }}>
                     {product.name}
                   </h3>
-                  <p className="text-xs sm:text-sm font-bold" style={{ color: '#895F42' }}>
+                  <p className="text-xs sm:text-sm font-bold" style={{ color: '#816047' }}>
                     ₹{(displayPrice || product.price)?.toLocaleString()}
                   </p>
                 </div>
@@ -846,7 +846,7 @@ const ProductDetail = () => {
                   className="p-1.5 sm:p-2 rounded-full transition-all hover:scale-110 hidden sm:block"
                   style={{
                     backgroundColor: isWishlisted ? '#FEE2E2' : '#F3F4F6',
-                    color: isWishlisted ? '#ef4444' : '#94A1AB'
+                    color: isWishlisted ? '#ef4444' : 'rgba(129, 96, 71, 0.6)'
                   }}
                 >
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill={isWishlisted ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
@@ -858,7 +858,7 @@ const ProductDetail = () => {
                 <button
                   onClick={handleAddToCart}
                   className="px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all hover:shadow-lg flex items-center gap-1 sm:gap-2"
-                  style={{ backgroundColor: '#895F42', color: 'white' }}
+                  style={{ backgroundColor: '#816047', color: 'white' }}
                 >
                   <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />

@@ -9,18 +9,18 @@ const PrivacyPolicy = () => {
         canonical="/privacy-policy"
       />
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-6" style={{ color: '#895F42' }}>Privacy Policy</h1>
+        <h1 className="text-3xl font-bold mb-6" style={{ color: '#816047' }}>Privacy Policy</h1>
 
         <div className="space-y-6 text-gray-700">
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Introduction</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Introduction</h2>
             <p className="mb-4">
               At Samrat Agencies, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or make a purchase from us.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Information We Collect</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Information We Collect</h2>
             <p className="mb-2">We collect information that you provide directly to us, including:</p>
             <ul className="list-disc list-inside ml-4 space-y-2">
               <li>Name, email address, phone number, and shipping address</li>
@@ -32,7 +32,7 @@ const PrivacyPolicy = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>How We Use Your Information</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>How We Use Your Information</h2>
             <p className="mb-2">We use the information we collect to:</p>
             <ul className="list-disc list-inside ml-4 space-y-2">
               <li>Process and fulfill your orders</li>
@@ -45,7 +45,7 @@ const PrivacyPolicy = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Information Sharing</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Information Sharing</h2>
             <p className="mb-4">
               We do not sell, trade, or rent your personal information to third parties. We may share your information with:
             </p>
@@ -58,14 +58,14 @@ const PrivacyPolicy = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Data Security</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Data Security</h2>
             <p className="mb-4">
               We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet is 100% secure, and we cannot guarantee absolute security.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Your Rights</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Your Rights</h2>
             <p className="mb-2">You have the right to:</p>
             <ul className="list-disc list-inside ml-4 space-y-2">
               <li>Access the personal information we hold about you</li>
@@ -77,21 +77,21 @@ const PrivacyPolicy = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Cookies</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Cookies</h2>
             <p className="mb-4">
               We use cookies and similar tracking technologies to enhance your browsing experience, analyze site traffic, and understand where our visitors are coming from. You can control cookies through your browser settings.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Changes to This Policy</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Changes to This Policy</h2>
             <p className="mb-4">
               We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Contact Us</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Contact Us</h2>
             <p className="mb-2">
               If you have any questions about this Privacy Policy, please contact us at:
             </p>

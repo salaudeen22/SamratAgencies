@@ -28,7 +28,7 @@ const NewsletterSignup = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-[#895F42] to-[#C97B63] py-12 px-4">
+    <div className="bg-gradient-to-r from-[#816047] to-[#CDAA82] py-12 px-4">
       <div className="max-w-4xl mx-auto text-center">
         <div className="flex justify-center mb-4">
           <FiMail className="w-12 h-12 text-white" />
@@ -53,7 +53,7 @@ const NewsletterSignup = () => {
             <button
               type="submit"
               disabled={loading}
-              className="px-8 py-3 bg-white text-[#895F42] font-semibold rounded-full hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-8 py-3 bg-white text-[#816047] font-semibold rounded-full hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Subscribing...' : 'Subscribe'}
             </button>

@@ -103,13 +103,13 @@ const AddressesTab = () => {
     <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-3 sm:gap-0">
         <div>
-          <h2 className="text-xl font-bold" style={{ color: '#1F2D38' }}>My Addresses</h2>
-          <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>Manage your delivery addresses</p>
+          <h2 className="text-xl font-bold" style={{ color: '#2F1A0F' }}>My Addresses</h2>
+          <p className="text-sm mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Manage your delivery addresses</p>
         </div>
         <button
           onClick={() => setShowAddressForm(true)}
           className="px-5 py-2.5 rounded-xl text-white transition-all text-sm font-medium hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2"
-          style={{ backgroundColor: '#895F42' }}
+          style={{ backgroundColor: '#816047' }}
         >
           <HiPlus className="w-4 h-4" />
           Add Address
@@ -125,7 +125,7 @@ const AddressesTab = () => {
         <form onSubmit={handleAddressSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+              <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
                 Full Name*
               </label>
               <input
@@ -133,12 +133,12 @@ const AddressesTab = () => {
                 value={addressData.name}
                 onChange={(e) => setAddressData({ ...addressData, name: e.target.value })}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
-                style={{ borderColor: '#BDD7EB' }}
+                style={{ borderColor: '#D7B790' }}
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+              <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
                 Phone Number*
               </label>
               <input
@@ -146,13 +146,13 @@ const AddressesTab = () => {
                 value={addressData.phone}
                 onChange={(e) => setAddressData({ ...addressData, phone: e.target.value })}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
-                style={{ borderColor: '#BDD7EB' }}
+                style={{ borderColor: '#D7B790' }}
                 required
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
               Address Line 1*
             </label>
             <input
@@ -160,13 +160,13 @@ const AddressesTab = () => {
               value={addressData.addressLine1}
               onChange={(e) => setAddressData({ ...addressData, addressLine1: e.target.value })}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
-              style={{ borderColor: '#BDD7EB' }}
+              style={{ borderColor: '#D7B790' }}
               placeholder="House/Flat No., Building Name"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
               Address Line 2
             </label>
             <input
@@ -174,13 +174,13 @@ const AddressesTab = () => {
               value={addressData.addressLine2}
               onChange={(e) => setAddressData({ ...addressData, addressLine2: e.target.value })}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
-              style={{ borderColor: '#BDD7EB' }}
+              style={{ borderColor: '#D7B790' }}
               placeholder="Street, Area, Landmark"
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+              <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
                 City*
               </label>
               <input
@@ -188,12 +188,12 @@ const AddressesTab = () => {
                 value={addressData.city}
                 onChange={(e) => setAddressData({ ...addressData, city: e.target.value })}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
-                style={{ borderColor: '#BDD7EB' }}
+                style={{ borderColor: '#D7B790' }}
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+              <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
                 State*
               </label>
               <input
@@ -201,12 +201,12 @@ const AddressesTab = () => {
                 value={addressData.state}
                 onChange={(e) => setAddressData({ ...addressData, state: e.target.value })}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
-                style={{ borderColor: '#BDD7EB' }}
+                style={{ borderColor: '#D7B790' }}
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+              <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
                 Pincode*
               </label>
               <input
@@ -214,7 +214,7 @@ const AddressesTab = () => {
                 value={addressData.pincode}
                 onChange={(e) => setAddressData({ ...addressData, pincode: e.target.value })}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
-                style={{ borderColor: '#BDD7EB' }}
+                style={{ borderColor: '#D7B790' }}
                 required
               />
             </div>
@@ -227,7 +227,7 @@ const AddressesTab = () => {
               onChange={(e) => setAddressData({ ...addressData, isDefault: e.target.checked })}
               className="rounded"
             />
-            <label htmlFor="isDefault" className="text-sm" style={{ color: '#1F2D38' }}>
+            <label htmlFor="isDefault" className="text-sm" style={{ color: '#2F1A0F' }}>
               Set as default address
             </label>
           </div>
@@ -237,7 +237,7 @@ const AddressesTab = () => {
               type="button"
               onClick={resetAddressForm}
               className="px-4 py-2 border rounded-md"
-              style={{ borderColor: '#BDD7EB', color: '#1F2D38' }}
+              style={{ borderColor: '#D7B790', color: '#2F1A0F' }}
             >
               Cancel
             </button>
@@ -247,8 +247,8 @@ const AddressesTab = () => {
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 mx-auto" style={{ borderColor: '#895F42' }}></div>
-          <p className="mt-4 text-sm sm:text-base" style={{ color: '#94A1AB' }}>Loading addresses...</p>
+          <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 mx-auto" style={{ borderColor: '#816047' }}></div>
+          <p className="mt-4 text-sm sm:text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Loading addresses...</p>
         </div>
       ) : addresses.length > 0 ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -263,11 +263,11 @@ const AddressesTab = () => {
         </div>
       ) : (
         <div className="text-center py-12">
-          <p className="text-base sm:text-lg mb-4" style={{ color: '#94A1AB' }}>No addresses saved yet</p>
+          <p className="text-base sm:text-lg mb-4" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>No addresses saved yet</p>
           <button
             onClick={() => setShowAddressForm(true)}
             className="px-4 py-2 rounded-md text-white text-sm sm:text-base"
-            style={{ backgroundColor: '#895F42' }}
+            style={{ backgroundColor: '#816047' }}
           >
             Add Your First Address
           </button>

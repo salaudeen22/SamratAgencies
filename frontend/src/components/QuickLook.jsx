@@ -34,7 +34,7 @@ const QuickLook = ({ product, isOpen, onClose }) => {
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-2 rounded-full bg-white shadow-lg hover:shadow-xl transition-all z-10"
-          style={{ color: '#1F2D38' }}
+          style={{ color: '#2F1A0F' }}
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -44,7 +44,7 @@ const QuickLook = ({ product, isOpen, onClose }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
           {/* Image Section */}
           <div>
-            <div className="relative rounded-lg h-80 flex items-center justify-center overflow-hidden" style={{ backgroundColor: '#E0EAF0' }}>
+            <div className="relative rounded-lg h-80 flex items-center justify-center overflow-hidden" style={{ backgroundColor: '#E6CDB1' }}>
               {product.images && product.images.length > 0 ? (
                 <img
                   src={product.images[selectedImageIndex]?.url}
@@ -52,11 +52,11 @@ const QuickLook = ({ product, isOpen, onClose }) => {
                   className="w-full h-full object-contain"
                 />
               ) : (
-                <div style={{ color: '#94A1AB' }}>No Image</div>
+                <div style={{ color: 'rgba(129, 96, 71, 0.6)' }}>No Image</div>
               )}
 
               {product.availabilityType === 'made-to-order' && (
-                <div className="absolute top-2 right-2 text-white px-3 py-1 rounded-md text-sm font-semibold" style={{ backgroundColor: '#895F42' }}>
+                <div className="absolute top-2 right-2 text-white px-3 py-1 rounded-md text-sm font-semibold" style={{ backgroundColor: '#816047' }}>
                   Made to Order
                 </div>
               )}
@@ -70,7 +70,7 @@ const QuickLook = ({ product, isOpen, onClose }) => {
                     key={index}
                     onClick={() => setSelectedImageIndex(index)}
                     className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 ${
-                      selectedImageIndex === index ? 'border-[#895F42]' : 'border-[#BDD7EB]'
+                      selectedImageIndex === index ? 'border-[#816047]' : 'border-[#D7B790]'
                     }`}
                   >
                     <img
@@ -86,18 +86,18 @@ const QuickLook = ({ product, isOpen, onClose }) => {
 
           {/* Product Info Section */}
           <div className="flex flex-col">
-            <h2 className="text-2xl font-bold mb-2" style={{ color: '#1F2D38' }}>
+            <h2 className="text-2xl font-bold mb-2" style={{ color: '#2F1A0F' }}>
               {product.name}
             </h2>
 
             {product.category && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium w-fit mb-3" style={{ backgroundColor: '#E0EAF0', color: '#895F42' }}>
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium w-fit mb-3" style={{ backgroundColor: '#E6CDB1', color: '#816047' }}>
                 {typeof product.category === 'object' ? product.category.name : product.category}
               </span>
             )}
 
             <div className="mb-4">
-              <span className="text-3xl font-bold" style={{ color: '#895F42' }}>
+              <span className="text-3xl font-bold" style={{ color: '#816047' }}>
                 ₹{product.price?.toLocaleString()}
               </span>
             </div>
@@ -111,18 +111,18 @@ const QuickLook = ({ product, isOpen, onClose }) => {
                 </>
               ) : (
                 <>
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#895F42' }}></div>
-                  <span className="text-sm font-semibold" style={{ color: '#895F42' }}>Made to Order</span>
+                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#816047' }}></div>
+                  <span className="text-sm font-semibold" style={{ color: '#816047' }}>Made to Order</span>
                 </>
               )}
             </div>
 
             {product.availabilityType === 'made-to-order' && product.deliveryDays && (
-              <div className="flex items-center gap-2 mb-4 p-3 rounded-lg" style={{ backgroundColor: '#FFF8F3', border: '1px solid #895F42' }}>
-                <svg className="w-4 h-4" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex items-center gap-2 mb-4 p-3 rounded-lg" style={{ backgroundColor: '#E6CDB1', border: '1px solid #816047' }}>
+                <svg className="w-4 h-4" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                <span className="text-sm font-semibold" style={{ color: '#895F42' }}>
+                <span className="text-sm font-semibold" style={{ color: '#816047' }}>
                   Manufacturing time: {product.deliveryDays} {product.deliveryDays === 1 ? 'day' : 'days'}
                 </span>
               </div>
@@ -134,24 +134,24 @@ const QuickLook = ({ product, isOpen, onClose }) => {
 
             {/* Quantity Selector */}
             <div className="mb-4">
-              <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+              <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                 Quantity
               </label>
-              <div className="inline-flex items-center rounded-lg overflow-hidden" style={{ border: '2px solid #BDD7EB' }}>
+              <div className="inline-flex items-center rounded-lg overflow-hidden" style={{ border: '2px solid #D7B790' }}>
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="px-4 py-2 font-bold transition hover:bg-gray-50"
-                  style={{ color: '#895F42', borderRight: '2px solid #BDD7EB' }}
+                  style={{ color: '#816047', borderRight: '2px solid #D7B790' }}
                 >
                   −
                 </button>
-                <span className="px-6 py-2 font-bold bg-white" style={{ color: '#1F2D38' }}>
+                <span className="px-6 py-2 font-bold bg-white" style={{ color: '#2F1A0F' }}>
                   {quantity}
                 </span>
                 <button
                   onClick={() => setQuantity(Math.min(100, quantity + 1))}
                   className="px-4 py-2 font-bold transition hover:bg-gray-50"
-                  style={{ color: '#895F42', borderLeft: '2px solid #BDD7EB' }}
+                  style={{ color: '#816047', borderLeft: '2px solid #D7B790' }}
                 >
                   +
                 </button>
@@ -163,7 +163,7 @@ const QuickLook = ({ product, isOpen, onClose }) => {
               <button
                 onClick={handleAddToCart}
                 className="w-full px-6 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
-                style={{ backgroundColor: '#895F42', color: 'white' }}
+                style={{ backgroundColor: '#816047', color: 'white' }}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -174,7 +174,7 @@ const QuickLook = ({ product, isOpen, onClose }) => {
               <Link
                 to={`/products/${product.slug || product._id}`}
                 className="w-full px-6 py-3 rounded-lg font-semibold transition-all text-center"
-                style={{ backgroundColor: '#E0EAF0', color: '#895F42' }}
+                style={{ backgroundColor: '#E6CDB1', color: '#816047' }}
               >
                 View Full Details
               </Link>

@@ -149,7 +149,7 @@ const ProductReviews = ({ productId }) => {
     <div className="py-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-bold mb-2" style={{ color: '#1F2D38' }}>
+          <h2 className="text-2xl font-bold mb-2" style={{ color: '#2F1A0F' }}>
             Customer Reviews
           </h2>
           {reviews.length > 0 && (
@@ -157,7 +157,7 @@ const ProductReviews = ({ productId }) => {
               <div className="flex items-center gap-1">
                 {renderStars(Math.round(averageRating))}
               </div>
-              <span className="text-lg font-semibold" style={{ color: '#895F42' }}>
+              <span className="text-lg font-semibold" style={{ color: '#816047' }}>
                 {averageRating} out of 5
               </span>
               <span className="text-sm text-gray-500">
@@ -171,9 +171,9 @@ const ProductReviews = ({ productId }) => {
           <button
             onClick={() => setShowReviewForm(true)}
             className="px-4 py-2 rounded-lg text-white font-medium transition-colors"
-            style={{ backgroundColor: '#895F42' }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#9F8065'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
+            style={{ backgroundColor: '#816047' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#D7B790'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#816047'}
           >
             Write a Review
           </button>
@@ -182,20 +182,20 @@ const ProductReviews = ({ productId }) => {
 
       {/* Review Form */}
       {showReviewForm && (
-        <form onSubmit={handleSubmitReview} className="mb-8 p-6 rounded-lg border-2" style={{ borderColor: '#BDD7EB', backgroundColor: '#F0F9FF' }}>
-          <h3 className="text-lg font-semibold mb-4" style={{ color: '#1F2D38' }}>
+        <form onSubmit={handleSubmitReview} className="mb-8 p-6 rounded-lg border-2" style={{ borderColor: '#D7B790', backgroundColor: '#F0F9FF' }}>
+          <h3 className="text-lg font-semibold mb-4" style={{ color: '#2F1A0F' }}>
             Write Your Review
           </h3>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
               Rating
             </label>
             {renderStars(rating, true, setRating)}
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
               Your Review
             </label>
             <textarea
@@ -203,9 +203,9 @@ const ProductReviews = ({ productId }) => {
               onChange={(e) => setComment(e.target.value)}
               placeholder="Share your experience with this product..."
               className="w-full px-4 py-3 border-2 rounded-lg focus:outline-none resize-none"
-              style={{ borderColor: '#BDD7EB' }}
-              onFocus={(e) => e.currentTarget.style.borderColor = '#895F42'}
-              onBlur={(e) => e.currentTarget.style.borderColor = '#BDD7EB'}
+              style={{ borderColor: '#D7B790' }}
+              onFocus={(e) => e.currentTarget.style.borderColor = '#816047'}
+              onBlur={(e) => e.currentTarget.style.borderColor = '#D7B790'}
               rows={4}
               minLength={10}
               required
@@ -214,7 +214,7 @@ const ProductReviews = ({ productId }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
               Add Photos (Optional)
             </label>
             <div className="flex flex-wrap gap-3">
@@ -225,7 +225,7 @@ const ProductReviews = ({ productId }) => {
                     src={URL.createObjectURL(file)}
                     alt={`Preview ${index + 1}`}
                     className="w-20 h-20 object-cover rounded-lg border-2"
-                    style={{ borderColor: '#BDD7EB' }}
+                    style={{ borderColor: '#D7B790' }}
                   />
                   <button
                     type="button"
@@ -240,7 +240,7 @@ const ProductReviews = ({ productId }) => {
               {/* Upload Button */}
               {selectedImages.length < 5 && (
                 <label className="w-20 h-20 flex items-center justify-center border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
-                  style={{ borderColor: '#BDD7EB' }}
+                  style={{ borderColor: '#D7B790' }}
                 >
                   <input
                     type="file"
@@ -249,7 +249,7 @@ const ProductReviews = ({ productId }) => {
                     onChange={handleImageSelect}
                     className="hidden"
                   />
-                  <FiImage className="w-6 h-6" style={{ color: '#895F42' }} />
+                  <FiImage className="w-6 h-6" style={{ color: '#816047' }} />
                 </label>
               )}
             </div>
@@ -263,7 +263,7 @@ const ProductReviews = ({ productId }) => {
               type="submit"
               disabled={submitting || uploadingImages || comment.trim().length < 10}
               className="px-6 py-2 rounded-lg text-white font-medium transition-colors disabled:opacity-50"
-              style={{ backgroundColor: '#895F42' }}
+              style={{ backgroundColor: '#816047' }}
             >
               {uploadingImages ? 'Uploading images...' : submitting ? 'Submitting...' : 'Submit Review'}
             </button>
@@ -276,7 +276,7 @@ const ProductReviews = ({ productId }) => {
                 setSelectedImages([]);
               }}
               className="px-6 py-2 rounded-lg font-medium transition-colors border-2"
-              style={{ borderColor: '#BDD7EB', color: '#1F2D38' }}
+              style={{ borderColor: '#D7B790', color: '#2F1A0F' }}
             >
               Cancel
             </button>
@@ -287,7 +287,7 @@ const ProductReviews = ({ productId }) => {
       {/* Reviews List */}
       {loading ? (
         <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-4 mx-auto" style={{ borderColor: '#895F42' }}></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-4 mx-auto" style={{ borderColor: '#816047' }}></div>
           <p className="mt-4 text-gray-600">Loading reviews...</p>
         </div>
       ) : reviews.length === 0 ? (
@@ -297,7 +297,7 @@ const ProductReviews = ({ productId }) => {
             <button
               onClick={() => setShowReviewForm(true)}
               className="px-6 py-2 rounded-lg text-white font-medium"
-              style={{ backgroundColor: '#895F42' }}
+              style={{ backgroundColor: '#816047' }}
             >
               Write the First Review
             </button>
@@ -309,11 +309,11 @@ const ProductReviews = ({ productId }) => {
             <div
               key={review._id}
               className="p-6 rounded-lg border-2"
-              style={{ borderColor: '#E0EAF0', backgroundColor: 'white' }}
+              style={{ borderColor: '#E6CDB1', backgroundColor: 'white' }}
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold" style={{ backgroundColor: '#895F42' }}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold" style={{ backgroundColor: '#816047' }}>
                     {review.user?.name ? (
                       review.user.name.charAt(0).toUpperCase()
                     ) : (
@@ -321,7 +321,7 @@ const ProductReviews = ({ productId }) => {
                     )}
                   </div>
                   <div>
-                    <p className="font-semibold" style={{ color: '#1F2D38' }}>
+                    <p className="font-semibold" style={{ color: '#2F1A0F' }}>
                       {review.user?.name || 'Anonymous'}
                     </p>
                     <div className="flex items-center gap-2">
@@ -360,7 +360,7 @@ const ProductReviews = ({ productId }) => {
                         src={image.url}
                         alt={`Review image ${index + 1}`}
                         className="w-24 h-24 object-cover rounded-lg border-2 hover:opacity-80 transition-opacity cursor-pointer"
-                        style={{ borderColor: '#BDD7EB' }}
+                        style={{ borderColor: '#D7B790' }}
                       />
                     </a>
                   ))}

@@ -85,7 +85,7 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
       {/* Variant Selectors */}
       {product.variantPricing.map((variant) => (
         <div key={variant.attributeCode}>
-          <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+          <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
             Select {variant.attributeName}
           </label>
           <select
@@ -93,8 +93,8 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
             onChange={(e) => handleOptionChange(variant.attributeCode, e.target.value)}
             className="w-full px-4 py-3 rounded-lg transition-all"
             style={{
-              border: '2px solid #BDD7EB',
-              color: '#1F2D38',
+              border: '2px solid #D7B790',
+              color: '#2F1A0F',
               backgroundColor: 'white'
             }}
           >
@@ -108,11 +108,11 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
       ))}
 
       {/* Price Breakdown */}
-      <div className="p-4 rounded-lg" style={{ backgroundColor: '#FFF8F3', border: '2px solid #895F42' }}>
+      <div className="p-4 rounded-lg" style={{ backgroundColor: '#E6CDB1', border: '2px solid #816047' }}>
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span style={{ color: '#1F2D38' }}>Base Price:</span>
-            <span className="font-semibold" style={{ color: '#1F2D38' }}>
+            <span style={{ color: '#2F1A0F' }}>Base Price:</span>
+            <span className="font-semibold" style={{ color: '#2F1A0F' }}>
               ₹{product.price?.toLocaleString()}
             </span>
           </div>
@@ -126,7 +126,7 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
 
             return (
               <div key={variant.attributeCode} className="flex justify-between text-sm">
-                <span style={{ color: '#1F2D38' }}>
+                <span style={{ color: '#2F1A0F' }}>
                   {variant.attributeName} ({selectedOption?.label}):
                 </span>
                 <span className="font-semibold" style={{ color: modifier > 0 ? '#10B981' : '#EF4444' }}>
@@ -136,10 +136,10 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
             );
           })}
 
-          <div className="pt-2 mt-2 border-t-2" style={{ borderColor: '#895F42' }}>
+          <div className="pt-2 mt-2 border-t-2" style={{ borderColor: '#816047' }}>
             <div className="flex justify-between items-baseline">
-              <span className="text-lg font-bold" style={{ color: '#1F2D38' }}>Final Price:</span>
-              <span className="text-3xl font-bold" style={{ color: '#895F42' }}>
+              <span className="text-lg font-bold" style={{ color: '#2F1A0F' }}>Final Price:</span>
+              <span className="text-3xl font-bold" style={{ color: '#816047' }}>
                 ₹{finalPrice?.toLocaleString()}
               </span>
             </div>
@@ -150,14 +150,14 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
       {/* Selected Variant Image */}
       {selectedImage && (
         <div className="mt-4">
-          <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+          <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
             Selected Variant
           </label>
           <img
             src={selectedImage}
             alt="Selected variant"
             className="w-full max-w-xs rounded-lg border-2"
-            style={{ borderColor: '#895F42' }}
+            style={{ borderColor: '#816047' }}
           />
         </div>
       )}

@@ -100,7 +100,7 @@ const ContactMessages = () => {
       <AdminLayout>
         <div className="flex items-center justify-center h-64">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#895F42' }}></div>
+            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#816047' }}></div>
             <p className="text-lg font-medium" style={{ color: '#64748b' }}>Loading messages...</p>
           </div>
         </div>
@@ -122,10 +122,10 @@ const ContactMessages = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium" style={{ color: '#64748b' }}>Total Messages</p>
-                <p className="text-2xl font-bold mt-1" style={{ color: '#1F2D38' }}>{total}</p>
+                <p className="text-2xl font-bold mt-1" style={{ color: '#2F1A0F' }}>{total}</p>
               </div>
               <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#e0eaf0' }}>
-                <FaInbox className="text-xl" style={{ color: '#895F42' }} />
+                <FaInbox className="text-xl" style={{ color: '#816047' }} />
               </div>
             </div>
           </Card>
@@ -204,7 +204,7 @@ const ContactMessages = () => {
                   <div className="text-center py-16">
                     <FaInbox className="text-5xl mx-auto mb-4" style={{ color: '#cbd5e1' }} />
                     <p className="text-lg font-medium mb-1" style={{ color: '#64748b' }}>No messages found</p>
-                    <p className="text-sm" style={{ color: '#94A1AB' }}>
+                    <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                       {filterStatus === 'unread' ? 'All caught up!' : 'Messages will appear here'}
                     </p>
                   </div>
@@ -215,11 +215,11 @@ const ContactMessages = () => {
                       onClick={() => handleViewMessage(message)}
                       className={`p-4 rounded-lg border cursor-pointer transition-all duration-200 ${
                         selectedMessage?._id === message._id
-                          ? 'border-[#895F42] bg-[#fafaf9] shadow-md'
+                          ? 'border-[#816047] bg-[#fafaf9] shadow-md'
                           : 'hover:bg-gray-50 hover:border-gray-300'
                       }`}
                       style={{
-                        borderColor: selectedMessage?._id === message._id ? '#895F42' : '#e2e8f0',
+                        borderColor: selectedMessage?._id === message._id ? '#816047' : '#e2e8f0',
                       }}
                     >
                       <div className="flex items-start gap-3">
@@ -232,7 +232,7 @@ const ContactMessages = () => {
                           {message.isRead ? (
                             <FaEnvelopeOpen className="text-gray-500" size={16} />
                           ) : (
-                            <FaEnvelope style={{ color: '#895F42' }} size={16} />
+                            <FaEnvelope style={{ color: '#816047' }} size={16} />
                           )}
                         </div>
 
@@ -246,7 +246,7 @@ const ContactMessages = () => {
                             >
                               {message.name}
                             </h4>
-                            <span className="text-xs shrink-0" style={{ color: '#94A1AB' }}>
+                            <span className="text-xs shrink-0" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                               {formatDate(message.createdAt)}
                             </span>
                           </div>
@@ -259,7 +259,7 @@ const ContactMessages = () => {
                             {message.subject}
                           </p>
 
-                          <p className="text-sm truncate" style={{ color: '#94A1AB' }}>
+                          <p className="text-sm truncate" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                             {message.message}
                           </p>
 
@@ -319,7 +319,7 @@ const ContactMessages = () => {
                   <div className="flex items-start justify-between pb-6 border-b" style={{ borderColor: '#e2e8f0' }}>
                     <div className="grow">
                       <div className="flex items-center gap-3 mb-2">
-                        <h2 className="text-2xl font-bold" style={{ color: '#1F2D38' }}>
+                        <h2 className="text-2xl font-bold" style={{ color: '#2F1A0F' }}>
                           {selectedMessage.subject}
                         </h2>
                         {selectedMessage.isRead ? (
@@ -366,12 +366,12 @@ const ContactMessages = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="p-4 rounded-lg" style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}>
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#895F42' }}>
+                        <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#816047' }}>
                           <FaUser className="text-white" size={20} />
                         </div>
                         <div>
                           <p className="text-xs font-medium" style={{ color: '#64748b' }}>From</p>
-                          <p className="font-bold" style={{ color: '#1F2D38' }}>{selectedMessage.name}</p>
+                          <p className="font-bold" style={{ color: '#2F1A0F' }}>{selectedMessage.name}</p>
                         </div>
                       </div>
                       <div className="space-y-2">
@@ -380,7 +380,7 @@ const ContactMessages = () => {
                           <a
                             href={`mailto:${selectedMessage.email}`}
                             className="text-sm hover:underline flex items-center gap-2"
-                            style={{ color: '#895F42' }}
+                            style={{ color: '#816047' }}
                           >
                             {selectedMessage.email}
                           </a>
@@ -391,7 +391,7 @@ const ContactMessages = () => {
                             <a
                               href={`tel:${selectedMessage.phone}`}
                               className="text-sm hover:underline flex items-center gap-2"
-                              style={{ color: '#895F42' }}
+                              style={{ color: '#816047' }}
                             >
                               <FaPhone size={12} />
                               {selectedMessage.phone}
@@ -403,12 +403,12 @@ const ContactMessages = () => {
 
                     {/* Quick Actions */}
                     <div className="p-4 rounded-lg" style={{ backgroundColor: '#fafaf9', border: '1px solid #e2e8f0' }}>
-                      <p className="text-sm font-bold mb-3" style={{ color: '#1F2D38' }}>Quick Actions</p>
+                      <p className="text-sm font-bold mb-3" style={{ color: '#2F1A0F' }}>Quick Actions</p>
                       <div className="space-y-2">
                         <button
                           onClick={() => window.location.href = `mailto:${selectedMessage.email}?subject=Re: ${selectedMessage.subject}`}
                           className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all hover:shadow-md"
-                          style={{ backgroundColor: '#895F42', color: 'white' }}
+                          style={{ backgroundColor: '#816047', color: 'white' }}
                         >
                           <FaReply />
                           <span>Reply via Email</span>
@@ -417,7 +417,7 @@ const ContactMessages = () => {
                           <button
                             onClick={() => window.location.href = `tel:${selectedMessage.phone}`}
                             className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium border transition-all hover:bg-gray-50"
-                            style={{ borderColor: '#e2e8f0', color: '#1F2D38' }}
+                            style={{ borderColor: '#e2e8f0', color: '#2F1A0F' }}
                           >
                             <FaPhone />
                             <span>Call Customer</span>
@@ -427,7 +427,7 @@ const ContactMessages = () => {
                           <button
                             onClick={() => handleMarkAsRead(selectedMessage._id)}
                             className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium border transition-all hover:bg-gray-50"
-                            style={{ borderColor: '#e2e8f0', color: '#1F2D38' }}
+                            style={{ borderColor: '#e2e8f0', color: '#2F1A0F' }}
                           >
                             <FaEnvelopeOpen />
                             <span>Mark as Read</span>
@@ -439,12 +439,12 @@ const ContactMessages = () => {
 
                   {/* Message Content */}
                   <div>
-                    <h3 className="text-sm font-bold mb-3 flex items-center gap-2" style={{ color: '#1F2D38' }}>
+                    <h3 className="text-sm font-bold mb-3 flex items-center gap-2" style={{ color: '#2F1A0F' }}>
                       <span>Message</span>
                     </h3>
                     <div
                       className="p-6 rounded-lg whitespace-pre-wrap leading-relaxed"
-                      style={{ backgroundColor: '#f8fafc', color: '#1F2D38', border: '1px solid #e2e8f0' }}
+                      style={{ backgroundColor: '#f8fafc', color: '#2F1A0F', border: '1px solid #e2e8f0' }}
                     >
                       {selectedMessage.message}
                     </div>
@@ -455,9 +455,9 @@ const ContactMessages = () => {
               <Card>
                 <div className="flex flex-col items-center justify-center py-20">
                   <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#e0eaf0' }}>
-                    <FaInbox className="text-4xl" style={{ color: '#895F42' }} />
+                    <FaInbox className="text-4xl" style={{ color: '#816047' }} />
                   </div>
-                  <p className="text-xl font-medium mb-2" style={{ color: '#1F2D38' }}>
+                  <p className="text-xl font-medium mb-2" style={{ color: '#2F1A0F' }}>
                     Select a message
                   </p>
                   <p className="text-sm" style={{ color: '#64748b' }}>

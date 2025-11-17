@@ -136,9 +136,9 @@ const DeliveryZones = () => {
               setShowModal(true);
             }}
             className="px-4 py-2 rounded-lg font-medium text-white shadow-md hover:shadow-lg transition-all"
-            style={{ backgroundColor: '#895F42' }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#9F8065'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
+            style={{ backgroundColor: '#816047' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#D7B790'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#816047'}
           >
             Create Zone
           </button>
@@ -146,31 +146,31 @@ const DeliveryZones = () => {
       />
 
       {/* Zones Table */}
-      <div className="bg-white rounded-lg shadow-md overflow-hidden" style={{ border: '2px solid #BDD7EB' }}>
+      <div className="bg-white rounded-lg shadow-md overflow-hidden" style={{ border: '2px solid #D7B790' }}>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y-2" style={{ borderColor: '#BDD7EB' }}>
-            <thead style={{ backgroundColor: '#E0EAF0' }}>
+          <table className="min-w-full divide-y-2" style={{ borderColor: '#D7B790' }}>
+            <thead style={{ backgroundColor: '#E6CDB1' }}>
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#1F2D38' }}>Zone Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#1F2D38' }}>Type</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#1F2D38' }}>Delivery Charge</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#1F2D38' }}>Free Delivery At</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#1F2D38' }}>Estimated Days</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#1F2D38' }}>Priority</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#1F2D38' }}>Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#1F2D38' }}>Actions</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#2F1A0F' }}>Zone Name</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#2F1A0F' }}>Type</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#2F1A0F' }}>Delivery Charge</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#2F1A0F' }}>Free Delivery At</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#2F1A0F' }}>Estimated Days</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#2F1A0F' }}>Priority</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#2F1A0F' }}>Status</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: '#2F1A0F' }}>Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y" style={{ borderColor: '#BDD7EB' }}>
+            <tbody className="divide-y" style={{ borderColor: '#D7B790' }}>
               {loading ? (
                 <tr>
-                  <td colSpan="8" className="px-6 py-4 text-center" style={{ color: '#94A1AB' }}>
+                  <td colSpan="8" className="px-6 py-4 text-center" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                     Loading...
                   </td>
                 </tr>
               ) : zones.length === 0 ? (
                 <tr>
-                  <td colSpan="8" className="px-6 py-4 text-center" style={{ color: '#94A1AB' }}>
+                  <td colSpan="8" className="px-6 py-4 text-center" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                     No delivery zones found
                   </td>
                 </tr>
@@ -178,26 +178,26 @@ const DeliveryZones = () => {
                 zones.map((zone) => (
                   <tr key={zone._id}>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="font-bold" style={{ color: '#1F2D38' }}>{zone.name}</div>
+                      <div className="font-bold" style={{ color: '#2F1A0F' }}>{zone.name}</div>
                       {zone.description && (
-                        <div className="text-sm" style={{ color: '#94A1AB' }}>{zone.description}</div>
+                        <div className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>{zone.description}</div>
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 py-1 text-xs rounded-full" style={{ backgroundColor: '#E0EAF0', color: '#1F2D38' }}>
+                      <span className="px-2 py-1 text-xs rounded-full" style={{ backgroundColor: '#E6CDB1', color: '#2F1A0F' }}>
                         {zone.zoneType}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap" style={{ color: '#895F42' }}>
+                    <td className="px-6 py-4 whitespace-nowrap" style={{ color: '#816047' }}>
                       <span className="font-semibold">₹{zone.deliveryCharge}</span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap" style={{ color: '#1F2D38' }}>
+                    <td className="px-6 py-4 whitespace-nowrap" style={{ color: '#2F1A0F' }}>
                       {zone.freeDeliveryThreshold ? `₹${zone.freeDeliveryThreshold}` : 'N/A'}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap" style={{ color: '#1F2D38' }}>
+                    <td className="px-6 py-4 whitespace-nowrap" style={{ color: '#2F1A0F' }}>
                       {zone.estimatedDays?.min || 3}-{zone.estimatedDays?.max || 7} days
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap" style={{ color: '#1F2D38' }}>
+                    <td className="px-6 py-4 whitespace-nowrap" style={{ color: '#2F1A0F' }}>
                       {zone.priority}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -211,7 +211,7 @@ const DeliveryZones = () => {
                       <button
                         onClick={() => handleEdit(zone)}
                         className="mr-3 transition"
-                        style={{ color: '#895F42' }}
+                        style={{ color: '#816047' }}
                       >
                         Edit
                       </button>
@@ -238,37 +238,37 @@ const DeliveryZones = () => {
       >
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>Zone Name *</label>
+            <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>Zone Name *</label>
             <input
               type="text"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="w-full px-3 py-2 border-2 rounded-md focus:outline-none"
-              style={{ borderColor: '#BDD7EB' }}
+              style={{ borderColor: '#D7B790' }}
               placeholder="e.g., Mumbai City, Maharashtra"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>Description</label>
+            <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>Description</label>
             <textarea
               value={form.description}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
               className="w-full px-3 py-2 border-2 rounded-md focus:outline-none"
-              style={{ borderColor: '#BDD7EB' }}
+              style={{ borderColor: '#D7B790' }}
               rows="2"
               placeholder="Optional description"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>Zone Type</label>
+            <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>Zone Type</label>
             <select
               value={form.zoneType}
               onChange={(e) => setForm({ ...form, zoneType: e.target.value })}
               className="w-full px-3 py-2 border-2 rounded-md focus:outline-none"
-              style={{ borderColor: '#BDD7EB' }}
+              style={{ borderColor: '#D7B790' }}
             >
               <option value="pincode">Pincode</option>
               <option value="city">City</option>
@@ -278,7 +278,7 @@ const DeliveryZones = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
               Pincodes (comma-separated)
             </label>
             <input
@@ -286,35 +286,35 @@ const DeliveryZones = () => {
               value={form.pincodes}
               onChange={(e) => setForm({ ...form, pincodes: e.target.value })}
               className="w-full px-3 py-2 border-2 rounded-md focus:outline-none"
-              style={{ borderColor: '#BDD7EB' }}
+              style={{ borderColor: '#D7B790' }}
               placeholder="e.g., 400001, 400002-400050, 4000*"
             />
-            <p className="text-xs mt-1" style={{ color: '#94A1AB' }}>
+            <p className="text-xs mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
               Supports exact match (400001), ranges (400001-400050), and wildcards (4000*)
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>Cities (comma-separated)</label>
+              <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>Cities (comma-separated)</label>
               <input
                 type="text"
                 value={form.cities}
                 onChange={(e) => setForm({ ...form, cities: e.target.value })}
                 className="w-full px-3 py-2 border-2 rounded-md focus:outline-none"
-                style={{ borderColor: '#BDD7EB' }}
+                style={{ borderColor: '#D7B790' }}
                 placeholder="e.g., Mumbai, Pune"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>States (comma-separated)</label>
+              <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>States (comma-separated)</label>
               <input
                 type="text"
                 value={form.states}
                 onChange={(e) => setForm({ ...form, states: e.target.value })}
                 className="w-full px-3 py-2 border-2 rounded-md focus:outline-none"
-                style={{ borderColor: '#BDD7EB' }}
+                style={{ borderColor: '#D7B790' }}
                 placeholder="e.g., Maharashtra, Gujarat"
               />
             </div>
@@ -322,13 +322,13 @@ const DeliveryZones = () => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>Delivery Charge (₹) *</label>
+              <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>Delivery Charge (₹) *</label>
               <input
                 type="number"
                 value={form.deliveryCharge}
                 onChange={(e) => setForm({ ...form, deliveryCharge: parseFloat(e.target.value) || 0 })}
                 className="w-full px-3 py-2 border-2 rounded-md focus:outline-none"
-                style={{ borderColor: '#BDD7EB' }}
+                style={{ borderColor: '#D7B790' }}
                 min="0"
                 step="0.01"
                 required
@@ -336,13 +336,13 @@ const DeliveryZones = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>Free Delivery Threshold (₹)</label>
+              <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>Free Delivery Threshold (₹)</label>
               <input
                 type="number"
                 value={form.freeDeliveryThreshold}
                 onChange={(e) => setForm({ ...form, freeDeliveryThreshold: e.target.value ? parseFloat(e.target.value) : '' })}
                 className="w-full px-3 py-2 border-2 rounded-md focus:outline-none"
-                style={{ borderColor: '#BDD7EB' }}
+                style={{ borderColor: '#D7B790' }}
                 min="0"
                 placeholder="No free delivery"
               />
@@ -351,41 +351,41 @@ const DeliveryZones = () => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>Min Delivery Days</label>
+              <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>Min Delivery Days</label>
               <input
                 type="number"
                 value={form.estimatedDays.min}
                 onChange={(e) => setForm({ ...form, estimatedDays: { ...form.estimatedDays, min: parseInt(e.target.value) || 3 } })}
                 className="w-full px-3 py-2 border-2 rounded-md focus:outline-none"
-                style={{ borderColor: '#BDD7EB' }}
+                style={{ borderColor: '#D7B790' }}
                 min="1"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>Max Delivery Days</label>
+              <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>Max Delivery Days</label>
               <input
                 type="number"
                 value={form.estimatedDays.max}
                 onChange={(e) => setForm({ ...form, estimatedDays: { ...form.estimatedDays, max: parseInt(e.target.value) || 7 } })}
                 className="w-full px-3 py-2 border-2 rounded-md focus:outline-none"
-                style={{ borderColor: '#BDD7EB' }}
+                style={{ borderColor: '#D7B790' }}
                 min="1"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>Priority (lower = higher priority)</label>
+            <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>Priority (lower = higher priority)</label>
             <input
               type="number"
               value={form.priority}
               onChange={(e) => setForm({ ...form, priority: parseInt(e.target.value) || 999 })}
               className="w-full px-3 py-2 border-2 rounded-md focus:outline-none"
-              style={{ borderColor: '#BDD7EB' }}
+              style={{ borderColor: '#D7B790' }}
               min="1"
             />
-            <p className="text-xs mt-1" style={{ color: '#94A1AB' }}>
+            <p className="text-xs mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
               When multiple zones match, the one with lowest priority number wins
             </p>
           </div>
@@ -398,7 +398,7 @@ const DeliveryZones = () => {
                 onChange={(e) => setForm({ ...form, codAvailable: e.target.checked })}
                 className="mr-2"
               />
-              <span className="text-sm" style={{ color: '#1F2D38' }}>COD Available</span>
+              <span className="text-sm" style={{ color: '#2F1A0F' }}>COD Available</span>
             </label>
 
             <label className="flex items-center">
@@ -408,7 +408,7 @@ const DeliveryZones = () => {
                 onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
                 className="mr-2"
               />
-              <span className="text-sm" style={{ color: '#1F2D38' }}>Active</span>
+              <span className="text-sm" style={{ color: '#2F1A0F' }}>Active</span>
             </label>
           </div>
 
@@ -417,14 +417,14 @@ const DeliveryZones = () => {
               type="button"
               onClick={resetForm}
               className="px-4 py-2 rounded-md"
-              style={{ backgroundColor: '#E0EAF0', color: '#1F2D38' }}
+              style={{ backgroundColor: '#E6CDB1', color: '#2F1A0F' }}
             >
               Cancel
             </button>
             <button
               type="submit"
               className="px-4 py-2 rounded-md"
-              style={{ backgroundColor: '#895F42', color: 'white' }}
+              style={{ backgroundColor: '#816047', color: 'white' }}
             >
               {editingZone ? 'Update' : 'Create'}
             </button>

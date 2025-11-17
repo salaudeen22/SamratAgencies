@@ -189,7 +189,7 @@ const Support = () => {
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2" style={{ color: '#1F2D38' }}>
+          <h1 className="text-3xl font-bold mb-2" style={{ color: '#2F1A0F' }}>
             Customer Support
           </h1>
           <p style={{ color: '#64748b' }}>
@@ -203,10 +203,10 @@ const Support = () => {
             onClick={() => setActiveTab('create')}
             className={`pb-3 px-4 font-medium transition-colors ${
               activeTab === 'create'
-                ? 'border-b-2 text-[#895F42]'
+                ? 'border-b-2 text-[#816047]'
                 : 'text-gray-500 hover:text-gray-700'
             }`}
-            style={activeTab === 'create' ? { borderColor: '#895F42' } : {}}
+            style={activeTab === 'create' ? { borderColor: '#816047' } : {}}
           >
             Create Ticket
           </button>
@@ -214,10 +214,10 @@ const Support = () => {
             onClick={() => setActiveTab('my-tickets')}
             className={`pb-3 px-4 font-medium transition-colors ${
               activeTab === 'my-tickets'
-                ? 'border-b-2 text-[#895F42]'
+                ? 'border-b-2 text-[#816047]'
                 : 'text-gray-500 hover:text-gray-700'
             }`}
-            style={activeTab === 'my-tickets' ? { borderColor: '#895F42' } : {}}
+            style={activeTab === 'my-tickets' ? { borderColor: '#816047' } : {}}
           >
             My Tickets ({tickets.length})
           </button>
@@ -228,7 +228,7 @@ const Support = () => {
           <div className="bg-white rounded-lg shadow-sm p-6 md:p-8" style={{ borderColor: '#e2e8f0', border: '1px solid' }}>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
                   Subject <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -236,20 +236,20 @@ const Support = () => {
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   placeholder="Brief description of your issue"
-                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#895F42]"
+                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#816047]"
                   style={{ borderColor: '#e2e8f0' }}
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
                   Priority
                 </label>
                 <select
                   value={formData.priority}
                   onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#895F42]"
+                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#816047]"
                   style={{ borderColor: '#e2e8f0' }}
                 >
                   <option value="low">Low</option>
@@ -260,7 +260,7 @@ const Support = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
                   Related Order ID (Optional)
                 </label>
                 <input
@@ -268,13 +268,13 @@ const Support = () => {
                   value={formData.relatedOrder}
                   onChange={(e) => setFormData({ ...formData, relatedOrder: e.target.value })}
                   placeholder="Enter order ID if this is order-related"
-                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#895F42]"
+                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#816047]"
                   style={{ borderColor: '#e2e8f0' }}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
                   Message <span className="text-red-500">*</span>
                 </label>
                 <textarea
@@ -282,7 +282,7 @@ const Support = () => {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Please describe your issue in detail..."
                   rows="6"
-                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#895F42] resize-none"
+                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#816047] resize-none"
                   style={{ borderColor: '#e2e8f0' }}
                   required
                 />
@@ -292,7 +292,7 @@ const Support = () => {
                 type="submit"
                 disabled={loading}
                 className="w-full md:w-auto px-8 py-3 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ backgroundColor: '#895F42' }}
+                style={{ backgroundColor: '#816047' }}
               >
                 {loading ? 'Submitting...' : 'Submit Ticket'}
               </button>
@@ -305,13 +305,13 @@ const Support = () => {
           <div className="space-y-4">
             {loading ? (
               <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-                <div className="w-12 h-12 border-4 border-gray-200 border-t-[#895F42] rounded-full animate-spin mx-auto"></div>
+                <div className="w-12 h-12 border-4 border-gray-200 border-t-[#816047] rounded-full animate-spin mx-auto"></div>
                 <p className="mt-4 text-gray-600">Loading tickets...</p>
               </div>
             ) : tickets.length === 0 ? (
               <div className="bg-white rounded-lg shadow-sm p-12 text-center">
                 <FaTicketAlt className="text-6xl mx-auto mb-4 text-gray-300" />
-                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                <h3 className="text-xl font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                   No tickets yet
                 </h3>
                 <p className="text-gray-600 mb-4">
@@ -320,7 +320,7 @@ const Support = () => {
                 <button
                   onClick={() => setActiveTab('create')}
                   className="px-6 py-2 text-white rounded-lg"
-                  style={{ backgroundColor: '#895F42' }}
+                  style={{ backgroundColor: '#816047' }}
                 >
                   Create Your First Ticket
                 </button>
@@ -330,7 +330,7 @@ const Support = () => {
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <button
                   onClick={() => setSelectedTicket(null)}
-                  className="mb-4 text-[#895F42] hover:underline"
+                  className="mb-4 text-[#816047] hover:underline"
                 >
                   ← Back to tickets
                 </button>
@@ -342,7 +342,7 @@ const Support = () => {
                       <p className="text-sm font-medium text-gray-600 mb-1">
                         {selectedTicket.ticketNumber}
                       </p>
-                      <h2 className="text-2xl font-bold" style={{ color: '#1F2D38' }}>
+                      <h2 className="text-2xl font-bold" style={{ color: '#2F1A0F' }}>
                         {selectedTicket.subject}
                       </h2>
                     </div>
@@ -369,7 +369,7 @@ const Support = () => {
                     >
                       <div
                         className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold shrink-0"
-                        style={{ backgroundColor: msg.sender === 'admin' ? '#895F42' : '#3b82f6' }}
+                        style={{ backgroundColor: msg.sender === 'admin' ? '#816047' : '#3b82f6' }}
                       >
                         {msg.sender === 'admin' ? 'A' : user?.name?.charAt(0).toUpperCase()}
                       </div>
@@ -377,7 +377,7 @@ const Support = () => {
                         <div
                           className={`inline-block px-4 py-3 rounded-lg ${
                             msg.sender === 'admin'
-                              ? 'bg-[#895F42] text-white'
+                              ? 'bg-[#816047] text-white'
                               : 'bg-gray-100'
                           }`}
                         >
@@ -398,7 +398,7 @@ const Support = () => {
                     onChange={(e) => setReplyMessage(e.target.value)}
                     placeholder="Type your reply..."
                     rows="4"
-                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#895F42] resize-none"
+                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#816047] resize-none"
                     style={{ borderColor: '#e2e8f0' }}
                     disabled={sending}
                   />
@@ -407,7 +407,7 @@ const Support = () => {
                       type="submit"
                       disabled={sending || !replyMessage.trim()}
                       className="px-6 py-2 text-white rounded-lg flex items-center gap-2 disabled:opacity-50"
-                      style={{ backgroundColor: '#895F42' }}
+                      style={{ backgroundColor: '#816047' }}
                     >
                       <FaPaperPlane size={14} />
                       {sending ? 'Sending...' : 'Send Reply'}
@@ -447,7 +447,7 @@ const Support = () => {
                           {ticket.ticketNumber}
                         </p>
                       </div>
-                      <h3 className="text-lg font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                      <h3 className="text-lg font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                         {ticket.subject}
                       </h3>
                       <p className="text-sm text-gray-600">

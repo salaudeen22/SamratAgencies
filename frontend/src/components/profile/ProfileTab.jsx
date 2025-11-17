@@ -26,14 +26,14 @@ const ProfileTab = ({ user }) => {
     <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-3 sm:gap-0">
         <div>
-          <h2 className="text-xl font-bold" style={{ color: '#1F2D38' }}>Profile Information</h2>
-          <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>Manage your personal details</p>
+          <h2 className="text-xl font-bold" style={{ color: '#2F1A0F' }}>Profile Information</h2>
+          <p className="text-sm mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Manage your personal details</p>
         </div>
         {!editMode && (
           <button
             onClick={() => setEditMode(true)}
             className="px-5 py-2.5 rounded-xl text-white transition-all text-sm font-medium hover:shadow-lg transform hover:-translate-y-0.5"
-            style={{ backgroundColor: '#895F42' }}
+            style={{ backgroundColor: '#816047' }}
           >
             Edit Profile
           </button>
@@ -43,7 +43,7 @@ const ProfileTab = ({ user }) => {
       {editMode ? (
         <form onSubmit={handleProfileUpdate} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
               Full Name
             </label>
             <input
@@ -51,12 +51,12 @@ const ProfileTab = ({ user }) => {
               value={profileData.name}
               onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
-              style={{ borderColor: '#BDD7EB' }}
+              style={{ borderColor: '#D7B790' }}
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
               Email
             </label>
             <input
@@ -64,12 +64,12 @@ const ProfileTab = ({ user }) => {
               value={profileData.email}
               onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
-              style={{ borderColor: '#BDD7EB' }}
+              style={{ borderColor: '#D7B790' }}
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
               Phone Number
             </label>
             <input
@@ -77,7 +77,7 @@ const ProfileTab = ({ user }) => {
               value={profileData.phone}
               onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
-              style={{ borderColor: '#BDD7EB' }}
+              style={{ borderColor: '#D7B790' }}
             />
           </div>
           <div className="flex gap-4">
@@ -86,7 +86,7 @@ const ProfileTab = ({ user }) => {
               type="button"
               onClick={() => setEditMode(false)}
               className="px-4 py-2 border rounded-md"
-              style={{ borderColor: '#BDD7EB', color: '#1F2D38' }}
+              style={{ borderColor: '#D7B790', color: '#2F1A0F' }}
             >
               Cancel
             </button>
@@ -95,28 +95,28 @@ const ProfileTab = ({ user }) => {
       ) : (
         <div className="space-y-4">
           <div>
-            <label className="block text-xs sm:text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
+            <label className="block text-xs sm:text-sm font-medium mb-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
               Full Name
             </label>
-            <p className="text-base sm:text-lg" style={{ color: '#1F2D38' }}>{user?.name}</p>
+            <p className="text-base sm:text-lg" style={{ color: '#2F1A0F' }}>{user?.name}</p>
           </div>
           <div>
-            <label className="block text-xs sm:text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
+            <label className="block text-xs sm:text-sm font-medium mb-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
               Email
             </label>
-            <p className="text-base sm:text-lg break-all" style={{ color: '#1F2D38' }}>{user?.email}</p>
+            <p className="text-base sm:text-lg break-all" style={{ color: '#2F1A0F' }}>{user?.email}</p>
           </div>
           <div>
-            <label className="block text-xs sm:text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
+            <label className="block text-xs sm:text-sm font-medium mb-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
               Phone Number
             </label>
-            <p className="text-base sm:text-lg" style={{ color: '#1F2D38' }}>{user?.phone || 'Not provided'}</p>
+            <p className="text-base sm:text-lg" style={{ color: '#2F1A0F' }}>{user?.phone || 'Not provided'}</p>
           </div>
           <div>
-            <label className="block text-xs sm:text-sm font-medium mb-1" style={{ color: '#94A1AB' }}>
+            <label className="block text-xs sm:text-sm font-medium mb-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
               Member Since
             </label>
-            <p className="text-base sm:text-lg" style={{ color: '#1F2D38' }}>
+            <p className="text-base sm:text-lg" style={{ color: '#2F1A0F' }}>
               {new Date(user?.createdAt).toLocaleDateString()}
             </p>
           </div>

@@ -104,7 +104,7 @@ const Reviews = () => {
       <AdminLayout>
         <div className="flex items-center justify-center h-64">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#895F42' }}></div>
+            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#816047' }}></div>
             <p className="text-lg font-medium" style={{ color: '#64748b' }}>Loading reviews...</p>
           </div>
         </div>
@@ -126,7 +126,7 @@ const Reviews = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium" style={{ color: '#64748b' }}>Total Reviews</p>
-                <p className="text-2xl font-bold mt-1" style={{ color: '#1F2D38' }}>{total}</p>
+                <p className="text-2xl font-bold mt-1" style={{ color: '#2F1A0F' }}>{total}</p>
               </div>
               <div className="w-12 h-12 rounded-full flex items-center justify-center bg-blue-100">
                 <FaStar className="text-xl text-blue-600" />
@@ -162,7 +162,7 @@ const Reviews = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium" style={{ color: '#64748b' }}>Avg Rating</p>
-                <p className="text-2xl font-bold mt-1" style={{ color: '#1F2D38' }}>{getAverageRating()}</p>
+                <p className="text-2xl font-bold mt-1" style={{ color: '#2F1A0F' }}>{getAverageRating()}</p>
               </div>
               <div className="w-12 h-12 rounded-full flex items-center justify-center bg-yellow-100">
                 <FaStar className="text-xl text-yellow-600" />
@@ -219,7 +219,7 @@ const Reviews = () => {
               <div className="text-center py-16">
                 <FaBoxOpen className="text-5xl mx-auto mb-4" style={{ color: '#cbd5e1' }} />
                 <p className="text-lg font-medium mb-1" style={{ color: '#64748b' }}>No reviews found</p>
-                <p className="text-sm" style={{ color: '#94A1AB' }}>
+                <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   {filterStatus === 'pending' ? 'All reviews are approved!' : 'Reviews will appear here'}
                 </p>
               </div>
@@ -251,7 +251,7 @@ const Reviews = () => {
                       {/* Product Name & Status */}
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <h3 className="text-lg font-bold mb-1" style={{ color: '#1F2D38' }}>
+                          <h3 className="text-lg font-bold mb-1" style={{ color: '#2F1A0F' }}>
                             {review.product?.name || 'Product Deleted'}
                           </h3>
                           <div className="flex items-center gap-3">
@@ -276,7 +276,7 @@ const Reviews = () => {
 
                       {/* Review Title */}
                       {review.title && (
-                        <h4 className="text-base font-semibold" style={{ color: '#1F2D38' }}>
+                        <h4 className="text-base font-semibold" style={{ color: '#2F1A0F' }}>
                           {review.title}
                         </h4>
                       )}
@@ -308,7 +308,7 @@ const Reviews = () => {
                       {/* Meta Information */}
                       <div className="flex items-center gap-4 text-sm flex-wrap" style={{ color: '#64748b' }}>
                         <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: '#895F42' }}>
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: '#816047' }}>
                             {review.user?.name?.charAt(0).toUpperCase() || 'U'}
                           </div>
                           <span className="font-medium">{review.user?.name || 'Unknown User'}</span>

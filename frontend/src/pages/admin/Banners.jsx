@@ -160,9 +160,9 @@ const Banners = () => {
               setShowModal(true);
             }}
             className="px-4 py-2 rounded-lg font-medium text-white shadow-md hover:shadow-lg transition-all"
-            style={{ backgroundColor: '#895F42' }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#9F8065'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
+            style={{ backgroundColor: '#816047' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#D7B790'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#816047'}
           >
             Create Banner
           </button>
@@ -171,7 +171,7 @@ const Banners = () => {
 
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: '#895F42' }}></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: '#816047' }}></div>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4">
@@ -193,7 +193,7 @@ const Banners = () => {
                   <div className="p-6 md:w-2/3">
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
-                        <h3 className="text-xl font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                        <h3 className="text-xl font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                           {banner.title}
                         </h3>
                         {banner.description && (
@@ -253,7 +253,7 @@ const Banners = () => {
       <Modal isOpen={showModal} onClose={resetForm} title={editingBanner ? 'Edit Banner' : 'Create Banner'} size="large">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
               Title
             </label>
             <input
@@ -261,25 +261,25 @@ const Banners = () => {
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-              style={{ focusRingColor: '#895F42' }}
+              style={{ focusRingColor: '#816047' }}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
               Description
             </label>
             <textarea
               value={form.description}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-              style={{ focusRingColor: '#895F42' }}
+              style={{ focusRingColor: '#816047' }}
               rows="3"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
               Banner Image <span className="text-red-500">*</span>
             </label>
             <input
@@ -291,7 +291,7 @@ const Banners = () => {
             />
             {uploading && (
               <div className="flex items-center gap-2 mt-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2" style={{ borderColor: '#895F42' }}></div>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2" style={{ borderColor: '#816047' }}></div>
                 <p className="text-sm text-gray-600">Uploading image to S3...</p>
               </div>
             )}
@@ -307,7 +307,7 @@ const Banners = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
               Link URL
             </label>
             <input
@@ -320,7 +320,7 @@ const Banners = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
               Button Text
             </label>
             <input
@@ -332,7 +332,7 @@ const Banners = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
               Position
             </label>
             <select
@@ -352,7 +352,7 @@ const Banners = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+            <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
               Display Order
             </label>
             <input
@@ -366,7 +366,7 @@ const Banners = () => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+              <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                 Start Date
               </label>
               <input
@@ -378,7 +378,7 @@ const Banners = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+              <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                 End Date
               </label>
               <input
@@ -397,7 +397,7 @@ const Banners = () => {
               onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
               className="mr-2"
             />
-            <label className="text-sm font-medium" style={{ color: '#1F2D38' }}>
+            <label className="text-sm font-medium" style={{ color: '#2F1A0F' }}>
               Active
             </label>
           </div>
@@ -413,9 +413,9 @@ const Banners = () => {
             <button
               type="submit"
               className="px-4 py-2 text-white rounded-lg transition-colors"
-              style={{ backgroundColor: '#895F42' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#9F8065'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
+              style={{ backgroundColor: '#816047' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#D7B790'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#816047'}
               disabled={uploading}
             >
               {editingBanner ? 'Update' : 'Create'}

@@ -5,7 +5,7 @@ const ProductRecommendations = ({ title, products, loading }) => {
   if (loading) {
     return (
       <div className="py-8">
-        <h2 className="text-2xl font-bold mb-6" style={{ color: '#1F2D38' }}>{title}</h2>
+        <h2 className="text-2xl font-bold mb-6" style={{ color: '#2F1A0F' }}>{title}</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
           {[...Array(6)].map((_, i) => (
             <div key={i} className="animate-pulse">
@@ -35,7 +35,7 @@ const ProductRecommendations = ({ title, products, loading }) => {
 
   return (
     <div className="py-8">
-      <h2 className="text-xl md:text-2xl font-bold mb-6" style={{ color: '#1F2D38' }}>
+      <h2 className="text-xl md:text-2xl font-bold mb-6" style={{ color: '#2F1A0F' }}>
         {title}
       </h2>
 
@@ -45,7 +45,7 @@ const ProductRecommendations = ({ title, products, loading }) => {
             key={product._id}
             to={`/products/${product._id}`}
             className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2"
-            style={{ borderColor: '#BDD7EB' }}
+            style={{ borderColor: '#D7B790' }}
           >
             {/* Product Image */}
             <div className="relative aspect-square overflow-hidden bg-gray-100">
@@ -74,7 +74,7 @@ const ProductRecommendations = ({ title, products, loading }) => {
             <div className="p-3">
               {/* Category */}
               {product.category && (
-                <p className="text-xs mb-1" style={{ color: '#94A1AB' }}>
+                <p className="text-xs mb-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   {product.category.name}
                 </p>
               )}
@@ -82,7 +82,7 @@ const ProductRecommendations = ({ title, products, loading }) => {
               {/* Product Name */}
               <h3
                 className="text-sm md:text-base font-semibold mb-2 line-clamp-2 min-h-[2.5rem]"
-                style={{ color: '#1F2D38' }}
+                style={{ color: '#2F1A0F' }}
               >
                 {product.name}
               </h3>
@@ -92,16 +92,16 @@ const ProductRecommendations = ({ title, products, loading }) => {
                 {product.discount > 0 ? (
                   <>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-base md:text-lg font-bold" style={{ color: '#895F42' }}>
+                      <span className="text-base md:text-lg font-bold" style={{ color: '#816047' }}>
                         ₹{Math.round(getDiscountedPrice(product)).toLocaleString()}
                       </span>
-                      <span className="text-xs line-through" style={{ color: '#94A1AB' }}>
+                      <span className="text-xs line-through" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                         ₹{product.price?.toLocaleString()}
                       </span>
                     </div>
                   </>
                 ) : (
-                  <span className="text-base md:text-lg font-bold" style={{ color: '#895F42' }}>
+                  <span className="text-base md:text-lg font-bold" style={{ color: '#816047' }}>
                     ₹{product.price?.toLocaleString()}
                   </span>
                 )}

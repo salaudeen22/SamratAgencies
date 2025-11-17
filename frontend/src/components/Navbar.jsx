@@ -38,13 +38,13 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-white border-b sticky top-0 z-50" style={{ borderColor: '#E0EAF0' }}>
+    <nav className="bg-white border-b sticky top-0 z-50" style={{ borderColor: '#E6CDB1' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-1.5 sm:space-x-2">
             <img src={logo} alt="Samrat Agencies" className="h-6 sm:h-8 w-auto" />
-            <span className="text-sm sm:text-base lg:text-lg font-semibold tracking-tight" style={{ color: '#1F2D38' }}>Samrat Agencies</span>
+            <span className="text-sm sm:text-base lg:text-lg font-semibold tracking-tight" style={{ color: '#2F1A0F' }}>Samrat Agencies</span>
           </Link>
 
           {/* Desktop Navigation - Centered */}
@@ -54,15 +54,15 @@ const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 className="text-sm font-medium tracking-wide uppercase transition-colors relative group"
-                style={{ color: isActive(link.path) ? '#895F42' : '#1F2D38' }}
+                style={{ color: isActive(link.path) ? '#816047' : '#2F1A0F' }}
               >
                 {link.label}
                 <span
                   className="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300"
-                  style={{ backgroundColor: '#895F42' }}
+                  style={{ backgroundColor: '#816047' }}
                 ></span>
                 {isActive(link.path) && (
-                  <span className="absolute bottom-0 left-0 w-full h-0.5" style={{ backgroundColor: '#895F42' }}></span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5" style={{ backgroundColor: '#816047' }}></span>
                 )}
               </Link>
             ))}
@@ -76,31 +76,31 @@ const Navbar = () => {
               <Link
                 to="/products"
                 className="text-sm font-medium tracking-wide uppercase transition-colors relative group"
-                style={{ color: isActive('/products') ? '#895F42' : '#1F2D38' }}
+                style={{ color: isActive('/products') ? '#816047' : '#2F1A0F' }}
               >
                 Shop
                 <span
                   className="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300"
-                  style={{ backgroundColor: '#895F42' }}
+                  style={{ backgroundColor: '#816047' }}
                 ></span>
                 {isActive('/products') && (
-                  <span className="absolute bottom-0 left-0 w-full h-0.5" style={{ backgroundColor: '#895F42' }}></span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5" style={{ backgroundColor: '#816047' }}></span>
                 )}
               </Link>
 
               {/* Mega Menu Dropdown */}
               {isShopMenuOpen && categories.length > 0 && (
                 <div className="absolute left-1/2 transform -translate-x-1/2 top-full pt-4 w-screen max-w-6xl z-50">
-                  <div className="bg-white rounded-lg shadow-2xl border p-8" style={{ borderColor: '#E0EAF0' }}>
+                  <div className="bg-white rounded-lg shadow-2xl border p-8" style={{ borderColor: '#E6CDB1' }}>
                     <div className="grid gap-8" style={{ gridTemplateColumns: `repeat(${Math.min(categories.length, 5)}, minmax(0, 1fr))` }}>
                       {categories.map((category) => (
                         <div key={category._id}>
                           <Link
                             to={`/products?category=${category.slug || category._id}`}
                             className="text-sm font-bold mb-4 uppercase tracking-wide block transition-colors"
-                            style={{ color: '#895F42' }}
-                            onMouseEnter={(e) => e.currentTarget.style.color = '#9F8065'}
-                            onMouseLeave={(e) => e.currentTarget.style.color = '#895F42'}
+                            style={{ color: '#816047' }}
+                            onMouseEnter={(e) => e.currentTarget.style.color = '#D7B790'}
+                            onMouseLeave={(e) => e.currentTarget.style.color = '#816047'}
                           >
                             {category.name}
                           </Link>
@@ -111,9 +111,9 @@ const Navbar = () => {
                                   <Link
                                     to={`/products?category=${child.slug || child._id}`}
                                     className="text-sm transition-colors block"
-                                    style={{ color: '#94A1AB' }}
-                                    onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = '#94A1AB'}
+                                    style={{ color: 'rgba(129, 96, 71, 0.6)' }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = '#816047'}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(129, 96, 71, 0.6)'}
                                   >
                                     {child.name}
                                   </Link>
@@ -134,7 +134,7 @@ const Navbar = () => {
           <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-6">
             {/* Wishlist */}
             <Link to="/wishlist" className="relative group">
-              <svg className="w-5 h-5 sm:w-5 sm:h-5 transition-colors" style={{ color: '#1F2D38' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-5 sm:h-5 transition-colors" style={{ color: '#2F1A0F' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
               {getWishlistCount() > 0 && (
@@ -146,11 +146,11 @@ const Navbar = () => {
 
             {/* Cart */}
             <Link to="/cart" className="relative group">
-              <svg className="w-5 h-5 sm:w-5 sm:h-5 transition-colors" style={{ color: '#1F2D38' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-5 sm:h-5 transition-colors" style={{ color: '#2F1A0F' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
               {getCartCount() > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 text-xs rounded-full h-4 w-4 flex items-center justify-center font-semibold" style={{ backgroundColor: '#895F42', color: 'white', fontSize: '10px' }}>
+                <span className="absolute -top-1.5 -right-1.5 text-xs rounded-full h-4 w-4 flex items-center justify-center font-semibold" style={{ backgroundColor: '#816047', color: 'white', fontSize: '10px' }}>
                   {getCartCount()}
                 </span>
               )}
@@ -162,9 +162,9 @@ const Navbar = () => {
                 <button
                   onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
                   className="flex items-center space-x-1.5"
-                  style={{ color: '#1F2D38' }}
+                  style={{ color: '#2F1A0F' }}
                 >
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-sm font-semibold" style={{ backgroundColor: '#E0EAF0', color: '#895F42' }}>
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-sm font-semibold" style={{ backgroundColor: '#E6CDB1', color: '#816047' }}>
                     {user?.name?.charAt(0).toUpperCase() || 'U'}
                   </div>
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,12 +173,12 @@ const Navbar = () => {
                 </button>
 
                 {isProfileDropdownOpen && (
-                  <div className="absolute right-0 top-10 w-44 bg-white rounded-md shadow-lg py-1 border" style={{ borderColor: '#E0EAF0' }}>
+                  <div className="absolute right-0 top-10 w-44 bg-white rounded-md shadow-lg py-1 border" style={{ borderColor: '#E6CDB1' }}>
                     <Link
                       to="/profile"
                       className="block px-4 py-2 text-sm transition-colors"
-                      style={{ color: '#1F2D38' }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+                      style={{ color: '#2F1A0F' }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
                       onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       onClick={() => setIsProfileDropdownOpen(false)}
                     >
@@ -188,8 +188,8 @@ const Navbar = () => {
                       <Link
                         to="/admin"
                         className="block px-4 py-2 text-sm transition-colors"
-                        style={{ color: '#895F42' }}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+                        style={{ color: '#816047' }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                         onClick={() => setIsProfileDropdownOpen(false)}
                       >
@@ -210,10 +210,10 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="hidden md:flex items-center space-x-6">
-                <Link to="/login" className="text-sm font-medium" style={{ color: '#1F2D38' }}>
+                <Link to="/login" className="text-sm font-medium" style={{ color: '#2F1A0F' }}>
                   Login
                 </Link>
-                <Link to="/register" className="text-sm font-medium px-4 py-1.5 rounded-sm transition-colors" style={{ backgroundColor: '#1F2D38', color: 'white' }}>
+                <Link to="/register" className="text-sm font-medium px-4 py-1.5 rounded-sm transition-colors" style={{ backgroundColor: '#816047', color: 'white' }}>
                   Register
                 </Link>
               </div>
@@ -226,7 +226,7 @@ const Navbar = () => {
                 setExpandedCategory(null); // Reset expanded category when toggling menu
               }}
               className="md:hidden"
-              style={{ color: '#1F2D38' }}
+              style={{ color: '#2F1A0F' }}
             >
               {isMobileMenuOpen ? (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -244,7 +244,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t" style={{ borderColor: '#E0EAF0' }}>
+        <div className="md:hidden bg-white border-t" style={{ borderColor: '#E6CDB1' }}>
           <div className="px-6 py-4 space-y-1">
             {navLinks.map((link) => (
               <Link
@@ -253,7 +253,7 @@ const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-2.5 text-sm font-medium tracking-wide uppercase"
                 style={{
-                  color: isActive(link.path) ? '#895F42' : '#1F2D38'
+                  color: isActive(link.path) ? '#816047' : '#2F1A0F'
                 }}
               >
                 {link.label}
@@ -261,13 +261,13 @@ const Navbar = () => {
             ))}
 
             {/* Shop Link with Categories */}
-            <div className="pt-3 mt-3" style={{ borderTop: '1px solid #E0EAF0' }}>
+            <div className="pt-3 mt-3" style={{ borderTop: '1px solid #E6CDB1' }}>
               <Link
                 to="/products"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-2.5 text-sm font-medium tracking-wide uppercase"
                 style={{
-                  color: isActive('/products') ? '#895F42' : '#1F2D38'
+                  color: isActive('/products') ? '#816047' : '#2F1A0F'
                 }}
               >
                 Shop
@@ -286,7 +286,7 @@ const Navbar = () => {
                             setExpandedCategory(null);
                           }}
                           className="block py-1.5 text-xs font-semibold uppercase flex-1"
-                          style={{ color: '#895F42' }}
+                          style={{ color: '#816047' }}
                         >
                           {category.name}
                         </Link>
@@ -294,7 +294,7 @@ const Navbar = () => {
                           <button
                             onClick={() => setExpandedCategory(expandedCategory === category._id ? null : category._id)}
                             className="p-1"
-                            style={{ color: '#895F42' }}
+                            style={{ color: '#816047' }}
                           >
                             <svg
                               className={`w-4 h-4 transition-transform ${expandedCategory === category._id ? 'rotate-180' : ''}`}
@@ -318,7 +318,7 @@ const Navbar = () => {
                                 setExpandedCategory(null);
                               }}
                               className="block py-1 text-xs"
-                              style={{ color: '#94A1AB' }}
+                              style={{ color: 'rgba(129, 96, 71, 0.6)' }}
                             >
                               {child.name}
                             </Link>
@@ -331,14 +331,14 @@ const Navbar = () => {
               )}
             </div>
 
-            <div className="pt-3 mt-3 space-y-1" style={{ borderTop: '1px solid #E0EAF0' }}>
+            <div className="pt-3 mt-3 space-y-1" style={{ borderTop: '1px solid #E6CDB1' }}>
               {isAuthenticated ? (
                 <>
                   <Link
                     to="/profile"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block py-2.5 text-sm"
-                    style={{ color: '#1F2D38' }}
+                    style={{ color: '#2F1A0F' }}
                   >
                     My Profile
                   </Link>
@@ -347,7 +347,7 @@ const Navbar = () => {
                       to="/admin"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="block py-2.5 text-sm"
-                      style={{ color: '#895F42' }}
+                      style={{ color: '#816047' }}
                     >
                       Admin Panel
                     </Link>
@@ -368,7 +368,7 @@ const Navbar = () => {
                     to="/login"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block py-2.5 text-sm"
-                    style={{ color: '#1F2D38' }}
+                    style={{ color: '#2F1A0F' }}
                   >
                     Login
                   </Link>
@@ -376,7 +376,7 @@ const Navbar = () => {
                     to="/register"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block py-2.5 text-sm text-center mt-2 rounded-md"
-                    style={{ backgroundColor: '#1F2D38', color: 'white' }}
+                    style={{ backgroundColor: '#816047', color: 'white' }}
                   >
                     Register
                   </Link>

@@ -11,7 +11,7 @@ const PageHeader = ({ title, subtitle, action, breadcrumbs }) => {
                 </svg>
               )}
               {crumb.link ? (
-                <a href={crumb.link} className="hover:underline" style={{ color: '#895F42' }}>
+                <a href={crumb.link} className="hover:underline" style={{ color: '#816047' }}>
                   {crumb.label}
                 </a>
               ) : (

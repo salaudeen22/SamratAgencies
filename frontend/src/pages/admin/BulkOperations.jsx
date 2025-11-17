@@ -169,20 +169,20 @@ const BulkOperations = () => {
                   }}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     isSelected
-                      ? 'border-[#895F42] bg-[#895F42] bg-opacity-5'
+                      ? 'border-[#816047] bg-[#816047] bg-opacity-5'
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
                   <div className="flex flex-col items-center gap-3">
                     <div className={`w-16 h-16 rounded-full flex items-center justify-center ${
-                      isSelected ? 'bg-[#895F42]' : `bg-${type.color}-100`
+                      isSelected ? 'bg-[#816047]' : `bg-${type.color}-100`
                     }`}>
                       <Icon className={`text-2xl ${
                         isSelected ? 'text-white' : `text-${type.color}-600`
                       }`} />
                     </div>
                     <span className={`text-lg font-semibold ${
-                      isSelected ? 'text-[#895F42]' : 'text-gray-700'
+                      isSelected ? 'text-[#816047]' : 'text-gray-700'
                     }`}>
                       {type.label}
                     </span>
@@ -240,13 +240,13 @@ const BulkOperations = () => {
             {/* Import Results */}
             {importResults && (
               <div className="space-y-4 pt-4 border-t" style={{ borderColor: '#e2e8f0' }}>
-                <h3 className="text-lg font-semibold" style={{ color: '#1F2D38' }}>Import Results</h3>
+                <h3 className="text-lg font-semibold" style={{ color: '#2F1A0F' }}>Import Results</h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="bg-gray-50 rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium" style={{ color: '#64748b' }}>Total Rows</span>
-                      <span className="text-2xl font-bold" style={{ color: '#1F2D38' }}>{importResults.total}</span>
+                      <span className="text-2xl font-bold" style={{ color: '#2F1A0F' }}>{importResults.total}</span>
                     </div>
                   </div>
 
@@ -273,7 +273,7 @@ const BulkOperations = () => {
 
                 {importResults.errors.length > 0 && (
                   <div>
-                    <h4 className="text-sm font-semibold mb-3" style={{ color: '#1F2D38' }}>
+                    <h4 className="text-sm font-semibold mb-3" style={{ color: '#2F1A0F' }}>
                       Errors ({importResults.errors.length})
                     </h4>
                     <div className="bg-red-50 border border-red-200 rounded-lg max-h-64 overflow-y-auto">
@@ -316,7 +316,7 @@ const BulkOperations = () => {
                         <Icon className={`text-xl text-${type.color}-600`} />
                       </div>
                       <div className="text-center">
-                        <h3 className="text-base font-semibold mb-1" style={{ color: '#1F2D38' }}>
+                        <h3 className="text-base font-semibold mb-1" style={{ color: '#2F1A0F' }}>
                           {type.label}
                         </h3>
                         <p className="text-xs mb-4" style={{ color: '#64748b' }}>
@@ -345,10 +345,10 @@ const BulkOperations = () => {
         <Card title="CSV Format Guidelines">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div>
-              <h4 className="text-sm font-semibold mb-3" style={{ color: '#1F2D38' }}>Products CSV</h4>
+              <h4 className="text-sm font-semibold mb-3" style={{ color: '#2F1A0F' }}>Products CSV</h4>
               <div className="bg-gray-50 rounded-lg p-3 font-mono text-xs overflow-x-auto">
                 <div style={{ color: '#64748b' }}>SKU,Name,Description,Category,Price,Stock,Images</div>
-                <div style={{ color: '#895F42' }}>P001,Chair,Wooden,cat-id,999,50,url</div>
+                <div style={{ color: '#816047' }}>P001,Chair,Wooden,cat-id,999,50,url</div>
               </div>
               <ul className="mt-3 text-xs space-y-1" style={{ color: '#64748b' }}>
                 <li>• SKU must be unique</li>
@@ -358,10 +358,10 @@ const BulkOperations = () => {
             </div>
 
             <div>
-              <h4 className="text-sm font-semibold mb-3" style={{ color: '#1F2D38' }}>Users CSV</h4>
+              <h4 className="text-sm font-semibold mb-3" style={{ color: '#2F1A0F' }}>Users CSV</h4>
               <div className="bg-gray-50 rounded-lg p-3 font-mono text-xs overflow-x-auto">
                 <div style={{ color: '#64748b' }}>Email,Name,Phone,Role</div>
-                <div style={{ color: '#895F42' }}>user@mail.com,John,9876543210,customer</div>
+                <div style={{ color: '#816047' }}>user@mail.com,John,9876543210,customer</div>
               </div>
               <ul className="mt-3 text-xs space-y-1" style={{ color: '#64748b' }}>
                 <li>• Email must be valid & unique</li>
@@ -371,10 +371,10 @@ const BulkOperations = () => {
             </div>
 
             <div>
-              <h4 className="text-sm font-semibold mb-3" style={{ color: '#1F2D38' }}>Orders CSV</h4>
+              <h4 className="text-sm font-semibold mb-3" style={{ color: '#2F1A0F' }}>Orders CSV</h4>
               <div className="bg-gray-50 rounded-lg p-3 font-mono text-xs overflow-x-auto">
                 <div style={{ color: '#64748b' }}>OrderID,Email,Total,Status,Date</div>
-                <div style={{ color: '#895F42' }}>ORD001,user@mail.com,5000,delivered,2025-01-15</div>
+                <div style={{ color: '#816047' }}>ORD001,user@mail.com,5000,delivered,2025-01-15</div>
               </div>
               <ul className="mt-3 text-xs space-y-1" style={{ color: '#64748b' }}>
                 <li>• OrderID must be unique</li>

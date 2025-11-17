@@ -24,13 +24,13 @@ const ErrorPage = ({ error, resetErrorBoundary }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold mb-4" style={{ color: '#1F2D38' }}>
+          <h1 className="text-3xl font-bold mb-4" style={{ color: '#2F1A0F' }}>
             Failed to Load Page
           </h1>
-          <p className="text-lg mb-2" style={{ color: '#94A1AB' }}>
+          <p className="text-lg mb-2" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
             We couldn't load this page. This might be due to a network issue.
           </p>
-          <p className="text-sm" style={{ color: '#94A1AB' }}>
+          <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
             Please check your internet connection and try again.
           </p>
 
@@ -53,11 +53,11 @@ const ErrorPage = ({ error, resetErrorBoundary }) => {
             className="px-6 py-3 rounded-lg font-medium transition"
             style={{
               backgroundColor: 'white',
-              color: '#895F42',
-              border: '2px solid #895F42'
+              color: '#816047',
+              border: '2px solid #816047'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#FFF8F3';
+              e.currentTarget.style.backgroundColor = '#E6CDB1';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'white';

@@ -9,20 +9,20 @@ const ShippingAndDelivery = () => {
         canonical="/shipping-and-delivery"
       />
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-6" style={{ color: '#895F42' }}>Shipping and Delivery Policy</h1>
+        <h1 className="text-3xl font-bold mb-6" style={{ color: '#816047' }}>Shipping and Delivery Policy</h1>
 
         <div className="space-y-6 text-gray-700">
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Delivery Areas</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Delivery Areas</h2>
             <p className="mb-4">
               We currently deliver to Bangalore and surrounding areas. For deliveries outside Bangalore, please contact us to check availability and shipping charges.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Delivery Timelines</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Delivery Timelines</h2>
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>Furniture Products</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>Furniture Products</h3>
               <ul className="list-disc list-inside ml-4 space-y-2">
                 <li><strong>In-Stock Items:</strong> Delivery within 3-7 business days from order confirmation</li>
                 <li><strong>Made-to-Order Items:</strong> Delivery within 15-30 business days depending on customization requirements</li>
@@ -30,7 +30,7 @@ const ShippingAndDelivery = () => {
               </ul>
             </div>
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>Samsung Electronics</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>Samsung Electronics</h3>
               <ul className="list-disc list-inside ml-4 space-y-2">
                 <li><strong>In-Stock Items:</strong> Delivery within 2-5 business days from order confirmation</li>
                 <li><strong>Special Orders:</strong> Delivery timeline will be communicated at the time of booking</li>
@@ -42,7 +42,7 @@ const ShippingAndDelivery = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Shipping Charges</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Shipping Charges</h2>
             <ul className="list-disc list-inside ml-4 space-y-2">
               <li><strong>Within Bangalore City Limits:</strong> Shipping charges vary based on product size and weight. Charges will be displayed at checkout.</li>
               <li><strong>Outside Bangalore:</strong> Shipping charges will be calculated based on distance and product specifications.</li>
@@ -52,7 +52,7 @@ const ShippingAndDelivery = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Order Processing</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Order Processing</h2>
             <ol className="list-decimal list-inside ml-4 space-y-2">
               <li><strong>Order Confirmation:</strong> You will receive an order confirmation email/SMS within 24 hours of placing your order</li>
               <li><strong>Order Preparation:</strong> Your order will be prepared and quality-checked before dispatch</li>
@@ -62,7 +62,7 @@ const ShippingAndDelivery = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Delivery Process</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Delivery Process</h2>
             <ul className="list-disc list-inside ml-4 space-y-2">
               <li>Our delivery team will contact you 24-48 hours before delivery to confirm the schedule</li>
               <li>Please ensure someone is available at the delivery address to receive the order</li>
@@ -73,7 +73,7 @@ const ShippingAndDelivery = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Installation Services</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Installation Services</h2>
             <p className="mb-2">
               For Samsung electronics and certain furniture items, we offer installation services:
             </p>
@@ -85,7 +85,7 @@ const ShippingAndDelivery = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Delivery Inspection</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Delivery Inspection</h2>
             <p className="mb-2">
               Upon delivery, please:
             </p>
@@ -99,7 +99,7 @@ const ShippingAndDelivery = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Failed Delivery Attempts</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Failed Delivery Attempts</h2>
             <p className="mb-4">
               If delivery cannot be completed due to the following reasons, the order may be returned to our warehouse:
             </p>
@@ -115,7 +115,7 @@ const ShippingAndDelivery = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Track Your Order</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Track Your Order</h2>
             <p className="mb-4">
               You can track your order status by:
             </p>
@@ -127,7 +127,7 @@ const ShippingAndDelivery = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Damaged or Defective Products</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Damaged or Defective Products</h2>
             <p className="mb-4">
               If you receive a damaged or defective product, please:
             </p>
@@ -143,14 +143,14 @@ const ShippingAndDelivery = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Force Majeure</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Force Majeure</h2>
             <p className="mb-4">
               Samrat Agencies shall not be liable for any delay or failure in delivery due to circumstances beyond our reasonable control, including but not limited to natural disasters, strikes, government restrictions, or other force majeure events.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Contact Us</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Contact Us</h2>
             <p className="mb-2">
               For any questions about shipping and delivery, please contact us:
             </p>

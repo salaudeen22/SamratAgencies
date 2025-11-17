@@ -19,11 +19,11 @@ const Button = ({
   };
 
   const variantStyles = {
-    primary: { backgroundColor: '#895F42' },
-    secondary: { backgroundColor: '#1F2D38' },
+    primary: { backgroundColor: '#816047' },
+    secondary: { backgroundColor: '#2F1A0F' },
     success: {},
     danger: {},
-    outline: { borderColor: '#895F42', backgroundColor: 'transparent', color: '#895F42' },
+    outline: { borderColor: '#816047', backgroundColor: 'transparent', color: '#816047' },
   };
 
   const sizeClasses = {

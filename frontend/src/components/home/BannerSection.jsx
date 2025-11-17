@@ -45,7 +45,7 @@ const BannerSection = ({ position }) => {
                     </p>
                   )}
                   {banner.buttonText && (
-                    <button className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-bold transition-all duration-300 hover:scale-105 shadow-xl" style={{ backgroundColor: '#895F42', color: '#FFFFFF' }}>
+                    <button className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-bold transition-all duration-300 hover:scale-105 shadow-xl" style={{ backgroundColor: '#816047', color: '#FFFFFF' }}>
                       {banner.buttonText}
                     </button>
                   )}

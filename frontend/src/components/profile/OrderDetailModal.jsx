@@ -82,11 +82,11 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
       <Modal isOpen={isOpen} onClose={onClose} title="Order Details">
         <div className="space-y-6">
         {/* Order Header */}
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 pb-4 border-b" style={{ borderColor: '#BDD7EB' }}>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 pb-4 border-b" style={{ borderColor: '#D7B790' }}>
           <div>
-            <p className="text-xs font-medium mb-1" style={{ color: '#94A1AB' }}>Order ID</p>
-            <p className="text-sm font-mono break-all" style={{ color: '#1F2D38' }}>{order._id}</p>
-            <p className="text-xs mt-2" style={{ color: '#94A1AB' }}>
+            <p className="text-xs font-medium mb-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Order ID</p>
+            <p className="text-sm font-mono break-all" style={{ color: '#2F1A0F' }}>{order._id}</p>
+            <p className="text-xs mt-2" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
               Placed on {new Date(order.createdAt).toLocaleDateString('en-IN', {
                 day: 'numeric',
                 month: 'long',
@@ -95,7 +95,7 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
             </p>
           </div>
           <div>
-            <p className="text-xs font-medium mb-1" style={{ color: '#94A1AB' }}>Status</p>
+            <p className="text-xs font-medium mb-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Status</p>
             <span className={`px-3 py-1.5 rounded-full text-sm font-semibold inline-block ${getStatusColor(order.status)}`}>
               {order.status}
             </span>
@@ -104,7 +104,7 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
 
         {/* Order Items */}
         <div>
-          <h3 className="text-lg font-semibold mb-4" style={{ color: '#1F2D38' }}>Order Items</h3>
+          <h3 className="text-lg font-semibold mb-4" style={{ color: '#2F1A0F' }}>Order Items</h3>
           <div className="space-y-3">
             {order.items?.map((item, index) => {
               const itemImage = item.image || item.product?.images?.[0]?.url || item.product?.images?.[0];
@@ -119,11 +119,11 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
                     />
                   )}
                   <div className="flex-1">
-                    <p className="font-semibold text-sm mb-1" style={{ color: '#1F2D38' }}>
+                    <p className="font-semibold text-sm mb-1" style={{ color: '#2F1A0F' }}>
                       {itemName}
                     </p>
                     {item.selectedVariants && Object.keys(item.selectedVariants).length > 0 && (
-                      <div className="text-xs mb-1" style={{ color: '#94A1AB' }}>
+                      <div className="text-xs mb-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                         {Object.entries(item.selectedVariants).map(([key, value]) => (
                           <span key={key} className="mr-2">
                             {key}: {value}
@@ -131,8 +131,8 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
                         ))}
                       </div>
                     )}
-                    <p className="text-xs" style={{ color: '#94A1AB' }}>Quantity: {item.quantity}</p>
-                    <p className="text-sm font-bold mt-1" style={{ color: '#895F42' }}>
+                    <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Quantity: {item.quantity}</p>
+                    <p className="text-sm font-bold mt-1" style={{ color: '#816047' }}>
                       ₹{(item.price * item.quantity).toLocaleString()}
                     </p>
                   </div>
@@ -143,43 +143,43 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
         </div>
 
         {/* Price Breakdown */}
-        <div className="border-t pt-4" style={{ borderColor: '#BDD7EB' }}>
-          <h3 className="text-lg font-semibold mb-3" style={{ color: '#1F2D38' }}>Price Details</h3>
+        <div className="border-t pt-4" style={{ borderColor: '#D7B790' }}>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#2F1A0F' }}>Price Details</h3>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span style={{ color: '#94A1AB' }}>Subtotal</span>
-              <span style={{ color: '#1F2D38' }}>₹{(order.itemsPrice || 0).toLocaleString()}</span>
+              <span style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Subtotal</span>
+              <span style={{ color: '#2F1A0F' }}>₹{(order.itemsPrice || 0).toLocaleString()}</span>
             </div>
             {order.taxPrice > 0 && (
               <div className="flex justify-between text-sm">
-                <span style={{ color: '#94A1AB' }}>Tax</span>
-                <span style={{ color: '#1F2D38' }}>₹{order.taxPrice.toLocaleString()}</span>
+                <span style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Tax</span>
+                <span style={{ color: '#2F1A0F' }}>₹{order.taxPrice.toLocaleString()}</span>
               </div>
             )}
             <div className="flex justify-between text-sm">
-              <span style={{ color: '#94A1AB' }}>Shipping</span>
+              <span style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Shipping</span>
               <span className="text-green-600 font-medium">
                 {order.shippingPrice > 0 ? `₹${order.shippingPrice.toLocaleString()}` : 'FREE'}
               </span>
             </div>
-            <div className="flex justify-between text-base font-bold pt-2 border-t" style={{ borderColor: '#BDD7EB' }}>
-              <span style={{ color: '#1F2D38' }}>Total Amount</span>
-              <span style={{ color: '#895F42' }}>₹{(order.totalPrice || 0).toLocaleString()}</span>
+            <div className="flex justify-between text-base font-bold pt-2 border-t" style={{ borderColor: '#D7B790' }}>
+              <span style={{ color: '#2F1A0F' }}>Total Amount</span>
+              <span style={{ color: '#816047' }}>₹{(order.totalPrice || 0).toLocaleString()}</span>
             </div>
           </div>
         </div>
 
         {/* Shipping Address */}
         {order.shippingAddress && (
-          <div className="border-t pt-4" style={{ borderColor: '#BDD7EB' }}>
-            <h3 className="text-lg font-semibold mb-3" style={{ color: '#1F2D38' }}>Shipping Address</h3>
+          <div className="border-t pt-4" style={{ borderColor: '#D7B790' }}>
+            <h3 className="text-lg font-semibold mb-3" style={{ color: '#2F1A0F' }}>Shipping Address</h3>
             <div className="p-4 rounded-lg" style={{ backgroundColor: '#fafaf9' }}>
-              <p className="font-semibold mb-1" style={{ color: '#1F2D38' }}>{order.shippingAddress.name}</p>
-              <p className="text-sm mb-1" style={{ color: '#1F2D38' }}>{order.shippingAddress.address}</p>
-              <p className="text-sm mb-1" style={{ color: '#1F2D38' }}>
+              <p className="font-semibold mb-1" style={{ color: '#2F1A0F' }}>{order.shippingAddress.name}</p>
+              <p className="text-sm mb-1" style={{ color: '#2F1A0F' }}>{order.shippingAddress.address}</p>
+              <p className="text-sm mb-1" style={{ color: '#2F1A0F' }}>
                 {order.shippingAddress.city}, {order.shippingAddress.state} - {order.shippingAddress.pincode}
               </p>
-              <p className="text-sm flex items-center gap-1 mt-2" style={{ color: '#94A1AB' }}>
+              <p className="text-sm flex items-center gap-1 mt-2" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                 <HiPhone className="w-4 h-4" />
                 {order.shippingAddress.phone}
               </p>
@@ -188,25 +188,25 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
         )}
 
         {/* Payment Info */}
-        <div className="border-t pt-4" style={{ borderColor: '#BDD7EB' }}>
-          <h3 className="text-lg font-semibold mb-3" style={{ color: '#1F2D38' }}>Payment Information</h3>
+        <div className="border-t pt-4" style={{ borderColor: '#D7B790' }}>
+          <h3 className="text-lg font-semibold mb-3" style={{ color: '#2F1A0F' }}>Payment Information</h3>
           <div className="p-4 rounded-lg" style={{ backgroundColor: '#fafaf9' }}>
             <div className="flex justify-between items-center text-sm">
-              <span style={{ color: '#94A1AB' }}>Payment Method</span>
-              <span className="font-medium" style={{ color: '#1F2D38' }}>
+              <span style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Payment Method</span>
+              <span className="font-medium" style={{ color: '#2F1A0F' }}>
                 {order.paymentMethod === 'online' ? 'Online Payment' : 'Cash on Delivery'}
               </span>
             </div>
             <div className="flex justify-between items-center text-sm mt-2">
-              <span style={{ color: '#94A1AB' }}>Payment Status</span>
+              <span style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Payment Status</span>
               <span className={`font-medium ${order.isPaid ? 'text-green-600' : 'text-yellow-600'}`}>
                 {order.isPaid ? 'Paid' : 'Pending'}
               </span>
             </div>
             {order.isPaid && order.paidAt && (
               <div className="flex justify-between items-center text-sm mt-2">
-                <span style={{ color: '#94A1AB' }}>Paid On</span>
-                <span className="font-medium" style={{ color: '#1F2D38' }}>
+                <span style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Paid On</span>
+                <span className="font-medium" style={{ color: '#2F1A0F' }}>
                   {new Date(order.paidAt).toLocaleDateString('en-IN', {
                     day: 'numeric',
                     month: 'short',
@@ -220,7 +220,7 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
 
         {/* Cancel Order Button */}
         {canCancel && (
-          <div className="border-t pt-4" style={{ borderColor: '#BDD7EB' }}>
+          <div className="border-t pt-4" style={{ borderColor: '#D7B790' }}>
             {!showCancelConfirm ? (
               <button
                 onClick={() => setShowCancelConfirm(true)}
@@ -259,7 +259,7 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
                     }}
                     disabled={cancelling}
                     className="flex-1 py-2.5 px-4 rounded-lg font-semibold transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-                    style={{ backgroundColor: '#E0EAF0', color: '#1F2D38' }}
+                    style={{ backgroundColor: '#E6CDB1', color: '#2F1A0F' }}
                   >
                     Keep Order
                   </button>
@@ -271,7 +271,7 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
 
         {/* Return Button */}
         {canReturn && (
-          <div className="border-t pt-4" style={{ borderColor: '#BDD7EB' }}>
+          <div className="border-t pt-4" style={{ borderColor: '#D7B790' }}>
             {existingReturn ? (
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                 <p className="text-sm font-semibold text-yellow-800 mb-1">
@@ -289,7 +289,7 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
                 onClick={handleRequestReturn}
                 disabled={checkingReturn}
                 className="w-full py-3 px-4 rounded-lg font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ backgroundColor: '#895F42' }}
+                style={{ backgroundColor: '#816047' }}
               >
                 {checkingReturn ? 'Checking...' : 'Request Return'}
               </button>

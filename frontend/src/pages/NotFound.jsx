@@ -10,51 +10,51 @@ const NotFound = () => {
         <div className="mb-8">
           {/* 404 Illustration */}
           <div className="mb-8">
-            <h1 className="text-9xl font-bold mb-2" style={{ color: '#895F42' }}>404</h1>
-            <div className="w-32 h-1 mx-auto rounded-full" style={{ backgroundColor: '#BDD7EB' }}></div>
+            <h1 className="text-9xl font-bold mb-2" style={{ color: '#816047' }}>404</h1>
+            <div className="w-32 h-1 mx-auto rounded-full" style={{ backgroundColor: '#D7B790' }}></div>
           </div>
 
-          <h2 className="text-3xl font-bold mb-4" style={{ color: '#1F2D38' }}>
+          <h2 className="text-3xl font-bold mb-4" style={{ color: '#2F1A0F' }}>
             Page Not Found
           </h2>
-          <p className="text-lg mb-6" style={{ color: '#94A1AB' }}>
+          <p className="text-lg mb-6" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
             The page you're looking for doesn't exist or has been moved.
           </p>
 
           {/* Helpful Links */}
-          <div className="mb-8 p-6 rounded-lg" style={{ backgroundColor: '#F0F9FF', border: '2px solid #BDD7EB' }}>
-            <p className="text-sm font-medium mb-4" style={{ color: '#1F2D38' }}>
+          <div className="mb-8 p-6 rounded-lg" style={{ backgroundColor: '#F0F9FF', border: '2px solid #D7B790' }}>
+            <p className="text-sm font-medium mb-4" style={{ color: '#2F1A0F' }}>
               Here are some helpful links:
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
               <button
                 onClick={() => navigate('/')}
                 className="text-sm font-medium hover:underline"
-                style={{ color: '#895F42' }}
+                style={{ color: '#816047' }}
               >
                 Home
               </button>
-              <span style={{ color: '#BDD7EB' }}>•</span>
+              <span style={{ color: '#D7B790' }}>•</span>
               <button
                 onClick={() => navigate('/products')}
                 className="text-sm font-medium hover:underline"
-                style={{ color: '#895F42' }}
+                style={{ color: '#816047' }}
               >
                 Products
               </button>
-              <span style={{ color: '#BDD7EB' }}>•</span>
+              <span style={{ color: '#D7B790' }}>•</span>
               <button
                 onClick={() => navigate('/about')}
                 className="text-sm font-medium hover:underline"
-                style={{ color: '#895F42' }}
+                style={{ color: '#816047' }}
               >
                 About Us
               </button>
-              <span style={{ color: '#BDD7EB' }}>•</span>
+              <span style={{ color: '#D7B790' }}>•</span>
               <button
                 onClick={() => navigate('/contact')}
                 className="text-sm font-medium hover:underline"
-                style={{ color: '#895F42' }}
+                style={{ color: '#816047' }}
               >
                 Contact
               </button>
@@ -71,11 +71,11 @@ const NotFound = () => {
               className="px-6 py-3 rounded-lg font-medium transition"
               style={{
                 backgroundColor: 'white',
-                color: '#895F42',
-                border: '2px solid #895F42'
+                color: '#816047',
+                border: '2px solid #816047'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#FFF8F3';
+                e.currentTarget.style.backgroundColor = '#E6CDB1';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = 'white';

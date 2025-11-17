@@ -1,5 +1,5 @@
-import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
@@ -66,8 +66,8 @@ const AdminBanners = lazy(() => import('./pages/admin/Banners'));
 const LoadingFallback = () => (
   <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#fafaf9' }}>
     <div className="text-center">
-      <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: '#895F42' }}></div>
-      <p className="mt-4 text-lg" style={{ color: '#1F2D38' }}>Loading...</p>
+      <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: '#816047' }}></div>
+      <p className="mt-4 text-lg" style={{ color: '#2F1A0F' }}>Loading...</p>
     </div>
   </div>
 );
@@ -77,10 +77,22 @@ const LazyLoadErrorFallback = ({ error, resetErrorBoundary }) => (
   <ErrorPage error={error} resetErrorBoundary={resetErrorBoundary} />
 );
 
+// Scroll to top component
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 function App() {
   return (
     <ErrorBoundary>
       <Router>
+        <ScrollToTop />
         <Toaster position="top-right" />
         <AuthProvider>
           <CartProvider>

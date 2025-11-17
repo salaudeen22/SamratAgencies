@@ -120,7 +120,7 @@ const Reports = () => {
       <AdminLayout>
         <div className="flex items-center justify-center h-64">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#895F42' }}></div>
+            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#816047' }}></div>
             <p className="text-lg font-medium" style={{ color: '#64748b' }}>Loading reports...</p>
           </div>
         </div>
@@ -186,7 +186,7 @@ const Reports = () => {
                   <FaMoneyBillWave className="text-green-600" />
                 </div>
               </div>
-              <p className="text-3xl font-bold" style={{ color: '#1F2D38' }}>
+              <p className="text-3xl font-bold" style={{ color: '#2F1A0F' }}>
                 ₹{(stats?.totalRevenue || 0).toLocaleString()}
               </p>
               <p className="text-xs text-green-600 font-medium">+12.5% from last period</p>
@@ -201,7 +201,7 @@ const Reports = () => {
                   <FaShoppingCart className="text-blue-600" />
                 </div>
               </div>
-              <p className="text-3xl font-bold" style={{ color: '#1F2D38' }}>
+              <p className="text-3xl font-bold" style={{ color: '#2F1A0F' }}>
                 {stats?.totalOrders || 0}
               </p>
               <p className="text-xs text-blue-600 font-medium">+8.2% from last period</p>
@@ -216,7 +216,7 @@ const Reports = () => {
                   <FaUsers className="text-purple-600" />
                 </div>
               </div>
-              <p className="text-3xl font-bold" style={{ color: '#1F2D38' }}>
+              <p className="text-3xl font-bold" style={{ color: '#2F1A0F' }}>
                 {stats?.totalUsers || 0}
               </p>
               <p className="text-xs text-purple-600 font-medium">+15.3% from last period</p>
@@ -228,13 +228,13 @@ const Reports = () => {
               <div className="flex items-center justify-between">
                 <p className="text-sm font-medium" style={{ color: '#64748b' }}>Avg Order Value</p>
                 <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: '#e0eaf0' }}>
-                  <FaTrophy style={{ color: '#895F42' }} />
+                  <FaTrophy style={{ color: '#816047' }} />
                 </div>
               </div>
-              <p className="text-3xl font-bold" style={{ color: '#1F2D38' }}>
+              <p className="text-3xl font-bold" style={{ color: '#2F1A0F' }}>
                 ₹{stats?.totalOrders > 0 ? Math.round(stats?.totalRevenue / stats?.totalOrders).toLocaleString() : 0}
               </p>
-              <p className="text-xs font-medium" style={{ color: '#895F42' }}>+5.8% from last period</p>
+              <p className="text-xs font-medium" style={{ color: '#816047' }}>+5.8% from last period</p>
             </div>
           </Card>
         </div>
@@ -246,30 +246,30 @@ const Reports = () => {
               <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-                  <span className="font-medium" style={{ color: '#1F2D38' }}>Pending</span>
+                  <span className="font-medium" style={{ color: '#2F1A0F' }}>Pending</span>
                 </div>
-                <span className="font-bold" style={{ color: '#1F2D38' }}>{stats?.pendingOrders || 0}</span>
+                <span className="font-bold" style={{ color: '#2F1A0F' }}>{stats?.pendingOrders || 0}</span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                  <span className="font-medium" style={{ color: '#1F2D38' }}>Processing</span>
+                  <span className="font-medium" style={{ color: '#2F1A0F' }}>Processing</span>
                 </div>
-                <span className="font-bold" style={{ color: '#1F2D38' }}>{stats?.processingOrders || 0}</span>
+                <span className="font-bold" style={{ color: '#2F1A0F' }}>{stats?.processingOrders || 0}</span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-                  <span className="font-medium" style={{ color: '#1F2D38' }}>Shipped</span>
+                  <span className="font-medium" style={{ color: '#2F1A0F' }}>Shipped</span>
                 </div>
-                <span className="font-bold" style={{ color: '#1F2D38' }}>{stats?.shippedOrders || 0}</span>
+                <span className="font-bold" style={{ color: '#2F1A0F' }}>{stats?.shippedOrders || 0}</span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                  <span className="font-medium" style={{ color: '#1F2D38' }}>Delivered</span>
+                  <span className="font-medium" style={{ color: '#2F1A0F' }}>Delivered</span>
                 </div>
-                <span className="font-bold" style={{ color: '#1F2D38' }}>{stats?.deliveredOrders || 0}</span>
+                <span className="font-bold" style={{ color: '#2F1A0F' }}>{stats?.deliveredOrders || 0}</span>
               </div>
             </div>
           </Card>
@@ -279,28 +279,28 @@ const Reports = () => {
               <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                 <div className="flex items-center gap-3">
                   <FaBox className="text-blue-600" />
-                  <span className="font-medium" style={{ color: '#1F2D38' }}>Total Products</span>
+                  <span className="font-medium" style={{ color: '#2F1A0F' }}>Total Products</span>
                 </div>
-                <span className="font-bold" style={{ color: '#1F2D38' }}>{stats?.totalProducts || 0}</span>
+                <span className="font-bold" style={{ color: '#2F1A0F' }}>{stats?.totalProducts || 0}</span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                 <div className="flex items-center gap-3">
                   <FaBox className="text-green-600" />
-                  <span className="font-medium" style={{ color: '#1F2D38' }}>In Stock</span>
+                  <span className="font-medium" style={{ color: '#2F1A0F' }}>In Stock</span>
                 </div>
                 <span className="font-bold text-green-600">{stats?.inStockProducts || 0}</span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                 <div className="flex items-center gap-3">
                   <FaBox className="text-orange-600" />
-                  <span className="font-medium" style={{ color: '#1F2D38' }}>Low Stock</span>
+                  <span className="font-medium" style={{ color: '#2F1A0F' }}>Low Stock</span>
                 </div>
                 <span className="font-bold text-orange-600">{stats?.lowStockProducts || 0}</span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                 <div className="flex items-center gap-3">
                   <FaBox className="text-red-600" />
-                  <span className="font-medium" style={{ color: '#1F2D38' }}>Out of Stock</span>
+                  <span className="font-medium" style={{ color: '#2F1A0F' }}>Out of Stock</span>
                 </div>
                 <span className="font-bold text-red-600">{stats?.outOfStockProducts || 0}</span>
               </div>
@@ -331,14 +331,14 @@ const Reports = () => {
                           ) : (
                             <div className="w-10 h-10 rounded bg-gray-100"></div>
                           )}
-                          <span className="font-medium" style={{ color: '#1F2D38' }}>{product.name}</span>
+                          <span className="font-medium" style={{ color: '#2F1A0F' }}>{product.name}</span>
                         </div>
                       </td>
                       <td className="py-3 px-4" style={{ color: '#64748b' }}>{product.category}</td>
-                      <td className="py-3 px-4 text-right font-medium" style={{ color: '#1F2D38' }}>
+                      <td className="py-3 px-4 text-right font-medium" style={{ color: '#2F1A0F' }}>
                         {product.totalSold}
                       </td>
-                      <td className="py-3 px-4 text-right font-bold" style={{ color: '#895F42' }}>
+                      <td className="py-3 px-4 text-right font-bold" style={{ color: '#816047' }}>
                         ₹{product.revenue.toLocaleString()}
                       </td>
                     </tr>
@@ -359,7 +359,7 @@ const Reports = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card title="New Customers">
             <div className="text-center py-6">
-              <p className="text-4xl font-bold mb-2" style={{ color: '#1F2D38' }}>
+              <p className="text-4xl font-bold mb-2" style={{ color: '#2F1A0F' }}>
                 {stats?.newCustomers || 24}
               </p>
               <p className="text-sm" style={{ color: '#64748b' }}>This month</p>
@@ -369,7 +369,7 @@ const Reports = () => {
 
           <Card title="Repeat Customers">
             <div className="text-center py-6">
-              <p className="text-4xl font-bold mb-2" style={{ color: '#1F2D38' }}>68%</p>
+              <p className="text-4xl font-bold mb-2" style={{ color: '#2F1A0F' }}>68%</p>
               <p className="text-sm" style={{ color: '#64748b' }}>Return rate</p>
               <p className="text-xs text-green-600 font-medium mt-2">+5% from last month</p>
             </div>
@@ -377,7 +377,7 @@ const Reports = () => {
 
           <Card title="Customer Lifetime Value">
             <div className="text-center py-6">
-              <p className="text-4xl font-bold mb-2" style={{ color: '#1F2D38' }}>₹45,200</p>
+              <p className="text-4xl font-bold mb-2" style={{ color: '#2F1A0F' }}>₹45,200</p>
               <p className="text-sm" style={{ color: '#64748b' }}>Average CLV</p>
               <p className="text-xs text-green-600 font-medium mt-2">+12% from last month</p>
             </div>

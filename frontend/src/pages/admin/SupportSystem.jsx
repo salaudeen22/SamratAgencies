@@ -249,7 +249,7 @@ const SupportSystem = () => {
       <AdminLayout>
         <div className="flex items-center justify-center h-64">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#895F42' }}></div>
+            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#816047' }}></div>
             <p className="text-lg font-medium" style={{ color: '#64748b' }}>Loading tickets...</p>
           </div>
         </div>
@@ -271,7 +271,7 @@ const SupportSystem = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium" style={{ color: '#64748b' }}>Total Tickets</p>
-                <p className="text-2xl font-bold mt-1" style={{ color: '#1F2D38' }}>{stats.total}</p>
+                <p className="text-2xl font-bold mt-1" style={{ color: '#2F1A0F' }}>{stats.total}</p>
               </div>
               <div className="w-12 h-12 rounded-full flex items-center justify-center bg-blue-100">
                 <FaTicketAlt className="text-xl text-blue-600" />
@@ -354,7 +354,7 @@ const SupportSystem = () => {
               <select
                 value={filterPriority}
                 onChange={(e) => setFilterPriority(e.target.value)}
-                className="px-3 py-1.5 text-xs border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#895F42]"
+                className="px-3 py-1.5 text-xs border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#816047]"
                 style={{ borderColor: '#e2e8f0' }}
               >
                 <option value="all">All Priorities</option>
@@ -387,16 +387,16 @@ const SupportSystem = () => {
                 return (
                   <Card
                     key={ticket._id}
-                    className={`cursor-pointer transition-all ${isSelected ? 'ring-2 ring-[#895F42]' : ''}`}
+                    className={`cursor-pointer transition-all ${isSelected ? 'ring-2 ring-[#816047]' : ''}`}
                     onClick={() => setSelectedTicket(ticket)}
                   >
                     <div className="space-y-3">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1">
-                          <p className="text-xs font-semibold mb-1" style={{ color: '#895F42' }}>
+                          <p className="text-xs font-semibold mb-1" style={{ color: '#816047' }}>
                             {ticket.ticketNumber}
                           </p>
-                          <h3 className="text-sm font-semibold line-clamp-1" style={{ color: '#1F2D38' }}>
+                          <h3 className="text-sm font-semibold line-clamp-1" style={{ color: '#2F1A0F' }}>
                             {ticket.subject}
                           </h3>
                         </div>
@@ -440,10 +440,10 @@ const SupportSystem = () => {
                   <div className="pb-4 border-b" style={{ borderColor: '#e2e8f0' }}>
                     <div className="flex items-start justify-between gap-4 mb-4">
                       <div>
-                        <p className="text-sm font-semibold mb-1" style={{ color: '#895F42' }}>
+                        <p className="text-sm font-semibold mb-1" style={{ color: '#816047' }}>
                           {selectedTicket.ticketNumber}
                         </p>
-                        <h2 className="text-xl font-bold" style={{ color: '#1F2D38' }}>
+                        <h2 className="text-xl font-bold" style={{ color: '#2F1A0F' }}>
                           {selectedTicket.subject}
                         </h2>
                       </div>
@@ -459,13 +459,13 @@ const SupportSystem = () => {
 
                     {/* Customer Contact Card */}
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                      <h3 className="text-sm font-semibold mb-3" style={{ color: '#1F2D38' }}>Customer Details</h3>
+                      <h3 className="text-sm font-semibold mb-3" style={{ color: '#2F1A0F' }}>Customer Details</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div className="flex items-center gap-2">
                           <FaUser className="text-blue-600" />
                           <div>
                             <p className="text-xs" style={{ color: '#64748b' }}>Name</p>
-                            <p className="text-sm font-medium" style={{ color: '#1F2D38' }}>{selectedTicket.user?.name || 'N/A'}</p>
+                            <p className="text-sm font-medium" style={{ color: '#2F1A0F' }}>{selectedTicket.user?.name || 'N/A'}</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
@@ -488,8 +488,8 @@ const SupportSystem = () => {
                           <select
                             value={selectedTicket.status}
                             onChange={(e) => handleUpdateStatus(selectedTicket._id, e.target.value)}
-                            className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#895F42] font-medium"
-                            style={{ borderColor: '#e2e8f0', color: '#1F2D38' }}
+                            className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#816047] font-medium"
+                            style={{ borderColor: '#e2e8f0', color: '#2F1A0F' }}
                           >
                             <option value="open">Open</option>
                             <option value="in-progress">In Progress</option>
@@ -517,14 +517,14 @@ const SupportSystem = () => {
                         className={`flex gap-3 ${msg.sender === 'admin' ? 'flex-row-reverse' : ''}`}
                       >
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 ${
-                          msg.sender === 'admin' ? 'bg-[#895F42]' : 'bg-blue-600'
+                          msg.sender === 'admin' ? 'bg-[#816047]' : 'bg-blue-600'
                         }`}>
                           {msg.sender === 'admin' ? 'A' : selectedTicket.user.name.charAt(0)}
                         </div>
                         <div className={`flex-1 ${msg.sender === 'admin' ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
                           <div className={`px-4 py-3 rounded-lg max-w-md ${
                             msg.sender === 'admin'
-                              ? 'bg-[#895F42] text-white'
+                              ? 'bg-[#816047] text-white'
                               : 'bg-gray-100'
                           }`}>
                             <p className="text-sm leading-relaxed">{msg.message}</p>
@@ -545,7 +545,7 @@ const SupportSystem = () => {
                         onChange={(e) => setReplyText(e.target.value)}
                         placeholder="Type your reply to customer..."
                         rows="4"
-                        className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#895F42] resize-none"
+                        className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#816047] resize-none"
                         style={{ borderColor: '#e2e8f0' }}
                         disabled={sending}
                       />

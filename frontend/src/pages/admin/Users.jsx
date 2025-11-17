@@ -46,7 +46,7 @@ const Users = () => {
       {loading ? (
         <div className="flex items-center justify-center py-12">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#895F42' }}></div>
+            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#816047' }}></div>
             <p className="text-lg font-medium" style={{ color: '#64748b' }}>Loading users...</p>
           </div>
         </div>
@@ -101,7 +101,7 @@ const Users = () => {
                     <tr key={user._id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-semibold" style={{ backgroundColor: '#895F42' }}>
+                          <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-semibold" style={{ backgroundColor: '#816047' }}>
                             {user.name?.charAt(0).toUpperCase() || 'U'}
                           </div>
                           <div className="font-semibold" style={{ color: '#1e293b' }}>{user.name}</div>
@@ -148,7 +148,7 @@ const Users = () => {
                               ? 'bg-red-500 hover:bg-red-600 text-white'
                               : 'text-white hover:shadow-md'
                           }`}
-                          style={!user.isAdmin ? { backgroundColor: '#895F42' } : {}}
+                          style={!user.isAdmin ? { backgroundColor: '#816047' } : {}}
                           onMouseEnter={(e) => {
                             if (!user.isAdmin) {
                               e.currentTarget.style.backgroundColor = '#6d4a33';
@@ -156,7 +156,7 @@ const Users = () => {
                           }}
                           onMouseLeave={(e) => {
                             if (!user.isAdmin) {
-                              e.currentTarget.style.backgroundColor = '#895F42';
+                              e.currentTarget.style.backgroundColor = '#816047';
                             }
                           }}
                         >
@@ -176,7 +176,7 @@ const Users = () => {
               <div key={user._id} className="bg-white rounded-xl shadow-sm p-4 border" style={{ borderColor: '#e2e8f0' }}>
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-semibold flex-shrink-0" style={{ backgroundColor: '#895F42' }}>
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-semibold flex-shrink-0" style={{ backgroundColor: '#816047' }}>
                       {user.name?.charAt(0).toUpperCase() || 'U'}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -219,7 +219,7 @@ const Users = () => {
                       ? 'bg-red-500 hover:bg-red-600 text-white'
                       : 'text-white hover:shadow-md'
                   }`}
-                  style={!user.isAdmin ? { backgroundColor: '#895F42' } : {}}
+                  style={!user.isAdmin ? { backgroundColor: '#816047' } : {}}
                   onMouseEnter={(e) => {
                     if (!user.isAdmin) {
                       e.currentTarget.style.backgroundColor = '#6d4a33';
@@ -227,7 +227,7 @@ const Users = () => {
                   }}
                   onMouseLeave={(e) => {
                     if (!user.isAdmin) {
-                      e.currentTarget.style.backgroundColor = '#895F42';
+                      e.currentTarget.style.backgroundColor = '#816047';
                     }
                   }}
                 >

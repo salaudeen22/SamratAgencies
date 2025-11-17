@@ -57,14 +57,14 @@ const OrdersTab = () => {
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
       <div className="mb-6">
-        <h2 className="text-xl font-bold" style={{ color: '#1F2D38' }}>Order History</h2>
-        <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>View and track your orders</p>
+        <h2 className="text-xl font-bold" style={{ color: '#2F1A0F' }}>Order History</h2>
+        <p className="text-sm mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>View and track your orders</p>
       </div>
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 mx-auto" style={{ borderColor: '#895F42' }}></div>
-          <p className="mt-4 text-sm sm:text-base" style={{ color: '#94A1AB' }}>Loading orders...</p>
+          <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 mx-auto" style={{ borderColor: '#816047' }}></div>
+          <p className="mt-4 text-sm sm:text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Loading orders...</p>
         </div>
       ) : orders.length > 0 ? (
         <>
@@ -89,11 +89,11 @@ const OrdersTab = () => {
         </>
       ) : (
         <div className="text-center py-12">
-          <p className="text-base sm:text-lg mb-4" style={{ color: '#94A1AB' }}>No orders yet</p>
+          <p className="text-base sm:text-lg mb-4" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>No orders yet</p>
           <button
             onClick={() => navigate('/products')}
             className="font-semibold transition text-sm sm:text-base"
-            style={{ color: '#895F42' }}
+            style={{ color: '#816047' }}
           >
             Start Shopping
           </button>

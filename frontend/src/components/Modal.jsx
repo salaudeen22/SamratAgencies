@@ -16,13 +16,13 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = 'max-w-2xl' }) => 
         {/* Modal panel */}
         <div className={`relative w-full ${maxWidth} bg-white shadow-2xl rounded-2xl transform transition-all`}>
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: '#E0EAF0' }}>
-            <h3 className="text-xl font-bold" style={{ color: '#1F2D38' }}>{title}</h3>
+          <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: '#E6CDB1' }}>
+            <h3 className="text-xl font-bold" style={{ color: '#2F1A0F' }}>{title}</h3>
             <button
               onClick={onClose}
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
-              <HiX className="w-5 h-5" style={{ color: '#94A1AB' }} />
+              <HiX className="w-5 h-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} />
             </button>
           </div>
 

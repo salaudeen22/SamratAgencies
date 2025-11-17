@@ -89,7 +89,7 @@ const OrderConfirmation = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#fafaf9' }}>
-        <div className="animate-spin rounded-full h-12 w-12 border-b-4" style={{ borderColor: '#895F42' }}></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-4" style={{ borderColor: '#816047' }}></div>
       </div>
     );
   }
@@ -98,7 +98,7 @@ const OrderConfirmation = () => {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#fafaf9' }}>
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4" style={{ color: '#1F2D38' }}>Order not found</h2>
+          <h2 className="text-2xl font-bold mb-4" style={{ color: '#2F1A0F' }}>Order not found</h2>
           <Button onClick={() => navigate('/products')}>Browse Products</Button>
         </div>
       </div>
@@ -127,8 +127,8 @@ const OrderConfirmation = () => {
             <button
               onClick={handlePrint}
               className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition"
-              style={{ backgroundColor: 'white', color: '#895F42', border: '1px solid #895F42' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#FFF8F3'}
+              style={{ backgroundColor: 'white', color: '#816047', border: '1px solid #816047' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,8 +151,8 @@ const OrderConfirmation = () => {
             <button
               onClick={handleCopyLink}
               className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition"
-              style={{ backgroundColor: 'white', color: '#895F42', border: '1px solid #895F42' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#FFF8F3'}
+              style={{ backgroundColor: 'white', color: '#816047', border: '1px solid #816047' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,17 +164,17 @@ const OrderConfirmation = () => {
         </div>
 
         {/* Order Details */}
-        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6" style={{ border: '2px solid #BDD7EB' }}>
-          <h2 className="text-lg sm:text-xl font-semibold mb-4" style={{ color: '#1F2D38' }}>Order Details</h2>
+        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6" style={{ border: '2px solid #D7B790' }}>
+          <h2 className="text-lg sm:text-xl font-semibold mb-4" style={{ color: '#2F1A0F' }}>Order Details</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <div>
-              <p className="text-sm" style={{ color: '#94A1AB' }}>Order ID</p>
-              <p className="font-semibold" style={{ color: '#1F2D38' }}>#{order._id.slice(-8).toUpperCase()}</p>
+              <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Order ID</p>
+              <p className="font-semibold" style={{ color: '#2F1A0F' }}>#{order._id.slice(-8).toUpperCase()}</p>
             </div>
             <div>
-              <p className="text-sm" style={{ color: '#94A1AB' }}>Order Date</p>
-              <p className="font-semibold" style={{ color: '#1F2D38' }}>
+              <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Order Date</p>
+              <p className="font-semibold" style={{ color: '#2F1A0F' }}>
                 {new Date(order.createdAt).toLocaleDateString('en-IN', {
                   day: 'numeric',
                   month: 'long',
@@ -183,16 +183,16 @@ const OrderConfirmation = () => {
               </p>
             </div>
             <div>
-              <p className="text-sm" style={{ color: '#94A1AB' }}>Payment Method</p>
-              <p className="font-semibold capitalize" style={{ color: '#1F2D38' }}>
+              <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Payment Method</p>
+              <p className="font-semibold capitalize" style={{ color: '#2F1A0F' }}>
                 {order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Online Payment'}
               </p>
             </div>
             <div>
-              <p className="text-sm" style={{ color: '#94A1AB' }}>Order Status</p>
+              <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Order Status</p>
               <span className="inline-block px-3 py-1 rounded-full text-sm font-semibold" style={{
-                backgroundColor: order.status === 'Pending' ? '#FFF8F3' : '#E0F2E9',
-                color: order.status === 'Pending' ? '#895F42' : '#10B981'
+                backgroundColor: order.status === 'Pending' ? '#E6CDB1' : '#E0F2E9',
+                color: order.status === 'Pending' ? '#816047' : '#10B981'
               }}>
                 {order.status}
               </span>
@@ -200,12 +200,12 @@ const OrderConfirmation = () => {
           </div>
 
           {/* Items Ordered */}
-          <div className="border-t-2 pt-4" style={{ borderColor: '#BDD7EB' }}>
-            <h3 className="text-base sm:text-lg font-semibold mb-4" style={{ color: '#1F2D38' }}>Items Ordered</h3>
+          <div className="border-t-2 pt-4" style={{ borderColor: '#D7B790' }}>
+            <h3 className="text-base sm:text-lg font-semibold mb-4" style={{ color: '#2F1A0F' }}>Items Ordered</h3>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {order.items.map((item, index) => (
                 <div key={index} className="flex items-start space-x-3 sm:space-x-4 p-3 sm:p-4 rounded-lg" style={{ backgroundColor: '#F9FAFB' }}>
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg shrink-0" style={{ backgroundColor: '#E0EAF0' }}>
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg shrink-0" style={{ backgroundColor: '#E6CDB1' }}>
                     {item.image ? (
                       <img
                         src={item.image}
@@ -213,13 +213,13 @@ const OrderConfirmation = () => {
                         className="w-full h-full object-cover rounded-lg"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-xs" style={{ color: '#94A1AB' }}>
+                      <div className="w-full h-full flex items-center justify-center text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                         No Image
                       </div>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-sm sm:text-base" style={{ color: '#1F2D38' }}>{item.name}</h4>
+                    <h4 className="font-semibold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>{item.name}</h4>
 
                     {/* Display Variants if available */}
                     {item.selectedVariants && Object.keys(item.selectedVariants).length > 0 && (
@@ -228,7 +228,7 @@ const OrderConfirmation = () => {
                           <span
                             key={key}
                             className="text-xs px-2 py-1 rounded"
-                            style={{ backgroundColor: '#E0EAF0', color: '#1F2D38' }}
+                            style={{ backgroundColor: '#E6CDB1', color: '#2F1A0F' }}
                           >
                             <span className="capitalize font-medium">{key}:</span> {value}
                           </span>
@@ -237,10 +237,10 @@ const OrderConfirmation = () => {
                     )}
 
                     <div className="mt-2 flex items-center justify-between gap-2">
-                      <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>
+                      <p className="text-xs sm:text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                         Qty: {item.quantity}
                       </p>
-                      <p className="font-semibold text-sm sm:text-base" style={{ color: '#895F42' }}>
+                      <p className="font-semibold text-sm sm:text-base" style={{ color: '#816047' }}>
                         ₹{(item.price * item.quantity).toLocaleString()}
                       </p>
                     </div>
@@ -252,12 +252,12 @@ const OrderConfirmation = () => {
         </div>
 
         {/* Order Tracking Timeline */}
-        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6" style={{ border: '2px solid #BDD7EB' }}>
-          <h2 className="text-lg sm:text-xl font-semibold mb-6" style={{ color: '#1F2D38' }}>Order Timeline</h2>
+        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6" style={{ border: '2px solid #D7B790' }}>
+          <h2 className="text-lg sm:text-xl font-semibold mb-6" style={{ color: '#2F1A0F' }}>Order Timeline</h2>
 
           <div className="relative">
             {/* Timeline Line */}
-            <div className="absolute left-4 top-0 bottom-0 w-0.5" style={{ backgroundColor: '#BDD7EB' }}></div>
+            <div className="absolute left-4 top-0 bottom-0 w-0.5" style={{ backgroundColor: '#D7B790' }}></div>
 
             {/* Order Placed */}
             <div className="relative flex gap-4 mb-8">
@@ -267,8 +267,8 @@ const OrderConfirmation = () => {
                 </svg>
               </div>
               <div className="flex-1 pb-8">
-                <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#1F2D38' }}>Order Placed</h3>
-                <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>
+                <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>Order Placed</h3>
+                <p className="text-xs sm:text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   {new Date(order.createdAt).toLocaleString('en-IN', {
                     day: 'numeric',
                     month: 'short',
@@ -284,17 +284,17 @@ const OrderConfirmation = () => {
             {/* Processing */}
             <div className="relative flex gap-4 mb-8">
               <div className="w-8 h-8 rounded-full flex items-center justify-center z-10" style={{
-                backgroundColor: order.status === 'Processing' || order.status === 'Shipped' || order.status === 'Delivered' ? '#22c55e' : '#E0EAF0',
-                color: order.status === 'Processing' || order.status === 'Shipped' || order.status === 'Delivered' ? 'white' : '#94A1AB'
+                backgroundColor: order.status === 'Processing' || order.status === 'Shipped' || order.status === 'Delivered' ? '#22c55e' : '#E6CDB1',
+                color: order.status === 'Processing' || order.status === 'Shipped' || order.status === 'Delivered' ? 'white' : 'rgba(129, 96, 71, 0.6)'
               }}>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               <div className="flex-1 pb-8">
-                <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#1F2D38' }}>Processing</h3>
-                <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>We're preparing your order</p>
-                <p className="text-xs mt-1" style={{ color: order.status === 'Processing' ? '#895F42' : order.status === 'Shipped' || order.status === 'Delivered' ? '#22c55e' : '#94A1AB' }}>
+                <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>Processing</h3>
+                <p className="text-xs sm:text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>We're preparing your order</p>
+                <p className="text-xs mt-1" style={{ color: order.status === 'Processing' ? '#816047' : order.status === 'Shipped' || order.status === 'Delivered' ? '#22c55e' : 'rgba(129, 96, 71, 0.6)' }}>
                   {order.status === 'Processing' ? 'In Progress' : order.status === 'Shipped' || order.status === 'Delivered' ? 'Completed' : 'Pending'}
                 </p>
               </div>
@@ -303,17 +303,17 @@ const OrderConfirmation = () => {
             {/* Shipped */}
             <div className="relative flex gap-4 mb-8">
               <div className="w-8 h-8 rounded-full flex items-center justify-center z-10" style={{
-                backgroundColor: order.status === 'Shipped' || order.status === 'Delivered' ? '#22c55e' : '#E0EAF0',
-                color: order.status === 'Shipped' || order.status === 'Delivered' ? 'white' : '#94A1AB'
+                backgroundColor: order.status === 'Shipped' || order.status === 'Delivered' ? '#22c55e' : '#E6CDB1',
+                color: order.status === 'Shipped' || order.status === 'Delivered' ? 'white' : 'rgba(129, 96, 71, 0.6)'
               }}>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                 </svg>
               </div>
               <div className="flex-1 pb-8">
-                <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#1F2D38' }}>Shipped</h3>
-                <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>Your order is on the way</p>
-                <p className="text-xs mt-1" style={{ color: order.status === 'Shipped' ? '#895F42' : order.status === 'Delivered' ? '#22c55e' : '#94A1AB' }}>
+                <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>Shipped</h3>
+                <p className="text-xs sm:text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Your order is on the way</p>
+                <p className="text-xs mt-1" style={{ color: order.status === 'Shipped' ? '#816047' : order.status === 'Delivered' ? '#22c55e' : 'rgba(129, 96, 71, 0.6)' }}>
                   {order.status === 'Shipped' ? 'In Transit' : order.status === 'Delivered' ? 'Completed' : 'Pending'}
                 </p>
               </div>
@@ -322,19 +322,19 @@ const OrderConfirmation = () => {
             {/* Delivered */}
             <div className="relative flex gap-4">
               <div className="w-8 h-8 rounded-full flex items-center justify-center z-10" style={{
-                backgroundColor: order.status === 'Delivered' ? '#22c55e' : '#E0EAF0',
-                color: order.status === 'Delivered' ? 'white' : '#94A1AB'
+                backgroundColor: order.status === 'Delivered' ? '#22c55e' : '#E6CDB1',
+                color: order.status === 'Delivered' ? 'white' : 'rgba(129, 96, 71, 0.6)'
               }}>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#1F2D38' }}>Delivered</h3>
-                <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>
+                <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>Delivered</h3>
+                <p className="text-xs sm:text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   {getEstimatedDeliveryDate() && `Expected: ${getEstimatedDeliveryDate().min} - ${getEstimatedDeliveryDate().max}`}
                 </p>
-                <p className="text-xs mt-1" style={{ color: order.status === 'Delivered' ? '#22c55e' : '#94A1AB' }}>
+                <p className="text-xs mt-1" style={{ color: order.status === 'Delivered' ? '#22c55e' : 'rgba(129, 96, 71, 0.6)' }}>
                   {order.status === 'Delivered' ? 'Completed' : 'Pending'}
                 </p>
               </div>
@@ -345,24 +345,24 @@ const OrderConfirmation = () => {
         {/* Shipping & Payment Summary */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6">
           {/* Shipping Address */}
-          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6" style={{ border: '2px solid #BDD7EB' }}>
-            <h3 className="text-base sm:text-lg font-semibold mb-4" style={{ color: '#1F2D38' }}>Shipping Address</h3>
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6" style={{ border: '2px solid #D7B790' }}>
+            <h3 className="text-base sm:text-lg font-semibold mb-4" style={{ color: '#2F1A0F' }}>Shipping Address</h3>
             <div className="space-y-2 text-sm">
-              <p className="font-semibold" style={{ color: '#1F2D38' }}>{order.shippingAddress.name}</p>
-              <p style={{ color: '#94A1AB' }}>{order.shippingAddress.phone}</p>
-              <p style={{ color: '#94A1AB' }}>{order.shippingAddress.address}</p>
-              <p style={{ color: '#94A1AB' }}>
+              <p className="font-semibold" style={{ color: '#2F1A0F' }}>{order.shippingAddress.name}</p>
+              <p style={{ color: 'rgba(129, 96, 71, 0.6)' }}>{order.shippingAddress.phone}</p>
+              <p style={{ color: 'rgba(129, 96, 71, 0.6)' }}>{order.shippingAddress.address}</p>
+              <p style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                 {order.shippingAddress.city}, {order.shippingAddress.state} - {order.shippingAddress.pincode}
               </p>
-              <p style={{ color: '#94A1AB' }}>{order.shippingAddress.country}</p>
+              <p style={{ color: 'rgba(129, 96, 71, 0.6)' }}>{order.shippingAddress.country}</p>
             </div>
           </div>
 
           {/* Order Summary */}
-          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6" style={{ border: '2px solid #BDD7EB' }}>
-            <h3 className="text-base sm:text-lg font-semibold mb-4" style={{ color: '#1F2D38' }}>Order Summary</h3>
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6" style={{ border: '2px solid #D7B790' }}>
+            <h3 className="text-base sm:text-lg font-semibold mb-4" style={{ color: '#2F1A0F' }}>Order Summary</h3>
             <div className="space-y-3">
-              <div className="flex justify-between text-sm" style={{ color: '#94A1AB' }}>
+              <div className="flex justify-between text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                 <span>Subtotal</span>
                 <span>₹{order.itemsPrice.toLocaleString()}</span>
               </div>
@@ -372,19 +372,19 @@ const OrderConfirmation = () => {
                   <span>-₹{order.discount.toLocaleString()}</span>
                 </div>
               )}
-              <div className="flex justify-between text-sm" style={{ color: '#94A1AB' }}>
+              <div className="flex justify-between text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                 <span>GST (18%)</span>
                 <span>₹{order.taxPrice.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between text-sm" style={{ color: '#94A1AB' }}>
+              <div className="flex justify-between text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                 <span>Shipping</span>
                 <span className="text-green-600 font-medium">
                   {order.shippingPrice === 0 ? 'Free' : `₹${order.shippingPrice.toLocaleString()}`}
                 </span>
               </div>
-              <div className="pt-3 flex justify-between text-lg font-bold" style={{ borderTop: '2px solid #BDD7EB' }}>
-                <span style={{ color: '#1F2D38' }}>Total</span>
-                <span style={{ color: '#895F42' }}>₹{order.totalPrice.toLocaleString()}</span>
+              <div className="pt-3 flex justify-between text-lg font-bold" style={{ borderTop: '2px solid #D7B790' }}>
+                <span style={{ color: '#2F1A0F' }}>Total</span>
+                <span style={{ color: '#816047' }}>₹{order.totalPrice.toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -394,12 +394,12 @@ const OrderConfirmation = () => {
         {order.paymentMethod === 'cod' && (
           <div className="bg-blue-50 rounded-lg p-4 sm:p-6 mb-6 border-2 border-blue-200">
             <div className="flex items-start gap-3">
-              <svg className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <div>
-                <h4 className="font-semibold mb-1 text-sm sm:text-base" style={{ color: '#1F2D38' }}>Cash on Delivery</h4>
-                <p className="text-xs sm:text-sm" style={{ color: '#94A1AB' }}>
+                <h4 className="font-semibold mb-1 text-sm sm:text-base" style={{ color: '#2F1A0F' }}>Cash on Delivery</h4>
+                <p className="text-xs sm:text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   Please keep ₹{order.totalPrice.toLocaleString()} ready in cash. Our delivery partner will collect the payment at the time of delivery.
                 </p>
               </div>
@@ -408,30 +408,30 @@ const OrderConfirmation = () => {
         )}
 
         {/* Help & Support Section */}
-        <div className="bg-linear-to-r from-blue-50 to-indigo-50 rounded-lg p-4 sm:p-6 mb-6 border-2" style={{ borderColor: '#BDD7EB' }}>
-          <h3 className="text-base sm:text-lg font-semibold mb-4" style={{ color: '#1F2D38' }}>Need Help?</h3>
+        <div className="bg-linear-to-r from-blue-50 to-indigo-50 rounded-lg p-4 sm:p-6 mb-6 border-2" style={{ borderColor: '#D7B790' }}>
+          <h3 className="text-base sm:text-lg font-semibold mb-4" style={{ color: '#2F1A0F' }}>Need Help?</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="flex items-start gap-3">
               <div className="p-2 rounded-lg shrink-0" style={{ backgroundColor: 'white' }}>
-                <svg className="w-5 h-5" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-semibold" style={{ color: '#1F2D38' }}>Call Us</p>
-                <p className="text-xs" style={{ color: '#94A1AB' }}>+91 1234567890</p>
+                <p className="text-sm font-semibold" style={{ color: '#2F1A0F' }}>Call Us</p>
+                <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>+91 1234567890</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
               <div className="p-2 rounded-lg shrink-0" style={{ backgroundColor: 'white' }}>
-                <svg className="w-5 h-5" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-semibold" style={{ color: '#1F2D38' }}>Email Us</p>
-                <p className="text-xs" style={{ color: '#94A1AB' }}>support@samratagencies.com</p>
+                <p className="text-sm font-semibold" style={{ color: '#2F1A0F' }}>Email Us</p>
+                <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>support@samratagencies.com</p>
               </div>
             </div>
 
@@ -442,8 +442,8 @@ const OrderConfirmation = () => {
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-semibold" style={{ color: '#1F2D38' }}>WhatsApp</p>
-                <p className="text-xs" style={{ color: '#94A1AB' }}>Chat with us</p>
+                <p className="text-sm font-semibold" style={{ color: '#2F1A0F' }}>WhatsApp</p>
+                <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Chat with us</p>
               </div>
             </div>
           </div>
@@ -474,11 +474,11 @@ const OrderConfirmation = () => {
             className="flex-1 w-full sm:w-auto px-4 sm:px-6 py-3 rounded-lg font-medium transition text-sm sm:text-base"
             style={{
               backgroundColor: 'white',
-              color: '#895F42',
-              border: '2px solid #895F42'
+              color: '#816047',
+              border: '2px solid #816047'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#FFF8F3';
+              e.currentTarget.style.backgroundColor = '#E6CDB1';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'white';

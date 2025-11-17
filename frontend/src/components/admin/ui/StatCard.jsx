@@ -1,4 +1,4 @@
-const StatCard = ({ label, value, icon, color = '#895F42', trend, trendValue, subValue, subColor }) => {
+const StatCard = ({ label, value, icon, color = '#816047', trend, trendValue, subValue, subColor }) => {
   return (
     <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-5 lg:p-6 border" style={{ borderColor: '#e2e8f0' }}>
       <div className="flex items-start justify-between">

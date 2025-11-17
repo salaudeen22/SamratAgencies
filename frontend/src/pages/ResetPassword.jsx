@@ -104,7 +104,7 @@ const ResetPassword = () => {
       {/* Right Side - Form Section */}
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-md w-full">
-          <div className="bg-white rounded-2xl shadow-xl p-8 border" style={{ borderColor: '#BDD7EB' }}>
+          <div className="bg-white rounded-2xl shadow-xl p-8 border" style={{ borderColor: '#D7B790' }}>
             {/* Logo */}
             <div className="text-center mb-8">
               <div className="flex items-center justify-center mb-4">
@@ -114,8 +114,8 @@ const ResetPassword = () => {
                   className="h-16 w-auto"
                 />
               </div>
-              <h3 className="text-2xl font-bold mb-2" style={{ color: '#1F2D38' }}>Reset Password</h3>
-              <p className="text-sm" style={{ color: '#94A1AB' }}>
+              <h3 className="text-2xl font-bold mb-2" style={{ color: '#2F1A0F' }}>Reset Password</h3>
+              <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                 Enter your new password below
               </p>
             </div>
@@ -142,12 +142,12 @@ const ResetPassword = () => {
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                   New Password
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <MdLock className="h-5 w-5" style={{ color: '#94A1AB' }} />
+                    <MdLock className="h-5 w-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} />
                   </div>
                   <input
                     type="password"
@@ -157,23 +157,23 @@ const ResetPassword = () => {
                     required
                     minLength={6}
                     className="w-full pl-11 pr-4 py-3 border-2 rounded-lg focus:ring-2 focus:border-transparent transition-all"
-                    style={{ borderColor: '#BDD7EB' }}
+                    style={{ borderColor: '#D7B790' }}
                     placeholder="••••••••"
                     disabled={loading || !token}
                   />
                 </div>
-                <p className="mt-1 text-xs" style={{ color: '#94A1AB' }}>
+                <p className="mt-1 text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   Must be at least 6 characters
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                   Confirm Password
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <MdLock className="h-5 w-5" style={{ color: '#94A1AB' }} />
+                    <MdLock className="h-5 w-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} />
                   </div>
                   <input
                     type="password"
@@ -183,7 +183,7 @@ const ResetPassword = () => {
                     required
                     minLength={6}
                     className="w-full pl-11 pr-4 py-3 border-2 rounded-lg focus:ring-2 focus:border-transparent transition-all"
-                    style={{ borderColor: '#BDD7EB' }}
+                    style={{ borderColor: '#D7B790' }}
                     placeholder="••••••••"
                     disabled={loading || !token}
                   />
@@ -194,7 +194,7 @@ const ResetPassword = () => {
                 type="submit"
                 disabled={loading || !token}
                 className="w-full text-white py-3 px-4 rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ backgroundColor: '#895F42' }}
+                style={{ backgroundColor: '#816047' }}
               >
                 {loading ? 'Resetting...' : 'Reset Password'}
               </button>
@@ -204,16 +204,16 @@ const ResetPassword = () => {
               <Link
                 to="/login"
                 className="text-sm font-medium transition-colors"
-                style={{ color: '#895F42' }}
+                style={{ color: '#816047' }}
               >
                 ← Back to Login
               </Link>
             </div>
 
             <div className="mt-8 text-center">
-              <p className="text-sm" style={{ color: '#94A1AB' }}>
+              <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                 Don't have an account?{' '}
-                <Link to="/register" className="font-semibold transition-colors" style={{ color: '#895F42' }}>
+                <Link to="/register" className="font-semibold transition-colors" style={{ color: '#816047' }}>
                   Sign up
                 </Link>
               </p>

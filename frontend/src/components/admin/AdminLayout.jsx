@@ -303,7 +303,7 @@ const AdminLayout = ({ children }) => {
           </div>
           <div className="flex items-center gap-2 lg:gap-3">
             <div className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg" style={{ backgroundColor: '#f1f5f9' }}>
-              <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-semibold" style={{ backgroundColor: '#895F42' }}>
+              <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-semibold" style={{ backgroundColor: '#816047' }}>
                 {user?.name?.charAt(0).toUpperCase() || 'A'}
               </div>
               <span className="text-sm font-medium" style={{ color: '#334155' }}>{user?.name}</span>
@@ -375,7 +375,7 @@ const AdminLayout = ({ children }) => {
                           : 'text-gray-300 hover:text-white hover:bg-slate-700'
                         }
                       `}
-                      style={location.pathname === section.items[0].path ? { backgroundColor: '#895F42' } : {}}
+                      style={location.pathname === section.items[0].path ? { backgroundColor: '#816047' } : {}}
                     >
                       <div className={`${location.pathname === section.items[0].path ? 'scale-110' : 'group-hover:scale-110'} transition-transform`}>
                         {section.items[0].icon}
@@ -424,7 +424,7 @@ const AdminLayout = ({ children }) => {
                                   : 'text-gray-300 hover:text-white hover:bg-slate-700'
                                 }
                               `}
-                              style={location.pathname === item.path ? { backgroundColor: '#895F42' } : {}}
+                              style={location.pathname === item.path ? { backgroundColor: '#816047' } : {}}
                             >
                               <div className={`${location.pathname === item.path ? 'scale-110' : 'group-hover:scale-110'} transition-transform shrink-0`}>
                                 {item.icon}
@@ -445,7 +445,7 @@ const AdminLayout = ({ children }) => {
           <div className="border-t-2 border-slate-700 p-2 lg:p-2.5 shrink-0">
             <div className="px-2 py-2 rounded-lg bg-slate-800 hover:bg-slate-750 transition-colors">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-md shrink-0" style={{ backgroundColor: '#895F42' }}>
+                <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-md shrink-0" style={{ backgroundColor: '#816047' }}>
                   {user?.name?.charAt(0).toUpperCase() || 'A'}
                 </div>
                 <div className="flex-1 min-w-0">

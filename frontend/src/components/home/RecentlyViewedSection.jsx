@@ -32,7 +32,7 @@ const RecentlyViewedSection = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h2 className="text-3xl font-bold mb-2" style={{ color: '#1F2D38' }}>
+            <h2 className="text-3xl font-bold mb-2" style={{ color: '#2F1A0F' }}>
               Recently Viewed
             </h2>
             <p className="text-gray-600">
@@ -62,24 +62,24 @@ const RecentlyViewedSection = () => {
                     className="p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors"
                     title="Add to wishlist"
                   >
-                    <FiHeart className="w-4 h-4" style={{ color: '#895F42' }} />
+                    <FiHeart className="w-4 h-4" style={{ color: '#816047' }} />
                   </button>
                   <button
                     onClick={(e) => handleAddToCart(e, product)}
                     className="p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors"
                     title="Add to cart"
                   >
-                    <FiShoppingCart className="w-4 h-4" style={{ color: '#895F42' }} />
+                    <FiShoppingCart className="w-4 h-4" style={{ color: '#816047' }} />
                   </button>
                 </div>
               </div>
 
               <div className="p-4">
-                <h3 className="font-medium text-sm mb-2 line-clamp-2" style={{ color: '#1F2D38' }}>
+                <h3 className="font-medium text-sm mb-2 line-clamp-2" style={{ color: '#2F1A0F' }}>
                   {product.name}
                 </h3>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-lg font-bold" style={{ color: '#895F42' }}>
+                  <span className="text-lg font-bold" style={{ color: '#816047' }}>
                     ₹{product.price?.toLocaleString('en-IN')}
                   </span>
                   {product.originalPrice && product.originalPrice > product.price && (

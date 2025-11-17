@@ -50,7 +50,7 @@ const Blog = () => {
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#1F2D38' }}>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#2F1A0F' }}>
               Our Blog
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -67,7 +67,7 @@ const Blog = () => {
                   ? 'text-white shadow-lg'
                   : 'bg-white text-gray-700 hover:shadow-md'
               }`}
-              style={selectedCategory === '' ? { backgroundColor: '#895F42' } : {}}
+              style={selectedCategory === '' ? { backgroundColor: '#816047' } : {}}
             >
               All
             </button>
@@ -80,7 +80,7 @@ const Blog = () => {
                     ? 'text-white shadow-lg'
                     : 'bg-white text-gray-700 hover:shadow-md'
                 }`}
-                style={selectedCategory === category ? { backgroundColor: '#895F42' } : {}}
+                style={selectedCategory === category ? { backgroundColor: '#816047' } : {}}
               >
                 {category}
               </button>
@@ -90,7 +90,7 @@ const Blog = () => {
           {/* Articles Grid */}
           {loading ? (
             <div className="text-center py-20">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-4 mx-auto" style={{ borderColor: '#895F42' }}></div>
+              <div className="animate-spin rounded-full h-16 w-16 border-b-4 mx-auto" style={{ borderColor: '#816047' }}></div>
               <p className="mt-6 text-lg text-gray-600">Loading articles...</p>
             </div>
           ) : articles.length === 0 ? (
@@ -119,7 +119,7 @@ const Blog = () => {
                       <div className="flex items-center gap-3 mb-3">
                         <span
                           className="text-xs font-semibold px-3 py-1 rounded-full"
-                          style={{ backgroundColor: '#f0f9ff', color: '#895F42' }}
+                          style={{ backgroundColor: '#f0f9ff', color: '#816047' }}
                         >
                           {article.category}
                         </span>
@@ -127,7 +127,7 @@ const Blog = () => {
                           {article.readTime} min read
                         </span>
                       </div>
-                      <h3 className="text-xl font-bold mb-3 group-hover:text-[#895F42] transition-colors" style={{ color: '#1F2D38' }}>
+                      <h3 className="text-xl font-bold mb-3 group-hover:text-[#816047] transition-colors" style={{ color: '#2F1A0F' }}>
                         {article.title}
                       </h3>
                       <p className="text-gray-600 mb-4 line-clamp-2">
@@ -135,7 +135,7 @@ const Blog = () => {
                       </p>
                       <div className="flex items-center justify-between text-sm text-gray-500">
                         <span>{new Date(article.publishDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                        <span className="text-[#895F42] font-medium group-hover:underline">Read More →</span>
+                        <span className="text-[#816047] font-medium group-hover:underline">Read More →</span>
                       </div>
                     </div>
                   </Link>

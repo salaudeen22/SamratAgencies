@@ -33,7 +33,7 @@ const BlogArticle = () => {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#f8fafc' }}>
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-4 mx-auto" style={{ borderColor: '#895F42' }}></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 mx-auto" style={{ borderColor: '#816047' }}></div>
           <p className="mt-6 text-lg text-gray-600">Loading article...</p>
         </div>
       </div>
@@ -44,12 +44,12 @@ const BlogArticle = () => {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#f8fafc' }}>
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4" style={{ color: '#1F2D38' }}>Article Not Found</h1>
+          <h1 className="text-4xl font-bold mb-4" style={{ color: '#2F1A0F' }}>Article Not Found</h1>
           <p className="text-gray-600 mb-8">The article you're looking for doesn't exist.</p>
           <Link
             to="/blog"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white transition-colors"
-            style={{ backgroundColor: '#895F42' }}
+            style={{ backgroundColor: '#816047' }}
           >
             <FiArrowLeft />
             Back to Blog
@@ -75,7 +75,7 @@ const BlogArticle = () => {
           <Link
             to="/blog"
             className="inline-flex items-center gap-2 text-sm font-medium mb-8 hover:underline"
-            style={{ color: '#895F42' }}
+            style={{ color: '#816047' }}
           >
             <FiArrowLeft />
             Back to Blog
@@ -98,7 +98,7 @@ const BlogArticle = () => {
               <div className="flex flex-wrap items-center gap-3 mb-4">
                 <span
                   className="text-xs font-semibold px-3 py-1 rounded-full"
-                  style={{ backgroundColor: '#f0f9ff', color: '#895F42' }}
+                  style={{ backgroundColor: '#f0f9ff', color: '#816047' }}
                 >
                   {article.category}
                 </span>
@@ -119,7 +119,7 @@ const BlogArticle = () => {
               </div>
 
               {/* Title */}
-              <h1 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: '#1F2D38' }}>
+              <h1 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: '#2F1A0F' }}>
                 {article.title}
               </h1>
 
@@ -179,7 +179,7 @@ const BlogArticle = () => {
             <Link
               to="/blog"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white transition-colors"
-              style={{ backgroundColor: '#895F42' }}
+              style={{ backgroundColor: '#816047' }}
             >
               <FiArrowLeft />
               View More Articles

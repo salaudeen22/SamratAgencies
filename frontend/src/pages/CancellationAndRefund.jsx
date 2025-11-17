@@ -9,14 +9,14 @@ const CancellationAndRefund = () => {
         canonical="/cancellation-and-refund"
       />
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-6" style={{ color: '#895F42' }}>Cancellation and Refund Policy</h1>
+        <h1 className="text-3xl font-bold mb-6" style={{ color: '#816047' }}>Cancellation and Refund Policy</h1>
 
         <div className="space-y-6 text-gray-700">
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Order Cancellation</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Order Cancellation</h2>
 
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>Before Shipment/Manufacturing</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>Before Shipment/Manufacturing</h3>
               <ul className="list-disc list-inside ml-4 space-y-2">
                 <li>Orders can be cancelled free of charge before the product is shipped or manufacturing has begun</li>
                 <li>To cancel, contact us via phone, email, or through your account on our website</li>
@@ -26,7 +26,7 @@ const CancellationAndRefund = () => {
             </div>
 
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>After Shipment/Manufacturing</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>After Shipment/Manufacturing</h3>
               <ul className="list-disc list-inside ml-4 space-y-2">
                 <li>For standard products: Cancellation may be accepted with applicable charges</li>
                 <li>For made-to-order or customized products: Cancellation is not permitted once manufacturing has begun</li>
@@ -35,16 +35,16 @@ const CancellationAndRefund = () => {
             </div>
 
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>After Delivery</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>After Delivery</h3>
               <p className="mb-2">Once delivered, orders cannot be cancelled but may be eligible for return or exchange as per our return policy below.</p>
             </div>
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Return Policy</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Return Policy</h2>
 
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>Eligibility for Returns</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>Eligibility for Returns</h3>
               <p className="mb-2">Products can be returned under the following conditions:</p>
               <ul className="list-disc list-inside ml-4 space-y-2">
                 <li><strong>Damaged Products:</strong> Product received in damaged condition</li>
@@ -55,7 +55,7 @@ const CancellationAndRefund = () => {
             </div>
 
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>Return Timeline</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>Return Timeline</h3>
               <ul className="list-disc list-inside ml-4 space-y-2">
                 <li><strong>Furniture Products:</strong> Return request must be raised within 7 days of delivery</li>
                 <li><strong>Samsung Electronics:</strong> Return request must be raised within 7 days of delivery (subject to manufacturer's policy)</li>
@@ -64,7 +64,7 @@ const CancellationAndRefund = () => {
             </div>
 
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>Non-Returnable Items</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>Non-Returnable Items</h3>
               <p className="mb-2">The following items cannot be returned:</p>
               <ul className="list-disc list-inside ml-4 space-y-2">
                 <li>Customized or made-to-order products</li>
@@ -76,7 +76,7 @@ const CancellationAndRefund = () => {
             </div>
 
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>Return Process</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>Return Process</h3>
               <ol className="list-decimal list-inside ml-4 space-y-2">
                 <li>Contact our customer service within the return timeline</li>
                 <li>Provide order number, photos of the product/damage, and reason for return</li>
@@ -88,7 +88,7 @@ const CancellationAndRefund = () => {
             </div>
 
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>Return Shipping</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>Return Shipping</h3>
               <ul className="list-disc list-inside ml-4 space-y-2">
                 <li>For damaged/defective products: Return pickup is free of charge</li>
                 <li>For other returns: Return shipping charges may apply and will be deducted from refund</li>
@@ -98,7 +98,7 @@ const CancellationAndRefund = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Exchange Policy</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Exchange Policy</h2>
             <p className="mb-2">Exchanges are available under the following conditions:</p>
             <ul className="list-disc list-inside ml-4 space-y-2">
               <li>Product received is damaged, defective, or incorrect</li>
@@ -111,10 +111,10 @@ const CancellationAndRefund = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Refund Policy</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Refund Policy</h2>
 
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>Refund Processing Time</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>Refund Processing Time</h3>
               <ul className="list-disc list-inside ml-4 space-y-2">
                 <li>Refunds will be initiated within 5-7 business days after product pickup and verification</li>
                 <li>For prepaid orders: Refund will be credited to the original payment method</li>
@@ -124,7 +124,7 @@ const CancellationAndRefund = () => {
             </div>
 
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>Refund Amount</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>Refund Amount</h3>
               <ul className="list-disc list-inside ml-4 space-y-2">
                 <li>For damaged/defective products: Full refund including shipping charges</li>
                 <li>For order cancellations before shipment: Full refund</li>
@@ -134,7 +134,7 @@ const CancellationAndRefund = () => {
             </div>
 
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#895F42' }}>Partial Refunds</h3>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#816047' }}>Partial Refunds</h3>
               <p className="mb-2">Partial refunds may be issued in the following cases:</p>
               <ul className="list-disc list-inside ml-4 space-y-2">
                 <li>Product shows signs of use beyond inspection</li>
@@ -145,7 +145,7 @@ const CancellationAndRefund = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Warranty Claims</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Warranty Claims</h2>
             <p className="mb-2">For warranty-related issues:</p>
             <ul className="list-disc list-inside ml-4 space-y-2">
               <li><strong>Samsung Products:</strong> Covered under manufacturer's warranty. Contact Samsung service center or our support team</li>
@@ -156,7 +156,7 @@ const CancellationAndRefund = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>How to Initiate a Return or Refund</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>How to Initiate a Return or Refund</h2>
             <ol className="list-decimal list-inside ml-4 space-y-2">
               <li>Contact us via phone (+91 98809 14457 / +91 94492 70486) or email</li>
               <li>Provide your order number and reason for return/refund</li>
@@ -168,14 +168,14 @@ const CancellationAndRefund = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Dispute Resolution</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Dispute Resolution</h2>
             <p className="mb-4">
               If you have any concerns regarding cancellation, returns, or refunds, please contact our customer service team. We are committed to resolving all issues fairly and promptly. If a resolution cannot be reached, the matter will be subject to the jurisdiction of courts in Bangalore, Karnataka.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#1F2D38' }}>Contact Us</h2>
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#2F1A0F' }}>Contact Us</h2>
             <p className="mb-2">
               For questions about cancellations, returns, or refunds:
             </p>

@@ -318,7 +318,7 @@ const Checkout = () => {
           contact: formData.phone,
         },
         theme: {
-          color: '#895F42',
+          color: '#816047',
         },
       };
 
@@ -333,7 +333,7 @@ const Checkout = () => {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#fafaf9' }}>
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4" style={{ color: '#1F2D38' }}>Your cart is empty</h2>
+          <h2 className="text-2xl font-bold mb-4" style={{ color: '#2F1A0F' }}>Your cart is empty</h2>
           <Button onClick={() => navigate('/products')}>Browse Products</Button>
         </div>
       </div>
@@ -343,7 +343,7 @@ const Checkout = () => {
   return (
     <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: '#1F2D38' }}>Checkout</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: '#2F1A0F' }}>Checkout</h1>
 
         {/* Progress Steps */}
         <div className="mb-6 sm:mb-8">
@@ -356,27 +356,27 @@ const Checkout = () => {
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <span className="text-xs mt-1 hidden sm:block" style={{ color: '#94A1AB' }}>Cart</span>
+                <span className="text-xs mt-1 hidden sm:block" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Cart</span>
               </div>
 
               <div className="flex-1 h-1 bg-green-500 mx-2"></div>
 
               {/* Step 2: Checkout */}
               <div className="flex flex-col items-center flex-1">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold" style={{ backgroundColor: '#895F42' }}>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold" style={{ backgroundColor: '#816047' }}>
                   2
                 </div>
-                <span className="text-xs mt-1 font-medium hidden sm:block" style={{ color: '#895F42' }}>Checkout</span>
+                <span className="text-xs mt-1 font-medium hidden sm:block" style={{ color: '#816047' }}>Checkout</span>
               </div>
 
-              <div className="flex-1 h-1 mx-2" style={{ backgroundColor: '#BDD7EB' }}></div>
+              <div className="flex-1 h-1 mx-2" style={{ backgroundColor: '#D7B790' }}></div>
 
               {/* Step 3: Confirmation */}
               <div className="flex flex-col items-center flex-1">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center font-semibold" style={{ backgroundColor: '#E0EAF0', color: '#94A1AB' }}>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center font-semibold" style={{ backgroundColor: '#E6CDB1', color: 'rgba(129, 96, 71, 0.6)' }}>
                   3
                 </div>
-                <span className="text-xs mt-1 hidden sm:block" style={{ color: '#94A1AB' }}>Confirmation</span>
+                <span className="text-xs mt-1 hidden sm:block" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Confirmation</span>
               </div>
             </div>
           </div>
@@ -385,18 +385,18 @@ const Checkout = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {/* Checkout Form */}
           <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-4 sm:p-6 border-2" style={{ borderColor: '#BDD7EB' }}>
+            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-4 sm:p-6 border-2" style={{ borderColor: '#D7B790' }}>
               {/* Saved Addresses */}
               {savedAddresses.length > 0 && (
                 <div className="mb-6 sm:mb-8">
-                  <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Select Delivery Address</h2>
+                  <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4" style={{ color: '#2F1A0F' }}>Select Delivery Address</h2>
                   <div className="space-y-3">
                     {savedAddresses.map((address) => (
                       <div
                         key={address._id}
                         onClick={() => handleAddressSelect(address)}
                         className={`p-4 border-2 rounded-lg cursor-pointer transition ${
-                          selectedAddressId === address._id ? 'border-[#895F42] bg-[#FDF8F5]' : 'border-[#BDD7EB] hover:border-[#895F42]'
+                          selectedAddressId === address._id ? 'border-[#816047] bg-[#E6CDB1]' : 'border-[#D7B790] hover:border-[#816047]'
                         }`}
                       >
                         <div className="flex items-start">
@@ -409,18 +409,18 @@ const Checkout = () => {
                           />
                           <div className="flex-1">
                             <div className="flex items-center gap-2">
-                              <p className="font-semibold" style={{ color: '#1F2D38' }}>{address.name}</p>
+                              <p className="font-semibold" style={{ color: '#2F1A0F' }}>{address.name}</p>
                               {address.isDefault && (
-                                <span className="px-2 py-1 text-xs rounded" style={{ backgroundColor: '#895F42', color: 'white' }}>
+                                <span className="px-2 py-1 text-xs rounded" style={{ backgroundColor: '#816047', color: 'white' }}>
                                   Default
                                 </span>
                               )}
                             </div>
-                            <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>{address.phone}</p>
-                            <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>
+                            <p className="text-sm mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>{address.phone}</p>
+                            <p className="text-sm mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                               {address.addressLine1}{address.addressLine2 && `, ${address.addressLine2}`}
                             </p>
-                            <p className="text-sm" style={{ color: '#94A1AB' }}>
+                            <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                               {address.city}, {address.state} - {address.pincode}
                             </p>
                           </div>
@@ -432,9 +432,9 @@ const Checkout = () => {
                       onClick={handleUseNewAddress}
                       className="w-full p-4 border-2 rounded-lg transition text-left"
                       style={{
-                        borderColor: useNewAddress ? '#895F42' : '#BDD7EB',
-                        backgroundColor: useNewAddress ? '#FDF8F5' : 'white',
-                        color: '#1F2D38'
+                        borderColor: useNewAddress ? '#816047' : '#D7B790',
+                        backgroundColor: useNewAddress ? '#E6CDB1' : 'white',
+                        color: '#2F1A0F'
                       }}
                     >
                       <div className="flex items-center">
@@ -452,13 +452,13 @@ const Checkout = () => {
                 </div>
               )}
 
-              <h2 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6" style={{ color: '#1F2D38' }}>
+              <h2 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6" style={{ color: '#2F1A0F' }}>
                 {savedAddresses.length > 0 ? 'Shipping Details' : 'Shipping Information'}
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#2F1A0F' }}>
                     Full Name *
                   </label>
                   <input
@@ -468,12 +468,12 @@ const Checkout = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
-                    style={{ borderColor: '#BDD7EB' }}
+                    style={{ borderColor: '#D7B790' }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#2F1A0F' }}>
                     Email *
                   </label>
                   <input
@@ -483,12 +483,12 @@ const Checkout = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
-                    style={{ borderColor: '#BDD7EB' }}
+                    style={{ borderColor: '#D7B790' }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#2F1A0F' }}>
                     Phone *
                   </label>
                   <input
@@ -498,12 +498,12 @@ const Checkout = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
-                    style={{ borderColor: '#BDD7EB' }}
+                    style={{ borderColor: '#D7B790' }}
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#2F1A0F' }}>
                     Address *
                   </label>
                   <textarea
@@ -513,12 +513,12 @@ const Checkout = () => {
                     required
                     rows="3"
                     className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
-                    style={{ borderColor: '#BDD7EB' }}
+                    style={{ borderColor: '#D7B790' }}
                   ></textarea>
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#2F1A0F' }}>
                     City *
                   </label>
                   <input
@@ -528,12 +528,12 @@ const Checkout = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
-                    style={{ borderColor: '#BDD7EB' }}
+                    style={{ borderColor: '#D7B790' }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#2F1A0F' }}>
                     State *
                   </label>
                   <input
@@ -543,12 +543,12 @@ const Checkout = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
-                    style={{ borderColor: '#BDD7EB' }}
+                    style={{ borderColor: '#D7B790' }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                  <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#2F1A0F' }}>
                     Pincode *
                   </label>
                   <input
@@ -559,10 +559,10 @@ const Checkout = () => {
                     required
                     maxLength="6"
                     className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
-                    style={{ borderColor: '#BDD7EB' }}
+                    style={{ borderColor: '#D7B790' }}
                   />
                   {checkingDelivery && (
-                    <p className="text-xs mt-1" style={{ color: '#895F42' }}>
+                    <p className="text-xs mt-1" style={{ color: '#816047' }}>
                       Checking delivery availability...
                     </p>
                   )}
@@ -577,7 +577,7 @@ const Checkout = () => {
 
               {/* Special Instructions */}
               <div className="mt-4 sm:mt-6">
-                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2" style={{ color: '#2F1A0F' }}>
                   Special Instructions (Optional)
                 </label>
                 <textarea
@@ -587,7 +587,7 @@ const Checkout = () => {
                   rows="2"
                   placeholder="Any special delivery instructions..."
                   className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border rounded-md focus:outline-none focus:ring-2"
-                  style={{ borderColor: '#BDD7EB' }}
+                  style={{ borderColor: '#D7B790' }}
                 ></textarea>
               </div>
 
@@ -601,18 +601,18 @@ const Checkout = () => {
                       onChange={(e) => setSaveAddress(e.target.checked)}
                       className="mr-2"
                     />
-                    <span style={{ color: '#1F2D38' }}>Save this address for future orders</span>
+                    <span style={{ color: '#2F1A0F' }}>Save this address for future orders</span>
                   </label>
                 </div>
               )}
 
               <div className="mt-4 sm:mt-6">
-                <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Payment Method</h3>
+                <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4" style={{ color: '#2F1A0F' }}>Payment Method</h3>
                 <div className="space-y-3">
                   {/* COD Option */}
                   <label
                     className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition ${
-                      formData.paymentMethod === 'cod' ? 'border-[#895F42] bg-[#FDF8F5]' : 'border-[#BDD7EB] hover:border-[#895F42]'
+                      formData.paymentMethod === 'cod' ? 'border-[#816047] bg-[#E6CDB1]' : 'border-[#D7B790] hover:border-[#816047]'
                     }`}
                   >
                     <input
@@ -624,14 +624,14 @@ const Checkout = () => {
                       className="mr-3"
                     />
                     <div className="flex items-center gap-3 flex-1">
-                      <div className="p-2 rounded-lg" style={{ backgroundColor: '#E0EAF0' }}>
-                        <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="p-2 rounded-lg" style={{ backgroundColor: '#E6CDB1' }}>
+                        <svg className="w-6 h-6" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                       </div>
                       <div>
-                        <p className="font-semibold text-sm sm:text-base" style={{ color: '#1F2D38' }}>Cash on Delivery</p>
-                        <p className="text-xs" style={{ color: '#94A1AB' }}>Pay when you receive</p>
+                        <p className="font-semibold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>Cash on Delivery</p>
+                        <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Pay when you receive</p>
                       </div>
                     </div>
                   </label>
@@ -639,7 +639,7 @@ const Checkout = () => {
                   {/* Online Payment Option */}
                   <label
                     className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition ${
-                      formData.paymentMethod === 'online' ? 'border-[#895F42] bg-[#FDF8F5]' : 'border-[#BDD7EB] hover:border-[#895F42]'
+                      formData.paymentMethod === 'online' ? 'border-[#816047] bg-[#E6CDB1]' : 'border-[#D7B790] hover:border-[#816047]'
                     }`}
                   >
                     <input
@@ -651,14 +651,14 @@ const Checkout = () => {
                       className="mr-3"
                     />
                     <div className="flex items-center gap-3 flex-1">
-                      <div className="p-2 rounded-lg" style={{ backgroundColor: '#E0EAF0' }}>
-                        <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="p-2 rounded-lg" style={{ backgroundColor: '#E6CDB1' }}>
+                        <svg className="w-6 h-6" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                         </svg>
                       </div>
                       <div>
-                        <p className="font-semibold text-sm sm:text-base" style={{ color: '#1F2D38' }}>Online Payment</p>
-                        <p className="text-xs" style={{ color: '#94A1AB' }}>UPI, Cards, Net Banking</p>
+                        <p className="font-semibold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>Online Payment</p>
+                        <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>UPI, Cards, Net Banking</p>
                       </div>
                     </div>
                   </label>
@@ -673,10 +673,10 @@ const Checkout = () => {
                     <span className="text-xs font-medium text-green-700">100% Secure</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <svg className="w-4 h-4" style={{ color: '#895F42' }} fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4" style={{ color: '#816047' }} fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-xs font-medium" style={{ color: '#895F42' }}>SSL Encrypted</span>
+                    <span className="text-xs font-medium" style={{ color: '#816047' }}>SSL Encrypted</span>
                   </div>
                 </div>
               </div>
@@ -691,8 +691,8 @@ const Checkout = () => {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-20 border-2" style={{ borderColor: '#BDD7EB' }}>
-              <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Order Summary</h2>
+            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-20 border-2" style={{ borderColor: '#D7B790' }}>
+              <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4" style={{ color: '#2F1A0F' }}>Order Summary</h2>
 
               <div className="space-y-3 mb-6">
                 {cart.items.map((item, index) => {
@@ -702,7 +702,7 @@ const Checkout = () => {
                   return (
                   <div key={`${item.product._id}-${index}`} className="flex gap-3 pb-3" style={{ borderBottom: '1px solid #E5E7EB' }}>
                     {/* Product Thumbnail */}
-                    <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0" style={{ backgroundColor: '#E0EAF0' }}>
+                    <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0" style={{ backgroundColor: '#E6CDB1' }}>
                       {item.product.images && item.product.images.length > 0 && item.product.images[0].url ? (
                         <img
                           src={item.product.images[0].url}
@@ -710,7 +710,7 @@ const Checkout = () => {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-xs" style={{ color: '#94A1AB' }}>
+                        <div className="w-full h-full flex items-center justify-center text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                           No Image
                         </div>
                       )}
@@ -719,14 +719,14 @@ const Checkout = () => {
                     {/* Product Info */}
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
-                        <p className="text-sm font-medium line-clamp-1" style={{ color: '#1F2D38' }}>
+                        <p className="text-sm font-medium line-clamp-1" style={{ color: '#2F1A0F' }}>
                           {item.product.name}
                         </p>
-                        <p className="text-xs" style={{ color: '#94A1AB' }}>
+                        <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                           Qty: {item.quantity}
                         </p>
                       </div>
-                      <p className="text-sm font-semibold" style={{ color: '#895F42' }}>
+                      <p className="text-sm font-semibold" style={{ color: '#816047' }}>
                         ₹{(itemPrice * item.quantity).toLocaleString()}
                       </p>
                     </div>
@@ -735,8 +735,8 @@ const Checkout = () => {
                 })}
               </div>
 
-              <div className="pt-4 space-y-2" style={{ borderTop: '2px solid #BDD7EB' }}>
-                <div className="flex justify-between" style={{ color: '#94A1AB' }}>
+              <div className="pt-4 space-y-2" style={{ borderTop: '2px solid #D7B790' }}>
+                <div className="flex justify-between" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   <span>Subtotal</span>
                   <span>₹{getCartTotal().toLocaleString()}</span>
                 </div>
@@ -750,31 +750,31 @@ const Checkout = () => {
                   </div>
                 )}
 
-                <div className="flex justify-between" style={{ color: '#94A1AB' }}>
+                <div className="flex justify-between" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   <span>GST (18%)</span>
-                  <span style={{ color: '#1F2D38' }}>₹{getGSTAmount().toLocaleString()}</span>
+                  <span style={{ color: '#2F1A0F' }}>₹{getGSTAmount().toLocaleString()}</span>
                 </div>
 
-                <div className="flex justify-between" style={{ color: '#94A1AB' }}>
+                <div className="flex justify-between" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   <span>Delivery Charge</span>
                   {deliveryCharge === 0 ? (
                     <span className="text-green-600 font-medium">
                       {freeShipping ? 'Free (Coupon)' : deliveryInfo?.isFree ? 'Free' : 'Free'}
                     </span>
                   ) : (
-                    <span style={{ color: '#1F2D38' }}>₹{deliveryCharge.toLocaleString()}</span>
+                    <span style={{ color: '#2F1A0F' }}>₹{deliveryCharge.toLocaleString()}</span>
                   )}
                 </div>
 
                 {deliveryInfo && !deliveryInfo.isFree && deliveryInfo.freeDeliveryThreshold && deliveryCharge > 0 && (
-                  <p className="text-xs" style={{ color: '#94A1AB' }}>
+                  <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                     Add ₹{(deliveryInfo.freeDeliveryThreshold - getCartTotal()).toLocaleString()} more for free delivery
                   </p>
                 )}
 
-                <div className="pt-2 flex justify-between text-lg font-bold" style={{ borderTop: '2px solid #BDD7EB' }}>
-                  <span style={{ color: '#1F2D38' }}>Total</span>
-                  <span style={{ color: '#895F42' }}>₹{getFinalTotal().toLocaleString()}</span>
+                <div className="pt-2 flex justify-between text-lg font-bold" style={{ borderTop: '2px solid #D7B790' }}>
+                  <span style={{ color: '#2F1A0F' }}>Total</span>
+                  <span style={{ color: '#816047' }}>₹{getFinalTotal().toLocaleString()}</span>
                 </div>
 
                 {/* Expected Delivery Date */}

@@ -22,15 +22,15 @@ const ErrorFallback = ({ error, resetError }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold mb-4" style={{ color: '#1F2D38' }}>
+          <h1 className="text-3xl font-bold mb-4" style={{ color: '#2F1A0F' }}>
             Oops! Something went wrong
           </h1>
-          <p className="text-lg mb-2" style={{ color: '#94A1AB' }}>
+          <p className="text-lg mb-2" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
             We encountered an unexpected error
           </p>
           {error && (
             <details className="mt-4 text-left">
-              <summary className="cursor-pointer text-sm font-medium mb-2" style={{ color: '#895F42' }}>
+              <summary className="cursor-pointer text-sm font-medium mb-2" style={{ color: '#816047' }}>
                 Technical Details
               </summary>
               <div className="p-4 rounded-lg text-xs font-mono overflow-auto" style={{ backgroundColor: '#F9FAFB', border: '1px solid #E5E7EB', color: '#EF4444' }}>
@@ -49,11 +49,11 @@ const ErrorFallback = ({ error, resetError }) => {
             className="px-6 py-3 rounded-lg font-medium transition"
             style={{
               backgroundColor: 'white',
-              color: '#895F42',
-              border: '2px solid #895F42'
+              color: '#816047',
+              border: '2px solid #816047'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#FFF8F3';
+              e.currentTarget.style.backgroundColor = '#E6CDB1';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'white';

@@ -63,7 +63,7 @@ const Settings = () => {
       <AdminLayout>
         <div className="flex items-center justify-center h-64">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#895F42' }}></div>
+            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#816047' }}></div>
             <p className="text-lg font-medium" style={{ color: '#64748b' }}>Loading settings...</p>
           </div>
         </div>
@@ -103,8 +103,8 @@ const Settings = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className="px-4 py-2 font-medium transition-colors"
                   style={{
-                    color: activeTab === tab.id ? '#895F42' : '#64748b',
-                    borderBottom: activeTab === tab.id ? '2px solid #895F42' : 'none'
+                    color: activeTab === tab.id ? '#816047' : '#64748b',
+                    borderBottom: activeTab === tab.id ? '2px solid #816047' : 'none'
                   }}
                 >
                   {tab.label}
@@ -118,7 +118,7 @@ const Settings = () => {
             <Card title="General Information">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+                  <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                     Site Name
                   </label>
                   <input
@@ -131,7 +131,7 @@ const Settings = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+                  <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                     Site Description
                   </label>
                   <textarea
@@ -145,7 +145,7 @@ const Settings = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                       Email
                     </label>
                     <input
@@ -158,7 +158,7 @@ const Settings = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                       Phone
                     </label>
                     <input
@@ -172,7 +172,7 @@ const Settings = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+                  <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                     Address
                   </label>
                   <textarea
@@ -193,7 +193,7 @@ const Settings = () => {
               <div className="space-y-3">
                 {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => (
                   <div key={day} className="grid grid-cols-2 gap-4 items-center">
-                    <label className="text-sm font-medium capitalize" style={{ color: '#1F2D38' }}>
+                    <label className="text-sm font-medium capitalize" style={{ color: '#2F1A0F' }}>
                       {day}
                     </label>
                     <input
@@ -215,7 +215,7 @@ const Settings = () => {
             <Card title="Payment & Tax Settings">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+                  <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                     Tax Rate (%)
                   </label>
                   <input
@@ -231,7 +231,7 @@ const Settings = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+                  <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                     Default Shipping Charge (₹)
                   </label>
                   <input
@@ -245,7 +245,7 @@ const Settings = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+                  <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                     Free Shipping Threshold (₹)
                   </label>
                   <input
@@ -265,9 +265,9 @@ const Settings = () => {
                       checked={settings.razorpayEnabled || false}
                       onChange={(e) => handleChange('razorpayEnabled', e.target.checked)}
                       className="w-4 h-4"
-                      style={{ accentColor: '#895F42' }}
+                      style={{ accentColor: '#816047' }}
                     />
-                    <span className="text-sm font-medium" style={{ color: '#1F2D38' }}>
+                    <span className="text-sm font-medium" style={{ color: '#2F1A0F' }}>
                       Enable Razorpay
                     </span>
                   </label>
@@ -278,9 +278,9 @@ const Settings = () => {
                       checked={settings.codEnabled || false}
                       onChange={(e) => handleChange('codEnabled', e.target.checked)}
                       className="w-4 h-4"
-                      style={{ accentColor: '#895F42' }}
+                      style={{ accentColor: '#816047' }}
                     />
-                    <span className="text-sm font-medium" style={{ color: '#1F2D38' }}>
+                    <span className="text-sm font-medium" style={{ color: '#2F1A0F' }}>
                       Enable Cash on Delivery
                     </span>
                   </label>
@@ -295,7 +295,7 @@ const Settings = () => {
               <div className="space-y-4">
                 {['facebook', 'instagram', 'twitter', 'youtube', 'linkedin'].map(platform => (
                   <div key={platform}>
-                    <label className="block text-sm font-medium mb-1 capitalize" style={{ color: '#1F2D38' }}>
+                    <label className="block text-sm font-medium mb-1 capitalize" style={{ color: '#2F1A0F' }}>
                       {platform}
                     </label>
                     <input
@@ -317,7 +317,7 @@ const Settings = () => {
             <Card title="SEO Settings">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+                  <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                     Meta Title
                   </label>
                   <input
@@ -330,7 +330,7 @@ const Settings = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+                  <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                     Meta Description
                   </label>
                   <textarea
@@ -343,7 +343,7 @@ const Settings = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+                  <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                     Meta Keywords
                   </label>
                   <input
@@ -357,7 +357,7 @@ const Settings = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2D38' }}>
+                  <label className="block text-sm font-medium mb-1" style={{ color: '#2F1A0F' }}>
                     OG Image URL
                   </label>
                   <input

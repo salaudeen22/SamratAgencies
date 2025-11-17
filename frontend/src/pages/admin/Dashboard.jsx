@@ -31,7 +31,7 @@ const Dashboard = () => {
       <AdminLayout>
         <div className="flex items-center justify-center h-64">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#895F42' }}></div>
+            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#816047' }}></div>
             <p className="text-lg font-medium" style={{ color: '#64748b' }}>Loading statistics...</p>
           </div>
         </div>
@@ -257,7 +257,7 @@ const Dashboard = () => {
                     </p>
                     <p className="text-xs" style={{ color: '#64748b' }}>{method.count} orders</p>
                   </div>
-                  <p className="font-bold" style={{ color: '#895F42' }}>₹{method.revenue.toLocaleString()}</p>
+                  <p className="font-bold" style={{ color: '#816047' }}>₹{method.revenue.toLocaleString()}</p>
                 </div>
               ))}
             </div>
@@ -281,7 +281,7 @@ const Dashboard = () => {
                       <p className="text-xs" style={{ color: '#64748b' }}>{city.orders} orders</p>
                     </div>
                   </div>
-                  <p className="font-semibold text-sm" style={{ color: '#895F42' }}>₹{city.revenue.toLocaleString()}</p>
+                  <p className="font-semibold text-sm" style={{ color: '#816047' }}>₹{city.revenue.toLocaleString()}</p>
                 </div>
               ))}
             </div>
@@ -305,7 +305,7 @@ const Dashboard = () => {
                       <p className="text-xs" style={{ color: '#64748b' }}>{category.totalSold} units</p>
                     </div>
                   </div>
-                  <p className="font-semibold text-sm" style={{ color: '#895F42' }}>₹{category.revenue.toLocaleString()}</p>
+                  <p className="font-semibold text-sm" style={{ color: '#816047' }}>₹{category.revenue.toLocaleString()}</p>
                 </div>
               ))}
             </div>
@@ -329,7 +329,7 @@ const Dashboard = () => {
                       <p className="text-xs" style={{ color: '#64748b' }}>{state.orders} orders</p>
                     </div>
                   </div>
-                  <p className="font-semibold text-sm" style={{ color: '#895F42' }}>₹{state.revenue.toLocaleString()}</p>
+                  <p className="font-semibold text-sm" style={{ color: '#816047' }}>₹{state.revenue.toLocaleString()}</p>
                 </div>
               ))}
             </div>
@@ -353,7 +353,7 @@ const Dashboard = () => {
                     </p>
                   </div>
                   <div className="text-right ml-4">
-                    <p className="font-semibold text-sm" style={{ color: '#895F42' }}>{coupon.usedCount} uses</p>
+                    <p className="font-semibold text-sm" style={{ color: '#816047' }}>{coupon.usedCount} uses</p>
                     <p className="text-xs" style={{ color: '#64748b' }}>₹{coupon.totalSaved?.toLocaleString() || 0} saved</p>
                   </div>
                 </div>
@@ -400,7 +400,7 @@ const Dashboard = () => {
                     </p>
                   </div>
                   <div className="text-right ml-4 flex-shrink-0">
-                    <p className="font-bold mb-1" style={{ color: '#895F42' }}>₹{order.totalPrice?.toLocaleString()}</p>
+                    <p className="font-bold mb-1" style={{ color: '#816047' }}>₹{order.totalPrice?.toLocaleString()}</p>
                     <span
                       className={`text-xs px-2 py-1 rounded-full font-medium ${
                         order.status === 'Delivered'
@@ -428,7 +428,7 @@ const Dashboard = () => {
               {stats.topProducts.map((item, index) => (
                 <div key={index} className="flex justify-between items-center p-3 rounded-lg hover:bg-gray-50 transition-colors" style={{ border: '1px solid #f1f5f9' }}>
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#895F42' }}>
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#816047' }}>
                       #{index + 1}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -439,7 +439,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <div className="text-right ml-4 flex-shrink-0">
-                    <p className="font-bold" style={{ color: '#895F42' }}>₹{item.revenue?.toLocaleString()}</p>
+                    <p className="font-bold" style={{ color: '#816047' }}>₹{item.revenue?.toLocaleString()}</p>
                   </div>
                 </div>
               ))}

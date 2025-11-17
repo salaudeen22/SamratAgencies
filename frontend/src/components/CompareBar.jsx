@@ -9,23 +9,23 @@ const CompareBar = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 transform transition-transform duration-300">
-      <div className="bg-white shadow-2xl border-t-4" style={{ borderColor: '#895F42' }}>
+      <div className="bg-white shadow-2xl border-t-4" style={{ borderColor: '#816047' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between gap-4">
             {/* Left: Product Thumbnails */}
             <div className="flex items-center gap-3 flex-1 overflow-x-auto">
               <div className="flex items-center gap-2 min-w-max">
-                <svg className="w-5 h-5" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
-                <span className="font-bold text-sm sm:text-base" style={{ color: '#1F2D38' }}>
+                <span className="font-bold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>
                   Compare ({getCompareCount()})
                 </span>
               </div>
 
               {compareList.map((product) => (
                 <div key={product._id} className="relative group">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border-2" style={{ borderColor: '#BDD7EB' }}>
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border-2" style={{ borderColor: '#D7B790' }}>
                     {product.images && product.images.length > 0 && product.images[0].url ? (
                       <img
                         src={product.images[0].url}
@@ -33,7 +33,7 @@ const CompareBar = () => {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: '#E0EAF0', color: '#94A1AB' }}>
+                      <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: '#E6CDB1', color: 'rgba(129, 96, 71, 0.6)' }}>
                         <span className="text-xs">No Image</span>
                       </div>
                     )}
@@ -69,7 +69,7 @@ const CompareBar = () => {
                 onClick={() => navigate('/compare')}
                 className="px-4 py-2 sm:px-6 sm:py-2 rounded-lg font-bold transition-all text-xs sm:text-sm shadow-lg hover:shadow-xl"
                 style={{
-                  backgroundColor: '#895F42',
+                  backgroundColor: '#816047',
                   color: 'white'
                 }}
               >

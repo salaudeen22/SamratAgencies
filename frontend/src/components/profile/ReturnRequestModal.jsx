@@ -130,13 +130,13 @@ const ReturnRequestModal = ({ isOpen, onClose, order, onSuccess }) => {
         {/* Modal panel */}
         <div className="relative w-full max-w-2xl bg-white shadow-2xl rounded-2xl transform transition-all">
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: '#E0EAF0' }}>
-            <h3 className="text-xl font-bold" style={{ color: '#1F2D38' }}>Request Return</h3>
+          <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: '#E6CDB1' }}>
+            <h3 className="text-xl font-bold" style={{ color: '#2F1A0F' }}>Request Return</h3>
             <button
               onClick={handleClose}
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
-              <HiX className="w-5 h-5" style={{ color: '#94A1AB' }} />
+              <HiX className="w-5 h-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} />
             </button>
           </div>
 
@@ -144,7 +144,7 @@ const ReturnRequestModal = ({ isOpen, onClose, order, onSuccess }) => {
           <form onSubmit={handleSubmit} className="px-6 py-6 max-h-[70vh] overflow-y-auto">
             {/* Select Items */}
             <div className="mb-6">
-              <label className="block text-sm font-semibold mb-3" style={{ color: '#1F2D38' }}>
+              <label className="block text-sm font-semibold mb-3" style={{ color: '#2F1A0F' }}>
                 Select Items to Return <span className="text-red-500">*</span>
               </label>
               <div className="space-y-2">
@@ -172,8 +172,8 @@ const ReturnRequestModal = ({ isOpen, onClose, order, onSuccess }) => {
                       />
                     )}
                     <div className="flex-1">
-                      <p className="font-medium text-sm" style={{ color: '#1F2D38' }}>{item.name}</p>
-                      <p className="text-xs" style={{ color: '#94A1AB' }}>Qty: {item.quantity} × ₹{item.price?.toLocaleString()}</p>
+                      <p className="font-medium text-sm" style={{ color: '#2F1A0F' }}>{item.name}</p>
+                      <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Qty: {item.quantity} × ₹{item.price?.toLocaleString()}</p>
                     </div>
                   </div>
                 ))}
@@ -182,7 +182,7 @@ const ReturnRequestModal = ({ isOpen, onClose, order, onSuccess }) => {
 
             {/* Return Reason */}
             <div className="mb-6">
-              <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+              <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                 Reason for Return <span className="text-red-500">*</span>
               </label>
               <select
@@ -200,7 +200,7 @@ const ReturnRequestModal = ({ isOpen, onClose, order, onSuccess }) => {
 
             {/* Description */}
             <div className="mb-6">
-              <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+              <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                 Detailed Description <span className="text-red-500">*</span>
               </label>
               <textarea
@@ -215,7 +215,7 @@ const ReturnRequestModal = ({ isOpen, onClose, order, onSuccess }) => {
 
             {/* Image Upload */}
             <div className="mb-6">
-              <label className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+              <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                 Upload Images (Optional, Max 5)
               </label>
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
@@ -234,8 +234,8 @@ const ReturnRequestModal = ({ isOpen, onClose, order, onSuccess }) => {
                     uploading || images.length >= 5 ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                 >
-                  <HiUpload className="w-8 h-8 mb-2" style={{ color: '#94A1AB' }} />
-                  <p className="text-sm" style={{ color: '#94A1AB' }}>
+                  <HiUpload className="w-8 h-8 mb-2" style={{ color: 'rgba(129, 96, 71, 0.6)' }} />
+                  <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                     {uploading ? 'Uploading...' : 'Click to upload images'}
                   </p>
                 </label>
@@ -271,19 +271,19 @@ const ReturnRequestModal = ({ isOpen, onClose, order, onSuccess }) => {
 
             {/* Pickup Address Info */}
             <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>Pickup Address</p>
+              <p className="text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>Pickup Address</p>
               <p className="text-sm" style={{ color: '#64748b' }}>
                 Items will be picked up from your delivery address
               </p>
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3 pt-4 border-t" style={{ borderColor: '#E0EAF0' }}>
+            <div className="flex gap-3 pt-4 border-t" style={{ borderColor: '#E6CDB1' }}>
               <button
                 type="button"
                 onClick={handleClose}
                 className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg font-medium text-sm hover:bg-gray-50 transition-colors"
-                style={{ color: '#1F2D38' }}
+                style={{ color: '#2F1A0F' }}
               >
                 Cancel
               </button>
@@ -291,7 +291,7 @@ const ReturnRequestModal = ({ isOpen, onClose, order, onSuccess }) => {
                 type="submit"
                 disabled={submitting || uploading}
                 className="flex-1 px-4 py-2.5 rounded-lg font-medium text-sm text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ backgroundColor: '#895F42' }}
+                style={{ backgroundColor: '#816047' }}
               >
                 {submitting ? 'Submitting...' : 'Submit Return Request'}
               </button>

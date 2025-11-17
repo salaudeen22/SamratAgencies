@@ -18,11 +18,11 @@ const BrandLogosSection = () => {
   ];
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 overflow-hidden" style={{ backgroundColor: '#E0EAF0' }}>
+    <section className="py-8 sm:py-12 md:py-16 overflow-hidden" style={{ backgroundColor: '#E6CDB1' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style={{ color: '#1F2D38' }}>Brands You Know & Love</h2>
-          <p className="text-base sm:text-lg" style={{ color: '#94A1AB' }}>Quality names you can trust, all in one place</p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style={{ color: '#2F1A0F' }}>Brands You Know & Love</h2>
+          <p className="text-base sm:text-lg" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Quality names you can trust, all in one place</p>
         </div>
 
         {/* Auto-scrolling carousel */}

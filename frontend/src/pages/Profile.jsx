@@ -35,10 +35,10 @@ const Profile = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* Profile Header Card */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-6">
-          <div className="relative h-32 sm:h-40" style={{ background: 'linear-gradient(135deg, #895F42 0%, #6d4a35 100%)' }}>
+          <div className="relative h-32 sm:h-40" style={{ background: 'linear-gradient(135deg, #816047 0%, #6d4a35 100%)' }}>
             <div className="absolute -bottom-12 left-6 sm:left-8">
               <div className="w-24 h-24 rounded-full bg-white p-1 shadow-xl">
-                <div className="w-full h-full rounded-full flex items-center justify-center text-3xl font-bold text-white" style={{ background: 'linear-gradient(135deg, #895F42 0%, #6d4a35 100%)' }}>
+                <div className="w-full h-full rounded-full flex items-center justify-center text-3xl font-bold text-white" style={{ background: 'linear-gradient(135deg, #816047 0%, #6d4a35 100%)' }}>
                   {user?.name?.charAt(0).toUpperCase()}
                 </div>
               </div>
@@ -52,11 +52,11 @@ const Profile = () => {
             </button>
           </div>
           <div className="pt-16 pb-6 px-6 sm:px-8">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-1" style={{ color: '#1F2D38' }}>{user?.name}</h1>
-            <p className="text-sm sm:text-base mb-4" style={{ color: '#94A1AB' }}>{user?.email}</p>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-1" style={{ color: '#2F1A0F' }}>{user?.name}</h1>
+            <p className="text-sm sm:text-base mb-4" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>{user?.email}</p>
 
             {/* Tab Navigation */}
-            <div className="flex gap-2 border-b overflow-x-auto" style={{ borderColor: '#E0EAF0' }}>
+            <div className="flex gap-2 border-b overflow-x-auto" style={{ borderColor: '#E6CDB1' }}>
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 return (
@@ -69,10 +69,10 @@ const Profile = () => {
                         : 'opacity-60 hover:opacity-100'
                     }`}
                     style={activeTab === tab.id ? {
-                      borderColor: '#895F42',
-                      color: '#895F42'
+                      borderColor: '#816047',
+                      color: '#816047'
                     } : {
-                      color: '#1F2D38'
+                      color: '#2F1A0F'
                     }}
                   >
                     <Icon className="w-5 h-5" />

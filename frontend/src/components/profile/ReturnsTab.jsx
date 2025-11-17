@@ -56,23 +56,23 @@ const ReturnsTab = () => {
       <div className="mb-6">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold" style={{ color: '#1F2D38' }}>Return Requests</h2>
-            <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>Track your return and refund requests</p>
+            <h2 className="text-xl font-bold" style={{ color: '#2F1A0F' }}>Return Requests</h2>
+            <p className="text-sm mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Track your return and refund requests</p>
           </div>
           <button
             onClick={fetchReturns}
             className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
             title="Refresh"
           >
-            <HiRefresh className="w-5 h-5" style={{ color: '#895F42' }} />
+            <HiRefresh className="w-5 h-5" style={{ color: '#816047' }} />
           </button>
         </div>
       </div>
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 mx-auto" style={{ borderColor: '#895F42' }}></div>
-          <p className="mt-4 text-sm sm:text-base" style={{ color: '#94A1AB' }}>Loading returns...</p>
+          <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 mx-auto" style={{ borderColor: '#816047' }}></div>
+          <p className="mt-4 text-sm sm:text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Loading returns...</p>
         </div>
       ) : returns.length > 0 ? (
         <div className="space-y-4">
@@ -80,7 +80,7 @@ const ReturnsTab = () => {
             <div
               key={returnReq._id}
               className="border-2 rounded-xl p-4 hover:shadow-md transition-all cursor-pointer"
-              style={{ borderColor: '#E0EAF0' }}
+              style={{ borderColor: '#E6CDB1' }}
               onClick={() => {
                 setSelectedReturn(returnReq);
                 setShowDetails(true);
@@ -89,11 +89,11 @@ const ReturnsTab = () => {
               <div className="flex justify-between items-start gap-3 mb-3">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <p className="text-sm font-semibold" style={{ color: '#1F2D38' }}>
+                    <p className="text-sm font-semibold" style={{ color: '#2F1A0F' }}>
                       Return Request #{returnReq._id.slice(-8)}
                     </p>
                   </div>
-                  <p className="text-xs" style={{ color: '#94A1AB' }}>
+                  <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                     Submitted on {new Date(returnReq.createdAt).toLocaleDateString('en-IN', {
                       day: 'numeric',
                       month: 'short',
@@ -107,19 +107,19 @@ const ReturnsTab = () => {
               </div>
 
               <div className="border-t border-b py-2 mb-2" style={{ borderColor: '#f3f4f6' }}>
-                <p className="text-sm mb-1" style={{ color: '#1F2D38' }}>
+                <p className="text-sm mb-1" style={{ color: '#2F1A0F' }}>
                   <span className="font-medium">Reason:</span> {getReasonLabel(returnReq.returnReason)}
                 </p>
-                <p className="text-xs" style={{ color: '#94A1AB' }}>
+                <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   {returnReq.items?.length || 0} item(s)
                 </p>
               </div>
 
               <div className="flex justify-between items-center">
-                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: '#94A1AB' }}>
+                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   Refund Amount
                 </span>
-                <span className="text-lg font-bold" style={{ color: '#895F42' }}>
+                <span className="text-lg font-bold" style={{ color: '#816047' }}>
                   ₹{returnReq.refundAmount?.toLocaleString()}
                 </span>
               </div>
@@ -148,10 +148,10 @@ const ReturnsTab = () => {
       ) : (
         <div className="text-center py-12">
           <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-            <HiRefresh className="w-10 h-10" style={{ color: '#94A1AB' }} />
+            <HiRefresh className="w-10 h-10" style={{ color: 'rgba(129, 96, 71, 0.6)' }} />
           </div>
-          <p className="text-base sm:text-lg mb-2" style={{ color: '#94A1AB' }}>No return requests yet</p>
-          <p className="text-sm" style={{ color: '#94A1AB' }}>Your return requests will appear here</p>
+          <p className="text-base sm:text-lg mb-2" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>No return requests yet</p>
+          <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Your return requests will appear here</p>
         </div>
       )}
 
@@ -166,13 +166,13 @@ const ReturnsTab = () => {
 
             <div className="relative w-full max-w-2xl bg-white shadow-2xl rounded-2xl transform transition-all">
               {/* Header */}
-              <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: '#E0EAF0' }}>
-                <h3 className="text-xl font-bold" style={{ color: '#1F2D38' }}>Return Request Details</h3>
+              <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: '#E6CDB1' }}>
+                <h3 className="text-xl font-bold" style={{ color: '#2F1A0F' }}>Return Request Details</h3>
                 <button
                   onClick={() => setShowDetails(false)}
                   className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
                 >
-                  <HiX className="w-5 h-5" style={{ color: '#94A1AB' }} />
+                  <HiX className="w-5 h-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} />
                 </button>
               </div>
 
@@ -180,7 +180,7 @@ const ReturnsTab = () => {
               <div className="px-6 py-6 max-h-[70vh] overflow-y-auto space-y-6">
                 {/* Status */}
                 <div>
-                  <p className="text-xs font-medium mb-2" style={{ color: '#94A1AB' }}>Current Status</p>
+                  <p className="text-xs font-medium mb-2" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Current Status</p>
                   <span className={`inline-block px-4 py-2 rounded-lg text-sm font-bold border ${getStatusColor(selectedReturn.status)}`}>
                     {selectedReturn.status}
                   </span>
@@ -188,14 +188,14 @@ const ReturnsTab = () => {
 
                 {/* Request ID */}
                 <div>
-                  <p className="text-xs font-medium mb-1" style={{ color: '#94A1AB' }}>Request ID</p>
-                  <p className="text-sm font-mono" style={{ color: '#1F2D38' }}>{selectedReturn._id}</p>
+                  <p className="text-xs font-medium mb-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Request ID</p>
+                  <p className="text-sm font-mono" style={{ color: '#2F1A0F' }}>{selectedReturn._id}</p>
                 </div>
 
                 {/* Reason */}
                 <div>
-                  <p className="text-xs font-medium mb-1" style={{ color: '#94A1AB' }}>Reason</p>
-                  <p className="text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                  <p className="text-xs font-medium mb-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Reason</p>
+                  <p className="text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                     {getReasonLabel(selectedReturn.returnReason)}
                   </p>
                   <p className="text-sm" style={{ color: '#64748b' }}>{selectedReturn.returnDescription}</p>
@@ -203,7 +203,7 @@ const ReturnsTab = () => {
 
                 {/* Items */}
                 <div>
-                  <p className="text-xs font-medium mb-2" style={{ color: '#94A1AB' }}>Items to Return</p>
+                  <p className="text-xs font-medium mb-2" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Items to Return</p>
                   <div className="space-y-2">
                     {selectedReturn.items?.map((item, index) => (
                       <div key={index} className="flex gap-3 p-3 rounded-lg" style={{ backgroundColor: '#fafaf9' }}>
@@ -211,9 +211,9 @@ const ReturnsTab = () => {
                           <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
                         )}
                         <div className="flex-1">
-                          <p className="text-sm font-semibold mb-1" style={{ color: '#1F2D38' }}>{item.name}</p>
-                          <p className="text-xs" style={{ color: '#94A1AB' }}>Qty: {item.quantity}</p>
-                          <p className="text-sm font-bold mt-1" style={{ color: '#895F42' }}>
+                          <p className="text-sm font-semibold mb-1" style={{ color: '#2F1A0F' }}>{item.name}</p>
+                          <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Qty: {item.quantity}</p>
+                          <p className="text-sm font-bold mt-1" style={{ color: '#816047' }}>
                             ₹{(item.price * item.quantity)?.toLocaleString()}
                           </p>
                         </div>
@@ -225,7 +225,7 @@ const ReturnsTab = () => {
                 {/* Images */}
                 {selectedReturn.images && selectedReturn.images.length > 0 && (
                   <div>
-                    <p className="text-xs font-medium mb-2" style={{ color: '#94A1AB' }}>
+                    <p className="text-xs font-medium mb-2" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                       Attached Images ({selectedReturn.images.length})
                     </p>
                     <div className="grid grid-cols-3 gap-2">
@@ -235,7 +235,7 @@ const ReturnsTab = () => {
                           src={img}
                           alt={`Evidence ${index + 1}`}
                           className="w-full h-24 object-cover rounded border"
-                          style={{ borderColor: '#E0EAF0' }}
+                          style={{ borderColor: '#E6CDB1' }}
                         />
                       ))}
                     </div>
@@ -265,11 +265,11 @@ const ReturnsTab = () => {
 
                 {/* Timeline */}
                 <div>
-                  <p className="text-xs font-medium mb-2" style={{ color: '#94A1AB' }}>Timeline</p>
+                  <p className="text-xs font-medium mb-2" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Timeline</p>
                   <div className="text-sm space-y-2">
                     <div className="flex justify-between">
                       <span style={{ color: '#64748b' }}>Submitted:</span>
-                      <span style={{ color: '#1F2D38' }}>
+                      <span style={{ color: '#2F1A0F' }}>
                         {new Date(selectedReturn.createdAt).toLocaleString('en-IN', {
                           day: 'numeric',
                           month: 'short',

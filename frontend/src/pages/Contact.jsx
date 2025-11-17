@@ -75,7 +75,7 @@ const Contact = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight drop-shadow-lg">Get in Touch</h1>
-            <p className="text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed drop-shadow-md" style={{ color: '#E5EFF3' }}>
+            <p className="text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed drop-shadow-md" style={{ color: '#E6CDB1' }}>
               Have questions about our furniture or Samsung products? We're here to help!
               Reach out to us and we'll respond as soon as possible.
             </p>
@@ -88,48 +88,48 @@ const Contact = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
             {/* Phone */}
-            <div className="group bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" style={{ border: '2px solid #BDD7EB' }}>
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: '#895F42' }}>
+            <div className="group bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" style={{ border: '2px solid #D7B790' }}>
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: '#816047' }}>
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-4" style={{ color: '#1F2D38' }}>Call Us</h3>
-              <a href="tel:+919880914457" className="block mb-2 text-lg font-medium hover:underline" style={{ color: '#895F42' }}>+91 98809 14457</a>
-              <a href="tel:+919448075801" className="block mb-4 text-lg font-medium hover:underline" style={{ color: '#895F42' }}>+91 94480 75801</a>
-              <div className="pt-4 border-t" style={{ borderColor: '#E0EAF0' }}>
-                <p className="text-sm font-semibold" style={{ color: '#1F2D38' }}>Business Hours</p>
-                <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>Mon-Sun: 8:00 AM - 10:30 PM</p>
+              <h3 className="text-xl font-bold mb-4" style={{ color: '#2F1A0F' }}>Call Us</h3>
+              <a href="tel:+919880914457" className="block mb-2 text-lg font-medium hover:underline" style={{ color: '#816047' }}>+91 98809 14457</a>
+              <a href="tel:+919448075801" className="block mb-4 text-lg font-medium hover:underline" style={{ color: '#816047' }}>+91 94480 75801</a>
+              <div className="pt-4 border-t" style={{ borderColor: '#E6CDB1' }}>
+                <p className="text-sm font-semibold" style={{ color: '#2F1A0F' }}>Business Hours</p>
+                <p className="text-sm mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Mon-Sun: 8:00 AM - 10:30 PM</p>
               </div>
             </div>
 
             {/* Email */}
-            <div className="group bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" style={{ border: '2px solid #BDD7EB' }}>
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: '#895F42' }}>
+            <div className="group bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" style={{ border: '2px solid #D7B790' }}>
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: '#816047' }}>
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-4" style={{ color: '#1F2D38' }}>Email Us</h3>
-              <a href="mailto:samratagencies2012@gmail.com" className="block mb-4 text-base font-medium hover:underline break-all" style={{ color: '#895F42' }}>
+              <h3 className="text-xl font-bold mb-4" style={{ color: '#2F1A0F' }}>Email Us</h3>
+              <a href="mailto:samratagencies2012@gmail.com" className="block mb-4 text-base font-medium hover:underline break-all" style={{ color: '#816047' }}>
                 samratagencies2012@gmail.com
               </a>
-              <div className="pt-4 border-t" style={{ borderColor: '#E0EAF0' }}>
-                <p className="text-sm font-semibold" style={{ color: '#1F2D38' }}>Response Time</p>
-                <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>Within 24 hours</p>
+              <div className="pt-4 border-t" style={{ borderColor: '#E6CDB1' }}>
+                <p className="text-sm font-semibold" style={{ color: '#2F1A0F' }}>Response Time</p>
+                <p className="text-sm mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Within 24 hours</p>
               </div>
             </div>
 
             {/* Location */}
-            <div className="group bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" style={{ border: '2px solid #BDD7EB' }}>
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: '#895F42' }}>
+            <div className="group bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" style={{ border: '2px solid #D7B790' }}>
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: '#816047' }}>
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-4" style={{ color: '#1F2D38' }}>Visit Showroom</h3>
-              <p className="text-sm leading-relaxed mb-4" style={{ color: '#94A1AB' }}>
+              <h3 className="text-xl font-bold mb-4" style={{ color: '#2F1A0F' }}>Visit Showroom</h3>
+              <p className="text-sm leading-relaxed mb-4" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                 Babu Reddy Complex, 5<br />
                 Begur Main Road, Hongasandra<br />
                 Bommanahalli, Bengaluru<br />
@@ -140,9 +140,9 @@ const Contact = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 font-semibold text-sm px-4 py-2 rounded-lg transition-all"
-                style={{ color: '#895F42', backgroundColor: '#E0EAF0' }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#BDD7EB'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+                style={{ color: '#816047', backgroundColor: '#E6CDB1' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#D7B790'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
               >
                 Get Directions
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,14 +155,14 @@ const Contact = () => {
           {/* Contact Form and Map */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Form */}
-            <div className="bg-white rounded-2xl p-8 lg:p-10 shadow-xl" style={{ border: '2px solid #BDD7EB' }}>
+            <div className="bg-white rounded-2xl p-8 lg:p-10 shadow-xl" style={{ border: '2px solid #D7B790' }}>
               <div className="mb-8">
-                <h2 className="text-3xl lg:text-4xl font-bold mb-3" style={{ color: '#1F2D38' }}>Send a Message</h2>
-                <p className="text-base" style={{ color: '#94A1AB' }}>Fill out the form below and we'll get back to you shortly.</p>
+                <h2 className="text-3xl lg:text-4xl font-bold mb-3" style={{ color: '#2F1A0F' }}>Send a Message</h2>
+                <p className="text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Fill out the form below and we'll get back to you shortly.</p>
               </div>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                  <label htmlFor="name" className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                     Full Name *
                   </label>
                   <input
@@ -173,16 +173,16 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3.5 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:border-transparent transition-all outline-none"
-                    style={{ borderColor: '#E0EAF0', focusRing: '#895F42' }}
-                    onFocus={(e) => e.currentTarget.style.borderColor = '#895F42'}
-                    onBlur={(e) => e.currentTarget.style.borderColor = '#E0EAF0'}
+                    style={{ borderColor: '#E6CDB1', focusRing: '#816047' }}
+                    onFocus={(e) => e.currentTarget.style.borderColor = '#816047'}
+                    onBlur={(e) => e.currentTarget.style.borderColor = '#E6CDB1'}
                     placeholder="John Doe"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                    <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                       Email *
                     </label>
                     <input
@@ -193,15 +193,15 @@ const Contact = () => {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3.5 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:border-transparent transition-all outline-none"
-                      style={{ borderColor: '#E0EAF0' }}
-                      onFocus={(e) => e.currentTarget.style.borderColor = '#895F42'}
-                      onBlur={(e) => e.currentTarget.style.borderColor = '#E0EAF0'}
+                      style={{ borderColor: '#E6CDB1' }}
+                      onFocus={(e) => e.currentTarget.style.borderColor = '#816047'}
+                      onBlur={(e) => e.currentTarget.style.borderColor = '#E6CDB1'}
                       placeholder="john@example.com"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                    <label htmlFor="phone" className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                       Phone Number
                     </label>
                     <input
@@ -211,16 +211,16 @@ const Contact = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-4 py-3.5 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:border-transparent transition-all outline-none"
-                      style={{ borderColor: '#E0EAF0' }}
-                      onFocus={(e) => e.currentTarget.style.borderColor = '#895F42'}
-                      onBlur={(e) => e.currentTarget.style.borderColor = '#E0EAF0'}
+                      style={{ borderColor: '#E6CDB1' }}
+                      onFocus={(e) => e.currentTarget.style.borderColor = '#816047'}
+                      onBlur={(e) => e.currentTarget.style.borderColor = '#E6CDB1'}
                       placeholder="+91 98765 43210"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                  <label htmlFor="subject" className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                     Subject *
                   </label>
                   <input
@@ -231,15 +231,15 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3.5 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:border-transparent transition-all outline-none"
-                    style={{ borderColor: '#E0EAF0' }}
-                    onFocus={(e) => e.currentTarget.style.borderColor = '#895F42'}
-                    onBlur={(e) => e.currentTarget.style.borderColor = '#E0EAF0'}
+                    style={{ borderColor: '#E6CDB1' }}
+                    onFocus={(e) => e.currentTarget.style.borderColor = '#816047'}
+                    onBlur={(e) => e.currentTarget.style.borderColor = '#E6CDB1'}
                     placeholder="How can we help you?"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-semibold mb-2" style={{ color: '#1F2D38' }}>
+                  <label htmlFor="message" className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
                     Message *
                   </label>
                   <textarea
@@ -250,9 +250,9 @@ const Contact = () => {
                     required
                     rows={6}
                     className="w-full px-4 py-3.5 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:border-transparent transition-all outline-none resize-none"
-                    style={{ borderColor: '#E0EAF0' }}
-                    onFocus={(e) => e.currentTarget.style.borderColor = '#895F42'}
-                    onBlur={(e) => e.currentTarget.style.borderColor = '#E0EAF0'}
+                    style={{ borderColor: '#E6CDB1' }}
+                    onFocus={(e) => e.currentTarget.style.borderColor = '#816047'}
+                    onBlur={(e) => e.currentTarget.style.borderColor = '#E6CDB1'}
                     placeholder="Tell us more about your requirements..."
                   ></textarea>
                 </div>
@@ -287,9 +287,9 @@ const Contact = () => {
                   type="submit"
                   disabled={loading}
                   className="w-full text-white px-6 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
-                  style={{ backgroundColor: '#895F42' }}
-                  onMouseEnter={(e) => !loading && (e.currentTarget.style.backgroundColor = '#9F8065')}
-                  onMouseLeave={(e) => !loading && (e.currentTarget.style.backgroundColor = '#895F42')}
+                  style={{ backgroundColor: '#816047' }}
+                  onMouseEnter={(e) => !loading && (e.currentTarget.style.backgroundColor = '#D7B790')}
+                  onMouseLeave={(e) => !loading && (e.currentTarget.style.backgroundColor = '#816047')}
                 >
                   {loading ? (
                     <>
@@ -313,48 +313,48 @@ const Contact = () => {
 
             {/* Info Section */}
             <div>
-              <div className="rounded-2xl p-8 lg:p-10 text-white shadow-xl mb-8" style={{ backgroundColor: '#895F42' }}>
+              <div className="rounded-2xl p-8 lg:p-10 text-white shadow-xl mb-8" style={{ backgroundColor: '#816047' }}>
                 <h3 className="text-2xl lg:text-3xl font-bold mb-4">Why Visit Us?</h3>
-                <p className="mb-8 leading-relaxed text-base" style={{ color: '#E5EFF3' }}>
+                <p className="mb-8 leading-relaxed text-base" style={{ color: '#E6CDB1' }}>
                   Experience our extensive collection of furniture and Samsung products in person. Our expert team is ready to help you create your dream space.
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: '#E5EFF3' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: '#E6CDB1' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p style={{ color: '#E5EFF3' }}>Wide range of furniture styles and price points</p>
+                    <p style={{ color: '#E6CDB1' }}>Wide range of furniture styles and price points</p>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: '#E5EFF3' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: '#E6CDB1' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p style={{ color: '#E5EFF3' }}>Authorized Samsung dealer with latest products</p>
+                    <p style={{ color: '#E6CDB1' }}>Authorized Samsung dealer with latest products</p>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: '#E5EFF3' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: '#E6CDB1' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p style={{ color: '#E5EFF3' }}>Customization options available</p>
+                    <p style={{ color: '#E6CDB1' }}>Customization options available</p>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: '#E5EFF3' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: '#E6CDB1' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p style={{ color: '#E5EFF3' }}>Flexible payment options including Bajaj Finance</p>
+                    <p style={{ color: '#E6CDB1' }}>Flexible payment options including Bajaj Finance</p>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: '#E5EFF3' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: '#E6CDB1' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p style={{ color: '#E5EFF3' }}>Free delivery on orders over ₹5000</p>
+                    <p style={{ color: '#E6CDB1' }}>Free delivery on orders over ₹5000</p>
                   </div>
                 </div>
               </div>
 
               {/* Online Platforms */}
-              <div className="bg-white rounded-2xl p-8 lg:p-10 shadow-xl" style={{ border: '2px solid #BDD7EB' }}>
-                <h3 className="text-2xl lg:text-3xl font-bold mb-3" style={{ color: '#1F2D38' }}>Find Us Online</h3>
+              <div className="bg-white rounded-2xl p-8 lg:p-10 shadow-xl" style={{ border: '2px solid #D7B790' }}>
+                <h3 className="text-2xl lg:text-3xl font-bold mb-3" style={{ color: '#2F1A0F' }}>Find Us Online</h3>
                 <div className="flex items-center gap-2 mb-6">
                   <div className="flex">
                     {[1,2,3,4,5].map(i => (
@@ -363,8 +363,8 @@ const Contact = () => {
                       </svg>
                     ))}
                   </div>
-                  <span className="font-bold text-lg" style={{ color: '#1F2D38' }}>5.0</span>
-                  <span style={{ color: '#94A1AB' }}>• 108+ reviews</span>
+                  <span className="font-bold text-lg" style={{ color: '#2F1A0F' }}>5.0</span>
+                  <span style={{ color: 'rgba(129, 96, 71, 0.6)' }}>• 108+ reviews</span>
                 </div>
                 <div className="space-y-3">
                   <a
@@ -372,12 +372,12 @@ const Contact = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between p-3 border rounded-lg transition-all group"
-                    style={{ borderColor: '#BDD7EB' }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+                    style={{ borderColor: '#D7B790' }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
                   >
-                    <span className="font-medium" style={{ color: '#1F2D38' }}>Google My Business</span>
-                    <svg className="w-5 h-5" style={{ color: '#94A1AB' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span className="font-medium" style={{ color: '#2F1A0F' }}>Google My Business</span>
+                    <svg className="w-5 h-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </a>
@@ -387,12 +387,12 @@ const Contact = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between p-3 border rounded-lg transition-all group"
-                    style={{ borderColor: '#BDD7EB' }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+                    style={{ borderColor: '#D7B790' }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
                   >
-                    <span className="font-medium" style={{ color: '#1F2D38' }}>JustDial</span>
-                    <svg className="w-5 h-5" style={{ color: '#94A1AB' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span className="font-medium" style={{ color: '#2F1A0F' }}>JustDial</span>
+                    <svg className="w-5 h-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </a>
@@ -402,12 +402,12 @@ const Contact = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between p-3 border rounded-lg transition-all group"
-                    style={{ borderColor: '#BDD7EB' }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+                    style={{ borderColor: '#D7B790' }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
                   >
-                    <span className="font-medium" style={{ color: '#1F2D38' }}>MagicPIN</span>
-                    <svg className="w-5 h-5" style={{ color: '#94A1AB' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span className="font-medium" style={{ color: '#2F1A0F' }}>MagicPIN</span>
+                    <svg className="w-5 h-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </a>
@@ -417,12 +417,12 @@ const Contact = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between p-3 border rounded-lg transition-all group"
-                    style={{ borderColor: '#BDD7EB' }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+                    style={{ borderColor: '#D7B790' }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
                   >
-                    <span className="font-medium" style={{ color: '#1F2D38' }}>Facebook</span>
-                    <svg className="w-5 h-5" style={{ color: '#94A1AB' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span className="font-medium" style={{ color: '#2F1A0F' }}>Facebook</span>
+                    <svg className="w-5 h-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </a>
@@ -432,12 +432,12 @@ const Contact = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between p-3 border rounded-lg transition-all group"
-                    style={{ borderColor: '#BDD7EB' }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+                    style={{ borderColor: '#D7B790' }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
                   >
-                    <span className="font-medium" style={{ color: '#1F2D38' }}>IndiaMART</span>
-                    <svg className="w-5 h-5" style={{ color: '#94A1AB' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span className="font-medium" style={{ color: '#2F1A0F' }}>IndiaMART</span>
+                    <svg className="w-5 h-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </a>
@@ -452,14 +452,14 @@ const Contact = () => {
       <section className="py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={{ color: '#1F2D38' }}>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={{ color: '#2F1A0F' }}>
               Visit Our Location
             </h2>
-            <p className="text-base sm:text-lg max-w-2xl mx-auto" style={{ color: '#94A1AB' }}>
+            <p className="text-base sm:text-lg max-w-2xl mx-auto" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
               Conveniently located on Begur Main Road, Hongasandra. Easy access and ample parking available.
             </p>
           </div>
-          <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ border: '3px solid #BDD7EB' }}>
+          <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ border: '3px solid #D7B790' }}>
             <iframe
               src="https://www.google.com/maps/d/embed?mid=18aWLW17D7q98_ilr1CsNogtQoa78XzI&ehbc=2E312F"
               width="100%"

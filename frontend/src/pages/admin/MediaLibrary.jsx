@@ -128,7 +128,7 @@ const MediaLibrary = () => {
       <AdminLayout>
         <div className="flex items-center justify-center h-64">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#895F42' }}></div>
+            <div className="w-12 h-12 border-4 rounded-full animate-spin" style={{ borderColor: '#e2e8f0', borderTopColor: '#816047' }}></div>
             <p className="text-lg font-medium" style={{ color: '#64748b' }}>Loading media library...</p>
           </div>
         </div>
@@ -150,7 +150,7 @@ const MediaLibrary = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium" style={{ color: '#64748b' }}>Total Files</p>
-                <p className="text-2xl font-bold mt-1" style={{ color: '#1F2D38' }}>{files.length}</p>
+                <p className="text-2xl font-bold mt-1" style={{ color: '#2F1A0F' }}>{files.length}</p>
               </div>
               <div className="w-12 h-12 rounded-full flex items-center justify-center bg-blue-100">
                 <FaFileImage className="text-xl text-blue-600" />
@@ -162,7 +162,7 @@ const MediaLibrary = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium" style={{ color: '#64748b' }}>Storage Used</p>
-                <p className="text-2xl font-bold mt-1" style={{ color: '#1F2D38' }}>{formatFileSize(totalSize)}</p>
+                <p className="text-2xl font-bold mt-1" style={{ color: '#2F1A0F' }}>{formatFileSize(totalSize)}</p>
               </div>
               <div className="w-12 h-12 rounded-full flex items-center justify-center bg-purple-100">
                 <FaFolder className="text-xl text-purple-600" />
@@ -174,7 +174,7 @@ const MediaLibrary = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium" style={{ color: '#64748b' }}>Images</p>
-                <p className="text-2xl font-bold mt-1" style={{ color: '#1F2D38' }}>
+                <p className="text-2xl font-bold mt-1" style={{ color: '#2F1A0F' }}>
                   {files.filter(f => f.type?.startsWith('image/')).length}
                 </p>
               </div>
@@ -196,7 +196,7 @@ const MediaLibrary = () => {
                   placeholder="Search files..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#895F42]"
+                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#816047]"
                   style={{ borderColor: '#e2e8f0' }}
                 />
               </div>
@@ -204,7 +204,7 @@ const MediaLibrary = () => {
 
             <div className="flex gap-2">
               <label htmlFor="file-upload" className="cursor-pointer">
-                <span className={`inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`} style={{ backgroundColor: '#895F42', color: 'white' }}>
+                <span className={`inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`} style={{ backgroundColor: '#816047', color: 'white' }}>
                   <FaUpload className="mr-2" size={12} />
                   {uploading ? 'Uploading...' : 'Upload Files'}
                 </span>
@@ -230,12 +230,12 @@ const MediaLibrary = () => {
               <p className="text-lg font-medium mb-1" style={{ color: '#64748b' }}>
                 {searchTerm ? 'No files found' : 'No files uploaded yet'}
               </p>
-              <p className="text-sm mb-6" style={{ color: '#94A1AB' }}>
+              <p className="text-sm mb-6" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                 {searchTerm ? 'Try a different search term' : 'Upload your first file to get started'}
               </p>
               {!searchTerm && (
                 <label htmlFor="file-upload-empty" className="cursor-pointer">
-                  <span className="inline-flex items-center px-6 py-3 text-sm font-medium rounded-lg transition-colors" style={{ backgroundColor: '#895F42', color: 'white' }}>
+                  <span className="inline-flex items-center px-6 py-3 text-sm font-medium rounded-lg transition-colors" style={{ backgroundColor: '#816047', color: 'white' }}>
                     <FaUpload className="mr-2" />
                     Upload Files
                   </span>
@@ -274,7 +274,7 @@ const MediaLibrary = () => {
 
                       {/* File Info */}
                       <div className="p-3">
-                        <p className="text-sm font-medium truncate mb-1" style={{ color: '#1F2D38' }}>
+                        <p className="text-sm font-medium truncate mb-1" style={{ color: '#2F1A0F' }}>
                           {file.name}
                         </p>
                         <p className="text-xs" style={{ color: '#64748b' }}>
@@ -309,28 +309,28 @@ const MediaLibrary = () => {
                     <div className="space-y-3">
                       <div>
                         <p className="text-xs font-medium mb-1" style={{ color: '#64748b' }}>File Name</p>
-                        <p className="text-sm font-medium break-all" style={{ color: '#1F2D38' }}>
+                        <p className="text-sm font-medium break-all" style={{ color: '#2F1A0F' }}>
                           {selectedFile.name}
                         </p>
                       </div>
 
                       <div>
                         <p className="text-xs font-medium mb-1" style={{ color: '#64748b' }}>Size</p>
-                        <p className="text-sm" style={{ color: '#1F2D38' }}>
+                        <p className="text-sm" style={{ color: '#2F1A0F' }}>
                           {formatFileSize(selectedFile.size)}
                         </p>
                       </div>
 
                       <div>
                         <p className="text-xs font-medium mb-1" style={{ color: '#64748b' }}>Type</p>
-                        <p className="text-sm" style={{ color: '#1F2D38' }}>
+                        <p className="text-sm" style={{ color: '#2F1A0F' }}>
                           {selectedFile.type || 'Unknown'}
                         </p>
                       </div>
 
                       <div>
                         <p className="text-xs font-medium mb-1" style={{ color: '#64748b' }}>Uploaded</p>
-                        <div className="flex items-center gap-2 text-sm" style={{ color: '#1F2D38' }}>
+                        <div className="flex items-center gap-2 text-sm" style={{ color: '#2F1A0F' }}>
                           <FaCalendar size={12} />
                           {formatDate(selectedFile.uploadedAt)}
                         </div>

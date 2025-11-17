@@ -179,11 +179,11 @@ const Cart = () => {
       <div className="min-h-screen py-8 sm:py-12 md:py-16" style={{ backgroundColor: '#fafaf9' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <svg className="mx-auto h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 mb-4 sm:mb-6" style={{ color: '#BDD7EB' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="mx-auto h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 mb-4 sm:mb-6" style={{ color: '#D7B790' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
-            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Your cart is empty</h2>
-            <p className="mb-6 sm:mb-8 text-sm sm:text-base" style={{ color: '#94A1AB' }}>Start shopping and add items to your cart</p>
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4" style={{ color: '#2F1A0F' }}>Your cart is empty</h2>
+            <p className="mb-6 sm:mb-8 text-sm sm:text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Start shopping and add items to your cart</p>
             <Link to="/products">
               <Button size="lg">Browse Products</Button>
             </Link>
@@ -199,8 +199,8 @@ const Cart = () => {
         {/* Header with Item Count and Actions */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 sm:mb-6 md:mb-8">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: '#1F2D38' }}>Shopping Cart</h1>
-            <p className="text-sm mt-1" style={{ color: '#94A1AB' }}>
+            <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: '#2F1A0F' }}>Shopping Cart</h1>
+            <p className="text-sm mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
               {cart.items.length} {cart.items.length === 1 ? 'item' : 'items'} in your cart
             </p>
           </div>
@@ -208,9 +208,9 @@ const Cart = () => {
           <button
             onClick={handleSaveAllToWishlist}
             className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all hover:shadow-md"
-            style={{ backgroundColor: '#E0EAF0', color: '#895F42' }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#BDD7EB'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+            style={{ backgroundColor: '#E6CDB1', color: '#816047' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#D7B790'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -232,10 +232,10 @@ const Cart = () => {
               const itemPrice = item.price || item.product.price || 0;
 
               return (
-              <div key={itemKey} className="bg-white rounded-lg shadow-md p-4 sm:p-6" style={{ border: '2px solid #BDD7EB' }}>
+              <div key={itemKey} className="bg-white rounded-lg shadow-md p-4 sm:p-6" style={{ border: '2px solid #D7B790' }}>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 md:space-x-6">
                   {/* Product Image */}
-                  <div className="rounded-lg w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0" style={{ backgroundColor: '#E0EAF0' }}>
+                  <div className="rounded-lg w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0" style={{ backgroundColor: '#E6CDB1' }}>
                     {item.product.images && item.product.images.length > 0 && item.product.images[0].url ? (
                       <img
                         src={item.product.images[0].url}
@@ -243,7 +243,7 @@ const Cart = () => {
                         className="w-full h-full object-cover rounded-lg"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-xs" style={{ color: '#94A1AB' }}>
+                      <div className="w-full h-full flex items-center justify-center text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                         No Image
                       </div>
                     )}
@@ -255,14 +255,14 @@ const Cart = () => {
                       <Link
                         to={`/products/${item.product._id}`}
                         className="text-base sm:text-lg font-semibold transition"
-                        style={{ color: '#1F2D38' }}
-                        onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
-                        onMouseLeave={(e) => e.currentTarget.style.color = '#1F2D38'}
+                        style={{ color: '#2F1A0F' }}
+                        onMouseEnter={(e) => e.currentTarget.style.color = '#816047'}
+                        onMouseLeave={(e) => e.currentTarget.style.color = '#2F1A0F'}
                       >
                         {item.product.name}
                       </Link>
                       {item.product.category && (
-                        <p className="text-xs sm:text-sm mt-1" style={{ color: '#94A1AB' }}>
+                        <p className="text-xs sm:text-sm mt-1" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                           {typeof item.product.category === 'object' ? item.product.category.name : item.product.category}
                         </p>
                       )}
@@ -274,7 +274,7 @@ const Cart = () => {
                             <span
                               key={key}
                               className="text-xs px-2 py-1 rounded"
-                              style={{ backgroundColor: '#E0EAF0', color: '#1F2D38' }}
+                              style={{ backgroundColor: '#E6CDB1', color: '#2F1A0F' }}
                             >
                               <span className="capitalize font-medium">{key}:</span> {value}
                             </span>
@@ -287,10 +287,10 @@ const Cart = () => {
                         {item.product.discount > 0 ? (
                           <div className="flex flex-col gap-1">
                             <div className="flex items-center gap-2">
-                              <p className="font-bold text-base sm:text-lg" style={{ color: '#895F42' }}>
+                              <p className="font-bold text-base sm:text-lg" style={{ color: '#816047' }}>
                                 ₹{itemPrice.toLocaleString()}
                               </p>
-                              <span className="text-xs line-through" style={{ color: '#94A1AB' }}>
+                              <span className="text-xs line-through" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                                 ₹{Math.round(getOriginalPrice(item.product)).toLocaleString()}
                               </span>
                             </div>
@@ -301,7 +301,7 @@ const Cart = () => {
                             </span>
                           </div>
                         ) : (
-                          <p className="font-bold text-base sm:text-lg" style={{ color: '#895F42' }}>
+                          <p className="font-bold text-base sm:text-lg" style={{ color: '#816047' }}>
                             ₹{itemPrice.toLocaleString()}
                           </p>
                         )}
@@ -314,19 +314,19 @@ const Cart = () => {
                         <button
                           onClick={() => handleQuantityChange(item.product._id, item.quantity - 1, item.selectedVariants)}
                           className="px-2 sm:px-3 py-1 rounded-md transition text-sm sm:text-base"
-                          style={{ backgroundColor: '#E0EAF0', color: '#1F2D38' }}
-                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#BDD7EB'}
-                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+                          style={{ backgroundColor: '#E6CDB1', color: '#2F1A0F' }}
+                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#D7B790'}
+                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
                         >
                           -
                         </button>
-                        <span className="text-base sm:text-lg font-semibold min-w-[30px] text-center" style={{ color: '#1F2D38' }}>{item.quantity}</span>
+                        <span className="text-base sm:text-lg font-semibold min-w-[30px] text-center" style={{ color: '#2F1A0F' }}>{item.quantity}</span>
                         <button
                           onClick={() => handleQuantityChange(item.product._id, item.quantity + 1, item.selectedVariants)}
                           className="px-2 sm:px-3 py-1 rounded-md transition text-sm sm:text-base"
-                          style={{ backgroundColor: '#E0EAF0', color: '#1F2D38' }}
-                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#BDD7EB'}
-                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#E0EAF0'}
+                          style={{ backgroundColor: '#E6CDB1', color: '#2F1A0F' }}
+                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#D7B790'}
+                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#E6CDB1'}
                         >
                           +
                         </button>
@@ -334,16 +334,16 @@ const Cart = () => {
 
                       {/* Subtotal & Actions */}
                       <div className="text-right">
-                        <p className="text-base sm:text-lg font-bold mb-2" style={{ color: '#1F2D38' }}>
+                        <p className="text-base sm:text-lg font-bold mb-2" style={{ color: '#2F1A0F' }}>
                           ₹{(itemPrice * item.quantity).toLocaleString()}
                         </p>
                         <div className="flex flex-col gap-1">
                           <button
                             onClick={() => handleMoveToWishlist(item.product._id, item.selectedVariants)}
                             className="text-xs sm:text-sm font-medium transition-colors"
-                            style={{ color: '#895F42' }}
-                            onMouseEnter={(e) => e.currentTarget.style.color = '#9F8065'}
-                            onMouseLeave={(e) => e.currentTarget.style.color = '#895F42'}
+                            style={{ color: '#816047' }}
+                            onMouseEnter={(e) => e.currentTarget.style.color = '#D7B790'}
+                            onMouseLeave={(e) => e.currentTarget.style.color = '#816047'}
                           >
                             Move to Wishlist
                           </button>
@@ -365,21 +365,21 @@ const Cart = () => {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-20" style={{ border: '2px solid #BDD7EB' }}>
-              <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4" style={{ color: '#1F2D38' }}>Order Summary</h2>
+            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-20" style={{ border: '2px solid #D7B790' }}>
+              <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4" style={{ color: '#2F1A0F' }}>Order Summary</h2>
 
               {/* Coupon Code Section */}
               <div className="mb-4 sm:mb-6">
-                <label className="block text-sm font-medium mb-2" style={{ color: '#1F2D38' }}>
+                <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
                   Have a coupon code?
                 </label>
                 {appliedCoupon ? (
-                  <div className="flex items-center justify-between p-3 rounded-md" style={{ backgroundColor: '#E0EAF0' }}>
+                  <div className="flex items-center justify-between p-3 rounded-md" style={{ backgroundColor: '#E6CDB1' }}>
                     <div className="flex items-center space-x-2">
                       <svg className="w-5 h-5" style={{ color: '#22c55e' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span className="font-semibold text-sm" style={{ color: '#1F2D38' }}>
+                      <span className="font-semibold text-sm" style={{ color: '#2F1A0F' }}>
                         {appliedCoupon.code}
                       </span>
                     </div>
@@ -398,17 +398,17 @@ const Cart = () => {
                       onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                       placeholder="Enter code"
                       className="flex-1 px-3 py-2 border-2 rounded-md focus:outline-none text-sm"
-                      style={{ borderColor: '#BDD7EB' }}
-                      onFocus={(e) => e.currentTarget.style.borderColor = '#895F42'}
-                      onBlur={(e) => e.currentTarget.style.borderColor = '#BDD7EB'}
+                      style={{ borderColor: '#D7B790' }}
+                      onFocus={(e) => e.currentTarget.style.borderColor = '#816047'}
+                      onBlur={(e) => e.currentTarget.style.borderColor = '#D7B790'}
                     />
                     <button
                       onClick={handleApplyCoupon}
                       disabled={isValidating}
                       className="px-4 py-2 rounded-md font-medium text-sm transition disabled:opacity-50"
-                      style={{ backgroundColor: '#895F42', color: 'white' }}
-                      onMouseEnter={(e) => !isValidating && (e.currentTarget.style.backgroundColor = '#9F8065')}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#895F42'}
+                      style={{ backgroundColor: '#816047', color: 'white' }}
+                      onMouseEnter={(e) => !isValidating && (e.currentTarget.style.backgroundColor = '#D7B790')}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#816047'}
                     >
                       {isValidating ? 'Validating...' : 'Apply'}
                     </button>
@@ -417,7 +417,7 @@ const Cart = () => {
               </div>
 
               <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
-                <div className="flex justify-between text-sm sm:text-base" style={{ color: '#94A1AB' }}>
+                <div className="flex justify-between text-sm sm:text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   <span>Subtotal</span>
                   <span>₹{getCartTotal().toLocaleString()}</span>
                 </div>
@@ -438,12 +438,12 @@ const Cart = () => {
                   </div>
                 )}
 
-                <div className="flex justify-between text-sm sm:text-base" style={{ color: '#94A1AB' }}>
+                <div className="flex justify-between text-sm sm:text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   <span>GST (18%)</span>
-                  <span style={{ color: '#1F2D38' }}>₹{getGSTAmount().toLocaleString()}</span>
+                  <span style={{ color: '#2F1A0F' }}>₹{getGSTAmount().toLocaleString()}</span>
                 </div>
 
-                <div className="flex justify-between text-sm sm:text-base" style={{ color: '#94A1AB' }}>
+                <div className="flex justify-between text-sm sm:text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   <span>Shipping</span>
                   {freeShipping ? (
                     <span className="text-green-600 font-medium">Free (Coupon)</span>
@@ -452,9 +452,9 @@ const Cart = () => {
                   )}
                 </div>
 
-                <div className="pt-2 sm:pt-3 flex justify-between text-base sm:text-lg font-bold" style={{ borderTop: '2px solid #BDD7EB' }}>
-                  <span style={{ color: '#1F2D38' }}>Total</span>
-                  <span style={{ color: '#895F42' }}>₹{getFinalTotal().toLocaleString()}</span>
+                <div className="pt-2 sm:pt-3 flex justify-between text-base sm:text-lg font-bold" style={{ borderTop: '2px solid #D7B790' }}>
+                  <span style={{ color: '#2F1A0F' }}>Total</span>
+                  <span style={{ color: '#816047' }}>₹{getFinalTotal().toLocaleString()}</span>
                 </div>
 
                 {/* Total Savings Badge */}
@@ -484,27 +484,27 @@ const Cart = () => {
               {/* Trust Badges */}
               <div className="mt-4 grid grid-cols-3 gap-2 text-center py-4" style={{ borderTop: '1px solid #E5E7EB', borderBottom: '1px solid #E5E7EB' }}>
                 <div className="flex flex-col items-center gap-1">
-                  <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
-                  <span className="text-xs font-medium" style={{ color: '#1F2D38' }}>Secure Payment</span>
+                  <span className="text-xs font-medium" style={{ color: '#2F1A0F' }}>Secure Payment</span>
                 </div>
                 <div className="flex flex-col items-center gap-1">
-                  <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                   </svg>
-                  <span className="text-xs font-medium" style={{ color: '#1F2D38' }}>Free Delivery</span>
+                  <span className="text-xs font-medium" style={{ color: '#2F1A0F' }}>Free Delivery</span>
                 </div>
                 <div className="flex flex-col items-center gap-1">
-                  <svg className="w-6 h-6" style={{ color: '#895F42' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="text-xs font-medium" style={{ color: '#1F2D38' }}>Quality Assured</span>
+                  <span className="text-xs font-medium" style={{ color: '#2F1A0F' }}>Quality Assured</span>
                 </div>
               </div>
 
               <Link to="/products">
-                <button className="w-full mt-3 sm:mt-4 font-medium transition text-sm sm:text-base" style={{ color: '#895F42' }} onMouseEnter={(e) => e.currentTarget.style.color = '#9F8065'} onMouseLeave={(e) => e.currentTarget.style.color = '#895F42'}>
+                <button className="w-full mt-3 sm:mt-4 font-medium transition text-sm sm:text-base" style={{ color: '#816047' }} onMouseEnter={(e) => e.currentTarget.style.color = '#D7B790'} onMouseLeave={(e) => e.currentTarget.style.color = '#816047'}>
                   Continue Shopping
                 </button>
               </Link>
