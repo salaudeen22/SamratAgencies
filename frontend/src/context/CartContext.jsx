@@ -16,6 +16,7 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState({ items: [], total: 0 });
   const [loading, setLoading] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
@@ -43,33 +44,15 @@ export const CartProvider = ({ children }) => {
   };
 
   const addToCart = async (productId, quantity = 1, selectedVariants = {}, calculatedPrice = null) => {
+    // Show auth modal if not authenticated
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+      return { success: false, requiresAuth: true };
+    }
+
     try {
-      if (isAuthenticated) {
-        const response = await cartAPI.addItem(productId, quantity, selectedVariants, calculatedPrice);
-        setCart(response.data);
-      } else {
-        // Handle guest cart in localStorage
-        const updatedCart = { ...cart };
-
-        // Check if item with same product and variants exists
-        const existingItem = updatedCart.items.find(item =>
-          item.product._id === productId &&
-          JSON.stringify(item.selectedVariants || {}) === JSON.stringify(selectedVariants)
-        );
-
-        if (existingItem) {
-          existingItem.quantity += quantity;
-        } else {
-          updatedCart.items.push({
-            product: { _id: productId },
-            quantity,
-            selectedVariants,
-            price: calculatedPrice
-          });
-        }
-        setCart(updatedCart);
-        localStorage.setItem('guestCart', JSON.stringify(updatedCart));
-      }
+      const response = await cartAPI.addItem(productId, quantity, selectedVariants, calculatedPrice);
+      setCart(response.data);
       return { success: true };
     } catch (err) {
       console.error('Failed to add to cart:', err);
@@ -162,6 +145,8 @@ export const CartProvider = ({ children }) => {
     clearCart,
     getCartCount,
     getCartTotal,
+    showAuthModal,
+    setShowAuthModal,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

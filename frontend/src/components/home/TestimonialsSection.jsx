@@ -3,25 +3,25 @@ import { FaStar } from 'react-icons/fa';
 const TestimonialsSection = () => {
   const testimonials = [
     {
-      name: 'Rajesh Kumar',
-      location: 'Mumbai • Young Family',
-      initial: 'R',
+      name: 'Yamuna Sharma',
+      location: 'Bangalore • Google Review',
+      initial: 'Y',
       bgColor: '#816047',
-      review: "We didn't think we could afford a sofa this beautiful! It's become the heart of our living room where the family gathers every evening. Worth every rupee.",
+      review: "I purchased a sofa and storage cot and duroflex mattress from samrat agencies my experience has been excellent so far. The products are of great quality. I would especially like to thank Azar for assisting us throughout the process. He was extremely patient, polite, and answered all our queries clearly.",
     },
     {
-      name: 'Priya Sharma',
-      location: 'Delhi • First Home',
-      initial: 'P',
+      name: 'Kumuda T',
+      location: 'Bangalore • Google Review',
+      initial: 'K',
       bgColor: '#2F1A0F',
-      review: "Setting up our first home felt overwhelming until we found Samrat. The team understood exactly what we needed and made it so easy. Our bedroom looks straight out of a magazine!",
+      review: "We bought peps mattress and a corner sofa from Samrat Agencies. The quality and selection provided by the shop was too good. The owner sent a temporary sofa to my home for the intermediate time so that I have place to sit! This is a commendable act for any shop owner!!",
     },
     {
-      name: 'Amit Patel',
-      location: 'Bangalore • Loyal Customer',
-      initial: 'A',
+      name: 'Deepak Pandey',
+      location: 'Bangalore • Google Review',
+      initial: 'D',
       bgColor: '#816047',
-      review: "Three years later, our dining table still looks brand new. Quality that lasts is rare these days. We've recommended Samrat to all our friends—they're family now!",
+      review: "Had a great shopping experience at Samrat Agencies at Begur road. The quality of the products is excellent and the way the owner explains us in detail about each product made it easy for us to choose the right product. We are happy with our purchase and would recommend Samrat Agencies to everyone!",
     },
   ];
 

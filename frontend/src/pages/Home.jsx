@@ -34,7 +34,7 @@ const Home = () => {
     <>
       <SEO
         title="Samrat Agencies - Furniture Made for Real Life | Bangalore"
-        description="Beautiful furniture designed for the way you live. Thoughtfully crafted, honestly priced. From first apartment to forever home—trusted since 1991. Shop sofas, beds, dining tables & more."
+        description="Beautiful furniture designed for the way you live. Thoughtfully crafted, honestly priced. From first apartment to forever home—trusted since 1996. Shop sofas, beds, dining tables & more."
         keywords="affordable furniture bangalore, quality furniture, home furniture, modern furniture, samrat agencies, sofas, beds, dining tables, furniture store"
         url="/"
         type="website"

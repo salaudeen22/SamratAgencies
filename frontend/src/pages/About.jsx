@@ -4,12 +4,12 @@ const About = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#fafaf9' }}>
       <Helmet>
-        <title>About Samrat Agencies - 30+ Years of Trust & Quality | Furniture & Mattress Store Bangalore</title>
-        <meta name="description" content="Discover the legacy of Samrat Agencies since 1991. Authorized dealer for Nilkamal, Sleepwell, Duroflex, Kurl-on & more. Manufacturing units in Jigani, Hongasandra & Lakkasandra. 5-star rated service." />
+        <title>About Samrat Agencies - 29+ Years of Trust & Quality | Furniture & Mattress Store Bangalore</title>
+        <meta name="description" content="Discover the legacy of Samrat Agencies since 1996. Authorized dealer for Nilkamal, Sleepwell, Duroflex, Kurl-on & more. Manufacturing units in Jigani, Hongasandra & Lakkasandra. 5-star rated service." />
         <meta name="keywords" content="Samrat Agencies, furniture store Bangalore, mattress dealer, Nilkamal, Sleepwell, Duroflex, Kurl-on, Peps, furniture manufacturing, Hongasandra showroom, Bangalore furniture" />
 
         {/* Open Graph Meta Tags */}
-        <meta property="og:title" content="About Samrat Agencies - A Legacy of Trust & Quality Since 1991" />
+        <meta property="og:title" content="About Samrat Agencies - A Legacy of Trust & Quality Since 1996" />
         <meta property="og:description" content="From a small electronics shop to Bangalore's trusted furniture destination. Authorized dealer for India's top brands with own manufacturing units." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://samratagencies.com/about" />
@@ -17,8 +17,8 @@ const About = () => {
 
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="About Samrat Agencies - 30+ Years of Trust & Quality" />
-        <meta name="twitter:description" content="Discover our journey from 1991 to becoming Bangalore's premier furniture and mattress destination." />
+        <meta name="twitter:title" content="About Samrat Agencies - 29+ Years of Trust & Quality" />
+        <meta name="twitter:description" content="Discover our journey from 1996 to becoming Bangalore's premier furniture and mattress destination." />
         <meta name="twitter:image" content="https://samrat-agencies.s3.ap-south-1.amazonaws.com/Gemini_Generated_Image_u4zctmu4zctmu4zc.png" />
 
         {/* Additional SEO Tags */}
@@ -40,7 +40,7 @@ const About = () => {
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight drop-shadow-lg">About Samrat Agencies</h1>
             <p className="text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed drop-shadow-md" style={{ color: '#E6CDB1' }}>
-              A Legacy of Trust, Quality, and Service Since 1991
+              A Legacy of Trust, Quality, and Service Since 1996
             </p>
           </div>
         </div>
@@ -63,7 +63,7 @@ const About = () => {
               </p>
 
               <p className="text-lg leading-relaxed mb-6" style={{ color: '#2F1A0F' }}>
-                It was <strong>1991</strong> when Mr. Nizamudeen S.A. opened the doors of what would become a household name in Bangalore—<strong>Samrat Agencies Electronic Store</strong>. In those early days, the shop wasn't grand. It was small, humble, and filled with the kind of determination only a dreamer possesses. But what it lacked in size, it made up for in something far more valuable: <em>trust</em>.
+                It was <strong>1996</strong> when Mr. Nizamudeen S.A. opened the doors of what would become a household name in Bangalore—<strong>Samrat Agencies Electronic Store</strong>. In those early days, the shop wasn't grand. It was small, humble, and filled with the kind of determination only a dreamer possesses. But what it lacked in size, it made up for in something far more valuable: <em>trust</em>.
               </p>
 
               <p className="text-lg leading-relaxed mb-6" style={{ color: '#2F1A0F' }}>
@@ -137,7 +137,7 @@ const About = () => {
                 />
               </div>
               <div className="p-8">
-                <div className="text-sm font-semibold mb-2" style={{ color: '#816047' }}>THE FOUNDER • 1991</div>
+                <div className="text-sm font-semibold mb-2" style={{ color: '#816047' }}>THE FOUNDER • 1996</div>
                 <h3 className="text-2xl font-bold mb-3" style={{ color: '#2F1A0F' }}>Mr. Nizamudeen S.A.</h3>
                 <p className="leading-relaxed mb-4" style={{ color: '#2F1A0F' }}>
                   <em>"Build something people can trust, and they'll never forget you."</em>
@@ -190,11 +190,11 @@ const About = () => {
 
             {/* Timeline Items */}
             <div className="space-y-12">
-              {/* 1991 - Foundation */}
+              {/* 1996 - Foundation */}
               <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div className="lg:text-right lg:pr-12">
                   <div className="inline-block bg-white rounded-2xl p-8 shadow-xl" style={{ border: '2px solid #D7B790' }}>
-                    <div className="text-sm font-bold mb-2" style={{ color: '#816047' }}>1991 • THE BEGINNING</div>
+                    <div className="text-sm font-bold mb-2" style={{ color: '#816047' }}>1996 • THE BEGINNING</div>
                     <h3 className="text-2xl font-bold mb-3" style={{ color: '#2F1A0F' }}>Samrat Agencies Founded</h3>
                     <p className="leading-relaxed" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                       Mr. Nizamudeen S.A. opens the first electronics store with a vision to serve Bangalore with quality products and honest service.
@@ -203,26 +203,26 @@ const About = () => {
                 </div>
                 <div className="hidden lg:flex justify-center">
                   <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl z-10" style={{ backgroundColor: '#816047' }}>
-                    1991
+                    1996
                   </div>
                 </div>
                 <div className="lg:hidden">
                   <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mb-4" style={{ backgroundColor: '#816047' }}>
-                    1991
+                    1996
                   </div>
                 </div>
               </div>
 
-              {/* 1995 - First Expansion */}
+              {/* 2000 - First Expansion */}
               <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div className="hidden lg:flex justify-center">
                   <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl z-10" style={{ backgroundColor: '#816047' }}>
-                    1995
+                    2000
                   </div>
                 </div>
                 <div className="lg:pl-12">
                   <div className="inline-block bg-white rounded-2xl p-8 shadow-xl" style={{ border: '2px solid #D7B790' }}>
-                    <div className="text-sm font-bold mb-2" style={{ color: '#816047' }}>1995 • EXPANSION</div>
+                    <div className="text-sm font-bold mb-2" style={{ color: '#816047' }}>2000 • EXPANSION</div>
                     <h3 className="text-2xl font-bold mb-3" style={{ color: '#2F1A0F' }}>Opening New Branches</h3>
                     <p className="leading-relaxed" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                       Growing customer trust leads to expansion across Bangalore with multiple showrooms serving diverse neighborhoods.
@@ -231,7 +231,7 @@ const About = () => {
                 </div>
                 <div className="lg:hidden">
                   <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mb-4" style={{ backgroundColor: '#816047' }}>
-                    1995
+                    2000
                   </div>
                 </div>
               </div>
@@ -475,7 +475,7 @@ const About = () => {
               <div className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Weekly Transactions</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold mb-2" style={{ color: '#816047' }}>30+</div>
+              <div className="text-3xl font-bold mb-2" style={{ color: '#816047' }}>29+</div>
               <div className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Years Experience</div>
             </div>
           </div>
@@ -780,7 +780,7 @@ const About = () => {
               </div>
               <h3 className="text-xl font-bold mb-3" style={{ color: '#2F1A0F' }}>5-Star Rated Service</h3>
               <p className="leading-relaxed" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
-                Rated 5.0 stars with 108+ verified reviews across multiple platforms.
+                Excellence in every interaction, ensuring your complete satisfaction.
               </p>
             </div>
           </div>
@@ -812,14 +812,14 @@ const About = () => {
                 </div>
               </div>
               <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#2F1A0F' }}>
-                "We furnished our entire home from Samrat Agencies. The quality of mattresses and furniture is outstanding, and the prices were better than online stores. Mr. Azarudeen personally helped us choose the right products. Highly recommended!"
+                "I recently bought products from Samrat Agencies and was very impressed. The quality of the items is excellent, and the prices are reasonable. My order arrived on time and in perfect condition. They do have EMI option also and I would Thank Mr. Azar for assisting us throughout and explained about product and answerable for all our queries clearly. Overall, a great experience, and I will definitely shop here again."
               </p>
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: '#816047' }}>
-                  RS
+                  SR
                 </div>
                 <div className="ml-4">
-                  <p className="font-bold" style={{ color: '#2F1A0F' }}>Rajesh Sharma</p>
+                  <p className="font-bold" style={{ color: '#2F1A0F' }}>Shiva Ready</p>
                   <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Google Review - ⭐ 5.0</p>
                 </div>
               </div>
@@ -837,15 +837,15 @@ const About = () => {
                 </div>
               </div>
               <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#2F1A0F' }}>
-                "Best furniture showroom in Bangalore! Genuine products from top brands at affordable prices. The staff is very helpful and knowledgeable. We bought a Sleepwell mattress and Nilkamal furniture - all excellent quality."
+                "I purchased a sofa and storage cot and duroflex mattress from samrat agencies my experience has been excellent so far. The products are of great quality — no defects or discomfort noticed till now. I would especially like to thank Azar for assisting us throughout the process. He was extremely patient, polite, and answered all our queries clearly. The delivery service was completely hassle-free and the products were delivered right on time."
               </p>
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: '#816047' }}>
-                  PK
+                  YS
                 </div>
                 <div className="ml-4">
-                  <p className="font-bold" style={{ color: '#2F1A0F' }}>Priya Krishnan</p>
-                  <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Facebook Review - ⭐ 5.0</p>
+                  <p className="font-bold" style={{ color: '#2F1A0F' }}>Yamuna Sharma</p>
+                  <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Google Review - ⭐ 5.0</p>
                 </div>
               </div>
             </div>
@@ -862,15 +862,15 @@ const About = () => {
                 </div>
               </div>
               <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#2F1A0F' }}>
-                "Samrat Agencies is a trusted name for over 30 years. I've been buying from them since 1995. The owner's family maintains the same quality and service standards. EMI options made it easy for us to furnish our new home."
+                "We bought peps mattress and a corner sofa from Samrat Agencies. The quality and selection provided by the shop was too good. They provide wide range of design selection and upholstery to choose from. The owner's behavior is awesome!! I definitely recommend working with him. To share my experience, I ordered the sofa which required to be built. The owner sent a temporary sofa to my home for the intermediate time so that I have place to sit! This is a commendable act for any shop owner!!"
               </p>
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: '#816047' }}>
-                  AM
+                  KT
                 </div>
                 <div className="ml-4">
-                  <p className="font-bold" style={{ color: '#2F1A0F' }}>Arjun Mehta</p>
-                  <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>JustDial Review - ⭐ 5.0</p>
+                  <p className="font-bold" style={{ color: '#2F1A0F' }}>Kumuda T</p>
+                  <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Google Review - ⭐ 5.0</p>
                 </div>
               </div>
             </div>
@@ -887,14 +887,14 @@ const About = () => {
                 </div>
               </div>
               <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#2F1A0F' }}>
-                "Excellent customer service! They have a huge collection of mattresses and furniture. We compared prices with other stores and online - Samrat Agencies offered the best deal with genuine warranty. Delivery was prompt too!"
+                "When we visited Samrat Agencies we were greeted by Mr. Azar a cheerful and knowledgeable sales executive. He patiently guided us through the showroom, showcasing a variety of furniture options. Within two days, we purchased a spacious sofa with storage, an executive chair, peps mattress and a few other items. Throughout the process, Azar was incredibly supportive, helping us with delivery arrangements. The showroom's ambience is excellent, making the shopping experience enjoyable."
               </p>
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: '#816047' }}>
-                  SK
+                  NR
                 </div>
                 <div className="ml-4">
-                  <p className="font-bold" style={{ color: '#2F1A0F' }}>Sneha Kapoor</p>
+                  <p className="font-bold" style={{ color: '#2F1A0F' }}>Nithin Nithin Ready</p>
                   <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Google Review - ⭐ 5.0</p>
                 </div>
               </div>
@@ -912,15 +912,15 @@ const About = () => {
                 </div>
               </div>
               <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#2F1A0F' }}>
-                "Very professional service. They helped us select the perfect Duroflex mattress based on our requirements. The showroom is well-maintained with all branded products on display. Their card offers saved us additional money!"
+                "Had a great shopping experience at Samrat Agencies at Begur road. We had gone to purchase dining table, sofa set, TV unit and peps mattress. The quality of the products is excellent and the way the owner explains us in detail about each product made it easy for us to choose the right product for us. We are happy with our purchase and would recommend Samrat Agencies to everyone looking for home furniture. Thank you!"
               </p>
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: '#816047' }}>
-                  VR
+                  DP
                 </div>
                 <div className="ml-4">
-                  <p className="font-bold" style={{ color: '#2F1A0F' }}>Vikram Rao</p>
-                  <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Facebook Review - ⭐ 5.0</p>
+                  <p className="font-bold" style={{ color: '#2F1A0F' }}>Deepak Pandey</p>
+                  <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Google Review - ⭐ 5.0</p>
                 </div>
               </div>
             </div>
@@ -937,29 +937,20 @@ const About = () => {
                 </div>
               </div>
               <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#2F1A0F' }}>
-                "A family business with family values. They treat customers with respect and honesty. We bought our entire bedroom set and dining furniture here. Quality is top-notch and prices are very competitive. Will definitely return!"
+                "Samrat Agencies has great products and extremely supportive staff. We have purchased Dining table, corner sofa, wood cot with storage and peps mattress from this shop and glad to see that the home interiors are also being taken care of. They have exclusive and attractive collections with good quality and wide range of items for a home. And they have Bajaj EMI options. I personally recommend this shop to everyone."
               </p>
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: '#816047' }}>
-                  MN
+                  SS
                 </div>
                 <div className="ml-4">
-                  <p className="font-bold" style={{ color: '#2F1A0F' }}>Meena Nair</p>
+                  <p className="font-bold" style={{ color: '#2F1A0F' }}>Sunny Sunny</p>
                   <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Google Review - ⭐ 5.0</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Review Summary */}
-          <div className="mt-12 text-center">
-            <p className="text-lg font-medium mb-2" style={{ color: '#2F1A0F' }}>
-              Rated 5.0 ⭐ across all platforms
-            </p>
-            <p className="text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
-              Based on 108+ verified customer reviews
-            </p>
-          </div>
         </div>
       </section>
 

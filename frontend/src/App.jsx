@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
-import { CartProvider } from './context/CartContext';
+import { CartProvider, useCart } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { CompareProvider } from './context/CompareContext';
 import { RecentlyViewedProvider } from './context/RecentlyViewedContext';
@@ -12,6 +12,7 @@ import CompareBar from './components/CompareBar';
 import AdminRoute from './components/AdminRoute';
 import ErrorBoundary from './components/ErrorBoundary';
 import ErrorPage from './components/ErrorPage';
+import AuthModal from './components/AuthModal';
 import './App.css';
 
 // Lazy load all page components
@@ -88,6 +89,18 @@ function ScrollToTop() {
   return null;
 }
 
+// Auth Modal Wrapper
+function AuthModalWrapper() {
+  const { showAuthModal, setShowAuthModal } = useCart();
+  return (
+    <AuthModal
+      isOpen={showAuthModal}
+      onClose={() => setShowAuthModal(false)}
+      defaultTab="login"
+    />
+  );
+}
+
 function App() {
   return (
     <ErrorBoundary>
@@ -99,6 +112,7 @@ function App() {
             <WishlistProvider>
               <CompareProvider>
                 <RecentlyViewedProvider>
+                  <AuthModalWrapper />
                   <Suspense fallback={<LoadingFallback />}>
                 <Routes>
               {/* Admin Routes */}

@@ -54,15 +54,15 @@ const Login = () => {
           <p className="text-lg opacity-90 mb-8">Transform your living space with premium furniture. Quality craftsmanship meets timeless elegance.</p>
           <div className="flex gap-8">
             <div>
-              <p className="text-3xl font-bold">500+</p>
+              <p className="text-3xl font-bold">1000+</p>
               <p className="text-sm opacity-80">Products</p>
             </div>
             <div>
-              <p className="text-3xl font-bold">5000+</p>
+              <p className="text-3xl font-bold">10 Lakh+</p>
               <p className="text-sm opacity-80">Happy Customers</p>
             </div>
             <div>
-              <p className="text-3xl font-bold">15+</p>
+              <p className="text-3xl font-bold">29+</p>
               <p className="text-sm opacity-80">Years</p>
             </div>
           </div>

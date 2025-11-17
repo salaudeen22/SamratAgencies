@@ -34,7 +34,7 @@ const Footer = () => {
           <div className="sm:col-span-2 md:col-span-1">
             <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4" style={{ color: '#895F42' }}>Samrat Agencies</h3>
             <p className="text-xs sm:text-sm mb-3" style={{ color: '#E0EAF0' }}>
-              Established in 1991
+              Established in 1996
             </p>
             <p className="text-xs sm:text-sm leading-relaxed" style={{ color: '#BDD7EB' }}>
               Babu Reddy Complex, 5<br />
@@ -189,8 +189,33 @@ const Footer = () => {
 
       {/* Copyright */}
       <div className="border-t" style={{ borderColor: '#334155' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-xs sm:text-sm" style={{ color: '#BDD7EB' }}>
-          <p>&copy; {new Date().getFullYear()} Samrat Agencies. All rights reserved.</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="text-center space-y-3">
+            <p className="text-xs sm:text-sm" style={{ color: '#BDD7EB' }}>
+              &copy; {new Date().getFullYear()} Samrat Agencies. All rights reserved.
+            </p>
+
+            {/* Developer Credit */}
+            <div className="flex items-center justify-center gap-2 text-xs" style={{ color: '#94A1AB' }}>
+              <span>Developed & Built by</span>
+              <a
+                href="https://www.linkedin.com/company/the-pi-aerotech/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-semibold transition-all hover:scale-105"
+                style={{ color: '#895F42' }}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <span>Piaerotech</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

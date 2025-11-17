@@ -1,4 +1,88 @@
+import { useState, useEffect, useRef } from 'react';
+
+const Counter = ({ end, duration = 2000, suffix = '' }) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const counterRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current);
+    }
+
+    return () => {
+      if (counterRef.current) {
+        observer.unobserve(counterRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let startTime;
+    let animationFrame;
+
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const progress = (currentTime - startTime) / duration;
+
+      if (progress < 1) {
+        setCount(Math.floor(end * progress));
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  }, [isVisible, end, duration]);
+
+  return (
+    <span ref={counterRef}>
+      {count}
+      {suffix}
+    </span>
+  );
+};
+
 const StatsSection = () => {
+  const stats = [
+    {
+      value: 29,
+      suffix: '+',
+      label: 'Years of Trust',
+      description: 'Since 1996',
+    },
+    {
+      value: 10,
+      suffix: ' Lakh+',
+      label: 'Happy Customers',
+      description: 'Homes transformed',
+    },
+    {
+      value: 1000,
+      suffix: '+',
+      label: 'Quality Products',
+      description: 'Curated collection',
+    },
+  ];
+
   return (
     <section className="py-6 sm:py-8 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #D7B790 0%, #E5EFF2 100%)' }}>
       {/* Decorative circles */}
@@ -12,26 +96,22 @@ const StatsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
-          {/* Stat 1 */}
-          <div className="text-center bg-white rounded-lg p-3 sm:p-4 shadow-md transform hover:scale-105 transition-all duration-300">
-            <div className="text-xl sm:text-2xl md:text-3xl font-black mb-0.5" style={{ color: '#816047' }}>30+</div>
-            <div className="text-sm sm:text-base font-bold mb-0.5" style={{ color: '#2F1A0F' }}>Years of Trust</div>
-            <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Since 1991</p>
-          </div>
-
-          {/* Stat 2 */}
-          <div className="text-center bg-white rounded-lg p-3 sm:p-4 shadow-md transform hover:scale-105 transition-all duration-300">
-            <div className="text-xl sm:text-2xl md:text-3xl font-black mb-0.5" style={{ color: '#816047' }}>5000+</div>
-            <div className="text-sm sm:text-base font-bold mb-0.5" style={{ color: '#2F1A0F' }}>Happy Customers</div>
-            <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Homes beautiful</p>
-          </div>
-
-          {/* Stat 3 */}
-          <div className="text-center bg-white rounded-lg p-3 sm:p-4 shadow-md transform hover:scale-105 transition-all duration-300">
-            <div className="text-xl sm:text-2xl md:text-3xl font-black mb-0.5" style={{ color: '#816047' }}>500+</div>
-            <div className="text-sm sm:text-base font-bold mb-0.5" style={{ color: '#2F1A0F' }}>Quality Products</div>
-            <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Curated collection</p>
-          </div>
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className="text-center bg-white rounded-lg p-3 sm:p-4 shadow-md transform hover:scale-105 transition-all duration-300"
+            >
+              <div className="text-xl sm:text-2xl md:text-3xl font-black mb-0.5" style={{ color: '#816047' }}>
+                <Counter end={stat.value} suffix={stat.suffix} duration={2000} />
+              </div>
+              <div className="text-sm sm:text-base font-bold mb-0.5" style={{ color: '#2F1A0F' }}>
+                {stat.label}
+              </div>
+              <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
+                {stat.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

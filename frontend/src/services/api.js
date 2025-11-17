@@ -1,4 +1,5 @@
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -19,6 +20,31 @@ api.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+
+// Handle response errors, especially 401 (unauthorized/expired token)
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Token is invalid or expired
+      const token = localStorage.getItem('token');
+      if (token) {
+        // Clear local storage
+        localStorage.removeItem('token');
+        localStorage.removeItem('lastActivity');
+
+        // Show error message
+        toast.error('Your session has expired. Please login again.');
+
+        // Redirect to login page after a short delay
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 1500);
+      }
+    }
+    return Promise.reject(error);
+  }
 );
 
 // Auth APIs

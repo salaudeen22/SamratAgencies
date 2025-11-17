@@ -146,21 +146,21 @@ const ProductReviews = ({ productId }) => {
     : 0;
 
   return (
-    <div className="py-8">
-      <div className="flex items-center justify-between mb-6">
+    <div className="py-4 sm:py-6 md:py-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
-          <h2 className="text-2xl font-bold mb-2" style={{ color: '#2F1A0F' }}>
+          <h2 className="text-xl sm:text-2xl font-bold mb-2" style={{ color: '#2F1A0F' }}>
             Customer Reviews
           </h2>
           {reviews.length > 0 && (
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <div className="flex items-center gap-1">
                 {renderStars(Math.round(averageRating))}
               </div>
-              <span className="text-lg font-semibold" style={{ color: '#816047' }}>
+              <span className="text-base sm:text-lg font-semibold" style={{ color: '#816047' }}>
                 {averageRating} out of 5
               </span>
-              <span className="text-sm text-gray-500">
+              <span className="text-xs sm:text-sm text-gray-500">
                 ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})
               </span>
             </div>
@@ -170,7 +170,7 @@ const ProductReviews = ({ productId }) => {
         {isAuthenticated && !showReviewForm && (
           <button
             onClick={() => setShowReviewForm(true)}
-            className="px-4 py-2 rounded-lg text-white font-medium transition-colors"
+            className="px-4 py-2 rounded-lg text-white font-medium transition-colors text-sm sm:text-base w-full sm:w-auto"
             style={{ backgroundColor: '#816047' }}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#D7B790'}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#816047'}
@@ -182,8 +182,8 @@ const ProductReviews = ({ productId }) => {
 
       {/* Review Form */}
       {showReviewForm && (
-        <form onSubmit={handleSubmitReview} className="mb-8 p-6 rounded-lg border-2" style={{ borderColor: '#D7B790', backgroundColor: '#F0F9FF' }}>
-          <h3 className="text-lg font-semibold mb-4" style={{ color: '#2F1A0F' }}>
+        <form onSubmit={handleSubmitReview} className="mb-6 sm:mb-8 p-4 sm:p-6 rounded-lg border-2" style={{ borderColor: '#D7B790', backgroundColor: '#F0F9FF' }}>
+          <h3 className="text-base sm:text-lg font-semibold mb-4" style={{ color: '#2F1A0F' }}>
             Write Your Review
           </h3>
 
@@ -258,11 +258,11 @@ const ProductReviews = ({ productId }) => {
             </p>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <button
               type="submit"
               disabled={submitting || uploadingImages || comment.trim().length < 10}
-              className="px-6 py-2 rounded-lg text-white font-medium transition-colors disabled:opacity-50"
+              className="px-6 py-2 rounded-lg text-white font-medium transition-colors disabled:opacity-50 text-sm sm:text-base w-full sm:w-auto"
               style={{ backgroundColor: '#816047' }}
             >
               {uploadingImages ? 'Uploading images...' : submitting ? 'Submitting...' : 'Submit Review'}
@@ -275,7 +275,7 @@ const ProductReviews = ({ productId }) => {
                 setRating(5);
                 setSelectedImages([]);
               }}
-              className="px-6 py-2 rounded-lg font-medium transition-colors border-2"
+              className="px-6 py-2 rounded-lg font-medium transition-colors border-2 text-sm sm:text-base w-full sm:w-auto"
               style={{ borderColor: '#D7B790', color: '#2F1A0F' }}
             >
               Cancel
@@ -304,27 +304,27 @@ const ProductReviews = ({ productId }) => {
           )}
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {reviews.map((review) => (
             <div
               key={review._id}
-              className="p-6 rounded-lg border-2"
+              className="p-4 sm:p-6 rounded-lg border-2"
               style={{ borderColor: '#E6CDB1', backgroundColor: 'white' }}
             >
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold" style={{ backgroundColor: '#816047' }}>
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                <div className="flex items-start gap-2 sm:gap-3 flex-1">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0" style={{ backgroundColor: '#816047' }}>
                     {review.user?.name ? (
-                      review.user.name.charAt(0).toUpperCase()
+                      <span className="text-sm sm:text-base">{review.user.name.charAt(0).toUpperCase()}</span>
                     ) : (
-                      <FiUser className="w-5 h-5" />
+                      <FiUser className="w-4 h-4 sm:w-5 sm:h-5" />
                     )}
                   </div>
-                  <div>
-                    <p className="font-semibold" style={{ color: '#2F1A0F' }}>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>
                       {review.user?.name || 'Anonymous'}
                     </p>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2 mt-1">
                       {renderStars(review.rating)}
                       {review.isVerifiedPurchase && (
                         <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">
@@ -334,7 +334,7 @@ const ProductReviews = ({ productId }) => {
                     </div>
                   </div>
                 </div>
-                <span className="text-sm text-gray-500">
+                <span className="text-xs sm:text-sm text-gray-500">
                   {new Date(review.createdAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'short',
@@ -343,7 +343,7 @@ const ProductReviews = ({ productId }) => {
                 </span>
               </div>
 
-              <p className="text-gray-700 leading-relaxed">{review.comment}</p>
+              <p className="text-sm sm:text-base text-gray-700 leading-relaxed">{review.comment}</p>
 
               {/* Review Images */}
               {review.images && review.images.length > 0 && (
@@ -359,7 +359,7 @@ const ProductReviews = ({ productId }) => {
                       <img
                         src={image.url}
                         alt={`Review image ${index + 1}`}
-                        className="w-24 h-24 object-cover rounded-lg border-2 hover:opacity-80 transition-opacity cursor-pointer"
+                        className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg border-2 hover:opacity-80 transition-opacity cursor-pointer"
                         style={{ borderColor: '#D7B790' }}
                       />
                     </a>
