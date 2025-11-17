@@ -13,7 +13,9 @@ import AdminRoute from './components/AdminRoute';
 import ErrorBoundary from './components/ErrorBoundary';
 import ErrorPage from './components/ErrorPage';
 import AuthModal from './components/AuthModal';
+import useImageProtection from './hooks/useImageProtection';
 import './App.css';
+import './styles/imageProtection.css';
 
 // Lazy load all page components
 const Home = lazy(() => import('./pages/Home'));
@@ -102,6 +104,9 @@ function AuthModalWrapper() {
 }
 
 function App() {
+  // Enable image protection globally
+  useImageProtection(true);
+
   return (
     <ErrorBoundary>
       <Router>

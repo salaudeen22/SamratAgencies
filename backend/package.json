@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "seed": "node src/seed/seed.js"
+    "seed": "node src/seed/seed.js",
+    "convert-images": "node src/scripts/convertImagesToWebP.js",
+    "convert-images:delete": "node src/scripts/convertImagesToWebP.js --delete"
   },
   "keywords": [
     "ecommerce",
@@ -17,6 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.928.0",
+    "@aws-sdk/lib-storage": "^3.932.0",
     "@aws-sdk/s3-request-presigner": "^3.928.0",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.41.0",
@@ -39,6 +42,7 @@
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "razorpay": "^2.9.6",
+    "sharp": "^0.34.5",
     "winston": "^3.18.3",
     "winston-daily-rotate-file": "^5.0.0",
     "xss-clean": "^0.1.4"

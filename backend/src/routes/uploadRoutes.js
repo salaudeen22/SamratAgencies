@@ -1,59 +1,67 @@
 const express = require('express');
 const router = express.Router();
-const { uploadSingle, uploadMultiple, handleUploadError } = require('../middleware/uploadS3');
+const {
+  uploadSingle,
+  uploadMultiple,
+  processSingleImage,
+  processMultipleImages,
+  handleUploadError
+} = require('../middleware/uploadS3');
 const { auth, adminAuth } = require('../middleware/auth');
 const { DeleteObjectCommand, ListObjectsV2Command } = require('@aws-sdk/client-s3');
 const { s3Client, bucketConfig } = require('../config/s3');
 
 // @route   POST /api/upload/image
-// @desc    Upload single image
+// @desc    Upload single image (auto-converts to WebP)
 // @access  Private/Admin
-router.post('/image', auth, adminAuth, (req, res) => {
-  uploadSingle(req, res, function (err) {
-    if (err) {
-      return handleUploadError(err, req, res, () => {});
-    }
+router.post('/image', auth, adminAuth, uploadSingle, processSingleImage, (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'Please upload an image' });
+  }
 
-    if (!req.file) {
-      return res.status(400).json({ message: 'Please upload an image' });
+  // Return the uploaded file information
+  const response = {
+    message: 'Image uploaded and converted successfully',
+    file: {
+      url: req.file.location,
+      key: req.file.key,
+      size: req.file.size,
+      mimetype: req.file.mimetype,
     }
+  };
 
-    // Return the uploaded file information
-    res.json({
-      message: 'Image uploaded successfully',
-      file: {
-        url: req.file.location, // S3 URL
-        key: req.file.key,      // S3 key for deletion
-        size: req.file.size,
-        mimetype: req.file.mimetype,
-      }
-    });
-  });
+  // Add compression stats if available
+  if (req.file.compressionRatio) {
+    response.file.originalSize = req.file.originalSize;
+    response.file.compressionRatio = req.file.compressionRatio;
+  }
+
+  res.json(response);
 });
 
 // @route   POST /api/upload/images
-// @desc    Upload multiple images (for reviews, etc.)
+// @desc    Upload multiple images (auto-converts to WebP)
 // @access  Private (authenticated users)
-router.post('/images', auth, (req, res) => {
-  uploadMultiple(req, res, function (err) {
-    if (err) {
-      return handleUploadError(err, req, res, () => {});
-    }
+router.post('/images', auth, uploadMultiple, processMultipleImages, (req, res) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({ message: 'Please upload at least one image' });
+  }
 
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ message: 'Please upload at least one image' });
-    }
+  // Return the uploaded files information
+  const images = req.files.map(file => ({
+    url: file.location,
+    public_id: file.key,
+    size: file.size,
+    mimetype: file.mimetype,
+    ...(file.compressionRatio && {
+      originalSize: file.originalSize,
+      compressionRatio: file.compressionRatio
+    })
+  }));
 
-    // Return the uploaded files information
-    const images = req.files.map(file => ({
-      url: file.location,
-      public_id: file.key,
-    }));
-
-    res.json({
-      message: `${images.length} image(s) uploaded successfully`,
-      images: images
-    });
+  res.json({
+    message: `${images.length} image(s) uploaded and converted successfully`,
+    images: images
   });
 });
 
