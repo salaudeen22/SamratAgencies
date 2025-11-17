@@ -126,7 +126,12 @@ const SEO = ({
     sameAs: [
       'https://www.facebook.com/SamratAgenciesHongasandra',
       'https://www.instagram.com/samrat_agencies/',
+      'https://www.linkedin.com/company/the-pi-aerotech',
       'https://www.google.com/maps/place/Samrat+Agencies',
+      'https://maps.app.goo.gl/wfqh3DdcEQPkAxnh7',
+      'https://share.google/lnHfBwcQ6Jrv48KZV',
+      'https://share.google/HfrXKWHyo2sauOTlV',
+      'https://share.google/DOFU2bLasaPvmoBHB',
       'https://www.justdial.com/Bangalore/Samrat-Agencies-Near-Reliance-Fresh-Hongasandra/080P5169625_BZDET',
       'https://magicpin.in/Bengaluru/Bommanahalli/Lifestyle/Samrat-Agencies-Dealer-Samsung-Furniture-Expert',
       'https://www.indiamart.com/samrat-agencies'
