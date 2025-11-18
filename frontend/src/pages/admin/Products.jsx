@@ -20,6 +20,7 @@ const Products = () => {
     category: '',
     level2Category: '',
     level3Category: '',
+    additionalCategories: [], // For storing additional category selections
     attributeSet: '',
     specifications: {},
     price: '',
@@ -82,10 +83,27 @@ const Products = () => {
       // Determine the final category (use the most specific level selected)
       const finalCategory = formData.level3Category || formData.level2Category || formData.category;
 
+      // Build categories array from selected hierarchy + additional categories
+      const categoriesArray = [];
+      if (formData.category) categoriesArray.push(formData.category);
+      if (formData.level2Category) categoriesArray.push(formData.level2Category);
+      if (formData.level3Category) categoriesArray.push(formData.level3Category);
+
+      // Add additional selected categories
+      if (formData.additionalCategories && formData.additionalCategories.length > 0) {
+        formData.additionalCategories.forEach(catId => {
+          if (!categoriesArray.includes(catId)) {
+            categoriesArray.push(catId);
+          }
+        });
+      }
+
       // Convert specifications object to proper format for backend
       const submitData = {
         ...formData,
-        category: finalCategory,
+        primaryCategory: finalCategory,
+        categories: categoriesArray,
+        category: finalCategory, // Keep for backward compatibility
         price: parseFloat(formData.price),
         discount: parseFloat(formData.discount) || 0,
         discountType: formData.discountType,
@@ -93,9 +111,10 @@ const Products = () => {
         deliveryDays: parseInt(formData.deliveryDays),
       };
 
-      // Remove level2Category and level3Category as they're not in the backend schema
+      // Remove level2Category, level3Category and additionalCategories as they're not in the backend schema
       delete submitData.level2Category;
       delete submitData.level3Category;
+      delete submitData.additionalCategories;
 
       if (editingProduct) {
         await adminAPI.updateProduct(editingProduct._id, submitData);
@@ -153,12 +172,18 @@ const Products = () => {
       level3 = categoryPath[2] || '';
     }
 
+    // Extract additional categories (excluding the primary category hierarchy)
+    const productCategoriesIds = product.categories?.map(cat => cat._id || cat) || [];
+    const hierarchyIds = [level1, level2, level3].filter(Boolean);
+    const additionalCats = productCategoriesIds.filter(catId => !hierarchyIds.includes(catId));
+
     setFormData({
       name: product.name,
       description: product.description,
       category: level1,
       level2Category: level2,
       level3Category: level3,
+      additionalCategories: additionalCats,
       attributeSet: product.attributeSet?._id || product.attributeSet || '',
       specifications: specs,
       price: product.price || '',
@@ -216,6 +241,7 @@ const Products = () => {
       category: '',
       level2Category: '',
       level3Category: '',
+      additionalCategories: [],
       attributeSet: '',
       specifications: {},
       price: '',
@@ -606,6 +632,111 @@ const Products = () => {
                       </select>
                     </div>
                   )}
+
+                  {/* Additional Categories */}
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium mb-2">
+                      Additional Categories (Optional)
+                    </label>
+                    <p className="text-xs text-gray-500 mb-3">
+                      Select additional categories where this product should appear.
+                      Example: "Single Wardrobe" can appear in both "Bedroom Furniture" and "Storage Furniture"
+                    </p>
+
+                    <div className="p-3 bg-gray-50 rounded-lg border border-gray-200 max-h-64 overflow-y-auto">
+                      {getLevel1Categories().map((level1Cat) => {
+                        return (
+                          <div key={level1Cat._id} className="mb-3 last:mb-0">
+                            {/* Level 1 Category */}
+                            <label className={`flex items-center gap-2 p-2 rounded font-medium ${formData.category === level1Cat._id ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-100'}`}>
+                              <input
+                                type="checkbox"
+                                checked={formData.additionalCategories?.includes(level1Cat._id) || false}
+                                disabled={formData.category === level1Cat._id}
+                                onChange={(e) => {
+                                  const newCategories = e.target.checked
+                                    ? [...(formData.additionalCategories || []), level1Cat._id]
+                                    : (formData.additionalCategories || []).filter(id => id !== level1Cat._id);
+                                  setFormData({ ...formData, additionalCategories: newCategories });
+                                }}
+                                className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed accent-blue-600"
+                              />
+                              <span className={`text-sm ${formData.category === level1Cat._id ? 'text-gray-400' : ''}`}>
+                                {level1Cat.name}
+                                {formData.category === level1Cat._id && ' (Primary Category)'}
+                              </span>
+                            </label>
+
+                            {/* Level 2 Categories */}
+                            {level1Cat.children && level1Cat.children.length > 0 && (
+                              <div className="ml-6 mt-1 space-y-1">
+                                {level1Cat.children.map((level2Cat) => {
+                                  return (
+                                    <div key={level2Cat._id}>
+                                      {/* Level 2 Category */}
+                                      <label className={`flex items-center gap-2 p-2 rounded ${formData.level2Category === level2Cat._id ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-100'}`}>
+                                        <input
+                                          type="checkbox"
+                                          checked={formData.additionalCategories?.includes(level2Cat._id) || false}
+                                          disabled={formData.level2Category === level2Cat._id}
+                                          onChange={(e) => {
+                                            const newCategories = e.target.checked
+                                              ? [...(formData.additionalCategories || []), level2Cat._id]
+                                              : (formData.additionalCategories || []).filter(id => id !== level2Cat._id);
+                                            setFormData({ ...formData, additionalCategories: newCategories });
+                                          }}
+                                          className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed accent-blue-600"
+                                        />
+                                        <span className={`text-sm text-gray-700 ${formData.level2Category === level2Cat._id ? 'text-gray-400' : ''}`}>
+                                          ↳ {level2Cat.name}
+                                          {formData.level2Category === level2Cat._id && ' (Primary Category)'}
+                                        </span>
+                                      </label>
+
+                                      {/* Level 3 Categories */}
+                                      {level2Cat.children && level2Cat.children.length > 0 && (
+                                        <div className="ml-6 mt-1 space-y-1">
+                                          {level2Cat.children.map((level3Cat) => {
+                                            return (
+                                              <label key={level3Cat._id} className={`flex items-center gap-2 p-2 rounded ${formData.level3Category === level3Cat._id ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-100'}`}>
+                                                <input
+                                                  type="checkbox"
+                                                  checked={formData.additionalCategories?.includes(level3Cat._id) || false}
+                                                  disabled={formData.level3Category === level3Cat._id}
+                                                  onChange={(e) => {
+                                                    const newCategories = e.target.checked
+                                                      ? [...(formData.additionalCategories || []), level3Cat._id]
+                                                      : (formData.additionalCategories || []).filter(id => id !== level3Cat._id);
+                                                    setFormData({ ...formData, additionalCategories: newCategories });
+                                                  }}
+                                                  className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed accent-blue-600"
+                                                />
+                                                <span className={`text-sm text-gray-600 ${formData.level3Category === level3Cat._id ? 'text-gray-400' : ''}`}>
+                                                  ↳ {level3Cat.name}
+                                                  {formData.level3Category === level3Cat._id && ' (Primary Category)'}
+                                                </span>
+                                              </label>
+                                            );
+                                          })}
+                                        </div>
+                                      )}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {formData.additionalCategories && formData.additionalCategories.length > 0 && (
+                      <div className="mt-2 text-xs text-green-600">
+                        ✓ Product will appear in {formData.additionalCategories.length} additional {formData.additionalCategories.length === 1 ? 'category' : 'categories'}
+                      </div>
+                    )}
+                  </div>
+
                   <div>
                     <label className="block text-sm font-medium mb-1">Attribute Set (Product Type) *</label>
                     <select

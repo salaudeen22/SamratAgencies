@@ -57,7 +57,12 @@ exports.getAllProducts = async (req, res) => {
       if (categoryId) {
         const allCategoryIds = await getAllChildCategoryIds(categoryId);
         console.log('Including category IDs (parent + children):', allCategoryIds);
-        query.category = { $in: allCategoryIds };
+        // Search in both old 'category' field and new 'categories' array
+        query.$or = [
+          { category: { $in: allCategoryIds } },
+          { categories: { $in: allCategoryIds } },
+          { primaryCategory: { $in: allCategoryIds } }
+        ];
       }
     }
 
@@ -84,6 +89,8 @@ exports.getAllProducts = async (req, res) => {
 
     const products = await Product.find(query)
       .populate('category', 'name slug')
+      .populate('categories', 'name slug')
+      .populate('primaryCategory', 'name slug')
       .populate('attributeSet', 'name')
       .sort(sortOption);
     res.json(products);
@@ -104,6 +111,8 @@ exports.getProductById = async (req, res) => {
 
     const product = await Product.findOne(query)
       .populate('category', 'name slug description')
+      .populate('categories', 'name slug description')
+      .populate('primaryCategory', 'name slug description')
       .populate({
         path: 'attributeSet',
         populate: {

@@ -66,11 +66,21 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  // Reference to category (for navigation/filtering)
-  category: {
+  // Multiple categories - product can belong to multiple categories
+  categories: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category'
+  }],
+  // Primary category - used for main display/navigation
+  primaryCategory: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
     required: true
+  },
+  // Deprecated: kept for backward compatibility
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category'
   },
   subcategory: {
     type: String,

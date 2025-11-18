@@ -31,6 +31,10 @@ router.get('/products', async (req, res) => {
     if (req.query.availabilityType) filter.availabilityType = req.query.availabilityType;
 
     const products = await Product.find(filter)
+      .populate('category', 'name slug')
+      .populate('categories', 'name slug parent')
+      .populate('primaryCategory', 'name slug')
+      .populate('attributeSet', 'name description')
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
@@ -66,7 +70,11 @@ router.put('/products/:id', async (req, res) => {
       req.params.id,
       req.body,
       { new: true, runValidators: true }
-    );
+    )
+      .populate('category', 'name slug')
+      .populate('categories', 'name slug parent')
+      .populate('primaryCategory', 'name slug')
+      .populate('attributeSet', 'name description');
 
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
@@ -385,10 +393,11 @@ router.get('/stats', async (req, res) => {
     const shippedOrders = await Order.countDocuments({ status: 'Shipped', ...dateFilter });
     const deliveredOrders = await Order.countDocuments({ status: 'Delivered', ...dateFilter });
 
-    // Stock status
-    const inStockProducts = await Product.countDocuments({ stock: { $gt: 10 } });
-    const lowStockProducts = await Product.countDocuments({ stock: { $gt: 0, $lte: 10 } });
-    const outOfStockProducts = await Product.countDocuments({ stock: 0 });
+    // Availability status (since we don't use stock field)
+    const immediateProducts = await Product.countDocuments({ availabilityType: 'immediate' });
+    const madeToOrderProducts = await Product.countDocuments({ availabilityType: 'made-to-order' });
+    const activeProducts = await Product.countDocuments({ isActive: true });
+    const inactiveProducts = await Product.countDocuments({ isActive: false });
 
     const recentOrders = await Order.find(dateFilter)
       .populate('user', 'name email')
@@ -772,9 +781,10 @@ router.get('/stats', async (req, res) => {
       processingOrders,
       shippedOrders,
       deliveredOrders,
-      inStockProducts,
-      lowStockProducts,
-      outOfStockProducts,
+      immediateProducts,
+      madeToOrderProducts,
+      activeProducts,
+      inactiveProducts,
       newCustomers,
       recentOrders,
       topProducts,
