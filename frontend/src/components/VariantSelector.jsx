@@ -45,8 +45,19 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
       }
     });
 
-    const newPrice = (product.price || 0) + totalModifier;
-    setFinalPrice(newPrice);
+    // Calculate base price with variant modifiers
+    let newPrice = (product.price || 0) + totalModifier;
+
+    // Apply product discount to the final price
+    if (product.discount > 0) {
+      if (product.discountType === 'percentage') {
+        newPrice = newPrice - (newPrice * product.discount / 100);
+      } else if (product.discountType === 'fixed') {
+        newPrice = Math.max(0, newPrice - product.discount);
+      }
+    }
+
+    setFinalPrice(Math.round(newPrice));
     setSelectedImage(imageToShow);
 
     // Notify parent components
@@ -136,12 +147,37 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
             );
           })}
 
+          {/* Show discount if applicable */}
+          {product.discount > 0 && (
+            <div className="flex justify-between text-sm">
+              <span style={{ color: '#2F1A0F' }}>
+                Discount ({product.discountType === 'percentage' ? `${product.discount}%` : `₹${product.discount}`}):
+              </span>
+              <span className="font-semibold text-green-600">
+                -{product.discountType === 'percentage'
+                  ? `₹${Math.round(((product.price + (product.variantPricing.map(v => {
+                      const sel = selectedOptions[v.attributeCode];
+                      const opt = v.options.find(o => o.value === sel);
+                      return opt?.priceModifier || 0;
+                    }).reduce((a, b) => a + b, 0))) * product.discount / 100)).toLocaleString()}`
+                  : `₹${product.discount.toLocaleString()}`}
+              </span>
+            </div>
+          )}
+
           <div className="pt-2 mt-2 border-t-2" style={{ borderColor: '#816047' }}>
             <div className="flex justify-between items-baseline">
               <span className="text-lg font-bold" style={{ color: '#2F1A0F' }}>Final Price:</span>
-              <span className="text-3xl font-bold" style={{ color: '#816047' }}>
-                ₹{finalPrice?.toLocaleString()}
-              </span>
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl font-bold" style={{ color: '#816047' }}>
+                  ₹{finalPrice?.toLocaleString()}
+                </span>
+                {product.discount > 0 && (
+                  <span className="text-sm font-semibold text-green-600">
+                    ({product.discountType === 'percentage' ? `${product.discount}% OFF` : `₹${product.discount} OFF`})
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>

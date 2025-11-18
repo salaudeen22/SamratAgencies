@@ -21,15 +21,6 @@ const ProductBadge = ({ product }) => {
     });
   }
 
-  // Check for discount percentage
-  if (product.discount > 0) {
-    badges.push({
-      text: `-${product.discount}%`,
-      bgColor: '#f59e0b', // amber
-      textColor: '#ffffff'
-    });
-  }
-
   if (badges.length === 0) return null;
 
   return (

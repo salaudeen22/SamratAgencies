@@ -207,12 +207,116 @@ const ProductDetail = () => {
     );
   }
 
+  // Generate comprehensive SEO keywords for the product
+  const generateProductKeywords = () => {
+    const keywords = [];
+
+    // Base product keywords
+    keywords.push(product.name);
+    keywords.push(product.name.toLowerCase());
+    keywords.push(`buy ${product.name}`);
+    keywords.push(`${product.name} online`);
+    keywords.push(`${product.name} price`);
+    keywords.push(`${product.name} bangalore`);
+
+    // Category keywords
+    if (product.category?.name) {
+      keywords.push(product.category.name);
+      keywords.push(`${product.category.name} bangalore`);
+      keywords.push(`buy ${product.category.name}`);
+      keywords.push(`${product.category.name} online`);
+      keywords.push(`best ${product.category.name}`);
+      keywords.push(`premium ${product.category.name}`);
+      keywords.push(`luxury ${product.category.name}`);
+      keywords.push(`affordable ${product.category.name}`);
+    }
+
+    // Brand keywords
+    if (product.brand) {
+      keywords.push(product.brand);
+      keywords.push(`${product.brand} ${product.category?.name || 'furniture'}`);
+      keywords.push(`${product.brand} bangalore`);
+    }
+
+    // Specification-based keywords
+    if (product.specifications) {
+      Object.entries(product.specifications).forEach(([key, value]) => {
+        if (value && typeof value === 'string') {
+          keywords.push(value.replace(/_/g, ' '));
+          keywords.push(`${value.replace(/_/g, ' ')} ${product.category?.name || 'furniture'}`);
+        }
+      });
+    }
+
+    // Price-based keywords
+    if (product.price) {
+      const priceRange = Math.floor(product.price / 10000) * 10000;
+      keywords.push(`furniture under ${priceRange + 10000}`);
+      keywords.push(`${product.category?.name} under ${priceRange + 10000}`);
+      if (product.discount > 0) {
+        keywords.push(`${product.name} on sale`);
+        keywords.push(`${product.name} discount`);
+        keywords.push(`${product.category?.name} offers`);
+      }
+    }
+
+    // Location keywords
+    const locations = [
+      'bangalore', 'bengaluru', 'karnataka', 'south india',
+      'hongasandra', 'begur road', 'bommanahalli', 'btm',
+      'hsr layout', 'koramangala', 'jp nagar', 'electronic city'
+    ];
+
+    locations.forEach(location => {
+      keywords.push(`${product.category?.name || 'furniture'} ${location}`);
+      keywords.push(`${product.name} ${location}`);
+      keywords.push(`buy ${product.category?.name || 'furniture'} in ${location}`);
+    });
+
+    // Generic furniture keywords
+    const furnitureTerms = [
+      'furniture store', 'furniture shop', 'furniture showroom', 'furniture dealer',
+      'online furniture', 'furniture online shopping', 'home furniture', 'quality furniture',
+      'premium furniture', 'affordable furniture', 'best furniture', 'furniture near me'
+    ];
+
+    furnitureTerms.forEach(term => {
+      keywords.push(`${term} bangalore`);
+      keywords.push(term);
+    });
+
+    // Action keywords
+    const actions = ['buy', 'purchase', 'shop', 'order', 'get', 'find'];
+    actions.forEach(action => {
+      keywords.push(`${action} ${product.name}`);
+      keywords.push(`${action} ${product.category?.name || 'furniture'} bangalore`);
+    });
+
+    // Quality keywords
+    const qualities = ['best', 'top', 'premium', 'luxury', 'quality', 'durable', 'modern', 'latest'];
+    qualities.forEach(quality => {
+      keywords.push(`${quality} ${product.category?.name || 'furniture'}`);
+      keywords.push(`${quality} ${product.category?.name || 'furniture'} bangalore`);
+    });
+
+    // Store-specific keywords
+    keywords.push('samrat agencies', 'samrat agencies bangalore', 'samrat agencies hongasandra');
+    keywords.push('samrat agencies furniture', 'samrat agencies reviews');
+
+    // Delivery & Service keywords
+    keywords.push('home delivery furniture', 'free delivery furniture', 'furniture with warranty');
+    keywords.push('furniture on emi', 'no cost emi furniture', 'furniture installment');
+
+    // Remove duplicates and return as comma-separated string
+    return [...new Set(keywords)].join(', ');
+  };
+
   return (
     <>
       <SEO
-        title={`${product.name} | Samrat Agencies`}
-        description={product.description?.substring(0, 160) || `Buy ${product.name} at Samrat Agencies. Premium furniture in Bangalore.`}
-        keywords={`${product.name}, ${product.category?.name || 'furniture'}, ${product.brand || ''}, furniture bangalore, samrat agencies`}
+        title={`${product.name} | Samrat Agencies Bangalore`}
+        description={product.description?.substring(0, 160) || `Buy ${product.name} at Samrat Agencies. Premium quality furniture in Bangalore. ${product.availabilityType === 'immediate' ? 'Immediate delivery available.' : `Delivery in ${product.deliveryDays} days.`} ${product.discount > 0 ? `${product.discount}% OFF!` : ''}`}
+        keywords={generateProductKeywords()}
         image={product.images?.[0]?.url || '/samrat-logo.png'}
         url={`/products/${id}`}
         type="product"
@@ -466,10 +570,36 @@ const ProductDetail = () => {
                 </div>
               ) : (
                 <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#E6CDB1', border: '2px solid #816047' }}>
-                  <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-3xl lg:text-4xl font-bold" style={{ color: '#816047' }}>
-                      ₹{product.price?.toLocaleString()}
-                    </span>
+                  <div className="flex items-baseline gap-3 mb-2">
+                    {product.discount > 0 ? (
+                      <>
+                        <span className="text-3xl lg:text-4xl font-bold" style={{ color: '#816047' }}>
+                          ₹{(() => {
+                            const price = product.price;
+                            const discount = product.discount;
+                            if (product.discountType === 'percentage') {
+                              return Math.round(price - (price * discount / 100)).toLocaleString();
+                            } else {
+                              return Math.round(Math.max(0, price - discount)).toLocaleString();
+                            }
+                          })()}
+                        </span>
+                        <div className="flex flex-col">
+                          <span className="text-lg text-gray-600 line-through">
+                            ₹{product.price?.toLocaleString()}
+                          </span>
+                          <span className="text-sm font-semibold text-green-600">
+                            {product.discountType === 'percentage'
+                              ? `${product.discount}% OFF`
+                              : `₹${product.discount} OFF`}
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <span className="text-3xl lg:text-4xl font-bold" style={{ color: '#816047' }}>
+                        ₹{product.price?.toLocaleString()}
+                      </span>
+                    )}
                   </div>
 
                   {/* Availability Type */}
@@ -837,9 +967,26 @@ const ProductDetail = () => {
                   <h3 className="font-semibold text-sm sm:text-base truncate" style={{ color: '#2F1A0F' }}>
                     {product.name}
                   </h3>
-                  <p className="text-sm sm:text-base font-bold" style={{ color: '#816047' }}>
-                    ₹{(displayPrice || product.price)?.toLocaleString()}
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm sm:text-base font-bold" style={{ color: '#816047' }}>
+                      ₹{(() => {
+                        const basePrice = displayPrice || product.price;
+                        if (product.discount > 0 && !displayPrice) {
+                          if (product.discountType === 'percentage') {
+                            return Math.round(basePrice - (basePrice * product.discount / 100)).toLocaleString();
+                          } else {
+                            return Math.round(Math.max(0, basePrice - product.discount)).toLocaleString();
+                          }
+                        }
+                        return basePrice?.toLocaleString();
+                      })()}
+                    </p>
+                    {product.discount > 0 && !displayPrice && (
+                      <span className="text-xs text-gray-500 line-through">
+                        ₹{product.price?.toLocaleString()}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
 
