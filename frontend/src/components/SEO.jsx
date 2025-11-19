@@ -125,6 +125,7 @@ const SEO = ({
     },
     sameAs: [
       'https://www.facebook.com/SamratAgenciesHongasandra',
+      'https://www.facebook.com/samratagencieshongasandra/photos/coming-soon-/209755234500296/?_rdr',
       'https://www.instagram.com/samrat_agencies/',
       'https://www.linkedin.com/company/the-pi-aerotech',
       'https://www.google.com/maps/place/Samrat+Agencies',
@@ -133,8 +134,16 @@ const SEO = ({
       'https://share.google/HfrXKWHyo2sauOTlV',
       'https://share.google/DOFU2bLasaPvmoBHB',
       'https://www.justdial.com/Bangalore/Samrat-Agencies-Near-Reliance-Fresh-Hongasandra/080P5169625_BZDET',
-      'https://magicpin.in/Bengaluru/Bommanahalli/Lifestyle/Samrat-Agencies-Dealer-Samsung-Furniture-Expert',
-      'https://www.indiamart.com/samrat-agencies'
+      'https://www.justdial.com/Bangalore/Samrat-Agencies-Near-Reliance-Fresh-Hongasandra/080P5169625_BZDET/reviewsm',
+      'https://www.justdial.com/Bangalore/Samrat-Agencies-Near-Reliance-Fresh-Hongasandra/080P5169625_BZDET/photos',
+      'https://www.justdial.com/jdmart/Bangalore/Samrat-Agencies/080PXX80-XX80-231016223310-H1Q3_BZDET/catalogue',
+      'https://magicpin.in/Bangalore/Bommanahalli/Lifestyle/Samrat-Agencies-%28Dealer%29-%28Samsung%29%28Furniture-Expert%29/store/9bb426/',
+      'https://www.indiamart.com/samrat-agencies',
+      'https://www.indiamart.com/samrat-agencies-bengaluru/',
+      'https://www.indiamart.com/company/227824715/aboutus.html',
+      'https://www.sulekha.com/samrat-agencies-hongasandra-bangalore-contact-address',
+      'https://www.asklaila.com/listing/Bangalore/hongasandra/ready-tel-distributors/1zEdeaRI/',
+      'https://www.knowyourgst.com/gst-number-search/samrat-agencies-29ADBPN9317P2ZT/'
     ],
     foundingDate: '1996',
     description: 'Samrat Agencies is South India\'s trusted furniture store since 1996. Serving customers across Karnataka, Kerala, Tamil Nadu, and Andhra Pradesh with premium quality furniture at prices better than IKEA and Royaloak. Located in Bangalore at Begur Road, Hongasandra.'
