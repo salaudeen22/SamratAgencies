@@ -6,13 +6,18 @@ Allow: /
 Disallow: /admin/
 Disallow: /admin/*
 
-# Disallow cart and checkout (duplicate content)
-Disallow: /cart
-Disallow: /checkout
-
-# Disallow auth pages
+# Disallow user-specific pages
 Disallow: /login
 Disallow: /register
 Disallow: /profile
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /auth/
 
-Sitemap: https://samratagencies.com/sitemap.xml
+# These pages can be crawled but have noindex meta tags
+Allow: /cart
+Allow: /checkout
+Allow: /wishlist
+Allow: /compare
+
+Sitemap: https://api.samratagencies.in/sitemap.xml
