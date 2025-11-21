@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { useWishlist } from '../context/WishlistContext';
 import { useCart } from '../context/CartContext';
 import Button from '../components/Button';
+import SEO from '../components/SEO';
 
 const Wishlist = () => {
   const { wishlist, removeFromWishlist, clearWishlist } = useWishlist();
@@ -74,10 +75,17 @@ const Wishlist = () => {
 
   if (!wishlist.products || wishlist.products.length === 0) {
     return (
-      <div className="min-h-screen py-8 sm:py-12 md:py-16" style={{ backgroundColor: '#fafaf9' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-xl shadow-lg p-8 sm:p-12 md:p-16 border-2" style={{ borderColor: '#D7B790' }}>
-            <div className="text-center">
+      <>
+        <SEO
+          title="Wishlist | Samrat Agencies"
+          description="View and manage your wishlist at Samrat Agencies."
+          url="/wishlist"
+          robots="noindex, follow"
+        />
+        <div className="min-h-screen py-8 sm:py-12 md:py-16" style={{ backgroundColor: '#fafaf9' }}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-white rounded-xl shadow-lg p-8 sm:p-12 md:p-16 border-2" style={{ borderColor: '#D7B790' }}>
+              <div className="text-center">
               <div className="relative inline-block mb-6">
                 <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full mx-auto flex items-center justify-center" style={{ backgroundColor: '#E6CDB1' }}>
                   <svg
@@ -122,11 +130,19 @@ const Wishlist = () => {
           </div>
         </div>
       </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
+    <>
+      <SEO
+        title="My Wishlist | Samrat Agencies"
+        description="View and manage your saved furniture items."
+        url="/wishlist"
+        robots="noindex, follow"
+      />
+      <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header with Actions */}
         <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 mb-8 border-2" style={{ borderColor: '#D7B790' }}>
@@ -368,6 +384,7 @@ const Wishlist = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

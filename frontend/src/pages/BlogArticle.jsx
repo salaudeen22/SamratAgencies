@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { articleAPI } from '../services/api';
 import SEO from '../components/SEO';
 import { FiCalendar, FiClock, FiArrowLeft } from 'react-icons/fi';
 
 const BlogArticle = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,6 +24,10 @@ const BlogArticle = () => {
       setArticle(response.data);
     } catch (err) {
       console.error('Failed to fetch article:', err);
+      if (err.response?.status === 404) {
+        // Navigate to 404 page if article not found
+        navigate('/404', { replace: true });
+      }
       setError('Article not found');
     } finally {
       setLoading(false);

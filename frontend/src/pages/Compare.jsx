@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCompare } from '../context/CompareContext';
 import { useCart } from '../context/CartContext';
 import toast from 'react-hot-toast';
+import SEO from '../components/SEO';
 
 const Compare = () => {
   const navigate = useNavigate();
@@ -17,7 +18,14 @@ const Compare = () => {
 
   if (compareList.length === 0) {
     return (
-      <div className="min-h-screen py-8 sm:py-12 md:py-16" style={{ backgroundColor: '#fafaf9' }}>
+      <>
+        <SEO
+          title="Compare Products | Samrat Agencies"
+          description="Compare furniture products side by side at Samrat Agencies."
+          url="/compare"
+          robots="noindex, follow"
+        />
+        <div className="min-h-screen py-8 sm:py-12 md:py-16" style={{ backgroundColor: '#fafaf9' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-12 md:p-16 border-2" style={{ borderColor: '#D7B790' }}>
             <div className="text-center">
@@ -60,6 +68,7 @@ const Compare = () => {
           </div>
         </div>
       </div>
+      </>
     );
   }
 
@@ -169,7 +178,14 @@ const Compare = () => {
   };
 
   return (
-    <div className="min-h-screen py-6 sm:py-8" style={{ backgroundColor: '#fafaf9' }}>
+    <>
+      <SEO
+        title="Compare Products | Samrat Agencies"
+        description="Compare selected furniture products side by side."
+        url="/compare"
+        robots="noindex, follow"
+      />
+      <div className="min-h-screen py-6 sm:py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 mb-8 border-2" style={{ borderColor: '#D7B790' }}>
@@ -293,6 +309,7 @@ const Compare = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

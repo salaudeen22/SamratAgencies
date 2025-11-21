@@ -7,6 +7,7 @@ import { useWishlist } from '../context/WishlistContext';
 import { couponAPI, recommendationAPI } from '../services/api';
 import Button from '../components/Button';
 import ProductRecommendations from '../components/ProductRecommendations';
+import SEO from '../components/SEO';
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, getCartTotal } = useCart();
@@ -176,25 +177,40 @@ const Cart = () => {
 
   if (!cart.items || cart.items.length === 0) {
     return (
-      <div className="min-h-screen py-8 sm:py-12 md:py-16" style={{ backgroundColor: '#fafaf9' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <svg className="mx-auto h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 mb-4 sm:mb-6" style={{ color: '#D7B790' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4" style={{ color: '#2F1A0F' }}>Your cart is empty</h2>
-            <p className="mb-6 sm:mb-8 text-sm sm:text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Start shopping and add items to your cart</p>
-            <Link to="/products">
-              <Button size="lg">Browse Products</Button>
-            </Link>
+      <>
+        <SEO
+          title="Shopping Cart | Samrat Agencies"
+          description="View your shopping cart at Samrat Agencies. Browse furniture items and complete your purchase."
+          url="/cart"
+          robots="noindex, follow"
+        />
+        <div className="min-h-screen py-8 sm:py-12 md:py-16" style={{ backgroundColor: '#fafaf9' }}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <svg className="mx-auto h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 mb-4 sm:mb-6" style={{ color: '#D7B790' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4" style={{ color: '#2F1A0F' }}>Your cart is empty</h2>
+              <p className="mb-6 sm:mb-8 text-sm sm:text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Start shopping and add items to your cart</p>
+              <Link to="/products">
+                <Button size="lg">Browse Products</Button>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
+    <>
+      <SEO
+        title="Shopping Cart | Samrat Agencies"
+        description="Review your selected furniture items and proceed to checkout."
+        url="/cart"
+        robots="noindex, follow"
+      />
+      <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header with Item Count and Actions */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 sm:mb-6 md:mb-8">
@@ -524,6 +540,7 @@ const Cart = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

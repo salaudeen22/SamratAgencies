@@ -7,6 +7,7 @@ const SEO = ({
   image = 'https://samratagencies.in/samrat-logo.png',
   url = window.location.href,
   type = 'website',
+  robots = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
   structuredData = null,
   product = null
 }) => {
@@ -184,7 +185,7 @@ const SEO = ({
       <meta name="twitter:image" content={fullImage} />
 
       {/* Additional SEO Tags */}
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta name="robots" content={robots} />
       <meta name="googlebot" content="index, follow" />
       <meta name="language" content="English" />
       <meta name="revisit-after" content="7 days" />

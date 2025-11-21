@@ -6,18 +6,21 @@ Allow: /
 Disallow: /admin/
 Disallow: /admin/*
 
-# Disallow user-specific pages
+# Disallow user-specific pages (noindex via robots.txt + meta tags)
 Disallow: /login
 Disallow: /register
 Disallow: /profile
 Disallow: /forgot-password
 Disallow: /reset-password
 Disallow: /auth/
+Disallow: /checkout
+Disallow: /order-confirmation/
 
-# These pages can be crawled but have noindex meta tags
-Allow: /cart
-Allow: /checkout
-Allow: /wishlist
-Allow: /compare
+# User-specific pages with noindex meta tags (allowed for crawling but not indexing)
+# Cart, Wishlist, Compare have noindex meta tags implemented
+# These are blocked to prevent soft 404 issues
+Disallow: /cart
+Disallow: /wishlist
+Disallow: /compare
 
 Sitemap: https://api.samratagencies.in/sitemap.xml

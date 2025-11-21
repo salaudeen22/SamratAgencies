@@ -57,6 +57,11 @@ const ProductDetail = () => {
         addToRecentlyViewed(response.data);
       } catch (err) {
         console.error('Failed to fetch product:', err);
+        if (err.response?.status === 404) {
+          // Navigate to 404 page if product not found
+          navigate('/404', { replace: true });
+        }
+        setProduct(null);
       } finally {
         setLoading(false);
       }
