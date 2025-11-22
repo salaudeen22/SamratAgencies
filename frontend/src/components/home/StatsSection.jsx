@@ -67,19 +67,19 @@ const StatsSection = () => {
       value: 29,
       suffix: '+',
       label: 'Years of Trust',
-      description: 'Since 1996',
+      description: 'Serving families since 1996',
     },
     {
-      value: 10,
-      suffix: ' Lakh+',
-      label: 'Happy Customers',
-      description: 'Homes transformed',
+      value: 50000,
+      suffix: '+',
+      label: 'Happy Families',
+      description: 'Homes transformed across Bangalore',
     },
     {
       value: 1000,
       suffix: '+',
-      label: 'Quality Products',
-      description: 'Curated collection',
+      label: 'Beautiful Designs',
+      description: 'Carefully selected for you',
     },
   ];
 
@@ -91,8 +91,8 @@ const StatsSection = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-3 sm:mb-4">
-          <h2 className="text-base sm:text-lg md:text-xl font-bold mb-0.5" style={{ color: '#2F1A0F' }}>The Numbers Speak</h2>
-          <p className="text-xs" style={{ color: '#2F1A0F', opacity: 0.7 }}>Your trust is our greatest achievement</p>
+          <h2 className="text-base sm:text-lg md:text-xl font-bold mb-0.5" style={{ color: '#2F1A0F' }}>A Legacy of Quality</h2>
+          <p className="text-xs" style={{ color: '#2F1A0F', opacity: 0.7 }}>Building beautiful homes, one family at a time</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">

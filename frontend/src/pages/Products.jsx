@@ -7,11 +7,13 @@ import SEO from '../components/SEO';
 const Products = () => {
   const location = useLocation();
   const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]); // Store all fetched products
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedLevel1, setSelectedLevel1] = useState('');
   const [selectedLevel2, setSelectedLevel2] = useState('');
   const [selectedLevel3, setSelectedLevel3] = useState('');
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [filters, setFilters] = useState({
     category: '',
     minPrice: '',
@@ -21,7 +23,7 @@ const Products = () => {
     availabilityType: '',
   });
 
-  // Read URL parameters on mount
+  // Read URL parameters on mount and resolve category slug to ID
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const categoryFromUrl = searchParams.get('category');
@@ -29,10 +31,89 @@ const Products = () => {
     console.log('URL Search Params:', location.search);
     console.log('Category from URL:', categoryFromUrl);
 
-    if (categoryFromUrl) {
-      setFilters(prev => ({ ...prev, category: categoryFromUrl }));
+    if (categoryFromUrl && categories.length > 0) {
+      // Check if it's already an ID (24-character hex) or a slug
+      const isId = /^[0-9a-fA-F]{24}$/.test(categoryFromUrl);
+
+      if (isId) {
+        // It's an ID, use it directly
+        setFilters(prev => ({ ...prev, category: categoryFromUrl }));
+
+        // Set the appropriate level selection
+        const category = findCategoryById(categories, categoryFromUrl);
+        if (category) {
+          // Find which level this category is at
+          const isLevel1 = categories.some(c => c._id === categoryFromUrl);
+          if (isLevel1) {
+            setSelectedLevel1(categoryFromUrl);
+          } else {
+            // Check if it's level 2
+            for (const level1 of categories) {
+              const isLevel2 = level1.children?.some(c => c._id === categoryFromUrl);
+              if (isLevel2) {
+                setSelectedLevel1(level1._id);
+                setSelectedLevel2(categoryFromUrl);
+                break;
+              }
+              // Check if it's level 3
+              for (const level2 of (level1.children || [])) {
+                const isLevel3 = level2.children?.some(c => c._id === categoryFromUrl);
+                if (isLevel3) {
+                  setSelectedLevel1(level1._id);
+                  setSelectedLevel2(level2._id);
+                  setSelectedLevel3(categoryFromUrl);
+                  break;
+                }
+              }
+            }
+          }
+        }
+      } else {
+        // It's a slug, find the category by slug
+        const findCategoryBySlug = (cats) => {
+          for (const cat of cats) {
+            if (cat.slug === categoryFromUrl) return cat;
+            if (cat.children && cat.children.length > 0) {
+              const found = findCategoryBySlug(cat.children);
+              if (found) return found;
+            }
+          }
+          return null;
+        };
+
+        const category = findCategoryBySlug(categories);
+        if (category) {
+          setFilters(prev => ({ ...prev, category: category._id }));
+
+          // Find which level this category is at
+          const isLevel1 = categories.some(c => c._id === category._id);
+          if (isLevel1) {
+            setSelectedLevel1(category._id);
+          } else {
+            // Check if it's level 2
+            for (const level1 of categories) {
+              const isLevel2 = level1.children?.some(c => c._id === category._id);
+              if (isLevel2) {
+                setSelectedLevel1(level1._id);
+                setSelectedLevel2(category._id);
+                break;
+              }
+              // Check if it's level 3
+              for (const level2 of (level1.children || [])) {
+                const isLevel3 = level2.children?.some(c => c._id === category._id);
+                if (isLevel3) {
+                  setSelectedLevel1(level1._id);
+                  setSelectedLevel2(level2._id);
+                  setSelectedLevel3(category._id);
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
     }
-  }, [location.search]);
+  }, [location.search, categories]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -70,7 +151,11 @@ const Products = () => {
         }
 
         let productsData = await productAPI.getAll(params);
-        setProducts(productsData.data);
+        const fetchedProducts = productsData.data;
+
+        // Store all products
+        setAllProducts(fetchedProducts);
+        setProducts(fetchedProducts);
       } catch (err) {
         console.error('Failed to fetch products:', err);
       } finally {
@@ -161,11 +246,25 @@ const Products = () => {
       />
       <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 md:mb-8" style={{ color: '#2F1A0F' }}>Our Products</h1>
+        <div className="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: '#2F1A0F' }}>Our Products</h1>
+
+          {/* Mobile Filter Toggle Button */}
+          <button
+            onClick={() => setShowMobileFilters(!showMobileFilters)}
+            className="lg:hidden flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all"
+            style={{ backgroundColor: '#816047', color: 'white' }}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            </svg>
+            Filters
+          </button>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-          {/* Filters Sidebar */}
-          <div className="lg:col-span-1">
+          {/* Filters Sidebar - Desktop */}
+          <div className="hidden lg:block lg:col-span-1">
             <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-20" style={{ border: '2px solid #D7B790' }}>
               <div className="flex items-center justify-between mb-3 sm:mb-4">
                 <h2 className="text-lg sm:text-xl font-semibold" style={{ color: '#2F1A0F' }}>Filters</h2>
@@ -431,13 +530,22 @@ const Products = () => {
 
             {loading ? (
               <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-4 mx-auto" style={{ borderColor: '#816047' }}></div>
-                <p className="mt-4" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Loading products...</p>
+                <div className="relative w-12 h-12 mx-auto">
+                  <div className="absolute inset-0 rounded-full border-4 border-[#E6CDB1]"></div>
+                  <div className="absolute inset-0 rounded-full border-4 border-[#816047] border-t-transparent animate-spin"></div>
+                </div>
+                <p className="mt-4 animate-pulse" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Loading products...</p>
               </div>
             ) : products.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {products.map((product) => (
-                  <ProductCard key={product._id} product={product} />
+                {products.map((product, index) => (
+                  <div
+                    key={product._id}
+                    className="animate-fade-in-up"
+                    style={{ animationDelay: `${(index % 12) * 50}ms` }}
+                  >
+                    <ProductCard product={product} />
+                  </div>
                 ))}
               </div>
             ) : (
@@ -456,6 +564,226 @@ const Products = () => {
             )}
           </div>
         </div>
+
+        {/* Mobile Filter Drawer */}
+        {showMobileFilters && (
+          <>
+            {/* Backdrop */}
+            <div
+              className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+              onClick={() => setShowMobileFilters(false)}
+            ></div>
+
+            {/* Drawer */}
+            <div className="fixed inset-y-0 right-0 w-full sm:w-96 bg-white z-50 lg:hidden overflow-y-auto shadow-2xl">
+              {/* Header */}
+              <div className="sticky top-0 bg-white border-b-2 px-4 py-4 flex items-center justify-between" style={{ borderColor: '#D7B790' }}>
+                <h2 className="text-xl font-semibold" style={{ color: '#2F1A0F' }}>Filters</h2>
+                <button
+                  onClick={() => setShowMobileFilters(false)}
+                  className="p-2 rounded-lg hover:bg-gray-100"
+                  style={{ color: '#816047' }}
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Filter Content */}
+              <div className="p-4">
+                {/* Search */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
+                    <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    Search
+                  </label>
+                  <input
+                    type="text"
+                    name="search"
+                    value={filters.search}
+                    onChange={handleFilterChange}
+                    placeholder="Search products..."
+                    className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2"
+                    style={{ border: '1px solid #D7B790' }}
+                  />
+                </div>
+
+                {/* Category Dropdowns */}
+                <div className="mb-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-sm font-medium" style={{ color: '#2F1A0F' }}>
+                      <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                      </svg>
+                      Categories
+                    </label>
+                    {filters.category && (
+                      <button
+                        onClick={() => {
+                          setSelectedLevel1('');
+                          setSelectedLevel2('');
+                          setSelectedLevel3('');
+                          setFilters(prev => ({ ...prev, category: '' }));
+                        }}
+                        className="text-xs font-medium"
+                        style={{ color: '#816047' }}
+                      >
+                        Clear
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="space-y-3">
+                    <select
+                      value={selectedLevel1}
+                      onChange={(e) => handleLevel1Change(e.target.value)}
+                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 text-sm"
+                      style={{ border: '1px solid #D7B790', color: '#2F1A0F' }}
+                    >
+                      <option value="">All Categories</option>
+                      {categories.map((category) => (
+                        <option key={category._id} value={category._id}>
+                          {category.name}
+                        </option>
+                      ))}
+                    </select>
+
+                    {selectedLevel1 && getLevel2Categories().length > 0 && (
+                      <select
+                        value={selectedLevel2}
+                        onChange={(e) => handleLevel2Change(e.target.value)}
+                        className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 text-sm"
+                        style={{ border: '1px solid #D7B790', color: '#2F1A0F' }}
+                      >
+                        <option value="">All in {categories.find(c => c._id === selectedLevel1)?.name}</option>
+                        {getLevel2Categories().map((category) => (
+                          <option key={category._id} value={category._id}>
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+
+                    {selectedLevel2 && getLevel3Categories().length > 0 && (
+                      <select
+                        value={selectedLevel3}
+                        onChange={(e) => handleLevel3Change(e.target.value)}
+                        className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 text-sm"
+                        style={{ border: '1px solid #D7B790', color: '#2F1A0F' }}
+                      >
+                        <option value="">All in {getLevel2Categories().find(c => c._id === selectedLevel2)?.name}</option>
+                        {getLevel3Categories().map((category) => (
+                          <option key={category._id} value={category._id}>
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
+                </div>
+
+                {/* Sort By */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
+                    <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                    </svg>
+                    Sort By
+                  </label>
+                  <select
+                    name="sortBy"
+                    value={filters.sortBy}
+                    onChange={handleFilterChange}
+                    className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 text-sm"
+                    style={{ border: '1px solid #D7B790', color: '#2F1A0F' }}
+                  >
+                    <option value="">Default</option>
+                    <option value="price_asc">Price: Low to High</option>
+                    <option value="price_desc">Price: High to Low</option>
+                    <option value="name_asc">Name: A to Z</option>
+                    <option value="name_desc">Name: Z to A</option>
+                    <option value="newest">Newest First</option>
+                  </select>
+                </div>
+
+                {/* Price Range */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
+                    <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Price Range
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <input
+                      type="number"
+                      name="minPrice"
+                      value={filters.minPrice}
+                      onChange={handleFilterChange}
+                      placeholder="Min"
+                      className="px-3 py-2 text-sm rounded-md focus:outline-none focus:ring-2"
+                      style={{ border: '1px solid #D7B790' }}
+                    />
+                    <input
+                      type="number"
+                      name="maxPrice"
+                      value={filters.maxPrice}
+                      onChange={handleFilterChange}
+                      placeholder="Max"
+                      className="px-3 py-2 text-sm rounded-md focus:outline-none focus:ring-2"
+                      style={{ border: '1px solid #D7B790' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Availability Type */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#2F1A0F' }}>
+                    <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Availability
+                  </label>
+                  <select
+                    name="availabilityType"
+                    value={filters.availabilityType}
+                    onChange={handleFilterChange}
+                    className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 text-sm"
+                    style={{ border: '1px solid #D7B790', color: '#2F1A0F' }}
+                  >
+                    <option value="">All Products</option>
+                    <option value="immediate">Immediate Delivery</option>
+                    <option value="made-to-order">Made to Order</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Footer Buttons */}
+              <div className="sticky bottom-0 bg-white border-t-2 p-4 flex gap-3" style={{ borderColor: '#D7B790' }}>
+                <button
+                  onClick={() => {
+                    clearFilters();
+                    setShowMobileFilters(false);
+                  }}
+                  className="flex-1 px-4 py-3 rounded-md font-medium transition"
+                  style={{ backgroundColor: '#F3F4F6', color: '#816047' }}
+                >
+                  Reset
+                </button>
+                <button
+                  onClick={() => setShowMobileFilters(false)}
+                  className="flex-1 px-4 py-3 rounded-md font-medium transition"
+                  style={{ backgroundColor: '#816047', color: 'white' }}
+                >
+                  Apply Filters
+                </button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
     </>

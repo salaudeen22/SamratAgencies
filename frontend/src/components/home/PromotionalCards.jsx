@@ -98,16 +98,16 @@ const PromotionalCards = () => {
             {/* Large Left Card */}
             <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-lg group cursor-pointer h-[400px] sm:h-[500px] md:h-[600px]">
               <img
-                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=85"
-                alt="Wooden classic table"
+                src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=1200&q=85"
+                alt="Family dining table setup"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent"></div>
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8 lg:p-12">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-white mb-4 sm:mb-6 leading-tight">
-                  Tables That Bring Everyone Together
+                  Dining Tables for Every Celebration
                 </h2>
-                <Link to="/products?category=table">
+                <Link to="/products?category=dining-room-furniture">
                   <button className="px-6 sm:px-8 py-2 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-xl" style={{ backgroundColor: '#2F1A0F', color: '#E6CDB1' }}>
                     Shop Tables
                   </button>
@@ -117,14 +117,14 @@ const PromotionalCards = () => {
 
             {/* Right Side - Two Stacked Cards */}
             <div className="flex flex-col gap-4 sm:gap-6 lg:gap-8">
-              {/* Top Card - Pottery Products */}
+              {/* Top Card - Home Decor */}
               <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-lg group cursor-pointer h-[200px] sm:h-[250px] md:h-[290px]" style={{ backgroundColor: '#E6CDB1' }}>
                 <div className="grid grid-cols-2 h-full items-center">
                   <div className="p-4 sm:p-6 md:p-8 lg:p-10">
                     <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold mb-3 sm:mb-4 md:mb-6 leading-tight" style={{ color: '#2F1A0F' }}>
-                      Add Your Personal Touch
+                      Make Your House Feel Like Home
                     </h3>
-                    <Link to="/products">
+                    <Link to="/products?category=living-room-furniture">
                       <button className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-md" style={{ backgroundColor: '#2F1A0F', color: '#E6CDB1' }}>
                         Shop Decor
                       </button>
@@ -132,21 +132,21 @@ const PromotionalCards = () => {
                   </div>
                   <div className="h-full relative">
                     <img
-                      src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&q=85"
-                      alt="Pottery products"
+                      src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=600&q=85"
+                      alt="Cozy home living room"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Bottom Card - Florence Compact */}
+              {/* Bottom Card - Bedroom */}
               <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-lg group cursor-pointer h-[200px] sm:h-[250px] md:h-[290px]" style={{ backgroundColor: '#f5f5f4' }}>
                 <div className="grid grid-cols-2 h-full items-center">
                   <div className="h-full relative">
                     <img
-                      src="https://images.unsplash.com/photo-1567016432779-094069958ea5?w=600&q=85"
-                      alt="Florence compact"
+                      src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600&q=85"
+                      alt="Comfortable bedroom setup"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
@@ -154,7 +154,7 @@ const PromotionalCards = () => {
                     <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold mb-3 sm:mb-4 md:mb-6 leading-tight" style={{ color: '#2F1A0F' }}>
                       Sleep Better, Live Better
                     </h3>
-                    <Link to="/products?category=bed">
+                    <Link to="/products?category=bedroom-furniture">
                       <button className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-md" style={{ backgroundColor: '#2F1A0F', color: '#E6CDB1' }}>
                         Shop Beds
                       </button>

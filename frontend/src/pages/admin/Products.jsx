@@ -85,6 +85,7 @@ const Products = () => {
         page: currentPage,
         limit: 10,
       };
+      if (searchQuery) params.search = searchQuery;
       if (filterCategory) params.category = filterCategory;
       if (filterAvailability) params.availabilityType = filterAvailability;
 

@@ -27,8 +27,42 @@ router.get('/products', async (req, res) => {
     const skip = (page - 1) * limit;
 
     const filter = {};
-    if (req.query.category) filter.category = req.query.category;
-    if (req.query.availabilityType) filter.availabilityType = req.query.availabilityType;
+
+    // Category filter - check all category fields
+    if (req.query.category) {
+      filter.$or = [
+        { category: req.query.category },
+        { primaryCategory: req.query.category },
+        { categories: req.query.category }
+      ];
+    }
+
+    // Availability filter
+    if (req.query.availabilityType) {
+      filter.availabilityType = req.query.availabilityType;
+    }
+
+    // Search filter - needs to combine with category filter using $and
+    if (req.query.search) {
+      const searchRegex = new RegExp(req.query.search, 'i');
+      const searchConditions = [
+        { name: searchRegex },
+        { description: searchRegex },
+        { sku: searchRegex }
+      ];
+
+      // If category filter exists, combine with $and
+      if (filter.$or) {
+        const categoryConditions = filter.$or;
+        delete filter.$or;
+        filter.$and = [
+          { $or: categoryConditions },
+          { $or: searchConditions }
+        ];
+      } else {
+        filter.$or = searchConditions;
+      }
+    }
 
     const products = await Product.find(filter)
       .populate('category', 'name slug')
