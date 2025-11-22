@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 /**
  * VariantSelector Component
  * Displays dropdown selectors for variant attributes
+ * Supports nested/cascading variants (e.g., Size → Dimensions)
  * Calculates final price based on base price + selected modifiers
  */
 const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
@@ -17,16 +18,24 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
 
       product.variantPricing.forEach(variant => {
         if (variant.options && variant.options.length > 0) {
-          initialOptions[variant.attributeCode] = variant.options[0].value;
+          // Select first parent option
+          const firstOption = variant.options[0];
+          initialOptions[variant.attributeCode] = firstOption.value;
+
+          // If first option has nested options, select first nested option
+          if (firstOption.subOptions && firstOption.subOptions.options && firstOption.subOptions.options.length > 0) {
+            initialOptions[firstOption.subOptions.attributeCode] = firstOption.subOptions.options[0].value;
+          }
         }
       });
 
       setSelectedOptions(initialOptions);
       calculatePrice(initialOptions);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product]);
 
-  // Calculate final price based on selected options
+  // Calculate final price based on selected options (including nested)
   const calculatePrice = (options) => {
     let totalModifier = 0;
     let imageToShow = null;
@@ -36,9 +45,24 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
       const selectedOption = variant.options.find(opt => opt.value === selectedValue);
 
       if (selectedOption) {
-        totalModifier += selectedOption.priceModifier || 0;
+        // Check if this option has nested options
+        if (selectedOption.subOptions && selectedOption.subOptions.options) {
+          // Find the selected nested option
+          const selectedNestedValue = options[selectedOption.subOptions.attributeCode];
+          const selectedNestedOption = selectedOption.subOptions.options.find(
+            nOpt => nOpt.value === selectedNestedValue
+          );
 
-        // Use the last variant's image if available
+          if (selectedNestedOption) {
+            // Use nested option's price modifier
+            totalModifier += selectedNestedOption.priceModifier || 0;
+          }
+        } else {
+          // No nested options, use parent's price modifier
+          totalModifier += selectedOption.priceModifier || 0;
+        }
+
+        // Use the parent option's image if available
         if (selectedOption.image && selectedOption.image.url) {
           imageToShow = selectedOption.image.url;
         }
@@ -70,11 +94,38 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
     }
   };
 
-  // Handle option change
+  // Handle parent option change
   const handleOptionChange = (attributeCode, value) => {
+    const newOptions = { ...selectedOptions };
+    newOptions[attributeCode] = value;
+
+    // Find the selected parent option
+    const variant = product.variantPricing.find(v => v.attributeCode === attributeCode);
+    if (variant) {
+      const selectedOption = variant.options.find(opt => opt.value === value);
+
+      // If the new selection has nested options, select the first nested option by default
+      if (selectedOption && selectedOption.subOptions && selectedOption.subOptions.options.length > 0) {
+        newOptions[selectedOption.subOptions.attributeCode] = selectedOption.subOptions.options[0].value;
+      } else {
+        // Remove any previously selected nested option for this parent
+        const oldSelectedValue = selectedOptions[attributeCode];
+        const oldSelectedOption = variant.options.find(opt => opt.value === oldSelectedValue);
+        if (oldSelectedOption && oldSelectedOption.subOptions) {
+          delete newOptions[oldSelectedOption.subOptions.attributeCode];
+        }
+      }
+    }
+
+    setSelectedOptions(newOptions);
+    calculatePrice(newOptions);
+  };
+
+  // Handle nested option change
+  const handleNestedOptionChange = (nestedAttributeCode, value) => {
     const newOptions = {
       ...selectedOptions,
-      [attributeCode]: value
+      [nestedAttributeCode]: value
     };
 
     setSelectedOptions(newOptions);
@@ -87,6 +138,13 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
     return modifier > 0 ? ` (+₹${modifier})` : ` (-₹${Math.abs(modifier)})`;
   };
 
+  // Get the current nested options based on parent selection
+  const getCurrentNestedOptions = (variant) => {
+    const selectedValue = selectedOptions[variant.attributeCode];
+    const selectedOption = variant.options.find(opt => opt.value === selectedValue);
+    return selectedOption?.subOptions || null;
+  };
+
   if (!product.variantPricing || product.variantPricing.length === 0) {
     return null;
   }
@@ -94,29 +152,66 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
   return (
     <div className="space-y-4">
       {/* Variant Selectors */}
-      {product.variantPricing.map((variant) => (
-        <div key={variant.attributeCode}>
-          <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
-            Select {variant.attributeName}
-          </label>
-          <select
-            value={selectedOptions[variant.attributeCode] || ''}
-            onChange={(e) => handleOptionChange(variant.attributeCode, e.target.value)}
-            className="w-full px-4 py-3 rounded-lg transition-all"
-            style={{
-              border: '2px solid #D7B790',
-              color: '#2F1A0F',
-              backgroundColor: 'white'
-            }}
-          >
-            {variant.options.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}{getPriceModifierText(option.priceModifier)}
-              </option>
-            ))}
-          </select>
-        </div>
-      ))}
+      {product.variantPricing.map((variant) => {
+        const nestedOptions = getCurrentNestedOptions(variant);
+
+        return (
+          <div key={variant.attributeCode} className="space-y-3">
+            {/* Parent Variant Selector */}
+            <div>
+              <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
+                Select {variant.attributeName}
+              </label>
+              <select
+                value={selectedOptions[variant.attributeCode] || ''}
+                onChange={(e) => handleOptionChange(variant.attributeCode, e.target.value)}
+                className="w-full px-4 py-3 rounded-lg transition-all"
+                style={{
+                  border: '2px solid #D7B790',
+                  color: '#2F1A0F',
+                  backgroundColor: 'white'
+                }}
+              >
+                {variant.options.map((option) => {
+                  // For parent options with nested options, don't show price modifier
+                  const showModifier = !option.subOptions || option.subOptions.options.length === 0;
+                  return (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                      {showModifier && getPriceModifierText(option.priceModifier)}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+
+            {/* Nested Variant Selector (Cascading) */}
+            {nestedOptions && nestedOptions.options && nestedOptions.options.length > 0 && (
+              <div className="ml-4 pl-4 border-l-4 border-purple-300">
+                <label className="block text-sm font-semibold mb-2" style={{ color: '#6B21A8' }}>
+                  Select {nestedOptions.attributeName}
+                </label>
+                <select
+                  value={selectedOptions[nestedOptions.attributeCode] || ''}
+                  onChange={(e) => handleNestedOptionChange(nestedOptions.attributeCode, e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg transition-all"
+                  style={{
+                    border: '2px solid #C084FC',
+                    color: '#6B21A8',
+                    backgroundColor: 'white'
+                  }}
+                >
+                  {nestedOptions.options.map((nestedOption) => (
+                    <option key={nestedOption.value} value={nestedOption.value}>
+                      {nestedOption.label}{getPriceModifierText(nestedOption.priceModifier)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+        );
+      })}
 
       {/* Price Breakdown */}
       <div className="p-4 rounded-lg" style={{ backgroundColor: '#E6CDB1', border: '2px solid #816047' }}>
@@ -131,20 +226,47 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
           {product.variantPricing.map((variant) => {
             const selectedValue = selectedOptions[variant.attributeCode];
             const selectedOption = variant.options.find(opt => opt.value === selectedValue);
-            const modifier = selectedOption?.priceModifier || 0;
 
-            if (modifier === 0) return null;
+            if (!selectedOption) return null;
 
-            return (
-              <div key={variant.attributeCode} className="flex justify-between text-sm">
-                <span style={{ color: '#2F1A0F' }}>
-                  {variant.attributeName} ({selectedOption?.label}):
-                </span>
-                <span className="font-semibold" style={{ color: modifier > 0 ? '#10B981' : '#EF4444' }}>
-                  {modifier > 0 ? '+' : ''}₹{modifier.toLocaleString()}
-                </span>
-              </div>
-            );
+            // Check if this option has nested options
+            if (selectedOption.subOptions && selectedOption.subOptions.options.length > 0) {
+              const selectedNestedValue = selectedOptions[selectedOption.subOptions.attributeCode];
+              const selectedNestedOption = selectedOption.subOptions.options.find(
+                nOpt => nOpt.value === selectedNestedValue
+              );
+
+              const modifier = selectedNestedOption?.priceModifier || 0;
+
+              if (modifier === 0) return null;
+
+              return (
+                <div key={`${variant.attributeCode}-nested`} className="flex justify-between text-sm">
+                  <span style={{ color: '#2F1A0F' }}>
+                    {selectedOption.label} - {selectedNestedOption?.label}:
+                  </span>
+                  <span className="font-semibold" style={{ color: modifier > 0 ? '#10B981' : '#EF4444' }}>
+                    {modifier > 0 ? '+' : ''}₹{modifier.toLocaleString()}
+                  </span>
+                </div>
+              );
+            } else {
+              // No nested options, show parent modifier
+              const modifier = selectedOption?.priceModifier || 0;
+
+              if (modifier === 0) return null;
+
+              return (
+                <div key={variant.attributeCode} className="flex justify-between text-sm">
+                  <span style={{ color: '#2F1A0F' }}>
+                    {variant.attributeName} ({selectedOption?.label}):
+                  </span>
+                  <span className="font-semibold" style={{ color: modifier > 0 ? '#10B981' : '#EF4444' }}>
+                    {modifier > 0 ? '+' : ''}₹{modifier.toLocaleString()}
+                  </span>
+                </div>
+              );
+            }
           })}
 
           {/* Show discount if applicable */}
@@ -155,11 +277,7 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
               </span>
               <span className="font-semibold text-green-600">
                 -{product.discountType === 'percentage'
-                  ? `₹${Math.round(((product.price + (product.variantPricing.map(v => {
-                      const sel = selectedOptions[v.attributeCode];
-                      const opt = v.options.find(o => o.value === sel);
-                      return opt?.priceModifier || 0;
-                    }).reduce((a, b) => a + b, 0))) * product.discount / 100)).toLocaleString()}`
+                  ? `₹${Math.round(((product.price + calculateTotalModifier()) * product.discount / 100)).toLocaleString()}`
                   : `₹${product.discount.toLocaleString()}`}
               </span>
             </div>
@@ -199,6 +317,32 @@ const VariantSelector = ({ product, onPriceChange, onVariantChange }) => {
       )}
     </div>
   );
+
+  // Helper function to calculate total modifier for discount calculation
+  function calculateTotalModifier() {
+    let totalModifier = 0;
+
+    product.variantPricing.forEach(variant => {
+      const selectedValue = selectedOptions[variant.attributeCode];
+      const selectedOption = variant.options.find(opt => opt.value === selectedValue);
+
+      if (selectedOption) {
+        if (selectedOption.subOptions && selectedOption.subOptions.options) {
+          const selectedNestedValue = selectedOptions[selectedOption.subOptions.attributeCode];
+          const selectedNestedOption = selectedOption.subOptions.options.find(
+            nOpt => nOpt.value === selectedNestedValue
+          );
+          if (selectedNestedOption) {
+            totalModifier += selectedNestedOption.priceModifier || 0;
+          }
+        } else {
+          totalModifier += selectedOption.priceModifier || 0;
+        }
+      }
+    });
+
+    return totalModifier;
+  }
 };
 
 export default VariantSelector;

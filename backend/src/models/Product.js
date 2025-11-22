@@ -106,7 +106,7 @@ const productSchema = new mongoose.Schema({
   // Product variants (only if some attributes affect price/stock)
   variants: [variantSchema],
 
-  // Variant Configuration - Price modifiers per attribute option (new flexible system)
+  // Variant Configuration - Price modifiers per attribute option (supports nested variants)
   variantPricing: [{
     attributeCode: String,
     attributeName: String,
@@ -120,6 +120,19 @@ const productSchema = new mongoose.Schema({
       image: {
         url: String,
         public_id: String
+      },
+      // Nested/Child options (e.g., Size -> Dimensions)
+      subOptions: {
+        attributeCode: String,
+        attributeName: String,
+        options: [{
+          value: String,
+          label: String,
+          priceModifier: {
+            type: Number,
+            default: 0
+          }
+        }]
       }
     }]
   }],

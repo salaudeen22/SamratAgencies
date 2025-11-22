@@ -185,16 +185,28 @@ const ProductCard = ({ product }) => {
               {/* Show price range if product has variant pricing */}
               {product.variantPricing && product.variantPricing.length > 0 ? (
                 (() => {
-                  // Calculate min and max price
+                  // Calculate min and max price (including nested options)
                   let minPrice = product.price || 0;
                   let maxPrice = product.price || 0;
 
                   product.variantPricing.forEach(variant => {
                     variant.options.forEach(option => {
-                      const modifier = option.priceModifier || 0;
-                      const priceWithModifier = (product.price || 0) + modifier;
-                      if (priceWithModifier < minPrice) minPrice = priceWithModifier;
-                      if (priceWithModifier > maxPrice) maxPrice = priceWithModifier;
+                      // Check if option has nested options
+                      if (option.subOptions && option.subOptions.options && option.subOptions.options.length > 0) {
+                        // Calculate prices based on nested options
+                        option.subOptions.options.forEach(nestedOption => {
+                          const modifier = nestedOption.priceModifier || 0;
+                          const priceWithModifier = (product.price || 0) + modifier;
+                          if (priceWithModifier < minPrice) minPrice = priceWithModifier;
+                          if (priceWithModifier > maxPrice) maxPrice = priceWithModifier;
+                        });
+                      } else {
+                        // No nested options, use parent's price modifier
+                        const modifier = option.priceModifier || 0;
+                        const priceWithModifier = (product.price || 0) + modifier;
+                        if (priceWithModifier < minPrice) minPrice = priceWithModifier;
+                        if (priceWithModifier > maxPrice) maxPrice = priceWithModifier;
+                      }
                     });
                   });
 
