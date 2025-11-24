@@ -4,11 +4,16 @@ const router = express.Router();
 const Product = require('../models/Product');
 const Category = require('../models/Category');
 const Article = require('../models/Article');
+const axios = require('axios');
+
+// IndexNow configuration
+const INDEXNOW_KEY = '5c7e7c9951fe606900186eefe1efb110';
+const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';
 
 // Generate XML sitemap
 router.get('/sitemap.xml', async (req, res) => {
   try {
-    const baseUrl = process.env.FRONTEND_URL || 'https://samratagencies.com';
+    const baseUrl = process.env.FRONTEND_URL || 'https://samratagencies.in';
 
     // Fetch all active products with slugs
     const products = await Product.find({ isActive: true }).select('slug updatedAt');
@@ -130,6 +135,127 @@ router.get('/sitemap.xml', async (req, res) => {
   } catch (error) {
     console.error('Sitemap generation error:', error);
     res.status(500).send('Error generating sitemap');
+  }
+});
+
+// Get all URLs for IndexNow submission
+router.get('/api/sitemap/urls', async (req, res) => {
+  try {
+    const baseUrl = process.env.FRONTEND_URL || 'https://samratagencies.in';
+    const urls = [];
+
+    // Static pages
+    urls.push(`${baseUrl}/`);
+    urls.push(`${baseUrl}/products`);
+    urls.push(`${baseUrl}/about`);
+    urls.push(`${baseUrl}/contact`);
+    urls.push(`${baseUrl}/blog`);
+    urls.push(`${baseUrl}/privacy-policy`);
+    urls.push(`${baseUrl}/terms-and-conditions`);
+    urls.push(`${baseUrl}/shipping-and-delivery`);
+    urls.push(`${baseUrl}/cancellation-and-refund`);
+    urls.push(`${baseUrl}/support`);
+
+    // Fetch all active products
+    const products = await Product.find({ isActive: true }).select('slug');
+    products.forEach((product) => {
+      const slug = product.slug || product._id;
+      urls.push(`${baseUrl}/products/${slug}`);
+    });
+
+    // Fetch all active categories
+    const categories = await Category.find({ isActive: true }).select('slug');
+    categories.forEach((category) => {
+      const slug = category.slug || category._id;
+      urls.push(`${baseUrl}/products?category=${slug}`);
+    });
+
+    // Fetch all published articles
+    const articles = await Article.find({ isPublished: true }).select('slug');
+    articles.forEach((article) => {
+      const slug = article.slug || article._id;
+      urls.push(`${baseUrl}/blog/${slug}`);
+    });
+
+    res.json({
+      success: true,
+      count: urls.length,
+      urls
+    });
+  } catch (error) {
+    console.error('URL list generation error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error generating URL list'
+    });
+  }
+});
+
+// Submit all URLs to IndexNow
+router.post('/api/sitemap/submit-indexnow', async (req, res) => {
+  try {
+    const baseUrl = process.env.FRONTEND_URL || 'https://samratagencies.in';
+    const host = baseUrl.replace(/^https?:\/\//, '');
+    const urls = [];
+
+    // Static pages
+    urls.push(`${baseUrl}/`);
+    urls.push(`${baseUrl}/products`);
+    urls.push(`${baseUrl}/about`);
+    urls.push(`${baseUrl}/contact`);
+    urls.push(`${baseUrl}/blog`);
+    urls.push(`${baseUrl}/privacy-policy`);
+    urls.push(`${baseUrl}/terms-and-conditions`);
+    urls.push(`${baseUrl}/shipping-and-delivery`);
+    urls.push(`${baseUrl}/cancellation-and-refund`);
+    urls.push(`${baseUrl}/support`);
+
+    // Fetch all active products
+    const products = await Product.find({ isActive: true }).select('slug');
+    products.forEach((product) => {
+      const slug = product.slug || product._id;
+      urls.push(`${baseUrl}/products/${slug}`);
+    });
+
+    // Fetch all active categories
+    const categories = await Category.find({ isActive: true }).select('slug');
+    categories.forEach((category) => {
+      const slug = category.slug || category._id;
+      urls.push(`${baseUrl}/products?category=${slug}`);
+    });
+
+    // Fetch all published articles
+    const articles = await Article.find({ isPublished: true }).select('slug');
+    articles.forEach((article) => {
+      const slug = article.slug || article._id;
+      urls.push(`${baseUrl}/blog/${slug}`);
+    });
+
+    // Submit to IndexNow API
+    const response = await axios.post(INDEXNOW_ENDPOINT, {
+      host: host,
+      key: INDEXNOW_KEY,
+      keyLocation: `${baseUrl}/${INDEXNOW_KEY}.txt`,
+      urlList: urls
+    }, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      }
+    });
+
+    res.json({
+      success: true,
+      message: 'URLs submitted to IndexNow successfully',
+      count: urls.length,
+      status: response.status
+    });
+  } catch (error) {
+    console.error('IndexNow submission error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error submitting URLs to IndexNow',
+      error: error.message
+    });
   }
 });
 
