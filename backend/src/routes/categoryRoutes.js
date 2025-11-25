@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { auth, adminAuth } = require('../middleware/auth');
 const Category = require('../models/Category');
+const { submitCategoryToIndexNow } = require('../utils/indexNow');
 
 // Get all categories with hierarchy (public)
 router.get('/', async (req, res) => {
@@ -115,6 +116,12 @@ router.post('/admin', async (req, res) => {
 
     await category.save();
     const populatedCategory = await Category.findById(category._id).populate('parent');
+
+    // Submit to IndexNow for instant indexing (non-blocking)
+    submitCategoryToIndexNow(populatedCategory).catch(err =>
+      console.error('IndexNow submission failed:', err)
+    );
+
     res.status(201).json({ message: 'Category created successfully', category: populatedCategory });
   } catch (error) {
     res.status(400).json({ message: 'Failed to create category', error: error.message });
@@ -147,6 +154,11 @@ router.put('/admin/:id', async (req, res) => {
     if (!category) {
       return res.status(404).json({ message: 'Category not found' });
     }
+
+    // Submit to IndexNow for instant indexing (non-blocking)
+    submitCategoryToIndexNow(category).catch(err =>
+      console.error('IndexNow submission failed:', err)
+    );
 
     res.json({ message: 'Category updated successfully', category });
   } catch (error) {

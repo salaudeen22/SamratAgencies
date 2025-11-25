@@ -8,7 +8,8 @@
     "dev": "nodemon server.js",
     "seed": "node src/seed/seed.js",
     "convert-images": "node src/scripts/convertImagesToWebP.js",
-    "convert-images:delete": "node src/scripts/convertImagesToWebP.js --delete"
+    "convert-images:delete": "node src/scripts/convertImagesToWebP.js --delete",
+    "indexnow:submit-all": "node scripts/submitAllToIndexNow.js"
   },
   "keywords": [
     "ecommerce",

@@ -236,13 +236,28 @@ const Products = () => {
     return level2Category?.children || [];
   };
 
+  // Get the current category info for dynamic SEO
+  const currentCategory = filters.category ? findCategoryById(categories, filters.category) : null;
+  const canonicalUrl = currentCategory
+    ? `/products?category=${currentCategory.slug || currentCategory._id}`
+    : '/products';
+
+  const seoTitle = currentCategory
+    ? `${currentCategory.name} - Premium Furniture in Bangalore | Samrat Agencies`
+    : "Premium Furniture Products | Samrat Agencies Bangalore";
+
+  const seoDescription = currentCategory
+    ? `Shop ${currentCategory.name.toLowerCase()} at Samrat Agencies. ${products.length} products available. Premium quality furniture with free delivery in Bangalore. Best prices guaranteed.`
+    : "Browse our extensive collection of premium furniture including sofas, beds, dining tables, chairs, wardrobes, and more. Quality furniture at competitive prices in Bangalore.";
+
   return (
     <>
       <SEO
-        title="Premium Furniture Products | Samrat Agencies Bangalore"
-        description="Browse our extensive collection of premium furniture including sofas, beds, dining tables, chairs, and more. Quality furniture at competitive prices in Bangalore."
+        title={seoTitle}
+        description={seoDescription}
         keywords="furniture products, buy furniture online, sofas, beds, dining tables, chairs, wardrobes, bangalore furniture"
-        url="/products"
+        url={canonicalUrl}
+        canonical={`https://samratagencies.in${canonicalUrl}`}
       />
       <div className="min-h-screen py-4 sm:py-6 md:py-8" style={{ backgroundColor: '#fafaf9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

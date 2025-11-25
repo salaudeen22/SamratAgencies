@@ -1,4 +1,5 @@
 const Article = require('../models/Article');
+const { submitArticleToIndexNow } = require('../utils/indexNow');
 
 // Get all articles (public - only published)
 const getArticles = async (req, res) => {
@@ -116,6 +117,14 @@ const createArticle = async (req, res) => {
   try {
     const article = new Article(req.body);
     await article.save();
+
+    // Submit to IndexNow for instant indexing (non-blocking)
+    if (article.isPublished) {
+      submitArticleToIndexNow(article).catch(err =>
+        console.error('IndexNow submission failed:', err)
+      );
+    }
+
     res.status(201).json(article);
   } catch (error) {
     console.error('Error creating article:', error);
@@ -134,6 +143,13 @@ const updateArticle = async (req, res) => {
 
     if (!article) {
       return res.status(404).json({ message: 'Article not found' });
+    }
+
+    // Submit to IndexNow for instant indexing (non-blocking)
+    if (article.isPublished) {
+      submitArticleToIndexNow(article).catch(err =>
+        console.error('IndexNow submission failed:', err)
+      );
     }
 
     res.json(article);

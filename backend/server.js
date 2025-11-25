@@ -55,6 +55,9 @@ app.use(requestLogger);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Serve static files (for IndexNow key verification)
+app.use(express.static('public'));
+
 // Apply general rate limiting to all API routes
 // app.use('/api/', apiLimiter);
 
@@ -98,6 +101,7 @@ app.use('/api/settings', require('./src/routes/settingsRoutes'));
 app.use('/api/tickets', require('./src/routes/ticketRoutes'));
 app.use('/api/bulk', require('./src/routes/bulkRoutes'));
 app.use('/api/banners', require('./src/routes/bannerRoutes'));
+app.use('/api/indexnow', require('./src/routes/indexNowRoutes'));
 app.use('/', require('./src/routes/sitemapRoutes'));
 
 // API info route

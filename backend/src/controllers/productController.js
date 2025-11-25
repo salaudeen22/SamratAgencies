@@ -2,6 +2,7 @@ const Product = require('../models/Product');
 const Category = require('../models/Category');
 const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const { s3Client, bucketConfig } = require('../config/s3');
+const { submitProductToIndexNow } = require('../utils/indexNow');
 
 // Helper function to get all child category IDs recursively
 async function getAllChildCategoryIds(categoryId) {
@@ -134,6 +135,12 @@ exports.getProductById = async (req, res) => {
 exports.createProduct = async (req, res) => {
   try {
     const product = await Product.create(req.body);
+
+    // Submit to IndexNow for instant indexing (non-blocking)
+    submitProductToIndexNow(product).catch(err =>
+      console.error('IndexNow submission failed:', err)
+    );
+
     res.status(201).json(product);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -152,6 +159,11 @@ exports.updateProduct = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
+
+    // Submit to IndexNow for instant indexing (non-blocking)
+    submitProductToIndexNow(product).catch(err =>
+      console.error('IndexNow submission failed:', err)
+    );
 
     res.json(product);
   } catch (error) {

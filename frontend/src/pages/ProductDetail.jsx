@@ -323,7 +323,8 @@ const ProductDetail = () => {
         description={product.description?.substring(0, 160) || `Buy ${product.name} at Samrat Agencies. Premium quality furniture in Bangalore. ${product.availabilityType === 'immediate' ? 'Immediate delivery available.' : `Delivery in ${product.deliveryDays} days.`} ${product.discount > 0 ? `${product.discount}% OFF!` : ''}`}
         keywords={generateProductKeywords()}
         image={product.images?.[0]?.url || '/samrat-logo.png'}
-        url={`/products/${id}`}
+        url={`/products/${product.slug || id}`}
+        canonical={`https://samratagencies.in/products/${product.slug || id}`}
         type="product"
         product={product}
       />
