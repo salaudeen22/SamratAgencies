@@ -110,7 +110,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="https://www.facebook.com/SamratAgenciesHongasandra"
+                  href="https://www.facebook.com/samratagencieshongasandra/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition"
@@ -132,6 +132,19 @@ const Footer = () => {
                   onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}
                 >
                   IndiaMART
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/samrat_agencies/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition"
+                  style={{ color: '#BDD7EB' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#895F42'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#BDD7EB'}
+                >
+                  Instagram
                 </a>
               </li>
             </ul>
