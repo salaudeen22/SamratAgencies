@@ -1,0 +1,21 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# ChatGPT crawler
+User-agent: ChatGPT-User
+Allow: /
+
+# OpenAI search bot
+User-agent: OAI-SearchBot
+Allow: /
+
+# Common search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap location
+Sitemap: https://api.samratagencies.in/sitemap.xml
