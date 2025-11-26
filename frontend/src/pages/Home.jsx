@@ -59,8 +59,8 @@ const Home = () => {
     <>
       <SEO
         title="Samrat Agencies - Furniture Made for Real Life | Bangalore"
-        description="Beautiful furniture designed for the way you live. Thoughtfully crafted, honestly priced. From first apartment to forever home—trusted since 1996. Shop sofas, beds, dining tables & more."
-        keywords="affordable furniture bangalore, quality furniture, home furniture, modern furniture, samrat agencies, sofas, beds, dining tables, furniture store"
+        description="South India's most trusted furniture destination since 1996. Explore 1000+ designs: Premium sofas (₹12K+), storage beds (₹8K+), dining tables, wardrobes, mattresses & more. Serving Bangalore, Chennai, Hyderabad, Kochi. Better prices than IKEA & Royaloak. Free delivery | EMI available | 5⭐ rated."
+        keywords="affordable furniture bangalore, quality furniture, home furniture, modern furniture, samrat agencies, sofas, beds, dining tables, furniture store, sofa set bangalore, bed bangalore, mattress bangalore, dining table bangalore, wardrobe bangalore, furniture on emi, better than ikea, royaloak alternative, furniture hongasandra, furniture begur road"
         url="/"
         type="website"
       />

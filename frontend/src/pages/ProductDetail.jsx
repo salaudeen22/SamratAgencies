@@ -245,7 +245,7 @@ const ProductDetail = () => {
 
     // Specification-based keywords
     if (product.specifications) {
-      Object.entries(product.specifications).forEach(([key, value]) => {
+      Object.entries(product.specifications).forEach(([, value]) => {
         if (value && typeof value === 'string') {
           keywords.push(value.replace(/_/g, ' '));
           keywords.push(`${value.replace(/_/g, ' ')} ${product.category?.name || 'furniture'}`);
@@ -320,7 +320,7 @@ const ProductDetail = () => {
     <>
       <SEO
         title={`${product.name} | Samrat Agencies Bangalore`}
-        description={product.description?.substring(0, 160) || `Buy ${product.name} at Samrat Agencies. Premium quality furniture in Bangalore. ${product.availabilityType === 'immediate' ? 'Immediate delivery available.' : `Delivery in ${product.deliveryDays} days.`} ${product.discount > 0 ? `${product.discount}% OFF!` : ''}`}
+        description={product.description || `Buy ${product.name} at Samrat Agencies. Premium quality furniture in Bangalore. ${product.availabilityType === 'immediate' ? 'Immediate delivery available.' : `Delivery in ${product.deliveryDays} days.`} ${product.discount > 0 ? `${product.discount}% OFF!` : ''} ${product.category ? `Best ${product.category.name || product.category} in South India.` : ''} ${product.specifications ? `Available in ${Object.values(product.specifications).slice(0, 3).join(', ')}.` : ''} Free delivery. Quality assured.`}
         keywords={generateProductKeywords()}
         image={product.images?.[0]?.url || '/samrat-logo.png'}
         url={`/products/${product.slug || id}`}
