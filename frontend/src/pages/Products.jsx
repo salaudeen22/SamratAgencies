@@ -243,12 +243,12 @@ const Products = () => {
     : '/products';
 
   const seoTitle = currentCategory
-    ? `${currentCategory.name} - Premium Furniture in Bangalore | Samrat Agencies`
-    : "Premium Furniture Products | Samrat Agencies Bangalore";
+    ? `${currentCategory.name} - ${products.length > 0 ? products.length + '+ Designs' : 'Best Deals'} | Starting ₹${products.length > 0 && products[0]?.price ? Math.min(...products.map(p => p.discount > 0 ? (p.discountType === 'percentage' ? p.price - (p.price * p.discount / 100) : p.price - p.discount) : p.price)).toLocaleString() : '9,999'}+ | Samrat Agencies Bangalore`
+    : `Premium Furniture Store Bangalore - ${products.length}+ Products | Sofas, Beds, Dining Sets | Free Delivery | EMI | Samrat Agencies`;
 
   const seoDescription = currentCategory
-    ? `Shop ${currentCategory.name.toLowerCase()} at Samrat Agencies. ${products.length} products available. Premium quality furniture with free delivery in Bangalore. Best prices guaranteed.`
-    : "Browse our extensive collection of premium furniture including sofas, beds, dining tables, chairs, wardrobes, and more. Quality furniture at competitive prices in Bangalore.";
+    ? `Explore ${products.length}+ Premium ${currentCategory.name} Designs in Bangalore. Starting at ₹${products.length > 0 && products[0]?.price ? Math.min(...products.map(p => p.discount > 0 ? (p.discountType === 'percentage' ? p.price - (p.price * p.discount / 100) : p.price - p.discount) : p.price)).toLocaleString() : '9,999'}. ${products.filter(p => p.discount > 0).length > 0 ? products.filter(p => p.discount > 0).length + ' Items on SALE' : 'Best Prices Guaranteed'}. FREE Home Delivery across Bangalore, Chennai, Hyderabad, Kochi. No Cost EMI - Bajaj Finserv, HDFC, ICICI, SBI. 5.0/5 Customer Rating (108+ Reviews). ${products.filter(p => p.availabilityType === 'immediate').length > 0 ? products.filter(p => p.availabilityType === 'immediate').length + ' Products Available for Same-Day Delivery' : 'Fast Delivery Available'}. Better Prices than IKEA & Royaloak. Quality Assured. Trusted Since 1996. Visit our Showroom at Begur Road, Hongasandra, Bommanahalli, Bangalore.`
+    : `Shop 1000+ Premium Furniture Designs Online at Best Prices in South India. Upto 50% OFF on Sofas, Beds, Dining Tables, Wardrobes, Mattresses & More. FREE Home Delivery in Bangalore, Chennai, Hyderabad, Kochi. No Cost EMI Available - Bajaj Finserv, HDFC, ICICI, SBI. 5-Star Rated Furniture Store (108+ Reviews). Better Prices Than IKEA & Royaloak. ${products.filter(p => p.availabilityType === 'immediate').length}+ Products Available for Immediate Delivery. Premium Quality Wooden, Leather & Fabric Furniture. Special Offers on Sofa Sets, Storage Beds, 4-6 Seater Dining Tables. Warranty Included. Trusted Since 1996. Visit Samrat Agencies Showroom - Begur Road, Hongasandra, Bommanahalli, Bangalore.`;
 
   return (
     <>

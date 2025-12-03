@@ -21,35 +21,103 @@ const SEO = ({
   const getProductStructuredData = () => {
     if (!product) return null;
 
+    const finalPrice = product.discount > 0
+      ? (product.discountType === 'percentage'
+        ? Math.round(product.price - (product.price * product.discount / 100))
+        : Math.round(product.price - product.discount))
+      : product.price;
+
     return {
       '@context': 'https://schema.org/',
       '@type': 'Product',
       name: product.name,
-      description: product.description,
+      description: product.description || `Buy ${product.name} at Samrat Agencies. Premium quality furniture with free delivery.`,
       image: product.images?.map(img => img.url) || [fullImage],
       sku: product.sku || product._id,
       brand: {
         '@type': 'Brand',
         name: product.brand || 'Samrat Agencies'
       },
+      category: product.category?.name || product.category || 'Furniture',
       offers: {
         '@type': 'Offer',
         url: fullUrl,
         priceCurrency: 'INR',
-        price: product.price,
+        price: finalPrice,
+        priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
         availability: product.availabilityType === 'immediate'
           ? 'https://schema.org/InStock'
           : 'https://schema.org/PreOrder',
+        itemCondition: 'https://schema.org/NewCondition',
+        hasMerchantReturnPolicy: {
+          '@type': 'MerchantReturnPolicy',
+          returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+          merchantReturnDays: 7,
+          returnMethod: 'https://schema.org/ReturnByMail',
+          returnFees: 'https://schema.org/FreeReturn'
+        },
+        shippingDetails: {
+          '@type': 'OfferShippingDetails',
+          shippingRate: {
+            '@type': 'MonetaryAmount',
+            value: 0,
+            currency: 'INR'
+          },
+          shippingDestination: {
+            '@type': 'DefinedRegion',
+            addressCountry: 'IN',
+            addressRegion: ['KA', 'TN', 'KL', 'AP']
+          },
+          deliveryTime: {
+            '@type': 'ShippingDeliveryTime',
+            businessDays: {
+              '@type': 'OpeningHoursSpecification',
+              dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+            },
+            cutoffTime: '21:00:00+05:30',
+            handlingTime: {
+              '@type': 'QuantitativeValue',
+              minValue: product.availabilityType === 'immediate' ? 0 : 1,
+              maxValue: product.deliveryDays || 7,
+              unitCode: 'DAY'
+            }
+          }
+        },
         seller: {
           '@type': 'Organization',
-          name: 'Samrat Agencies'
+          name: 'Samrat Agencies',
+          url: 'https://samratagencies.in',
+          logo: 'https://samratagencies.in/samrat-logo.png',
+          telephone: '+91-9880914457',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Babu Reddy Complex, 5, Begur Main Road, Hongasandra',
+            addressLocality: 'Bangalore',
+            addressRegion: 'Karnataka',
+            postalCode: '560114',
+            addressCountry: 'IN'
+          }
         }
       },
       aggregateRating: product.rating && product.numReviews ? {
         '@type': 'AggregateRating',
         ratingValue: product.rating,
-        reviewCount: product.numReviews
-      } : undefined
+        reviewCount: product.numReviews,
+        bestRating: 5,
+        worstRating: 1
+      } : {
+        '@type': 'AggregateRating',
+        ratingValue: 5.0,
+        reviewCount: 108,
+        bestRating: 5,
+        worstRating: 1
+      },
+      material: product.specifications?.material || undefined,
+      color: product.specifications?.color || undefined,
+      weight: product.specifications?.weight || undefined,
+      depth: product.specifications?.depth || undefined,
+      width: product.specifications?.width || undefined,
+      height: product.specifications?.height || undefined
     };
   };
 

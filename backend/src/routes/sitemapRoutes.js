@@ -94,16 +94,28 @@ router.get('/sitemap.xml', async (req, res) => {
     sitemap += `    <priority>0.5</priority>\n`;
     sitemap += `  </url>\n`;
 
-    // Add all category pages
-    categories.forEach((category) => {
+    // Add category pages only if they have products
+    for (const category of categories) {
       const slug = category.slug || category._id;
-      sitemap += `  <url>\n`;
-      sitemap += `    <loc>${baseUrl}/products?category=${slug}</loc>\n`;
-      sitemap += `    <changefreq>weekly</changefreq>\n`;
-      sitemap += `    <priority>0.7</priority>\n`;
-      sitemap += `    <lastmod>${category.updatedAt.toISOString()}</lastmod>\n`;
-      sitemap += `  </url>\n`;
-    });
+      // Check if category has any products
+      const productCount = await Product.countDocuments({
+        isActive: true,
+        $or: [
+          { category: category._id },
+          { categories: category._id }
+        ]
+      });
+
+      // Only add to sitemap if category has products
+      if (productCount > 0) {
+        sitemap += `  <url>\n`;
+        sitemap += `    <loc>${baseUrl}/products?category=${slug}</loc>\n`;
+        sitemap += `    <changefreq>weekly</changefreq>\n`;
+        sitemap += `    <priority>0.7</priority>\n`;
+        sitemap += `    <lastmod>${category.updatedAt.toISOString()}</lastmod>\n`;
+        sitemap += `  </url>\n`;
+      }
+    }
 
     // Add all product pages
     products.forEach((product) => {
@@ -163,12 +175,23 @@ router.get('/api/sitemap/urls', async (req, res) => {
       urls.push(`${baseUrl}/products/${slug}`);
     });
 
-    // Fetch all active categories
+    // Fetch all active categories that have products
     const categories = await Category.find({ isActive: true }).select('slug');
-    categories.forEach((category) => {
+    for (const category of categories) {
       const slug = category.slug || category._id;
-      urls.push(`${baseUrl}/products?category=${slug}`);
-    });
+      // Check if category has any products
+      const productCount = await Product.countDocuments({
+        isActive: true,
+        $or: [
+          { category: category._id },
+          { categories: category._id }
+        ]
+      });
+      // Only add if category has products
+      if (productCount > 0) {
+        urls.push(`${baseUrl}/products?category=${slug}`);
+      }
+    }
 
     // Fetch all published articles
     const articles = await Article.find({ isPublished: true }).select('slug');
@@ -217,12 +240,23 @@ router.post('/api/sitemap/submit-indexnow', async (req, res) => {
       urls.push(`${baseUrl}/products/${slug}`);
     });
 
-    // Fetch all active categories
+    // Fetch all active categories that have products
     const categories = await Category.find({ isActive: true }).select('slug');
-    categories.forEach((category) => {
+    for (const category of categories) {
       const slug = category.slug || category._id;
-      urls.push(`${baseUrl}/products?category=${slug}`);
-    });
+      // Check if category has any products
+      const productCount = await Product.countDocuments({
+        isActive: true,
+        $or: [
+          { category: category._id },
+          { categories: category._id }
+        ]
+      });
+      // Only add if category has products
+      if (productCount > 0) {
+        urls.push(`${baseUrl}/products?category=${slug}`);
+      }
+    }
 
     // Fetch all published articles
     const articles = await Article.find({ isPublished: true }).select('slug');
