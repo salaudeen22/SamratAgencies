@@ -5,6 +5,9 @@ import Modal from '../../components/admin/Modal';
 import toast from 'react-hot-toast';
 import PageHeader from '../../components/admin/ui/PageHeader';
 import Card from '../../components/admin/ui/Card';
+import RichTextEditor from '../../components/admin/RichTextEditor';
+import TagsInput from '../../components/admin/TagsInput';
+import ImageUpload from '../../components/admin/ImageUpload';
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
@@ -15,8 +18,11 @@ const Articles = () => {
     title: '',
     excerpt: '',
     content: '',
+    contentType: 'html',
     author: 'Samrat Agencies',
     category: 'News',
+    featuredImage: null,
+    images: [],
     tags: [],
     isPublished: false,
     metaTitle: '',
@@ -43,6 +49,9 @@ const Articles = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log('Submitting article with data:', formData);
+      console.log('Gallery images being submitted:', formData.images);
+
       if (editingArticle) {
         await articleAPI.update(editingArticle._id, formData);
         toast.success('Article updated successfully');
@@ -53,24 +62,37 @@ const Articles = () => {
       fetchArticles();
       resetForm();
     } catch (error) {
+      console.error('Submit error:', error);
       toast.error(error.response?.data?.message || 'Failed to save article');
     }
   };
 
-  const handleEdit = (article) => {
-    setEditingArticle(article);
-    setFormData({
-      title: article.title || '',
-      excerpt: article.excerpt || '',
-      content: article.content || '',
-      author: article.author || 'Samrat Agencies',
-      category: article.category || 'News',
-      tags: article.tags || [],
-      isPublished: article.isPublished || false,
-      metaTitle: article.metaTitle || '',
-      metaDescription: article.metaDescription || '',
-    });
-    setShowModal(true);
+  const handleEdit = async (article) => {
+    try {
+      // Fetch full article with content
+      const response = await articleAPI.getBySlug(article.slug || article._id);
+      const fullArticle = response.data;
+
+      setEditingArticle(fullArticle);
+      setFormData({
+        title: fullArticle.title || '',
+        excerpt: fullArticle.excerpt || '',
+        content: fullArticle.content || '',
+        contentType: fullArticle.contentType || 'html',
+        author: fullArticle.author || 'Samrat Agencies',
+        category: fullArticle.category || 'News',
+        featuredImage: fullArticle.featuredImage || null,
+        images: fullArticle.images || [],
+        tags: fullArticle.tags || [],
+        isPublished: fullArticle.isPublished || false,
+        metaTitle: fullArticle.metaTitle || '',
+        metaDescription: fullArticle.metaDescription || '',
+      });
+      setShowModal(true);
+    } catch (error) {
+      console.error('Failed to fetch article:', error);
+      toast.error('Failed to load article');
+    }
   };
 
   const handleDelete = async (id) => {
@@ -99,8 +121,11 @@ const Articles = () => {
       title: '',
       excerpt: '',
       content: '',
+      contentType: 'html',
       author: 'Samrat Agencies',
       category: 'News',
+      featuredImage: null,
+      images: [],
       tags: [],
       isPublished: false,
       metaTitle: '',
@@ -208,25 +233,26 @@ const Articles = () => {
         title={editingArticle ? 'Edit Article' : 'New Article'}
         size="large"
       >
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium mb-1">Title *</label>
+            <label className="block text-sm font-medium mb-2">Title *</label>
             <input
               type="text"
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter article title..."
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Category</label>
+              <label className="block text-sm font-medium mb-2">Category</label>
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
@@ -234,83 +260,121 @@ const Articles = () => {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Author</label>
+              <label className="block text-sm font-medium mb-2">Author</label>
               <input
                 type="text"
                 value={formData.author}
                 onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Excerpt *</label>
+            <label className="block text-sm font-medium mb-2">Excerpt *</label>
             <textarea
               required
               maxLength={300}
-              rows={2}
+              rows={3}
               value={formData.excerpt}
               onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Brief description of the article..."
             />
             <p className="text-xs text-gray-500 mt-1">{formData.excerpt.length}/300 characters</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Content *</label>
-            <textarea
-              required
-              rows={10}
+            <label className="block text-sm font-medium mb-2">Featured Image</label>
+            <ImageUpload
+              value={formData.featuredImage}
+              onChange={(image) => setFormData({ ...formData, featuredImage: image })}
+              label="Upload Featured Image"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Gallery Images (Optional)</label>
+            <ImageUpload
+              value={formData.images}
+              onChange={(images) => {
+                console.log('Gallery images updated:', images);
+                setFormData(prev => ({ ...prev, images: images }));
+              }}
+              multiple
+              label="Add Gallery Images"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Content *</label>
+            <RichTextEditor
               value={formData.content}
-              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg font-mono text-sm"
+              onChange={(content) => setFormData({ ...formData, content })}
+              placeholder="Write your article content here..."
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Meta Title (SEO)</label>
-            <input
-              type="text"
-              value={formData.metaTitle}
-              onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg"
+            <label className="block text-sm font-medium mb-2">Tags</label>
+            <TagsInput
+              tags={formData.tags}
+              onChange={(tags) => setFormData({ ...formData, tags })}
+              placeholder="Add tags (e.g., furniture, design, tips)..."
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1">Meta Description (SEO)</label>
-            <textarea
-              rows={2}
-              value={formData.metaDescription}
-              onChange={(e) => setFormData({ ...formData, metaDescription: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg"
-            />
+          <div className="border-t pt-6">
+            <h3 className="text-sm font-semibold mb-4 text-gray-700">SEO Settings</h3>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Meta Title</label>
+                <input
+                  type="text"
+                  value={formData.metaTitle}
+                  onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Leave empty to use article title"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Meta Description</label>
+                <textarea
+                  rows={2}
+                  value={formData.metaDescription}
+                  onChange={(e) => setFormData({ ...formData, metaDescription: e.target.value })}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Leave empty to use excerpt"
+                />
+              </div>
+            </div>
           </div>
 
-          <div>
-            <label className="flex items-center gap-2">
+          <div className="border-t pt-4">
+            <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={formData.isPublished}
                 onChange={(e) => setFormData({ ...formData, isPublished: e.target.checked })}
-                className="w-4 h-4"
+                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
               <span className="text-sm font-medium">Publish immediately</span>
             </label>
           </div>
 
-          <div className="flex gap-2 pt-4">
+          <div className="flex gap-3 pt-4">
             <button
               type="submit"
-              className="px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg"
+              className="px-6 py-2.5 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-colors"
             >
-              {editingArticle ? 'Update' : 'Create'}
+              {editingArticle ? 'Update Article' : 'Create Article'}
             </button>
             <button
               type="button"
               onClick={resetForm}
-              className="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg"
+              className="px-6 py-2.5 bg-gray-500 hover:bg-gray-600 text-white rounded-lg font-medium transition-colors"
             >
               Cancel
             </button>

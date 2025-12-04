@@ -22,6 +22,11 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  contentType: {
+    type: String,
+    enum: ['text', 'html', 'markdown'],
+    default: 'html'
+  },
   author: {
     type: String,
     default: 'Samrat Agencies'

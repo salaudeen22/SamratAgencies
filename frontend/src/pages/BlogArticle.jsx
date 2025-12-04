@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { articleAPI } from '../services/api';
 import SEO from '../components/SEO';
-import { FiCalendar, FiClock, FiArrowLeft } from 'react-icons/fi';
+import { FiCalendar, FiClock, FiArrowLeft, FiShare2 } from 'react-icons/fi';
+import { FaFacebook, FaTwitter, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
+import DOMPurify from 'dompurify';
 
 const BlogArticle = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [article, setArticle] = useState(null);
+  const [relatedArticles, setRelatedArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -21,7 +24,20 @@ const BlogArticle = () => {
     try {
       setLoading(true);
       const response = await articleAPI.getBySlug(slug);
+      console.log('Article fetched:', response.data);
+      console.log('Gallery images:', response.data.images);
       setArticle(response.data);
+
+      // Fetch related articles (same category, exclude current)
+      if (response.data.category) {
+        const relatedResponse = await articleAPI.getAll({
+          category: response.data.category,
+          limit: 3
+        });
+        setRelatedArticles(
+          relatedResponse.data.articles.filter(a => a._id !== response.data._id).slice(0, 3)
+        );
+      }
     } catch (err) {
       console.error('Failed to fetch article:', err);
       if (err.response?.status === 404) {
@@ -32,6 +48,20 @@ const BlogArticle = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const shareUrl = `https://samratagencies.in/blog/${slug}`;
+  const shareTitle = article?.title || 'Check out this article';
+
+  const shareLinks = {
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
+    whatsapp: `https://wa.me/?text=${encodeURIComponent(shareTitle + ' ' + shareUrl)}`
+  };
+
+  const createMarkup = (htmlContent) => {
+    return { __html: DOMPurify.sanitize(htmlContent) };
   };
 
   if (loading) {
@@ -140,18 +170,38 @@ const BlogArticle = () => {
 
               {/* Content */}
               <div
-                className="prose prose-lg max-w-none"
+                className="prose prose-lg max-w-none article-content"
                 style={{
                   color: '#334155',
                   lineHeight: '1.8'
                 }}
-              >
-                {article.content.split('\n').map((paragraph, index) => (
-                  <p key={index} className="mb-4">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+                dangerouslySetInnerHTML={createMarkup(article.content)}
+              />
+
+              {/* Gallery Images */}
+              {article.images && article.images.length > 0 && (
+                <div className="mt-12">
+                  <h3 className="text-xl font-semibold mb-4" style={{ color: '#2F1A0F' }}>Gallery</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {article.images.filter(img => img && (img.url || (typeof img === 'string'))).map((image, index) => {
+                      const imageUrl = typeof image === 'string' ? image : image.url;
+                      return (
+                        <div key={index} className="rounded-lg overflow-hidden shadow-md">
+                          <img
+                            src={imageUrl}
+                            alt={`Gallery ${index + 1}`}
+                            className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
+                            onError={(e) => {
+                              console.error('Failed to load gallery image:', imageUrl);
+                              e.target.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
               {/* Tags */}
               {article.tags && article.tags.length > 0 && (
@@ -172,18 +222,110 @@ const BlogArticle = () => {
 
               {/* Share Section */}
               <div className="mt-8 pt-8 border-t">
-                <p className="text-sm text-gray-500">
-                  Share this article with your friends and family!
-                </p>
+                <div className="flex items-center justify-between flex-wrap gap-4">
+                  <div>
+                    <h3 className="text-sm font-semibold mb-1" style={{ color: '#2F1A0F' }}>
+                      <FiShare2 className="inline w-4 h-4 mr-2" />
+                      Share this article
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      Help others discover this content
+                    </p>
+                  </div>
+                  <div className="flex gap-3">
+                    <a
+                      href={shareLinks.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-full hover:bg-blue-100 transition-colors"
+                      style={{ color: '#1877F2' }}
+                      title="Share on Facebook"
+                    >
+                      <FaFacebook className="w-5 h-5" />
+                    </a>
+                    <a
+                      href={shareLinks.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-full hover:bg-blue-100 transition-colors"
+                      style={{ color: '#1DA1F2' }}
+                      title="Share on Twitter"
+                    >
+                      <FaTwitter className="w-5 h-5" />
+                    </a>
+                    <a
+                      href={shareLinks.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-full hover:bg-blue-100 transition-colors"
+                      style={{ color: '#0A66C2' }}
+                      title="Share on LinkedIn"
+                    >
+                      <FaLinkedin className="w-5 h-5" />
+                    </a>
+                    <a
+                      href={shareLinks.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-full hover:bg-green-100 transition-colors"
+                      style={{ color: '#25D366' }}
+                      title="Share on WhatsApp"
+                    >
+                      <FaWhatsapp className="w-5 h-5" />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </article>
+
+          {/* Related Articles */}
+          {relatedArticles.length > 0 && (
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold mb-6" style={{ color: '#2F1A0F' }}>
+                Related Articles
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {relatedArticles.map((relatedArticle) => (
+                  <Link
+                    key={relatedArticle._id}
+                    to={`/blog/${relatedArticle.slug || relatedArticle._id}`}
+                    className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow group"
+                  >
+                    {relatedArticle.featuredImage?.url && (
+                      <div className="aspect-video overflow-hidden">
+                        <img
+                          src={relatedArticle.featuredImage.url}
+                          alt={relatedArticle.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
+                    <div className="p-4">
+                      <span
+                        className="text-xs font-semibold px-2 py-1 rounded-full"
+                        style={{ backgroundColor: '#f0f9ff', color: '#816047' }}
+                      >
+                        {relatedArticle.category}
+                      </span>
+                      <h3 className="text-lg font-bold mt-3 mb-2 group-hover:text-[#816047] transition-colors line-clamp-2">
+                        {relatedArticle.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 line-clamp-2">
+                        {relatedArticle.excerpt}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Back to Blog Button */}
           <div className="mt-12 text-center">
             <Link
               to="/blog"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white transition-colors hover:opacity-90"
               style={{ backgroundColor: '#816047' }}
             >
               <FiArrowLeft />
@@ -192,6 +334,104 @@ const BlogArticle = () => {
           </div>
         </div>
       </div>
+
+      {/* Styles for article content */}
+      <style>{`
+        .article-content h1,
+        .article-content h2,
+        .article-content h3,
+        .article-content h4,
+        .article-content h5,
+        .article-content h6 {
+          color: #2F1A0F;
+          font-weight: 700;
+          margin-top: 2rem;
+          margin-bottom: 1rem;
+        }
+        .article-content h1 { font-size: 2.25rem; }
+        .article-content h2 { font-size: 1.875rem; }
+        .article-content h3 { font-size: 1.5rem; }
+        .article-content h4 { font-size: 1.25rem; }
+
+        .article-content p {
+          margin-bottom: 1rem;
+        }
+
+        .article-content img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 0.5rem;
+          margin: 1.5rem 0;
+        }
+
+        .article-content a {
+          color: #816047;
+          text-decoration: underline;
+        }
+
+        .article-content a:hover {
+          opacity: 0.8;
+        }
+
+        .article-content ul,
+        .article-content ol {
+          margin-left: 1.5rem;
+          margin-bottom: 1rem;
+        }
+
+        .article-content li {
+          margin-bottom: 0.5rem;
+        }
+
+        .article-content blockquote {
+          border-left: 4px solid #816047;
+          padding-left: 1rem;
+          margin: 1.5rem 0;
+          font-style: italic;
+          color: #64748b;
+        }
+
+        .article-content code {
+          background-color: #f1f5f9;
+          padding: 0.25rem 0.5rem;
+          border-radius: 0.25rem;
+          font-size: 0.875em;
+          font-family: 'Courier New', monospace;
+        }
+
+        .article-content pre {
+          background-color: #1e293b;
+          color: #e2e8f0;
+          padding: 1rem;
+          border-radius: 0.5rem;
+          overflow-x: auto;
+          margin: 1.5rem 0;
+        }
+
+        .article-content pre code {
+          background: none;
+          padding: 0;
+          color: inherit;
+        }
+
+        .article-content table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 1.5rem 0;
+        }
+
+        .article-content table th,
+        .article-content table td {
+          border: 1px solid #e2e8f0;
+          padding: 0.75rem;
+          text-align: left;
+        }
+
+        .article-content table th {
+          background-color: #f8fafc;
+          font-weight: 600;
+        }
+      `}</style>
     </>
   );
 };
