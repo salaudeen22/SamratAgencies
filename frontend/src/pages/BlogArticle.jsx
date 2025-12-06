@@ -61,7 +61,17 @@ const BlogArticle = () => {
   };
 
   const createMarkup = (htmlContent) => {
-    return { __html: DOMPurify.sanitize(htmlContent) };
+    if (!htmlContent) return { __html: '' };
+
+    // Decode if content was double-encoded
+    let decodedContent = htmlContent;
+    if (htmlContent.includes('&lt;') || htmlContent.includes('&gt;')) {
+      const textarea = document.createElement('textarea');
+      textarea.innerHTML = htmlContent;
+      decodedContent = textarea.value;
+    }
+
+    return { __html: DOMPurify.sanitize(decodedContent) };
   };
 
   if (loading) {
@@ -177,6 +187,58 @@ const BlogArticle = () => {
                 }}
                 dangerouslySetInnerHTML={createMarkup(article.content)}
               />
+
+              {/* YouTube Video Embed */}
+              {article.videoUrl && (() => {
+                try {
+                  let url = article.videoUrl.trim();
+                  let videoId = '';
+
+                  console.log('Video URL from article:', url);
+
+                  // Extract video ID from various YouTube URL formats
+                  if (url.includes('youtube.com/watch?v=')) {
+                    videoId = url.split('watch?v=')[1].split('&')[0];
+                  } else if (url.includes('youtube.com/shorts/')) {
+                    videoId = url.split('shorts/')[1].split('?')[0].split('/')[0];
+                  } else if (url.includes('youtu.be/')) {
+                    videoId = url.split('youtu.be/')[1].split('?')[0].split('/')[0];
+                  } else if (url.includes('youtube.com/embed/')) {
+                    videoId = url.split('embed/')[1].split('?')[0].split('/')[0];
+                  } else if (url.includes('youtube.com/v/')) {
+                    videoId = url.split('v/')[1].split('?')[0].split('/')[0];
+                  }
+
+                  console.log('Extracted video ID:', videoId, 'Length:', videoId.length);
+
+                  // If we have a valid video ID, render the embed
+                  if (videoId && videoId.length === 11) {
+                    console.log('Rendering video embed with ID:', videoId);
+                    return (
+                      <div className="mt-8 mb-8">
+                        <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
+                          <iframe
+                            width="100%"
+                            height="100%"
+                            src={`https://www.youtube-nocookie.com/embed/${videoId}?modestbranding=1&rel=0&showinfo=0`}
+                            title={article.title}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            className="w-full h-full"
+                          ></iframe>
+                        </div>
+                      </div>
+                    );
+                  } else {
+                    console.warn('Invalid video ID:', videoId);
+                  }
+                } catch (error) {
+                  console.error('Error parsing video URL:', error);
+                }
+                return null;
+              })()}
 
               {/* Gallery Images */}
               {article.images && article.images.length > 0 && (

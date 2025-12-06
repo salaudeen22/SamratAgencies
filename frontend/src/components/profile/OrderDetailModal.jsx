@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { HiPhone, HiXCircle } from 'react-icons/hi2';
+import { HiPhone, HiXCircle, HiArrowDownTray } from 'react-icons/hi2';
 import Modal from '../Modal';
 import ReturnRequestModal from './ReturnRequestModal';
 import { returnAPI, orderAPI } from '../../services/api';
@@ -74,6 +74,36 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
       toast.error(error.response?.data?.message || 'Failed to cancel order');
     } finally {
       setCancelling(false);
+    }
+  };
+
+  const handleDownloadInvoice = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/orders/${order._id}/invoice`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to download invoice');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `invoice-${order._id}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      toast.success('Invoice downloaded successfully!');
+    } catch (error) {
+      console.error('Error downloading invoice:', error);
+      toast.error('Failed to download invoice');
     }
   };
 
@@ -216,6 +246,18 @@ const OrderDetailModal = ({ isOpen, onClose, order, getStatusColor, onReturnSubm
               </div>
             )}
           </div>
+        </div>
+
+        {/* Download Invoice Button */}
+        <div className="border-t pt-4" style={{ borderColor: '#D7B790' }}>
+          <button
+            onClick={handleDownloadInvoice}
+            className="w-full py-3 px-4 rounded-lg font-semibold text-white transition-all hover:opacity-90 flex items-center justify-center gap-2"
+            style={{ backgroundColor: '#816047' }}
+          >
+            <HiArrowDownTray className="w-5 h-5" />
+            Download Invoice
+          </button>
         </div>
 
         {/* Cancel Order Button */}

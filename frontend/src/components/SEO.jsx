@@ -195,9 +195,10 @@ const SEO = ({
       worstRating: '1'
     },
     sameAs: [
-      'https://www.facebook.com/SamratAgenciesHongasandra',
-      'https://www.facebook.com/samratagencieshongasandra/photos/coming-soon-/209755234500296/?_rdr',
+      'https://www.facebook.com/samratagenciesblr',
       'https://www.instagram.com/samrat_agencies/',
+      'https://www.youtube.com/@samrat_agencies',
+      'https://x.com/samrat_agencies',
       'https://www.linkedin.com/company/the-pi-aerotech',
       'https://www.google.com/maps/place/Samrat+Agencies',
       'https://maps.app.goo.gl/wfqh3DdcEQPkAxnh7',
@@ -249,6 +250,7 @@ const SEO = ({
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@samrat_agencies" />
       <meta name="twitter:url" content={fullUrl} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />

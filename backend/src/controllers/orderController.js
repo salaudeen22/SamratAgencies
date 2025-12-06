@@ -4,6 +4,7 @@ const Product = require('../models/Product');
 const User = require('../models/User');
 const { sendEmail } = require('../config/email');
 const { orderConfirmationEmail, orderStatusUpdateEmail } = require('../utils/emailTemplates');
+const { generateInvoice } = require('../utils/invoiceGenerator');
 
 // Create new order
 exports.createOrder = async (req, res) => {
@@ -220,5 +221,23 @@ exports.cancelOrder = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// Generate and download invoice
+exports.downloadInvoice = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id)
+      .populate('user', 'name email');
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // Generate and send PDF
+    generateInvoice(order, res);
+  } catch (error) {
+    console.error('Error generating invoice:', error);
+    res.status(500).json({ message: 'Failed to generate invoice' });
   }
 };

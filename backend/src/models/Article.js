@@ -33,7 +33,7 @@ const articleSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['Design Tips', 'Home Decor', 'Product Guide', 'Trends', 'Maintenance', 'News'],
+    enum: ['Design Tips', 'Home Decor', 'Product Guide', 'Trends', 'Maintenance', 'News', 'Customer Stories'],
     default: 'News'
   },
   featuredImage: {
@@ -44,6 +44,10 @@ const articleSchema = new mongoose.Schema({
     url: String,
     public_id: String
   }],
+  videoUrl: {
+    type: String,
+    trim: true
+  },
   tags: [{
     type: String,
     trim: true

@@ -23,6 +23,7 @@ const Articles = () => {
     category: 'News',
     featuredImage: null,
     images: [],
+    videoUrl: '',
     tags: [],
     isPublished: false,
     metaTitle: '',
@@ -83,6 +84,7 @@ const Articles = () => {
         category: fullArticle.category || 'News',
         featuredImage: fullArticle.featuredImage || null,
         images: fullArticle.images || [],
+        videoUrl: fullArticle.videoUrl || '',
         tags: fullArticle.tags || [],
         isPublished: fullArticle.isPublished || false,
         metaTitle: fullArticle.metaTitle || '',
@@ -126,6 +128,7 @@ const Articles = () => {
       category: 'News',
       featuredImage: null,
       images: [],
+      videoUrl: '',
       tags: [],
       isPublished: false,
       metaTitle: '',
@@ -135,7 +138,7 @@ const Articles = () => {
     setShowModal(false);
   };
 
-  const categories = ['Design Tips', 'Home Decor', 'Product Guide', 'Trends', 'Maintenance', 'News'];
+  const categories = ['Design Tips', 'Home Decor', 'Product Guide', 'Trends', 'Maintenance', 'News', 'Customer Stories'];
 
   return (
     <AdminLayout>
@@ -304,6 +307,18 @@ const Articles = () => {
               multiple
               label="Add Gallery Images"
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">YouTube Video URL (Optional)</label>
+            <input
+              type="url"
+              value={formData.videoUrl}
+              onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/..."
+            />
+            <p className="text-xs text-gray-500 mt-1">Paste a YouTube URL to embed a video in your article</p>
           </div>
 
           <div>

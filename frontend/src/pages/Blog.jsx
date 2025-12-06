@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { articleAPI } from '../services/api';
 import SEO from '../components/SEO';
+import logo from '../assets/logo.svg';
 
 const Blog = () => {
   const [articles, setArticles] = useState([]);
@@ -10,7 +11,7 @@ const Blog = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState('');
 
-  const categories = ['Design Tips', 'Home Decor', 'Product Guide', 'Trends', 'Maintenance', 'News'];
+  const categories = ['Design Tips', 'Home Decor', 'Product Guide', 'Trends', 'Maintenance', 'News', 'Customer Stories'];
 
   useEffect(() => {
     fetchArticles();
@@ -104,9 +105,9 @@ const Blog = () => {
                   <Link
                     key={article._id}
                     to={`/blog/${article.slug || article._id}`}
-                    className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow group"
+                    className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow group flex flex-col"
                   >
-                    {article.featuredImage?.url && (
+                    {article.featuredImage?.url ? (
                       <div className="aspect-video overflow-hidden">
                         <img
                           src={article.featuredImage.url}
@@ -114,8 +115,16 @@ const Blog = () => {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
+                    ) : (
+                      <div className="aspect-video overflow-hidden bg-gradient-to-br from-[#816047] to-[#2F1A0F] flex items-center justify-center">
+                        <div className="text-center px-6">
+                          <svg className="w-16 h-16 mx-auto mb-2 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                          </svg>
+                        </div>
+                      </div>
                     )}
-                    <div className="p-6">
+                    <div className="p-6 flex-1 flex flex-col">
                       <div className="flex items-center gap-3 mb-3">
                         <span
                           className="text-xs font-semibold px-3 py-1 rounded-full"

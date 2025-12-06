@@ -42,8 +42,10 @@
     "nodemailer": "^7.0.10",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
+    "pdfkit": "^0.17.2",
     "razorpay": "^2.9.6",
     "sharp": "^0.34.5",
+    "svg-to-pdfkit": "^0.1.8",
     "winston": "^3.18.3",
     "winston-daily-rotate-file": "^5.0.0",
     "xss-clean": "^0.1.4"
