@@ -1,6 +1,7 @@
 const Product = require('../models/Product');
 const Order = require('../models/Order');
 const Category = require('../models/Category');
+const CollaborativeFilterService = require('../services/collaborativeFilterService');
 
 // Helper function to get root category (Level 1)
 async function getRootCategory(categoryId) {
@@ -45,7 +46,7 @@ async function getCategoryHierarchyIds(categoryId) {
   return hierarchyIds;
 }
 
-// @desc    Get similar products based on category, subcategory, and price range
+// @desc    Get similar products using collaborative filtering + category fallback
 // @route   GET /api/recommendations/similar/:productId
 // @access  Public
 exports.getSimilarProducts = async (req, res) => {
@@ -65,64 +66,37 @@ exports.getSimilarProducts = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    // Get all category IDs within the same Level 1 hierarchy
-    const hierarchyIds = await getCategoryHierarchyIds(product.category._id);
+    // Try collaborative filtering first
+    const cfRecommendations = await CollaborativeFilterService.getRecommendations(
+      product._id.toString(),
+      limit
+    );
 
-    // Calculate price range (±30%)
-    const priceMin = product.price * 0.7;
-    const priceMax = product.price * 1.3;
+    let similarProducts = [];
 
-    // Priority 1: Same Level 3 category (e.g., other L-Shaped Sofas)
-    let similarProducts = await Product.find({
-      _id: { $ne: product._id },
-      category: product.category._id,
-      isActive: true
-    })
-      .populate('category', 'name')
-      .limit(limit)
-      .select('name price images discount discountType category subcategory tags')
-      .lean();
+    // Get products from CF recommendations
+    if (cfRecommendations.length > 0) {
+      similarProducts = await Product.find({
+        _id: { $in: cfRecommendations },
+        isActive: true
+      })
+        .populate('category', 'name')
+        .select('name price images discount discountType category subcategory tags')
+        .lean();
+    }
 
-    // Priority 2: Same Level 2 category (e.g., other Sofas & Sofa Sets)
+    // If CF didn't return enough, use category-based fallback
     if (similarProducts.length < limit) {
       const remaining = limit - similarProducts.length;
       const excludeIds = [product._id, ...similarProducts.map(p => p._id)];
 
-      // Get parent category
-      const currentCat = await Category.findById(product.category._id).lean();
-      if (currentCat?.parent) {
-        // Find all Level 3 categories under the same Level 2 parent
-        const siblingCategories = await Category.find({
-          parent: currentCat.parent,
-          _id: { $ne: product.category._id }
-        }).select('_id').lean();
+      // Get all category IDs within the same Level 1 hierarchy
+      const hierarchyIds = await getCategoryHierarchyIds(product.category._id);
 
-        const siblingCatIds = siblingCategories.map(c => c._id);
-
-        if (siblingCatIds.length > 0) {
-          const level2Products = await Product.find({
-            _id: { $nin: excludeIds },
-            category: { $in: siblingCatIds },
-            isActive: true
-          })
-            .populate('category', 'name')
-            .limit(remaining)
-            .select('name price images discount discountType category subcategory tags')
-            .lean();
-
-          similarProducts = [...similarProducts, ...level2Products];
-        }
-      }
-    }
-
-    // Priority 3: Same Level 1 hierarchy (but stay within root category)
-    if (similarProducts.length < limit && hierarchyIds.length > 0) {
-      const remaining = limit - similarProducts.length;
-      const excludeIds = [product._id, ...similarProducts.map(p => p._id)];
-
-      const hierarchyProducts = await Product.find({
+      // Priority 1: Same Level 3 category
+      let fallbackProducts = await Product.find({
         _id: { $nin: excludeIds },
-        category: { $in: hierarchyIds.map(id => id) },
+        category: product.category._id,
         isActive: true
       })
         .populate('category', 'name')
@@ -130,7 +104,55 @@ exports.getSimilarProducts = async (req, res) => {
         .select('name price images discount discountType category subcategory tags')
         .lean();
 
-      similarProducts = [...similarProducts, ...hierarchyProducts];
+      // Priority 2: Same Level 2 category
+      if (fallbackProducts.length < remaining) {
+        const stillNeeded = remaining - fallbackProducts.length;
+        const allExcludeIds = [...excludeIds, ...fallbackProducts.map(p => p._id)];
+
+        const currentCat = await Category.findById(product.category._id).lean();
+        if (currentCat?.parent) {
+          const siblingCategories = await Category.find({
+            parent: currentCat.parent,
+            _id: { $ne: product.category._id }
+          }).select('_id').lean();
+
+          const siblingCatIds = siblingCategories.map(c => c._id);
+
+          if (siblingCatIds.length > 0) {
+            const level2Products = await Product.find({
+              _id: { $nin: allExcludeIds },
+              category: { $in: siblingCatIds },
+              isActive: true
+            })
+              .populate('category', 'name')
+              .limit(stillNeeded)
+              .select('name price images discount discountType category subcategory tags')
+              .lean();
+
+            fallbackProducts = [...fallbackProducts, ...level2Products];
+          }
+        }
+      }
+
+      // Priority 3: Same Level 1 hierarchy
+      if (fallbackProducts.length < remaining && hierarchyIds.length > 0) {
+        const stillNeeded = remaining - fallbackProducts.length;
+        const allExcludeIds = [...excludeIds, ...fallbackProducts.map(p => p._id)];
+
+        const hierarchyProducts = await Product.find({
+          _id: { $nin: allExcludeIds },
+          category: { $in: hierarchyIds },
+          isActive: true
+        })
+          .populate('category', 'name')
+          .limit(stillNeeded)
+          .select('name price images discount discountType category subcategory tags')
+          .lean();
+
+        fallbackProducts = [...fallbackProducts, ...hierarchyProducts];
+      }
+
+      similarProducts = [...similarProducts, ...fallbackProducts];
     }
 
     res.json(similarProducts);
@@ -140,7 +162,7 @@ exports.getSimilarProducts = async (req, res) => {
   }
 };
 
-// @desc    Get frequently bought together products
+// @desc    Get frequently bought together products using collaborative filtering
 // @route   GET /api/recommendations/frequently-bought/:productId
 // @access  Public
 exports.getFrequentlyBoughtTogether = async (req, res) => {
@@ -158,35 +180,17 @@ exports.getFrequentlyBoughtTogether = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    // Find orders that contain this product
-    const orders = await Order.find({
-      'items.product': product._id
-    }).select('items');
+    // Use collaborative filtering service
+    const cfProductIds = await CollaborativeFilterService.getFrequentlyBoughtTogether(
+      product._id.toString(),
+      limit
+    );
 
-    // Count occurrences of other products bought with this one
-    const productCounts = {};
-
-    orders.forEach(order => {
-      order.items.forEach(item => {
-        const itemProductId = item.product.toString();
-        if (itemProductId !== product._id.toString()) {
-          productCounts[itemProductId] = (productCounts[itemProductId] || 0) + 1;
-        }
-      });
-    });
-
-    // Sort by frequency and get top products
-    const sortedProductIds = Object.entries(productCounts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, limit)
-      .map(entry => entry[0]);
-
-    // Fetch the actual products from order history
     let frequentlyBought = [];
 
-    if (sortedProductIds.length > 0) {
+    if (cfProductIds.length > 0) {
       frequentlyBought = await Product.find({
-        _id: { $in: sortedProductIds },
+        _id: { $in: cfProductIds },
         isActive: true
       })
         .populate('category', 'name')
@@ -194,7 +198,7 @@ exports.getFrequentlyBoughtTogether = async (req, res) => {
         .lean();
     }
 
-    // If not enough products from order history, use category fallback (stay within Level 1 hierarchy)
+    // If not enough products from order history, use category fallback
     if (frequentlyBought.length < limit) {
       const hierarchyIds = await getCategoryHierarchyIds(product.category._id);
       const remaining = limit - frequentlyBought.length;
@@ -211,7 +215,7 @@ exports.getFrequentlyBoughtTogether = async (req, res) => {
         .select('name price images discount discountType category subcategory')
         .lean();
 
-      // Priority 2: Same Level 2 (sibling Level 3 categories)
+      // Priority 2: Same Level 2
       if (fallbackProducts.length < remaining) {
         const stillNeeded = remaining - fallbackProducts.length;
         const allExcludeIds = [...excludeIds, ...fallbackProducts.map(p => p._id)];
@@ -241,7 +245,7 @@ exports.getFrequentlyBoughtTogether = async (req, res) => {
         }
       }
 
-      // Priority 3: Same Level 1 hierarchy only
+      // Priority 3: Same Level 1 hierarchy
       if (fallbackProducts.length < remaining && hierarchyIds.length > 0) {
         const stillNeeded = remaining - fallbackProducts.length;
         const allExcludeIds = [...excludeIds, ...fallbackProducts.map(p => p._id)];
@@ -415,52 +419,35 @@ exports.getCompleteTheLook = async (req, res) => {
   }
 };
 
-// @desc    Get trending/popular products
+// @desc    Get trending/popular products using collaborative filtering
 // @route   GET /api/recommendations/trending
 // @access  Public
 exports.getTrendingProducts = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 8;
+    const days = parseInt(req.query.days) || 30;
 
-    // Get products that appear most in recent orders (last 30 days)
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    // Use collaborative filtering service
+    const trendingProductIds = await CollaborativeFilterService.getTrendingProducts(limit, days);
 
-    const trendingProducts = await Order.aggregate([
-      {
-        $match: {
-          createdAt: { $gte: thirtyDaysAgo },
-          status: { $nin: ['cancelled'] }
-        }
-      },
-      { $unwind: '$items' },
-      {
-        $group: {
-          _id: '$items.product',
-          orderCount: { $sum: 1 },
-          totalQuantity: { $sum: '$items.quantity' }
-        }
-      },
-      { $sort: { orderCount: -1 } },
-      { $limit: limit }
-    ]);
+    let products = [];
 
-    const productIds = trendingProducts.map(item => item._id);
+    if (trendingProductIds.length > 0) {
+      const productDocs = await Product.find({
+        _id: { $in: trendingProductIds },
+        isActive: true
+      })
+        .populate('category', 'name')
+        .select('name price images discount discountType category')
+        .lean();
 
-    const products = await Product.find({
-      _id: { $in: productIds },
-      isActive: true
-    })
-      .populate('category', 'name')
-      .select('name price images discount discountType category')
-      .lean();
+      // Sort products by trending order
+      products = trendingProductIds
+        .map(id => productDocs.find(p => p._id.toString() === id.toString()))
+        .filter(Boolean);
+    }
 
-    // Sort products by trending order
-    const sortedProducts = productIds
-      .map(id => products.find(p => p._id.toString() === id.toString()))
-      .filter(Boolean);
-
-    res.json(sortedProducts);
+    res.json(products);
   } catch (error) {
     console.error('Error getting trending products:', error);
     res.status(500).json({ message: error.message });
