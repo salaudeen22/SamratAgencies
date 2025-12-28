@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { orderAPI, userAPI, paymentAPI, deliveryAPI } from '../services/api';
+import { orderAPI, userAPI, paymentAPI, deliveryAPI, settingsAPI } from '../services/api';
 import Button from '../components/Button';
 
 const Checkout = () => {
@@ -18,6 +18,7 @@ const Checkout = () => {
   const [deliveryCharge, setDeliveryCharge] = useState(0);
   const [deliveryInfo, setDeliveryInfo] = useState(null);
   const [checkingDelivery, setCheckingDelivery] = useState(false);
+  const [settings, setSettings] = useState(null);
 
   // Get coupon data from cart page
   const appliedCoupon = location.state?.appliedCoupon || null;
@@ -32,7 +33,7 @@ const Checkout = () => {
     city: '',
     state: '',
     pincode: '',
-    paymentMethod: 'cod',
+    paymentMethod: '',
     specialInstructions: '',
   });
 
@@ -97,6 +98,27 @@ const Checkout = () => {
       max: maxDate.toLocaleDateString('en-IN', options)
     };
   };
+
+  // Fetch settings
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await settingsAPI.getSettings();
+        setSettings(response.data);
+        // Set default payment method based on settings
+        if (response.data.codEnabled) {
+          setFormData(prev => ({ ...prev, paymentMethod: 'cod' }));
+        } else if (response.data.razorpayEnabled) {
+          setFormData(prev => ({ ...prev, paymentMethod: 'online' }));
+        }
+      } catch (error) {
+        console.error('Failed to fetch settings:', error);
+        // Default to COD if settings fetch fails
+        setFormData(prev => ({ ...prev, paymentMethod: 'cod' }));
+      }
+    };
+    fetchSettings();
+  }, []);
 
   // Load Razorpay script
   useEffect(() => {
@@ -609,59 +631,72 @@ const Checkout = () => {
               <div className="mt-4 sm:mt-6">
                 <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4" style={{ color: '#2F1A0F' }}>Payment Method</h3>
                 <div className="space-y-3">
-                  {/* COD Option */}
-                  <label
-                    className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition ${
-                      formData.paymentMethod === 'cod' ? 'border-[#816047] bg-[#E6CDB1]' : 'border-[#D7B790] hover:border-[#816047]'
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="cod"
-                      checked={formData.paymentMethod === 'cod'}
-                      onChange={handleChange}
-                      className="mr-3"
-                    />
-                    <div className="flex items-center gap-3 flex-1">
-                      <div className="p-2 rounded-lg" style={{ backgroundColor: '#E6CDB1' }}>
-                        <svg className="w-6 h-6" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
+                  {/* COD Option - Only show if enabled */}
+                  {settings?.codEnabled && (
+                    <label
+                      className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition ${
+                        formData.paymentMethod === 'cod' ? 'border-[#816047] bg-[#E6CDB1]' : 'border-[#D7B790] hover:border-[#816047]'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="cod"
+                        checked={formData.paymentMethod === 'cod'}
+                        onChange={handleChange}
+                        className="mr-3"
+                      />
+                      <div className="flex items-center gap-3 flex-1">
+                        <div className="p-2 rounded-lg" style={{ backgroundColor: '#E6CDB1' }}>
+                          <svg className="w-6 h-6" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>Cash on Delivery</p>
+                          <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Pay when you receive</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-semibold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>Cash on Delivery</p>
-                        <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Pay when you receive</p>
-                      </div>
-                    </div>
-                  </label>
+                    </label>
+                  )}
 
-                  {/* Online Payment Option */}
-                  <label
-                    className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition ${
-                      formData.paymentMethod === 'online' ? 'border-[#816047] bg-[#E6CDB1]' : 'border-[#D7B790] hover:border-[#816047]'
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="online"
-                      checked={formData.paymentMethod === 'online'}
-                      onChange={handleChange}
-                      className="mr-3"
-                    />
-                    <div className="flex items-center gap-3 flex-1">
-                      <div className="p-2 rounded-lg" style={{ backgroundColor: '#E6CDB1' }}>
-                        <svg className="w-6 h-6" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                        </svg>
+                  {/* Online Payment Option - Only show if enabled */}
+                  {settings?.razorpayEnabled && (
+                    <label
+                      className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition ${
+                        formData.paymentMethod === 'online' ? 'border-[#816047] bg-[#E6CDB1]' : 'border-[#D7B790] hover:border-[#816047]'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="online"
+                        checked={formData.paymentMethod === 'online'}
+                        onChange={handleChange}
+                        className="mr-3"
+                      />
+                      <div className="flex items-center gap-3 flex-1">
+                        <div className="p-2 rounded-lg" style={{ backgroundColor: '#E6CDB1' }}>
+                          <svg className="w-6 h-6" style={{ color: '#816047' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>Online Payment</p>
+                          <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>UPI, Cards, Net Banking</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-semibold text-sm sm:text-base" style={{ color: '#2F1A0F' }}>Online Payment</p>
-                        <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>UPI, Cards, Net Banking</p>
-                      </div>
+                    </label>
+                  )}
+
+                  {/* No payment methods available */}
+                  {!settings?.codEnabled && !settings?.razorpayEnabled && (
+                    <div className="p-4 border-2 rounded-lg" style={{ borderColor: '#D7B790', backgroundColor: '#FEF3C7' }}>
+                      <p className="text-sm text-center" style={{ color: '#92400E' }}>
+                        No payment methods are currently available. Please contact support.
+                      </p>
                     </div>
-                  </label>
+                  )}
                 </div>
 
                 {/* Trust Badges */}
