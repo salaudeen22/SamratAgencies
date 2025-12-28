@@ -14,14 +14,32 @@ const Products = () => {
   const [selectedLevel2, setSelectedLevel2] = useState('');
   const [selectedLevel3, setSelectedLevel3] = useState('');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [filters, setFilters] = useState({
-    category: '',
-    minPrice: '',
-    maxPrice: '',
-    search: '',
-    sortBy: '',
-    availabilityType: '',
-  });
+  // Initialize filters from URL on first render
+  const initializeFiltersFromUrl = () => {
+    const searchParams = new URLSearchParams(location.search);
+    return {
+      category: searchParams.get('category') || '',
+      minPrice: searchParams.get('minPrice') || '',
+      maxPrice: searchParams.get('maxPrice') || '',
+      search: searchParams.get('search') || '',
+      sortBy: searchParams.get('sort') || '',
+      availabilityType: '',
+    };
+  };
+
+  const [filters, setFilters] = useState(initializeFiltersFromUrl());
+
+  // Update filters when URL changes
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    setFilters(prev => ({
+      ...prev,
+      minPrice: searchParams.get('minPrice') || '',
+      maxPrice: searchParams.get('maxPrice') || '',
+      search: searchParams.get('search') || '',
+      sortBy: searchParams.get('sort') || '',
+    }));
+  }, [location.search]);
 
   // Read URL parameters on mount and resolve category slug to ID
   useEffect(() => {

@@ -13,6 +13,7 @@ import AdminRoute from './components/AdminRoute';
 import ErrorBoundary from './components/ErrorBoundary';
 import ErrorPage from './components/ErrorPage';
 import AuthModal from './components/AuthModal';
+import FloatingButtons from './components/FloatingButtons';
 import useImageProtection from './hooks/useImageProtection';
 import './App.css';
 import './styles/imageProtection.css';
@@ -118,6 +119,7 @@ function App() {
               <CompareProvider>
                 <RecentlyViewedProvider>
                   <AuthModalWrapper />
+                  <FloatingButtons />
                   <Suspense fallback={<LoadingFallback />}>
                 <Routes>
               {/* Admin Routes */}

@@ -2,12 +2,16 @@ import { useState, useEffect } from 'react';
 import { productAPI } from '../services/api';
 import SEO from '../components/SEO';
 import HeroSection from '../components/home/HeroSection';
-import CategoriesSection from '../components/home/CategoriesSection';
+import TrustBadges from '../components/home/TrustBadges';
+import ExpandedCategories from '../components/home/ExpandedCategories';
 import FeaturedProductsSection from '../components/home/FeaturedProductsSection';
+import WhyChooseUs from '../components/home/WhyChooseUs';
+import ShopByBudget from '../components/home/ShopByBudget';
 import StatsSection from '../components/home/StatsSection';
 import BrandLogosSection from '../components/home/BrandLogosSection';
 import PromotionalCards from '../components/home/PromotionalCards';
 import TestimonialsSection from '../components/home/TestimonialsSection';
+import ContactSection from '../components/home/ContactSection';
 import RecentlyViewedSection from '../components/home/RecentlyViewedSection';
 import BannerSection from '../components/home/BannerSection';
 
@@ -66,8 +70,9 @@ const Home = () => {
       />
       <div className="min-h-screen" style={{ backgroundColor: '#f8fafc' }}>
         <HeroSection />
+        <TrustBadges />
         <BannerSection position="section1" />
-        <CategoriesSection />
+        <ExpandedCategories />
         <BannerSection position="section2" />
         <FeaturedProductsSection
           featuredProducts={featuredProducts}
@@ -75,6 +80,8 @@ const Home = () => {
           loading={loading}
         />
         <BannerSection position="section3" />
+        <WhyChooseUs />
+        <ShopByBudget />
         <RecentlyViewedSection />
         <BannerSection position="section4" />
         <StatsSection />
@@ -83,6 +90,7 @@ const Home = () => {
         <BannerSection position="section5" />
         <TestimonialsSection />
         <BannerSection position="section6" />
+        <ContactSection />
       </div>
     </>
   );
