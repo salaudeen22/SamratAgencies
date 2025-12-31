@@ -32,6 +32,11 @@ const ticketSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  category: {
+    type: String,
+    enum: ['general', 'order', 'product', 'payment', 'delivery', 'return', 'technical', 'other'],
+    default: 'general'
+  },
   status: {
     type: String,
     enum: ['open', 'in-progress', 'resolved', 'closed'],

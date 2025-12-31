@@ -838,6 +838,259 @@ Samrat Agencies
   };
 };
 
+// New ticket notification email template (to admin)
+const newTicketNotificationEmail = (ticket, user) => {
+  return {
+    subject: `New Support Ticket #${ticket.ticketNumber} - ${ticket.subject}`,
+    html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Support Ticket</title>
+      </head>
+      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #1F2D38; margin: 0; padding: 20px; background-color: #f8fafc;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+
+          ${emailHeader('New Support Ticket', 'Customer needs assistance')}
+
+          <div style="padding: 30px;">
+            <div style="background-color: #fff3cd; padding: 20px; border-radius: 12px; border-left: 4px solid #f59e0b; margin-bottom: 25px;">
+              <h3 style="color: #92400e; margin: 0 0 10px 0; font-size: 15px; font-weight: 700;">Action Required</h3>
+              <p style="margin: 0; color: #78350f; font-size: 14px;">A new support ticket has been created and requires your attention.</p>
+            </div>
+
+            <div style="background-color: #fafafa; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+              <h3 style="color: #1F2D38; margin: 0 0 15px 0; font-size: 16px; font-weight: 700;">Ticket Information</h3>
+              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Ticket #:</strong> ${ticket.ticketNumber}</p>
+              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Subject:</strong> ${ticket.subject}</p>
+              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Category:</strong> ${ticket.category}</p>
+              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Priority:</strong> <span style="color: ${ticket.priority === 'urgent' ? '#dc2626' : ticket.priority === 'high' ? '#f59e0b' : '#64748b'}; font-weight: 600;">${ticket.priority.toUpperCase()}</span></p>
+              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Status:</strong> ${ticket.status}</p>
+            </div>
+
+            <div style="background-color: #dbeafe; padding: 20px; border-radius: 12px; border-left: 4px solid #3b82f6; margin-bottom: 25px;">
+              <h3 style="color: #1e40af; margin: 0 0 15px 0; font-size: 16px; font-weight: 700;">Customer Details</h3>
+              <p style="margin: 5px 0; color: #1e3a8a; font-size: 14px;"><strong>Name:</strong> ${user.name}</p>
+              <p style="margin: 5px 0; color: #1e3a8a; font-size: 14px;"><strong>Email:</strong> <a href="mailto:${user.email}" style="color: #895F42;">${user.email}</a></p>
+              ${user.phone ? `<p style="margin: 5px 0; color: #1e3a8a; font-size: 14px;"><strong>Phone:</strong> <a href="tel:${user.phone}" style="color: #895F42;">${user.phone}</a></p>` : ''}
+            </div>
+
+            <div style="background-color: #f1f5f9; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+              <h3 style="color: #1F2D38; margin: 0 0 10px 0; font-size: 16px; font-weight: 700;">Message</h3>
+              <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${ticket.message}</p>
+            </div>
+
+            ${ticket.orderId ? `
+            <div style="background-color: #fef3c7; padding: 20px; border-radius: 12px; border-left: 4px solid #f59e0b; margin-bottom: 25px;">
+              <p style="margin: 0; color: #92400e; font-size: 14px;"><strong>Related Order:</strong> #${ticket.orderId}</p>
+            </div>
+            ` : ''}
+
+            <div style="text-align: center; margin-top: 30px;">
+              <a href="${process.env.FRONTEND_URL}/admin/tickets" style="background-color: #895F42; color: white; padding: 15px 40px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: 600; font-size: 15px; box-shadow: 0 4px 6px rgba(137, 95, 66, 0.2);">View Ticket in Admin Panel</a>
+            </div>
+
+            ${emailFooter()}
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+    text: `
+New Support Ticket #${ticket.ticketNumber}
+
+Ticket Information:
+- Ticket #: ${ticket.ticketNumber}
+- Subject: ${ticket.subject}
+- Category: ${ticket.category}
+- Priority: ${ticket.priority.toUpperCase()}
+- Status: ${ticket.status}
+
+Customer Details:
+- Name: ${user.name}
+- Email: ${user.email}
+${user.phone ? `- Phone: ${user.phone}` : ''}
+
+Message:
+${ticket.message}
+
+${ticket.orderId ? `Related Order: #${ticket.orderId}` : ''}
+
+View Ticket: ${process.env.FRONTEND_URL}/admin/tickets
+
+Samrat Agencies
+    `
+  };
+};
+
+// Ticket reply notification email template (to customer)
+const ticketReplyNotificationEmail = (ticket, reply, user) => {
+  return {
+    subject: `Reply to Your Support Ticket #${ticket.ticketNumber}`,
+    html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ticket Reply</title>
+      </head>
+      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #1F2D38; margin: 0; padding: 20px; background-color: #f8fafc;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+
+          ${emailHeader('Support Team Reply', `RE: ${ticket.subject}`)}
+
+          <div style="padding: 30px;">
+            <p style="margin: 0 0 20px 0; color: #64748b; font-size: 15px;">Hi ${user.name},</p>
+            <p style="margin: 0 0 20px 0; color: #64748b; font-size: 15px;">Our support team has replied to your ticket.</p>
+
+            <div style="background-color: #dcfce7; padding: 20px; border-radius: 12px; border-left: 4px solid #22c55e; margin-bottom: 25px;">
+              <h3 style="color: #166534; margin: 0 0 10px 0; font-size: 15px; font-weight: 700;">Ticket #${ticket.ticketNumber}</h3>
+              <p style="margin: 0; color: #14532d; font-size: 14px;"><strong>Subject:</strong> ${ticket.subject}</p>
+            </div>
+
+            <div style="background-color: #f1f5f9; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+              <h3 style="color: #1F2D38; margin: 0 0 10px 0; font-size: 16px; font-weight: 700;">Support Team Response</h3>
+              <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${reply.message}</p>
+              <p style="margin: 15px 0 0 0; color: #64748b; font-size: 13px;">
+                Replied by: ${reply.isAdmin ? 'Support Team' : user.name}<br>
+                ${new Date(reply.createdAt).toLocaleString('en-IN', { dateStyle: 'full', timeStyle: 'short' })}
+              </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+              <a href="${process.env.FRONTEND_URL}/profile?tab=support" style="background-color: #895F42; color: white; padding: 15px 40px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: 600; font-size: 15px; box-shadow: 0 4px 6px rgba(137, 95, 66, 0.2);">View & Reply to Ticket</a>
+            </div>
+
+            <p style="margin: 25px 0 0 0; color: #64748b; font-size: 14px;">If you have any additional questions, please reply to the ticket or contact us directly.</p>
+
+            ${emailFooter()}
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+    text: `
+Support Team Reply
+
+Hi ${user.name},
+
+Our support team has replied to your ticket.
+
+Ticket #${ticket.ticketNumber}
+Subject: ${ticket.subject}
+
+Support Team Response:
+${reply.message}
+
+Replied by: ${reply.isAdmin ? 'Support Team' : user.name}
+${new Date(reply.createdAt).toLocaleString('en-IN')}
+
+View & Reply: ${process.env.FRONTEND_URL}/profile?tab=support
+
+If you have any additional questions, please reply to the ticket or contact us directly.
+
+Need help? Call us: +91 98809 14457
+
+Samrat Agencies
+    `
+  };
+};
+
+// Ticket status update notification email template
+const ticketStatusUpdateEmail = (ticket, user) => {
+  const statusConfig = {
+    open: { color: '#3b82f6', bgColor: '#dbeafe', label: 'Open' },
+    'in-progress': { color: '#f59e0b', bgColor: '#fef3c7', label: 'In Progress' },
+    resolved: { color: '#22c55e', bgColor: '#dcfce7', label: 'Resolved' },
+    closed: { color: '#64748b', bgColor: '#f1f5f9', label: 'Closed' }
+  };
+
+  const config = statusConfig[ticket.status] || statusConfig.open;
+
+  return {
+    subject: `Ticket #${ticket.ticketNumber} Status Updated: ${config.label}`,
+    html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ticket Status Update</title>
+      </head>
+      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #1F2D38; margin: 0; padding: 20px; background-color: #f8fafc;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+
+          ${emailHeader('Ticket Status Update', `Ticket #${ticket.ticketNumber}`)}
+
+          <div style="padding: 30px;">
+            <p style="margin: 0 0 20px 0; color: #64748b; font-size: 15px;">Hi ${user.name},</p>
+            <p style="margin: 0 0 20px 0; color: #64748b; font-size: 15px;">Your support ticket status has been updated.</p>
+
+            <div style="text-align: center; margin: 30px 0;">
+              <div style="display: inline-block; padding: 15px 30px; background-color: ${config.color}; color: white; border-radius: 8px; font-size: 18px; font-weight: 700; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                ${config.label}
+              </div>
+            </div>
+
+            <div style="background-color: #fafafa; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+              <h3 style="color: #1F2D38; margin: 0 0 15px 0; font-size: 16px; font-weight: 700;">Ticket Details</h3>
+              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Ticket #:</strong> ${ticket.ticketNumber}</p>
+              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Subject:</strong> ${ticket.subject}</p>
+              <p style="margin: 5px 0; color: #64748b; font-size: 14px;"><strong style="color: #1F2D38;">Category:</strong> ${ticket.category}</p>
+            </div>
+
+            ${ticket.status === 'resolved' ? `
+            <div style="background-color: #dcfce7; padding: 20px; border-radius: 12px; border-left: 4px solid #22c55e; margin-bottom: 25px;">
+              <h3 style="color: #166534; margin: 0 0 10px 0; font-size: 15px; font-weight: 700;">Issue Resolved</h3>
+              <p style="margin: 0; color: #14532d; font-size: 14px;">Your ticket has been marked as resolved. If you still need assistance, please reply to the ticket.</p>
+            </div>
+            ` : ''}
+
+            ${ticket.status === 'closed' ? `
+            <div style="background-color: #f1f5f9; padding: 20px; border-radius: 12px; border-left: 4px solid #64748b; margin-bottom: 25px;">
+              <h3 style="color: #334155; margin: 0 0 10px 0; font-size: 15px; font-weight: 700;">Ticket Closed</h3>
+              <p style="margin: 0; color: #475569; font-size: 14px;">This ticket has been closed. If you need further assistance, please create a new ticket.</p>
+            </div>
+            ` : ''}
+
+            <div style="text-align: center; margin-top: 30px;">
+              <a href="${process.env.FRONTEND_URL}/profile?tab=support" style="background-color: #895F42; color: white; padding: 15px 40px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: 600; font-size: 15px; box-shadow: 0 4px 6px rgba(137, 95, 66, 0.2);">View Ticket Details</a>
+            </div>
+
+            ${emailFooter()}
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+    text: `
+Ticket Status Update
+
+Hi ${user.name},
+
+Your support ticket status has been updated to: ${config.label}
+
+Ticket Details:
+- Ticket #: ${ticket.ticketNumber}
+- Subject: ${ticket.subject}
+- Category: ${ticket.category}
+- Status: ${config.label}
+
+${ticket.status === 'resolved' ? 'Your ticket has been marked as resolved. If you still need assistance, please reply to the ticket.' : ''}
+${ticket.status === 'closed' ? 'This ticket has been closed. If you need further assistance, please create a new ticket.' : ''}
+
+View Ticket: ${process.env.FRONTEND_URL}/profile?tab=support
+
+Need help? Call us: +91 98809 14457
+
+Samrat Agencies
+    `
+  };
+};
+
 module.exports = {
   orderConfirmationEmail,
   passwordResetEmail,
@@ -846,5 +1099,8 @@ module.exports = {
   contactFormEmail,
   contactFormThankYouEmail,
   adminNewOrderNotificationEmail,
-  emailVerificationEmail
+  emailVerificationEmail,
+  newTicketNotificationEmail,
+  ticketReplyNotificationEmail,
+  ticketStatusUpdateEmail
 };

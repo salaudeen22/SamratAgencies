@@ -2,13 +2,17 @@ const express = require('express');
 const router = express.Router();
 const { auth, adminAuth } = require('../middleware/auth');
 const Ticket = require('../models/Ticket');
+const User = require('../models/User');
+const { sendEmail } = require('../config/email');
+const { newTicketNotificationEmail, ticketReplyNotificationEmail, ticketStatusUpdateEmail } = require('../utils/emailTemplates');
+const logger = require('../config/logger');
 
 // @route   POST /api/tickets
 // @desc    Create a new support ticket
 // @access  Private
 router.post('/', auth, async (req, res) => {
   try {
-    const { subject, message, priority, relatedOrder } = req.body;
+    const { subject, message, priority, category, relatedOrder } = req.body;
 
     if (!subject || !message) {
       return res.status(400).json({ message: 'Subject and message are required' });
@@ -17,6 +21,7 @@ router.post('/', auth, async (req, res) => {
     const ticketData = {
       user: req.user.id,
       subject,
+      category: category || 'general',
       priority: priority || 'medium',
       messages: [{
         sender: 'customer',
@@ -32,7 +37,38 @@ router.post('/', auth, async (req, res) => {
     const ticket = new Ticket(ticketData);
 
     await ticket.save();
-    await ticket.populate('user', 'name email');
+    await ticket.populate('user', 'name email phone');
+
+    // Send email notification to admin
+    try {
+      const adminUsers = await User.find({ isAdmin: true });
+      const ticketData = {
+        ticketNumber: ticket.ticketNumber,
+        subject: ticket.subject,
+        category: ticket.category,
+        priority: ticket.priority,
+        status: ticket.status,
+        message: ticket.messages[0].message,
+        orderId: ticket.relatedOrder
+      };
+
+      const emailContent = newTicketNotificationEmail(ticketData, ticket.user);
+
+      // Send to all admins
+      for (const admin of adminUsers) {
+        await sendEmail({
+          to: admin.email,
+          subject: emailContent.subject,
+          html: emailContent.html,
+          text: emailContent.text
+        });
+      }
+
+      logger.info(`New ticket notification sent to admins: ${ticket.ticketNumber}`);
+    } catch (emailError) {
+      logger.error(`Failed to send ticket notification email: ${emailError.message}`);
+      // Don't fail the request if email fails
+    }
 
     res.status(201).json({
       message: 'Ticket created successfully',
@@ -124,10 +160,12 @@ router.post('/:id/messages', auth, async (req, res) => {
       return res.status(403).json({ message: 'Access denied' });
     }
 
-    ticket.messages.push({
+    const newMessage = {
       sender: req.user.isAdmin ? 'admin' : 'customer',
       message
-    });
+    };
+
+    ticket.messages.push(newMessage);
 
     // Update status to in-progress if admin replies to open ticket
     if (req.user.isAdmin && ticket.status === 'open') {
@@ -136,6 +174,25 @@ router.post('/:id/messages', auth, async (req, res) => {
 
     await ticket.save();
     await ticket.populate('user', 'name email');
+
+    // Send email notification if admin replied to customer
+    if (req.user.isAdmin) {
+      try {
+        const emailContent = ticketReplyNotificationEmail(ticket, newMessage, ticket.user);
+
+        await sendEmail({
+          to: ticket.user.email,
+          subject: emailContent.subject,
+          html: emailContent.html,
+          text: emailContent.text
+        });
+
+        logger.info(`Ticket reply notification sent to customer: ${ticket.user.email} for ticket ${ticket.ticketNumber}`);
+      } catch (emailError) {
+        logger.error(`Failed to send ticket reply notification email: ${emailError.message}`);
+        // Don't fail the request if email fails
+      }
+    }
 
     res.json({
       message: 'Message added successfully',
@@ -205,6 +262,23 @@ router.put('/admin/:id/status', auth, adminAuth, async (req, res) => {
 
     if (!ticket) {
       return res.status(404).json({ message: 'Ticket not found' });
+    }
+
+    // Send email notification to customer about status change
+    try {
+      const emailContent = ticketStatusUpdateEmail(ticket, ticket.user);
+
+      await sendEmail({
+        to: ticket.user.email,
+        subject: emailContent.subject,
+        html: emailContent.html,
+        text: emailContent.text
+      });
+
+      logger.info(`Ticket status update notification sent to customer: ${ticket.user.email} for ticket ${ticket.ticketNumber}`);
+    } catch (emailError) {
+      logger.error(`Failed to send ticket status update notification email: ${emailError.message}`);
+      // Don't fail the request if email fails
     }
 
     res.json({

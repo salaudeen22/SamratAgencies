@@ -2,6 +2,7 @@ const Order = require('../models/Order');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const User = require('../models/User');
+const Coupon = require('../models/Coupon');
 const { sendEmail } = require('../config/email');
 const { orderConfirmationEmail, orderStatusUpdateEmail, adminNewOrderNotificationEmail } = require('../utils/emailTemplates');
 const { generateInvoice } = require('../utils/invoiceGenerator');
@@ -16,7 +17,8 @@ exports.createOrder = async (req, res) => {
       totalAmount,
       gstAmount,
       deliveryCharge,
-      discount
+      discount,
+      couponCode
     } = req.body;
 
     if (!items || items.length === 0) {
@@ -28,7 +30,8 @@ exports.createOrder = async (req, res) => {
       return total + (item.price * item.quantity);
     }, 0);
 
-    const order = await Order.create({
+    // Prepare order data
+    const orderData = {
       user: req.user.id,
       items,
       shippingAddress,
@@ -38,7 +41,50 @@ exports.createOrder = async (req, res) => {
       shippingPrice: deliveryCharge || 0,
       discount: discount || 0,
       totalPrice: totalAmount
-    });
+    };
+
+    // Process coupon if provided
+    if (couponCode) {
+      const coupon = await Coupon.findOne({
+        code: couponCode.toUpperCase(),
+        isActive: true
+      });
+
+      if (coupon) {
+        // Check if user can use this coupon
+        const user = await User.findById(req.user.id);
+        const isFirstTimeBuyer = await Order.countDocuments({ user: req.user.id }) === 0;
+        const canUse = coupon.canUserUseCoupon(req.user.id, isFirstTimeBuyer);
+
+        if (canUse.valid) {
+          // Validate discount amount matches
+          const calculatedDiscount = coupon.calculateDiscount(itemsPrice, items);
+
+          if (calculatedDiscount.discount > 0) {
+            // Mark coupon as used
+            await coupon.markAsUsed(req.user.id, null, discount); // We'll update with orderId after creation
+
+            orderData.coupon = coupon._id;
+            orderData.couponCode = couponCode.toUpperCase();
+          }
+        }
+      }
+    }
+
+    const order = await Order.create(orderData);
+
+    // Update coupon usage with order ID
+    if (order.coupon) {
+      const coupon = await Coupon.findById(order.coupon);
+      if (coupon) {
+        // Update the last usage history entry with the order ID
+        const lastUsageIndex = coupon.usageHistory.length - 1;
+        if (lastUsageIndex >= 0) {
+          coupon.usageHistory[lastUsageIndex].order = order._id;
+          await coupon.save();
+        }
+      }
+    }
 
     // Clear user cart after order is created
     await Cart.findOneAndUpdate(

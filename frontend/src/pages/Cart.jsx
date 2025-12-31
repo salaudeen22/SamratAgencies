@@ -461,11 +461,7 @@ const Cart = () => {
 
                 <div className="flex justify-between text-sm sm:text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   <span>Shipping</span>
-                  {freeShipping ? (
-                    <span className="text-green-600 font-medium">Free (Coupon)</span>
-                  ) : (
-                    <span className="text-green-600 font-medium">Free</span>
-                  )}
+                  <span style={{ color: '#2F1A0F' }}>Calculated at checkout</span>
                 </div>
 
                 <div className="pt-2 sm:pt-3 flex justify-between text-base sm:text-lg font-bold" style={{ borderTop: '2px solid #D7B790' }}>

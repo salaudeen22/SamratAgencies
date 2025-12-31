@@ -262,7 +262,7 @@ const Checkout = () => {
         paymentMethod: formData.paymentMethod,
         totalAmount: getFinalTotal(),
         gstAmount: getGSTAmount(),
-        coupon: appliedCoupon?._id || null,
+        couponCode: appliedCoupon?.code || null,
         discount: couponDiscount || 0,
         deliveryCharge: deliveryCharge || 0,
         specialInstructions: formData.specialInstructions || '',
@@ -591,7 +591,6 @@ const Checkout = () => {
                   {deliveryInfo && (
                     <p className="text-xs mt-1 text-green-600">
                       ✓ Delivery available in {deliveryInfo.estimatedDays?.min}-{deliveryInfo.estimatedDays?.max} days
-                      {deliveryInfo.isFree && ' (Free delivery)'}
                     </p>
                   )}
                 </div>
@@ -801,11 +800,6 @@ const Checkout = () => {
                   )}
                 </div>
 
-                {deliveryInfo && !deliveryInfo.isFree && deliveryInfo.freeDeliveryThreshold && deliveryCharge > 0 && (
-                  <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
-                    Add ₹{(deliveryInfo.freeDeliveryThreshold - getCartTotal()).toLocaleString()} more for free delivery
-                  </p>
-                )}
 
                 <div className="pt-2 flex justify-between text-lg font-bold" style={{ borderTop: '2px solid #D7B790' }}>
                   <span style={{ color: '#2F1A0F' }}>Total</span>
