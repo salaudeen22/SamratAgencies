@@ -111,8 +111,15 @@ export const AuthProvider = ({ children }) => {
       return { success: true };
     } catch (err) {
       const message = err.response?.data?.message || 'Login failed';
+      const emailNotVerified = err.response?.data?.emailNotVerified || false;
+      const email = err.response?.data?.email || '';
       setError(message);
-      return { success: false, error: message };
+      return {
+        success: false,
+        error: message,
+        emailNotVerified,
+        email
+      };
     }
   };
 

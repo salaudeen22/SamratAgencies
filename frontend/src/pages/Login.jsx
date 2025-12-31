@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
 import { FcGoogle } from 'react-icons/fc';
 import { MdEmail, MdLock } from 'react-icons/md';
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,6 +18,10 @@ const Login = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [emailNotVerified, setEmailNotVerified] = useState(false);
+  const [unverifiedEmail, setUnverifiedEmail] = useState('');
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [resendingEmail, setResendingEmail] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,6 +30,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setEmailNotVerified(false);
     setLoading(true);
 
     const result = await login(formData.email, formData.password);
@@ -31,10 +39,44 @@ const Login = () => {
       toast.success('Login successful!');
       navigate('/');
     } else {
+      // Check if it's an email verification error
+      if (result.emailNotVerified) {
+        setEmailNotVerified(true);
+        setUnverifiedEmail(result.email || formData.email);
+        setShowVerificationModal(true); // Auto-open modal
+      }
       setError(result.error || 'Login failed');
     }
 
     setLoading(false);
+  };
+
+  const handleResendVerification = async () => {
+    setResendingEmail(true);
+    try {
+      const response = await axios.post(`${API_URL}/auth/resend-verification-email`, {
+        email: unverifiedEmail
+      });
+
+      if (response.data.success) {
+        toast.success('Verification email sent! Please check your inbox.');
+        setShowVerificationModal(false);
+        setEmailNotVerified(false);
+        setError('');
+      }
+    } catch (err) {
+      if (err.response?.data?.alreadyVerified) {
+        toast.success('Email already verified! You can login now.');
+        setShowVerificationModal(false);
+        setEmailNotVerified(false);
+        setError('');
+      } else {
+        const errorMsg = err.response?.data?.message || 'Failed to resend email';
+        toast.error(errorMsg);
+      }
+    } finally {
+      setResendingEmail(false);
+    }
   };
 
   return (
@@ -90,6 +132,15 @@ const Login = () => {
             {error && (
               <div className="bg-red-50 border-l-4 text-red-700 px-4 py-3 rounded mb-6" style={{ borderColor: '#816047' }}>
                 <p className="text-sm">{error}</p>
+                {emailNotVerified && (
+                  <button
+                    onClick={() => setShowVerificationModal(true)}
+                    className="mt-2 text-xs font-semibold underline hover:no-underline"
+                    style={{ color: '#816047' }}
+                  >
+                    Resend verification email
+                  </button>
+                )}
               </div>
             )}
 
@@ -189,6 +240,100 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      {/* Verification Modal */}
+      {showVerificationModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 transform transition-all">
+            <div className="text-center mb-6">
+              <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#fff3cd' }}>
+                <MdEmail className="w-8 h-8" style={{ color: '#92400e' }} />
+              </div>
+              <h3 className="text-2xl font-bold mb-2" style={{ color: '#2F1A0F' }}>
+                Email Not Verified
+              </h3>
+              <p className="text-sm" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
+                Please verify your email to continue
+              </p>
+              <p className="text-base font-semibold mt-2" style={{ color: '#816047' }}>
+                {unverifiedEmail}
+              </p>
+            </div>
+
+            <div className="space-y-4 mb-6">
+              <div className="flex items-start gap-3 p-3 rounded-lg" style={{ backgroundColor: '#f8fafc' }}>
+                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#dbeafe' }}>
+                  <MdEmail className="w-4 h-4" style={{ color: '#1e40af' }} />
+                </div>
+                <div>
+                  <p className="text-sm font-medium" style={{ color: '#2F1A0F' }}>Check your inbox</p>
+                  <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
+                    Look for the verification email we sent you
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-3 rounded-lg" style={{ backgroundColor: '#f8fafc' }}>
+                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#dbeafe' }}>
+                  <span className="text-sm font-bold" style={{ color: '#1e40af' }}>1</span>
+                </div>
+                <div>
+                  <p className="text-sm font-medium" style={{ color: '#2F1A0F' }}>Click the verification link</p>
+                  <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
+                    The link expires in 24 hours
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-3 rounded-lg" style={{ backgroundColor: '#f8fafc' }}>
+                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#dbeafe' }}>
+                  <span className="text-sm font-bold" style={{ color: '#1e40af' }}>2</span>
+                </div>
+                <div>
+                  <p className="text-sm font-medium" style={{ color: '#2F1A0F' }}>Login after verification</p>
+                  <p className="text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
+                    Come back and login once verified
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg mb-6" style={{ backgroundColor: '#fff3cd', border: '1px solid #f59e0b' }}>
+              <p className="text-xs text-center" style={{ color: '#92400e' }}>
+                Didn't receive the email? Click below to send a new one
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <button
+                onClick={handleResendVerification}
+                disabled={resendingEmail}
+                className="w-full py-3 px-4 rounded-xl text-white font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
+                style={{ backgroundColor: '#816047' }}
+              >
+                {resendingEmail ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Sending...
+                  </span>
+                ) : (
+                  'Resend Verification Email'
+                )}
+              </button>
+              <button
+                onClick={() => setShowVerificationModal(false)}
+                disabled={resendingEmail}
+                className="w-full py-3 px-4 rounded-xl font-semibold transition-all border-2 disabled:opacity-50"
+                style={{ borderColor: '#D7B790', color: '#816047' }}
+              >
+                Close
+              </button>
+            </div>
+
+            <p className="text-xs text-center mt-4" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
+              Check your spam folder or contact support if you need help
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

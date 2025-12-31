@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HiUser, HiShoppingBag, HiMapPin, HiArrowRightOnRectangle, HiReceiptRefund } from 'react-icons/hi2';
+import { MdVerified, MdWarning } from 'react-icons/md';
 import { useAuth } from '../context/AuthContext';
 import ProfileTab from '../components/profile/ProfileTab';
 import AddressesTab from '../components/profile/AddressesTab';
@@ -53,7 +54,20 @@ const Profile = () => {
           </div>
           <div className="pt-16 pb-6 px-6 sm:px-8">
             <h1 className="text-2xl sm:text-3xl font-bold mb-1" style={{ color: '#2F1A0F' }}>{user?.name}</h1>
-            <p className="text-sm sm:text-base mb-4" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>{user?.email}</p>
+            <div className="flex items-center gap-2 mb-4">
+              <p className="text-sm sm:text-base" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>{user?.email}</p>
+              {user?.isEmailVerified ? (
+                <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium" style={{ backgroundColor: '#dcfce7', color: '#166534' }}>
+                  <MdVerified className="w-4 h-4" />
+                  Verified
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium" style={{ backgroundColor: '#fff3cd', color: '#92400e' }}>
+                  <MdWarning className="w-4 h-4" />
+                  Not Verified
+                </span>
+              )}
+            </div>
 
             {/* Tab Navigation */}
             <div className="flex gap-2 border-b overflow-x-auto" style={{ borderColor: '#E6CDB1' }}>

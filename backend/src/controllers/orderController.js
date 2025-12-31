@@ -3,7 +3,7 @@ const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const User = require('../models/User');
 const { sendEmail } = require('../config/email');
-const { orderConfirmationEmail, orderStatusUpdateEmail } = require('../utils/emailTemplates');
+const { orderConfirmationEmail, orderStatusUpdateEmail, adminNewOrderNotificationEmail } = require('../utils/emailTemplates');
 const { generateInvoice } = require('../utils/invoiceGenerator');
 
 // Create new order
@@ -49,7 +49,7 @@ exports.createOrder = async (req, res) => {
     // Get user email for sending confirmation
     const user = await User.findById(req.user.id);
 
-    // Send order confirmation email
+    // Send order confirmation email to customer
     if (user && user.email) {
       const emailContent = orderConfirmationEmail(order);
       await sendEmail({
@@ -58,6 +58,45 @@ exports.createOrder = async (req, res) => {
         html: emailContent.html,
         text: emailContent.text
       });
+    }
+
+    // Send notification to all admins
+    try {
+      const admins = await User.find({ isAdmin: true });
+      console.log(`Found ${admins.length} admin(s) to notify about new order #${order._id}`);
+
+      if (admins && admins.length > 0) {
+        const adminEmailContent = adminNewOrderNotificationEmail(order, user);
+
+        // Send email to each admin
+        const adminEmailPromises = admins.map(admin => {
+          if (admin.email) {
+            console.log(`Sending order notification to admin: ${admin.email}`);
+            return sendEmail({
+              to: admin.email,
+              subject: adminEmailContent.subject,
+              html: adminEmailContent.html,
+              text: adminEmailContent.text
+            }).then(result => {
+              if (result.success) {
+                console.log(`✓ Admin notification sent successfully to ${admin.email}`);
+              } else {
+                console.error(`✗ Failed to send notification to ${admin.email}:`, result.error);
+              }
+              return result;
+            });
+          }
+          return Promise.resolve();
+        });
+
+        await Promise.allSettled(adminEmailPromises);
+        console.log(`Admin notification process completed for order #${order._id}`);
+      } else {
+        console.warn('No admin users found in database to send order notifications');
+      }
+    } catch (emailError) {
+      // Log error but don't fail the order creation
+      console.error('Error sending admin notifications:', emailError);
     }
 
     res.status(201).json(order);

@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
 import { FcGoogle } from 'react-icons/fc';
-import { MdEmail, MdLock, MdPerson } from 'react-icons/md';
+import { MdEmail, MdLock, MdPerson, MdPhone } from 'react-icons/md';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -12,11 +12,14 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     password: '',
     confirmPassword: '',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showVerificationBanner, setShowVerificationBanner] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,17 +39,29 @@ const Register = () => {
       return;
     }
 
+    if (!formData.phone || formData.phone.length < 10) {
+      setError('Please enter a valid 10-digit mobile number');
+      return;
+    }
+
     setLoading(true);
 
     const result = await register({
       name: formData.name,
       email: formData.email,
+      phone: formData.phone,
       password: formData.password,
     });
 
     if (result.success) {
-      toast.success('Registration successful! Welcome to Samrat Agencies');
-      navigate('/');
+      setUserEmail(formData.email);
+      setShowVerificationBanner(true);
+      toast.success('Registration successful! Please check your email to verify your account.');
+
+      // Redirect to home after 5 seconds to give user time to see the banner
+      setTimeout(() => {
+        navigate('/');
+      }, 5000);
     } else {
       setError(result.error || 'Registration failed');
     }
@@ -73,6 +88,28 @@ const Register = () => {
               <h3 className="text-2xl font-bold mb-2" style={{ color: '#2F1A0F' }}>Create Your Account</h3>
               <p style={{ color: 'rgba(129, 96, 71, 0.6)' }}>Join us and discover premium furniture</p>
             </div>
+
+            {showVerificationBanner && (
+              <div className="p-4 rounded-lg mb-6" style={{ backgroundColor: '#dbeafe', border: '2px solid #3b82f6' }}>
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <MdEmail className="h-6 w-6" style={{ color: '#1e40af' }} />
+                  </div>
+                  <div className="ml-3 flex-1">
+                    <h3 className="text-sm font-semibold mb-1" style={{ color: '#1e40af' }}>
+                      Verify Your Email
+                    </h3>
+                    <p className="text-sm mb-2" style={{ color: '#1e3a8a' }}>
+                      We've sent a verification email to <strong>{userEmail}</strong>
+                    </p>
+                    <p className="text-xs" style={{ color: '#1e3a8a', opacity: 0.8 }}>
+                      Please check your inbox and click the verification link to activate your account.
+                      The link expires in 24 hours.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {error && (
               <div className="bg-red-50 border-l-4 text-red-700 px-4 py-3 rounded mb-6" style={{ borderColor: '#816047' }}>
@@ -123,6 +160,33 @@ const Register = () => {
                     placeholder="your@email.com"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-2" style={{ color: '#2F1A0F' }}>
+                  Mobile Number
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <MdPhone className="h-5 w-5" style={{ color: 'rgba(129, 96, 71, 0.6)' }} />
+                  </div>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                    autoComplete="tel"
+                    maxLength="10"
+                    pattern="[0-9]{10}"
+                    className="w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all"
+                    style={{ borderColor: '#E6CDB1' }}
+                    placeholder="9876543210"
+                  />
+                </div>
+                <p className="mt-1 text-xs" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
+                  Enter 10-digit mobile number
+                </p>
               </div>
 
               <div>
