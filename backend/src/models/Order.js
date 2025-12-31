@@ -142,6 +142,13 @@ const orderSchema = new mongoose.Schema({
   cancelledAt: {
     type: Date
   },
+  refundInfo: {
+    id: String,
+    amount: Number,
+    status: String,
+    created_at: Number,
+    processed_at: Number
+  },
   adminNotes: {
     type: String
   }

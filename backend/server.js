@@ -14,6 +14,7 @@ const connectDB = require('./src/config/db');
 const logger = require('./src/config/logger');
 const requestLogger = require('./src/middleware/requestLogger');
 const { apiLimiter, authLimiter, passwordResetLimiter, uploadLimiter, paymentLimiter, newsletterLimiter, contactLimiter } = require('./src/middleware/rateLimiter');
+const { startCronJobs } = require('./src/services/cronJobs');
 
 // Connect to database
 connectDB();
@@ -149,4 +150,7 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
+
+  // Start cron jobs
+  startCronJobs();
 });

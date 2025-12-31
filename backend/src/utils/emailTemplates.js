@@ -1091,6 +1091,206 @@ Samrat Agencies
   };
 };
 
+// Payment success email template
+const paymentSuccessEmail = (order, payment) => {
+  return {
+    subject: `Payment Successful - Order #${order._id}`,
+    html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Payment Successful</title>
+      </head>
+      <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background-color: #F7FAFC; color: #1F2D38;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+          ${emailHeader('Payment Successful', 'Your payment has been received')}
+
+          <div style="padding: 40px 30px;">
+            <div style="background-color: #D4EDDA; border-left: 4px solid #28A745; padding: 20px; margin-bottom: 30px; border-radius: 8px;">
+              <p style="margin: 0; color: #155724; font-size: 16px; font-weight: 600;">
+                ✓ Payment of ₹${(payment.amount / 100).toLocaleString('en-IN')} confirmed
+              </p>
+              <p style="margin: 8px 0 0 0; color: #155724; font-size: 14px;">
+                Payment ID: ${payment.id}
+              </p>
+            </div>
+
+            <h2 style="color: #1F2D38; margin: 0 0 20px 0; font-size: 22px;">Order Details</h2>
+
+            <div style="background-color: #F7FAFC; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+              <p style="margin: 0 0 10px 0; color: #1F2D38;">
+                <strong>Order ID:</strong> #${order._id}
+              </p>
+              <p style="margin: 0 0 10px 0; color: #1F2D38;">
+                <strong>Payment Method:</strong> ${payment.method || 'Online Payment'}
+              </p>
+              <p style="margin: 0 0 10px 0; color: #1F2D38;">
+                <strong>Amount Paid:</strong> ₹${(payment.amount / 100).toLocaleString('en-IN')}
+              </p>
+              <p style="margin: 0; color: #1F2D38;">
+                <strong>Status:</strong> <span style="color: #28A745; font-weight: 600;">Paid</span>
+              </p>
+            </div>
+
+            <p style="margin: 25px 0; color: #4A5568; line-height: 1.6;">
+              Thank you for your payment! Your order is now being processed and you will receive a shipping confirmation soon.
+            </p>
+
+            <p style="margin: 20px 0; color: #4A5568; line-height: 1.6;">
+              You can track your order status anytime by logging into your account.
+            </p>
+
+            ${emailFooter()}
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+    text: `Payment Successful\n\nYour payment of ₹${(payment.amount / 100).toLocaleString('en-IN')} has been received.\n\nOrder ID: #${order._id}\nPayment ID: ${payment.id}\nPayment Method: ${payment.method || 'Online Payment'}\n\nThank you for your payment! Your order is now being processed.`
+  };
+};
+
+// Payment failed email template
+const paymentFailedEmail = (order, payment) => {
+  return {
+    subject: `Payment Failed - Order #${order._id}`,
+    html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Payment Failed</title>
+      </head>
+      <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background-color: #F7FAFC; color: #1F2D38;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+          ${emailHeader('Payment Failed', 'We couldn\'t process your payment')}
+
+          <div style="padding: 40px 30px;">
+            <div style="background-color: #F8D7DA; border-left: 4px solid #DC3545; padding: 20px; margin-bottom: 30px; border-radius: 8px;">
+              <p style="margin: 0; color: #721C24; font-size: 16px; font-weight: 600;">
+                Payment Failed
+              </p>
+              <p style="margin: 8px 0 0 0; color: #721C24; font-size: 14px;">
+                ${payment.error_description || 'Your payment could not be processed'}
+              </p>
+            </div>
+
+            <h2 style="color: #1F2D38; margin: 0 0 20px 0; font-size: 22px;">What Happened?</h2>
+
+            <div style="background-color: #F7FAFC; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+              <p style="margin: 0 0 10px 0; color: #1F2D38;">
+                <strong>Order ID:</strong> #${order._id}
+              </p>
+              <p style="margin: 0 0 10px 0; color: #1F2D38;">
+                <strong>Payment Method:</strong> ${payment.method || 'Online Payment'}
+              </p>
+              <p style="margin: 0; color: #1F2D38;">
+                <strong>Reason:</strong> ${payment.error_description || 'Payment declined'}
+              </p>
+            </div>
+
+            <h3 style="color: #1F2D38; margin: 25px 0 15px 0; font-size: 18px;">What You Can Do:</h3>
+
+            <ul style="color: #4A5568; line-height: 1.8; padding-left: 20px;">
+              <li>Check if you have sufficient balance in your account</li>
+              <li>Verify that you entered the correct card details</li>
+              <li>Try using a different payment method</li>
+              <li>Contact your bank if the problem persists</li>
+            </ul>
+
+            <p style="margin: 25px 0; color: #4A5568; line-height: 1.6;">
+              Your order is still active. You can complete the payment by logging into your account and going to "My Orders".
+            </p>
+
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="${process.env.FRONTEND_URL}/orders" style="display: inline-block; background-color: #895F42; color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">
+                View Order
+              </a>
+            </div>
+
+            ${emailFooter()}
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+    text: `Payment Failed\n\nYour payment for order #${order._id} could not be processed.\n\nReason: ${payment.error_description || 'Payment declined'}\n\nYou can try again by logging into your account and going to "My Orders".\n\nIf you need help, please contact us at +91 98809 14457.`
+  };
+};
+
+// Abandoned cart email template
+const abandonedCartEmail = (user, cart) => {
+  const itemsList = cart.items.slice(0, 3).map(item => `
+    <div style="display: flex; align-items: center; padding: 15px; background-color: #F7FAFC; border-radius: 8px; margin-bottom: 12px;">
+      <div style="flex: 1;">
+        <p style="margin: 0 0 5px 0; font-weight: 600; color: #1F2D38;">${item.product.name}</p>
+        <p style="margin: 0; color: #4A5568; font-size: 14px;">Quantity: ${item.quantity}</p>
+      </div>
+      <div style="text-align: right;">
+        <p style="margin: 0; font-weight: 600; color: #895F42; font-size: 16px;">₹${(item.price * item.quantity).toLocaleString('en-IN')}</p>
+      </div>
+    </div>
+  `).join('');
+
+  const totalItems = cart.items.length;
+  const moreItems = totalItems > 3 ? `<p style="text-align: center; color: #4A5568; margin: 10px 0;">+ ${totalItems - 3} more item${totalItems - 3 > 1 ? 's' : ''}</p>` : '';
+
+  return {
+    subject: `You left ${totalItems} item${totalItems > 1 ? 's' : ''} in your cart`,
+    html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Complete Your Purchase</title>
+      </head>
+      <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background-color: #F7FAFC; color: #1F2D38;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+          ${emailHeader('Don\'t Miss Out!', 'Your items are waiting for you')}
+
+          <div style="padding: 40px 30px;">
+            <p style="margin: 0 0 20px 0; color: #1F2D38; font-size: 16px;">
+              Hi ${user.name},
+            </p>
+
+            <p style="margin: 0 0 25px 0; color: #4A5568; line-height: 1.6;">
+              You left some great items in your cart! We've saved them for you. Complete your purchase before they're gone.
+            </p>
+
+            <h2 style="color: #1F2D38; margin: 0 0 20px 0; font-size: 20px;">Your Cart Items</h2>
+
+            ${itemsList}
+            ${moreItems}
+
+            <div style="background-color: #E6F3FF; padding: 20px; border-radius: 8px; margin: 25px 0; text-align: center;">
+              <p style="margin: 0 0 5px 0; color: #1F2D38; font-size: 14px;">Cart Total</p>
+              <p style="margin: 0; color: #895F42; font-size: 28px; font-weight: 700;">₹${cart.totalPrice.toLocaleString('en-IN')}</p>
+            </div>
+
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="${process.env.FRONTEND_URL}/cart" style="display: inline-block; background-color: #895F42; color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">
+                Complete Your Purchase
+              </a>
+            </div>
+
+            <p style="margin: 25px 0; color: #4A5568; text-align: center; font-size: 14px; line-height: 1.6;">
+              Need help? Our team is here to assist you.
+            </p>
+
+            ${emailFooter()}
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+    text: `Don't Miss Out!\n\nHi ${user.name},\n\nYou left ${totalItems} item${totalItems > 1 ? 's' : ''} in your cart. Complete your purchase before they're gone!\n\nCart Total: ₹${cart.totalPrice.toLocaleString('en-IN')}\n\nComplete your purchase: ${process.env.FRONTEND_URL}/cart\n\nNeed help? Contact us at +91 98809 14457.`
+  };
+};
+
 module.exports = {
   orderConfirmationEmail,
   passwordResetEmail,
@@ -1102,5 +1302,8 @@ module.exports = {
   emailVerificationEmail,
   newTicketNotificationEmail,
   ticketReplyNotificationEmail,
-  ticketStatusUpdateEmail
+  ticketStatusUpdateEmail,
+  paymentSuccessEmail,
+  paymentFailedEmail,
+  abandonedCartEmail
 };
