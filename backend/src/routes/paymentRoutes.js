@@ -4,9 +4,11 @@ const {
   createRazorpayOrder,
   verifyRazorpayPayment,
   getRazorpayKey,
-  handleRazorpayWebhook
+  handleRazorpayWebhook,
+  processRefund,
+  getRefundStatus
 } = require('../controllers/paymentController');
-const { auth } = require('../middleware/auth');
+const { auth, adminAuth } = require('../middleware/auth');
 
 // Get Razorpay key
 router.get('/razorpay/key', getRazorpayKey);
@@ -19,5 +21,11 @@ router.post('/razorpay/verify', auth, verifyRazorpayPayment);
 
 // Razorpay webhook (no auth - Razorpay will call this)
 router.post('/razorpay/webhook', handleRazorpayWebhook);
+
+// Process refund (admin only)
+router.post('/refund', auth, adminAuth, processRefund);
+
+// Get refund status
+router.get('/refund/:orderId', auth, getRefundStatus);
 
 module.exports = router;

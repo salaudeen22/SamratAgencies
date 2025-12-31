@@ -6,6 +6,7 @@ const Coupon = require('../models/Coupon');
 const { sendEmail } = require('../config/email');
 const { orderConfirmationEmail, orderStatusUpdateEmail, adminNewOrderNotificationEmail } = require('../utils/emailTemplates');
 const { generateInvoice } = require('../utils/invoiceGenerator');
+const logger = require('../config/logger');
 
 // Create new order
 exports.createOrder = async (req, res) => {
@@ -288,6 +289,43 @@ exports.cancelOrder = async (req, res) => {
     });
 
     const updatedOrder = await order.save();
+
+    // Auto-refund if paid online
+    logger.info(`Checking auto-refund conditions for order ${order._id}: isPaid=${order.isPaid}, paymentMethod=${order.paymentMethod}, hasPaymentResult=${!!order.paymentResult}, paymentId=${order.paymentResult?.id}`);
+
+    if (order.isPaid && order.paymentMethod === 'online' && order.paymentResult && order.paymentResult.id) {
+      logger.info(`Initiating auto-refund for order ${order._id}`);
+      try {
+        const Razorpay = require('razorpay');
+        const razorpay = new Razorpay({
+          key_id: process.env.RAZORPAY_KEY_ID,
+          key_secret: process.env.RAZORPAY_KEY_SECRET,
+        });
+
+        const refund = await razorpay.payments.refund(order.paymentResult.id, {
+          amount: Math.round(order.totalPrice * 100),
+          notes: {
+            orderId: order._id.toString(),
+            reason: cancellationReason || 'Order cancelled by customer'
+          }
+        });
+
+        // Update order with refund info
+        updatedOrder.refundInfo = {
+          id: refund.id,
+          amount: refund.amount / 100,
+          status: refund.status,
+          reason: cancellationReason || 'Order cancelled by customer',
+          created_at: refund.created_at
+        };
+        await updatedOrder.save();
+
+        logger.info(`Auto-refund processed for cancelled order ${order._id}: ₹${refund.amount / 100}`);
+      } catch (refundError) {
+        logger.error(`Failed to process auto-refund for order ${order._id}: ${refundError.message}`);
+        // Don't fail the cancellation if refund fails
+      }
+    }
 
     // Send cancellation email
     if (order.user && order.user.email) {

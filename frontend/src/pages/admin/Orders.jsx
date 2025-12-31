@@ -19,6 +19,10 @@ const Orders = () => {
     endDate: ''
   });
   const [selectedOrders, setSelectedOrders] = useState([]);
+  const [showRefundModal, setShowRefundModal] = useState(false);
+  const [refundAmount, setRefundAmount] = useState('');
+  const [refundReason, setRefundReason] = useState('');
+  const [processingRefund, setProcessingRefund] = useState(false);
 
   useEffect(() => {
     fetchOrders();
@@ -329,6 +333,46 @@ const Orders = () => {
       toast.success('Payment status updated');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to update payment status');
+    }
+  };
+
+  const handleProcessRefund = async () => {
+    if (!selectedOrder) return;
+
+    try {
+      setProcessingRefund(true);
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/payment/refund`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          orderId: selectedOrder._id,
+          amount: refundAmount ? parseFloat(refundAmount) : undefined,
+          reason: refundReason || 'Admin initiated refund'
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to process refund');
+      }
+
+      toast.success('Refund processed successfully');
+      setShowRefundModal(false);
+      setRefundAmount('');
+      setRefundReason('');
+      fetchOrders();
+      if (selectedOrder) {
+        viewDetails(selectedOrder._id);
+      }
+    } catch (err) {
+      toast.error(err.message || 'Failed to process refund');
+    } finally {
+      setProcessingRefund(false);
     }
   };
 
@@ -699,6 +743,23 @@ const Orders = () => {
                           Paid on: {new Date(selectedOrder.paidAt).toLocaleString('en-IN')}
                         </p>
                       )}
+                      {selectedOrder.refundInfo && (
+                        <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded">
+                          <p className="text-sm font-semibold text-yellow-800">Refund Status: {selectedOrder.refundInfo.status}</p>
+                          <p className="text-xs text-yellow-700">Amount: ₹{selectedOrder.refundInfo.amount}</p>
+                          {selectedOrder.refundInfo.reason && (
+                            <p className="text-xs text-yellow-700">Reason: {selectedOrder.refundInfo.reason}</p>
+                          )}
+                        </div>
+                      )}
+                      {selectedOrder.isPaid && selectedOrder.paymentMethod === 'online' && !selectedOrder.refundInfo && (
+                        <button
+                          onClick={() => setShowRefundModal(true)}
+                          className="mt-3 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded text-xs font-medium transition-colors"
+                        >
+                          Process Refund
+                        </button>
+                      )}
                     </div>
 
                     {/* Status History */}
@@ -774,6 +835,68 @@ const Orders = () => {
                   Select an order to view details
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Refund Modal */}
+        {showRefundModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg max-w-md w-full p-6">
+              <h3 className="text-lg font-semibold mb-4">Process Refund</h3>
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Refund Amount (Optional)
+                </label>
+                <input
+                  type="number"
+                  value={refundAmount}
+                  onChange={(e) => setRefundAmount(e.target.value)}
+                  placeholder={`Full amount: ₹${selectedOrder?.totalPrice || 0}`}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  step="0.01"
+                  min="0"
+                  max={selectedOrder?.totalPrice}
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Leave empty to refund full amount: ₹{selectedOrder?.totalPrice}
+                </p>
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Reason (Optional)
+                </label>
+                <textarea
+                  value={refundReason}
+                  onChange={(e) => setRefundReason(e.target.value)}
+                  placeholder="Enter refund reason..."
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  rows="3"
+                />
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => {
+                    setShowRefundModal(false);
+                    setRefundAmount('');
+                    setRefundReason('');
+                  }}
+                  className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-colors"
+                  disabled={processingRefund}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleProcessRefund}
+                  className="flex-1 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors disabled:opacity-50"
+                  disabled={processingRefund}
+                >
+                  {processingRefund ? 'Processing...' : 'Process Refund'}
+                </button>
+              </div>
             </div>
           </div>
         )}

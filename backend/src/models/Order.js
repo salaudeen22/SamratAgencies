@@ -146,6 +146,7 @@ const orderSchema = new mongoose.Schema({
     id: String,
     amount: Number,
     status: String,
+    reason: String,
     created_at: Number,
     processed_at: Number
   },

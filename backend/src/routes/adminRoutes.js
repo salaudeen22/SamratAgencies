@@ -280,12 +280,46 @@ router.put('/orders/:id/cancel', async (req, res) => {
       updatedBy: req.user.id
     });
 
-    await order.save();
+    const updatedOrder = await order.save();
+
+    // Auto-refund if paid online
+    if (order.isPaid && order.paymentMethod === 'online' && order.paymentResult && order.paymentResult.id) {
+      try {
+        const Razorpay = require('razorpay');
+        const razorpay = new Razorpay({
+          key_id: process.env.RAZORPAY_KEY_ID,
+          key_secret: process.env.RAZORPAY_KEY_SECRET,
+        });
+
+        const refund = await razorpay.payments.refund(order.paymentResult.id, {
+          amount: Math.round(order.totalPrice * 100),
+          notes: {
+            orderId: order._id.toString(),
+            reason: cancellationReason || 'Order cancelled by admin'
+          }
+        });
+
+        // Update order with refund info
+        updatedOrder.refundInfo = {
+          id: refund.id,
+          amount: refund.amount / 100,
+          status: refund.status,
+          reason: cancellationReason || 'Order cancelled by admin',
+          created_at: refund.created_at
+        };
+        await updatedOrder.save();
+
+        console.log(`Auto-refund processed for cancelled order ${order._id}: ₹${refund.amount / 100}`);
+      } catch (refundError) {
+        console.error(`Failed to process auto-refund for order ${order._id}: ${refundError.message}`);
+        // Don't fail the cancellation if refund fails
+      }
+    }
 
     // Send email notification
     if (order.user && order.user.email) {
       try {
-        const emailContent = orderStatusUpdateEmail(order, 'Cancelled');
+        const emailContent = orderStatusUpdateEmail(updatedOrder, 'Cancelled');
         await sendEmail({
           to: order.user.email,
           subject: emailContent.subject,
@@ -297,7 +331,7 @@ router.put('/orders/:id/cancel', async (req, res) => {
       }
     }
 
-    res.json({ message: 'Order cancelled successfully', order });
+    res.json({ message: 'Order cancelled successfully', order: updatedOrder });
   } catch (error) {
     res.status(400).json({ message: 'Failed to cancel order', error: error.message });
   }

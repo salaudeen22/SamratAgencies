@@ -277,6 +277,112 @@ async function handlePaymentFailure(payment) {
   }
 }
 
+// Process refund for an order
+exports.processRefund = async (req, res) => {
+  try {
+    const { orderId, amount, reason } = req.body;
+
+    // Find the order
+    const order = await Order.findById(orderId).populate('user', 'name email');
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // Check if order is paid
+    if (!order.isPaid) {
+      return res.status(400).json({ message: 'Order is not paid yet' });
+    }
+
+    // Check if payment ID exists
+    if (!order.paymentResult || !order.paymentResult.id) {
+      return res.status(400).json({ message: 'No payment information found for this order' });
+    }
+
+    // Check if refund already exists
+    if (order.refundInfo && order.refundInfo.status === 'processed') {
+      return res.status(400).json({ message: 'Refund already processed for this order' });
+    }
+
+    const paymentId = order.paymentResult.id;
+    const refundAmount = amount ? Math.round(amount * 100) : Math.round(order.totalPrice * 100);
+
+    // Create refund via Razorpay
+    const refund = await razorpay.payments.refund(paymentId, {
+      amount: refundAmount,
+      notes: {
+        orderId: orderId,
+        reason: reason || 'Customer requested refund'
+      }
+    });
+
+    // Update order with refund information
+    order.refundInfo = {
+      id: refund.id,
+      amount: refund.amount / 100,
+      status: refund.status,
+      reason: reason || 'Customer requested refund',
+      created_at: refund.created_at
+    };
+
+    // Update order status if full refund
+    if (refundAmount >= Math.round(order.totalPrice * 100)) {
+      order.orderStatus = 'Refunded';
+    }
+
+    await order.save();
+
+    logger.info(`Refund initiated for order ${order._id}, amount: ₹${refund.amount / 100}`);
+
+    res.json({
+      success: true,
+      message: 'Refund processed successfully',
+      refund: {
+        id: refund.id,
+        amount: refund.amount / 100,
+        status: refund.status,
+        orderId: order._id
+      }
+    });
+  } catch (error) {
+    logger.error(`Refund processing error: ${error.message}`);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to process refund'
+    });
+  }
+};
+
+// Get refund status for an order
+exports.getRefundStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    if (!order.refundInfo) {
+      return res.json({
+        success: true,
+        hasRefund: false,
+        message: 'No refund found for this order'
+      });
+    }
+
+    res.json({
+      success: true,
+      hasRefund: true,
+      refund: order.refundInfo
+    });
+  } catch (error) {
+    logger.error(`Get refund status error: ${error.message}`);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Helper: Handle refund
 async function handleRefund(refund) {
   try {
@@ -302,6 +408,11 @@ async function handleRefund(refund) {
       created_at: refund.created_at,
       processed_at: refund.processed_at
     };
+
+    // Update order status if full refund
+    if (refund.amount >= Math.round(order.totalPrice * 100)) {
+      order.orderStatus = 'Refunded';
+    }
 
     await order.save();
 
