@@ -1,12 +1,44 @@
 version: '3.8'
 
 services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy:alpine
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - samrat-network
+
+  acme-companion:
+    image: nginxproxy/acme-companion
+    container_name: nginx-acme
+    restart: unless-stopped
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - acme:/etc/acme.sh
+    environment:
+      - DEFAULT_EMAIL=salaudeensalu@gmail.com
+      - ACME_CHECK_INTERVAL=259200
+    depends_on:
+      - nginx-proxy
+    networks:
+      - samrat-network
+
   backend:
     image: salaudeen22/samrat-backend:latest
     container_name: samrat-backend
     restart: unless-stopped
-    ports:
-      - "5000:5000"
+    expose:
+      - "5000"
     env_file:
       - ./backend/.env
     networks:
@@ -22,8 +54,12 @@ services:
     image: salaudeen22/samrat-frontend:latest
     container_name: samrat-frontend
     restart: unless-stopped
-    ports:
-      - "80:80"
+    expose:
+      - "80"
+    environment:
+      - VIRTUAL_HOST=samratagencies.in,www.samratagencies.in
+      - LETSENCRYPT_HOST=samratagencies.in,www.samratagencies.in
+      - LETSENCRYPT_EMAIL=salaudeensalu@gmail.com
     depends_on:
       - backend
     networks:
@@ -33,6 +69,12 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+
+volumes:
+  certs:
+  vhost:
+  html:
+  acme:
 
 networks:
   samrat-network:
