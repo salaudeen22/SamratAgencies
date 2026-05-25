@@ -34,6 +34,7 @@ const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
 const Profile = lazy(() => import('./pages/Profile'));
 const About = lazy(() => import('./pages/About'));
+const OurStory = lazy(() => import('./pages/OurStory'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogArticle = lazy(() => import('./pages/BlogArticle'));
@@ -311,6 +312,7 @@ function App() {
                         <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/about" element={<About />} />
+                        <Route path="/our-story" element={<OurStory />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/blog/:slug" element={<BlogArticle />} />
                         <Route path="/blog" element={<Blog />} />
