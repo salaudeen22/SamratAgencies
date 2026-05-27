@@ -126,25 +126,6 @@ const About = () => {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-            <a href="/about/azarudeen"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-white font-semibold text-base transition-all hover:opacity-90 shadow-lg"
-              style={{ backgroundColor: '#816047' }}>
-              Meet Azarudeen
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-            <a href="/about/nizamudeen"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-base transition-all hover:opacity-90 shadow-lg"
-              style={{ backgroundColor: '#E6CDB1', color: '#2F1A0F' }}>
-              Meet Nizamudeen
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
             {/* Founder */}
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden" style={{ border: '2px solid #D7B790' }}>
