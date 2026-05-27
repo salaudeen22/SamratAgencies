@@ -126,13 +126,19 @@ const About = () => {
             </p>
           </div>
 
-          <div className="text-center mb-10">
-            <a
-              href="/our-story"
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+            <a href="/about/azarudeen"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-white font-semibold text-base transition-all hover:opacity-90 shadow-lg"
-              style={{ backgroundColor: '#816047' }}
-            >
-              Meet the People Behind Samrat Agencies
+              style={{ backgroundColor: '#816047' }}>
+              Meet Azarudeen
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+            <a href="/about/nizamudeen"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-base transition-all hover:opacity-90 shadow-lg"
+              style={{ backgroundColor: '#E6CDB1', color: '#2F1A0F' }}>
+              Meet Nizamudeen
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -155,9 +161,17 @@ const About = () => {
                 <p className="leading-relaxed mb-4" style={{ color: '#2F1A0F' }}>
                   <em>"Build something people can trust, and they'll never forget you."</em>
                 </p>
-                <p className="leading-relaxed" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
+                <p className="leading-relaxed mb-6" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   The man who started it all. With nothing but determination and an unwavering belief in honest business, he turned a small electronics shop into a legacy. His secret? He treated every customer like family. That foundation of trust still guides everything we do.
                 </p>
+                <a href="/about/nizamudeen"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold text-sm transition-all hover:opacity-90"
+                  style={{ backgroundColor: '#2F1A0F' }}>
+                  Read His Story
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
               </div>
             </div>
 
@@ -176,9 +190,17 @@ const About = () => {
                 <p className="leading-relaxed mb-4" style={{ color: '#2F1A0F' }}>
                   <em>"My father taught me that business isn't about transactions—it's about relationships that last generations."</em>
                 </p>
-                <p className="leading-relaxed" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
+                <p className="leading-relaxed mb-6" style={{ color: 'rgba(129, 96, 71, 0.6)' }}>
                   Taking the reins, Mr. Azarudeen didn't just preserve his father's legacy—he amplified it. He expanded partnerships with premium brands, opened manufacturing facilities in Jigani, Hongasandra, and Lakkasandra, and transformed Samrat Agencies into a one-stop destination for home furnishing. Yet through all the growth, one thing never changed: the promise to treat every customer like family.
                 </p>
+                <a href="/about/azarudeen"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold text-sm transition-all hover:opacity-90"
+                  style={{ backgroundColor: '#816047' }}>
+                  Read His Story
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
               </div>
             </div>
           </div>
