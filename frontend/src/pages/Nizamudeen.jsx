@@ -62,11 +62,11 @@ const Nizamudeen = () => {
           <img
             src="https://samrat-agencies.s3.ap-south-1.amazonaws.com/Gemini_Generated_Image_u4zctmu4zctmu4zc.png"
             alt="Nizamudeen S.A. – Founder, Samrat Agencies"
-            className="w-full h-full object-cover object-center"
-            style={{ filter: 'brightness(0.45) saturate(0.5) sepia(0.2)' }}
+            className="w-full h-full object-cover object-top"
+            style={{ filter: 'brightness(0.65) saturate(0.7)' }}
           />
           <div className="absolute inset-0" style={{
-            background: 'linear-gradient(to left, #0e0905 0%, rgba(14,9,5,0.6) 30%, transparent 65%), linear-gradient(to top, #0e0905 0%, transparent 45%)'
+            background: 'linear-gradient(to left, #0e0905 0%, rgba(14,9,5,0.75) 25%, transparent 60%), linear-gradient(to top, #0e0905 0%, transparent 40%)'
           }} />
         </div>
 
@@ -77,33 +77,41 @@ const Nizamudeen = () => {
               Founder &nbsp;·&nbsp; Samrat Agencies &nbsp;·&nbsp; Since 1996
             </p>
             <h1 style={{
-              fontSize: 'clamp(3rem, 9vw, 7rem)',
+              fontSize: 'clamp(2.8rem, 8vw, 6.5rem)',
               fontWeight: 900,
-              lineHeight: 0.92,
+              lineHeight: 1,
               letterSpacing: '-0.03em',
               color: '#ffffff',
               textTransform: 'uppercase'
             }}>
-              Nizam<br />
-              <span style={{ WebkitTextStroke: '1px #D7B790', color: 'transparent' }}>udeen</span><br />
-              <span className="text-base font-normal tracking-[0.2em] uppercase" style={{ color: '#816047', fontSize: '0.9rem' }}>S. A.</span>
+              Nizamudeen
             </h1>
+            <div style={{
+              fontSize: 'clamp(1.2rem, 3vw, 2rem)',
+              fontWeight: 700,
+              letterSpacing: '0.15em',
+              color: '#D7B790',
+              marginTop: '0.25rem',
+              textTransform: 'uppercase'
+            }}>
+              S. A.
+            </div>
             <div className="w-24 h-px mt-6 mb-6" style={{ backgroundColor: '#816047' }} />
             <p className="text-base sm:text-lg leading-relaxed" style={{ color: '#b89a7a' }}>
               In 1996, with modest savings and an unshakeable belief in honest business, he opened a small electronics shop in Bangalore. What he built over the next three decades became a household name.
             </p>
 
             {/* Legacy stats */}
-            <div className="flex flex-wrap gap-x-10 gap-y-4 mt-10">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-10">
               {[
                 { n: '1996', l: 'Year Founded' },
                 { n: '30+', l: 'Years of Trust' },
                 { n: '1Cr+', l: 'Customers' },
                 { n: '2nd Gen', l: 'Legacy Lives On' },
               ].map(s => (
-                <div key={s.l}>
+                <div key={s.l} className="flex flex-col">
                   <div className="text-3xl font-black" style={{ color: '#D7B790' }}>{s.n}</div>
-                  <div className="text-xs tracking-widest uppercase mt-0.5" style={{ color: 'rgba(184,154,122,0.7)' }}>{s.l}</div>
+                  <div className="text-xs tracking-widest uppercase mt-1 leading-tight" style={{ color: 'rgba(184,154,122,0.7)' }}>{s.l}</div>
                 </div>
               ))}
             </div>

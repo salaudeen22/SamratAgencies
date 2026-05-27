@@ -78,32 +78,41 @@ const Azarudeen = () => {
               Samrat Agencies &nbsp;·&nbsp; Est. 1996 &nbsp;·&nbsp; Bangalore
             </p>
             <h1 style={{
-              fontSize: 'clamp(3.5rem, 10vw, 7.5rem)',
+              fontSize: 'clamp(2.8rem, 8vw, 6.5rem)',
               fontWeight: 900,
-              lineHeight: 0.9,
+              lineHeight: 1,
               letterSpacing: '-0.03em',
               color: '#ffffff',
               textTransform: 'uppercase'
             }}>
-              Azaru<br />
-              <span style={{ color: '#D7B790', WebkitTextStroke: '1px #D7B790', color: 'transparent' }}>deen</span>
+              Azarudeen
             </h1>
+            <div style={{
+              fontSize: 'clamp(0.75rem, 1.5vw, 0.95rem)',
+              fontWeight: 700,
+              letterSpacing: '0.25em',
+              color: '#D7B790',
+              marginTop: '0.5rem',
+              textTransform: 'uppercase'
+            }}>
+              Owner &amp; Managing Director
+            </div>
             <div className="w-24 h-px mt-6 mb-6" style={{ backgroundColor: '#816047' }} />
             <p className="text-base sm:text-lg leading-relaxed max-w-xl" style={{ color: '#b89a7a' }}>
-              Owner & Managing Director. The man who took his father's 1996 dream and built it into Bangalore's most trusted furniture and mattress destination.
+              The man who took his father's 1996 dream and built it into Bangalore's most trusted furniture and mattress destination.
             </p>
 
             {/* Inline stats */}
-            <div className="flex flex-wrap gap-x-10 gap-y-4 mt-10">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-10">
               {[
                 { n: '10+', l: 'Brand Partnerships' },
                 { n: '3', l: 'Manufacturing Units' },
                 { n: '5.0', l: 'Google Rating' },
                 { n: '30+', l: 'Years of Legacy' },
               ].map(s => (
-                <div key={s.l}>
+                <div key={s.l} className="flex flex-col">
                   <div className="text-3xl font-black" style={{ color: '#D7B790' }}>{s.n}</div>
-                  <div className="text-xs tracking-widest uppercase mt-0.5" style={{ color: 'rgba(184,154,122,0.7)' }}>{s.l}</div>
+                  <div className="text-xs tracking-widest uppercase mt-1 leading-tight" style={{ color: 'rgba(184,154,122,0.7)' }}>{s.l}</div>
                 </div>
               ))}
             </div>
