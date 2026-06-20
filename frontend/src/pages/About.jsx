@@ -160,7 +160,7 @@ const About = () => {
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden" style={{ border: '2px solid #D7B790' }}>
               <div className="aspect-square" style={{ backgroundColor: '#E6CDB1' }}>
                 <img
-                  src="https://samrat-agencies.s3.ap-south-1.amazonaws.com/Gemini_Generated_Image_lprobylprobylpro.png"
+                  src="/azarudeen.jpeg"
                   alt="Mr. Azarudeen - Current Leader"
                   className="w-full h-full object-cover"
                 />
