@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
 import { productAPI, recommendationAPI, deliveryAPI } from '../services/api';
 import { useCart } from '../context/CartContext';
@@ -332,6 +333,17 @@ const ProductDetail = () => {
         type="product"
         product={product}
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://samratagencies.in/' },
+            { '@type': 'ListItem', position: 2, name: 'Products', item: 'https://samratagencies.in/products' },
+            { '@type': 'ListItem', position: 3, name: product.name, item: `https://samratagencies.in/products/${product.slug || id}` }
+          ]
+        })}</script>
+      </Helmet>
       <div className="min-h-screen py-4 lg:py-8" style={{ backgroundColor: '#fafaf9' }}>
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-12">
         {/* Breadcrumb Navigation */}

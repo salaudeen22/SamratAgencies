@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { contactAPI } from '../services/api';
+import SEO from '../components/SEO';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -56,6 +57,41 @@ const Contact = () => {
   };
 
   return (
+    <>
+    <SEO
+      title="Contact Samrat Agencies – Furniture Store Bangalore | +91 98809 14457"
+      description="Visit Samrat Agencies at Begur Main Road, Hongasandra, Bangalore or call +91 98809 14457. Open every day 8AM–10:30PM. Send us a message and we'll reply fast."
+      keywords="contact samrat agencies, samrat agencies phone number, samrat agencies address, furniture store contact bangalore, samrat agencies hongasandra"
+      url="/contact"
+      canonical="https://samratagencies.in/contact"
+      type="website"
+      structuredData={{
+        '@context': 'https://schema.org',
+        '@type': 'ContactPage',
+        name: 'Contact Samrat Agencies',
+        url: 'https://samratagencies.in/contact',
+        mainEntity: {
+          '@type': 'FurnitureStore',
+          name: 'Samrat Agencies',
+          telephone: '+91-9880914457',
+          email: 'samratagencies2012@gmail.com',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Babu Reddy Complex, 5, Begur Main Road, Hongasandra',
+            addressLocality: 'Bangalore',
+            addressRegion: 'Karnataka',
+            postalCode: '560114',
+            addressCountry: 'IN'
+          },
+          openingHoursSpecification: {
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            opens: '08:00',
+            closes: '22:30'
+          }
+        }
+      }}
+    />
     <div className="min-h-screen" style={{ backgroundColor: '#fafaf9' }}>
       {/* Hero Section */}
       <section className="relative text-white py-24 md:py-32 overflow-hidden" style={{
@@ -474,6 +510,7 @@ const Contact = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
       <SEO
         title="Privacy Policy | Samrat Agencies"
         description="Privacy Policy for Samrat Agencies - Learn how we collect, use, and protect your personal information"
-        canonical="/privacy-policy"
+        canonical="https://samratagencies.in/privacy-policy"
       />
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <h1 className="text-3xl font-bold mb-6" style={{ color: '#816047' }}>Privacy Policy</h1>

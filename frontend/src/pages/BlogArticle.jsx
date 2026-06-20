@@ -111,7 +111,35 @@ const BlogArticle = () => {
         description={article.metaDescription || article.excerpt}
         keywords={article.metaKeywords?.join(', ')}
         url={`/blog/${article.slug}`}
+        canonical={`https://samratagencies.in/blog/${article.slug}`}
         image={article.featuredImage?.url}
+        type="article"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: article.title,
+          description: article.metaDescription || article.excerpt,
+          image: article.featuredImage?.url,
+          datePublished: article.publishDate || article.createdAt,
+          dateModified: article.updatedAt,
+          author: {
+            '@type': 'Organization',
+            name: 'Samrat Agencies',
+            url: 'https://samratagencies.in'
+          },
+          publisher: {
+            '@type': 'Organization',
+            name: 'Samrat Agencies',
+            logo: {
+              '@type': 'ImageObject',
+              url: 'https://samratagencies.in/samrat-logo.png'
+            }
+          },
+          mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': `https://samratagencies.in/blog/${article.slug}`
+          }
+        }}
       />
 
       <div className="min-h-screen py-12 px-4" style={{ backgroundColor: '#f8fafc' }}>

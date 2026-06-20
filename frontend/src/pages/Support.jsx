@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import SEO from '../components/SEO';
 import { ticketAPI } from '../services/api';
 import toast from 'react-hot-toast';
 import { FaTicketAlt, FaClock, FaCheckCircle, FaPaperPlane, FaExclamationCircle, FaTimesCircle } from 'react-icons/fa';
@@ -185,6 +186,14 @@ const Support = () => {
   };
 
   return (
+    <>
+    <SEO
+      title="Customer Support | Samrat Agencies"
+      description="Get support for your Samrat Agencies orders. Raise a support ticket and our team will respond promptly."
+      url="/support"
+      canonical="https://samratagencies.in/support"
+      robots="noindex, follow"
+    />
     <div className="min-h-screen" style={{ backgroundColor: '#fafaf9', paddingTop: '80px' }}>
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Header */}
@@ -470,6 +479,7 @@ const Support = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

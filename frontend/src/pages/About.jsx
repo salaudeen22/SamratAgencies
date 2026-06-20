@@ -22,7 +22,7 @@ const About = () => {
         <meta name="twitter:image" content="https://samrat-agencies.s3.ap-south-1.amazonaws.com/Gemini_Generated_Image_u4zctmu4zctmu4zc.png" />
 
         {/* Additional SEO Tags */}
-        <link rel="canonical" href="https://samratagencies.com/about" />
+        <link rel="canonical" href="https://samratagencies.in/about" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Samrat Agencies" />
       </Helmet>
