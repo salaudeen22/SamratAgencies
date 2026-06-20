@@ -11,7 +11,7 @@ const Azarudeen = () => {
         <meta property="og:description" content="Meet Azarudeen, the face of Samrat Agencies. Building on a legacy started in 1996, he has grown Samrat Agencies into Bangalore's premier furniture destination." />
         <meta property="og:type" content="profile" />
         <meta property="og:url" content="https://samratagencies.in/about/azarudeen" />
-        <meta property="og:image" content="https://samrat-agencies.s3.ap-south-1.amazonaws.com/Gemini_Generated_Image_lprobylprobylpro.png" />
+        <meta property="og:image" content="https://samratagencies.in/azarudeen.jpeg" />
         <meta property="profile:first_name" content="Azarudeen" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://samratagencies.in/about/azarudeen" />
@@ -24,7 +24,7 @@ const Azarudeen = () => {
             "name": "Azarudeen",
             "jobTitle": "Owner & Managing Director",
             "description": "Azarudeen is the owner and managing director of Samrat Agencies, Bangalore's premier furniture and mattress store.",
-            "image": "https://samrat-agencies.s3.ap-south-1.amazonaws.com/Gemini_Generated_Image_lprobylprobylpro.png",
+            "image": "https://samratagencies.in/azarudeen.jpeg",
             "url": "https://samratagencies.in/about/azarudeen",
             "worksFor": { "@type": "LocalBusiness", "name": "Samrat Agencies", "url": "https://samratagencies.in" }
           }
@@ -43,7 +43,7 @@ const Azarudeen = () => {
         {/* Photo */}
         <div className="absolute inset-0 md:left-auto md:right-0 md:w-[55%] lg:w-[52%] overflow-hidden">
           <img
-            src="https://samrat-agencies.s3.ap-south-1.amazonaws.com/Gemini_Generated_Image_lprobylprobylpro.png"
+            src="/azarudeen.jpeg"
             alt="Azarudeen – Owner, Samrat Agencies Bangalore"
             className="w-full h-full object-cover object-top"
             style={{ filter: 'brightness(0.38) saturate(0.7)' }}
@@ -162,7 +162,7 @@ const Azarudeen = () => {
               <div className="relative rounded-xl sm:rounded-2xl overflow-hidden w-full"
                 style={{ aspectRatio: '16 / 9' }}>
                 <img
-                  src="https://samrat-agencies.s3.ap-south-1.amazonaws.com/Gemini_Generated_Image_lprobylprobylpro.png"
+                  src="/azarudeen.jpeg"
                   alt="Azarudeen at Samrat Agencies showroom"
                   className="w-full h-full object-cover object-top"
                 />
