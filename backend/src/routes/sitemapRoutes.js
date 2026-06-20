@@ -33,7 +33,6 @@ router.get('/sitemap.xml', async (req, res) => {
     sitemap += `    <loc>${baseUrl}/</loc>\n`;
     sitemap += `    <changefreq>daily</changefreq>\n`;
     sitemap += `    <priority>1.0</priority>\n`;
-    sitemap += `    <lastmod>${new Date().toISOString()}</lastmod>\n`;
     sitemap += `  </url>\n`;
 
     // Add products page
@@ -41,14 +40,35 @@ router.get('/sitemap.xml', async (req, res) => {
     sitemap += `    <loc>${baseUrl}/products</loc>\n`;
     sitemap += `    <changefreq>daily</changefreq>\n`;
     sitemap += `    <priority>0.9</priority>\n`;
-    sitemap += `    <lastmod>${new Date().toISOString()}</lastmod>\n`;
     sitemap += `  </url>\n`;
 
-    // Add about page
+    // Add about pages
     sitemap += `  <url>\n`;
     sitemap += `    <loc>${baseUrl}/about</loc>\n`;
     sitemap += `    <changefreq>monthly</changefreq>\n`;
+    sitemap += `    <priority>0.8</priority>\n`;
+    sitemap += `    <lastmod>2026-06-20</lastmod>\n`;
+    sitemap += `  </url>\n`;
+
+    sitemap += `  <url>\n`;
+    sitemap += `    <loc>${baseUrl}/about/azarudeen</loc>\n`;
+    sitemap += `    <changefreq>monthly</changefreq>\n`;
+    sitemap += `    <priority>0.8</priority>\n`;
+    sitemap += `    <lastmod>2026-06-20</lastmod>\n`;
+    sitemap += `  </url>\n`;
+
+    sitemap += `  <url>\n`;
+    sitemap += `    <loc>${baseUrl}/about/nizamudeen</loc>\n`;
+    sitemap += `    <changefreq>monthly</changefreq>\n`;
+    sitemap += `    <priority>0.8</priority>\n`;
+    sitemap += `    <lastmod>2026-06-20</lastmod>\n`;
+    sitemap += `  </url>\n`;
+
+    sitemap += `  <url>\n`;
+    sitemap += `    <loc>${baseUrl}/our-story</loc>\n`;
+    sitemap += `    <changefreq>monthly</changefreq>\n`;
     sitemap += `    <priority>0.7</priority>\n`;
+    sitemap += `    <lastmod>2026-06-20</lastmod>\n`;
     sitemap += `  </url>\n`;
 
     // Add contact page
@@ -56,6 +76,7 @@ router.get('/sitemap.xml', async (req, res) => {
     sitemap += `    <loc>${baseUrl}/contact</loc>\n`;
     sitemap += `    <changefreq>monthly</changefreq>\n`;
     sitemap += `    <priority>0.7</priority>\n`;
+    sitemap += `    <lastmod>2026-06-01</lastmod>\n`;
     sitemap += `  </url>\n`;
 
     // Add blog page
@@ -63,35 +84,41 @@ router.get('/sitemap.xml', async (req, res) => {
     sitemap += `    <loc>${baseUrl}/blog</loc>\n`;
     sitemap += `    <changefreq>weekly</changefreq>\n`;
     sitemap += `    <priority>0.8</priority>\n`;
-    sitemap += `    <lastmod>${new Date().toISOString()}</lastmod>\n`;
+    sitemap += `  </url>\n`;
+
+    // Add support page
+    sitemap += `  <url>\n`;
+    sitemap += `    <loc>${baseUrl}/support</loc>\n`;
+    sitemap += `    <changefreq>monthly</changefreq>\n`;
+    sitemap += `    <priority>0.6</priority>\n`;
     sitemap += `  </url>\n`;
 
     // Add privacy policy
     sitemap += `  <url>\n`;
     sitemap += `    <loc>${baseUrl}/privacy-policy</loc>\n`;
-    sitemap += `    <changefreq>monthly</changefreq>\n`;
-    sitemap += `    <priority>0.5</priority>\n`;
+    sitemap += `    <changefreq>yearly</changefreq>\n`;
+    sitemap += `    <priority>0.4</priority>\n`;
     sitemap += `  </url>\n`;
 
     // Add terms and conditions
     sitemap += `  <url>\n`;
     sitemap += `    <loc>${baseUrl}/terms-and-conditions</loc>\n`;
-    sitemap += `    <changefreq>monthly</changefreq>\n`;
-    sitemap += `    <priority>0.5</priority>\n`;
+    sitemap += `    <changefreq>yearly</changefreq>\n`;
+    sitemap += `    <priority>0.4</priority>\n`;
     sitemap += `  </url>\n`;
 
     // Add shipping and delivery
     sitemap += `  <url>\n`;
     sitemap += `    <loc>${baseUrl}/shipping-and-delivery</loc>\n`;
-    sitemap += `    <changefreq>monthly</changefreq>\n`;
-    sitemap += `    <priority>0.5</priority>\n`;
+    sitemap += `    <changefreq>yearly</changefreq>\n`;
+    sitemap += `    <priority>0.4</priority>\n`;
     sitemap += `  </url>\n`;
 
     // Add cancellation and refund
     sitemap += `  <url>\n`;
     sitemap += `    <loc>${baseUrl}/cancellation-and-refund</loc>\n`;
-    sitemap += `    <changefreq>monthly</changefreq>\n`;
-    sitemap += `    <priority>0.5</priority>\n`;
+    sitemap += `    <changefreq>yearly</changefreq>\n`;
+    sitemap += `    <priority>0.4</priority>\n`;
     sitemap += `  </url>\n`;
 
     // Add category pages only if they have products
@@ -160,13 +187,16 @@ router.get('/api/sitemap/urls', async (req, res) => {
     urls.push(`${baseUrl}/`);
     urls.push(`${baseUrl}/products`);
     urls.push(`${baseUrl}/about`);
+    urls.push(`${baseUrl}/about/azarudeen`);
+    urls.push(`${baseUrl}/about/nizamudeen`);
+    urls.push(`${baseUrl}/our-story`);
     urls.push(`${baseUrl}/contact`);
     urls.push(`${baseUrl}/blog`);
+    urls.push(`${baseUrl}/support`);
     urls.push(`${baseUrl}/privacy-policy`);
     urls.push(`${baseUrl}/terms-and-conditions`);
     urls.push(`${baseUrl}/shipping-and-delivery`);
     urls.push(`${baseUrl}/cancellation-and-refund`);
-    urls.push(`${baseUrl}/support`);
 
     // Fetch all active products
     const products = await Product.find({ isActive: true }).select('slug');
@@ -179,7 +209,6 @@ router.get('/api/sitemap/urls', async (req, res) => {
     const categories = await Category.find({ isActive: true }).select('slug');
     for (const category of categories) {
       const slug = category.slug || category._id;
-      // Check if category has any products
       const productCount = await Product.countDocuments({
         isActive: true,
         $or: [
@@ -187,7 +216,6 @@ router.get('/api/sitemap/urls', async (req, res) => {
           { categories: category._id }
         ]
       });
-      // Only add if category has products
       if (productCount > 0) {
         urls.push(`${baseUrl}/products?category=${slug}`);
       }
@@ -225,13 +253,16 @@ router.post('/api/sitemap/submit-indexnow', async (req, res) => {
     urls.push(`${baseUrl}/`);
     urls.push(`${baseUrl}/products`);
     urls.push(`${baseUrl}/about`);
+    urls.push(`${baseUrl}/about/azarudeen`);
+    urls.push(`${baseUrl}/about/nizamudeen`);
+    urls.push(`${baseUrl}/our-story`);
     urls.push(`${baseUrl}/contact`);
     urls.push(`${baseUrl}/blog`);
+    urls.push(`${baseUrl}/support`);
     urls.push(`${baseUrl}/privacy-policy`);
     urls.push(`${baseUrl}/terms-and-conditions`);
     urls.push(`${baseUrl}/shipping-and-delivery`);
     urls.push(`${baseUrl}/cancellation-and-refund`);
-    urls.push(`${baseUrl}/support`);
 
     // Fetch all active products
     const products = await Product.find({ isActive: true }).select('slug');
@@ -244,7 +275,6 @@ router.post('/api/sitemap/submit-indexnow', async (req, res) => {
     const categories = await Category.find({ isActive: true }).select('slug');
     for (const category of categories) {
       const slug = category.slug || category._id;
-      // Check if category has any products
       const productCount = await Product.countDocuments({
         isActive: true,
         $or: [
@@ -252,7 +282,6 @@ router.post('/api/sitemap/submit-indexnow', async (req, res) => {
           { categories: category._id }
         ]
       });
-      // Only add if category has products
       if (productCount > 0) {
         urls.push(`${baseUrl}/products?category=${slug}`);
       }
